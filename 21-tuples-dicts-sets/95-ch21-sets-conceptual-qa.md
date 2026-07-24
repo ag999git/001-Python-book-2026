@@ -4,14 +4,20 @@
 **Q1. A Python set — unordered? unique? hashable-only? Why each?**
 
 A set in Python is an unordered collection of unique, hashable elements. Think of it as a bag of labelled marbles: 
-(a) No duplicates — dropping in a marble that is already present changes nothing, because a set can hold only one copy of any value; 
-(b) No fixed order — marbles shake around freely, so there is no "first" or "last" marble, and you cannot ask for the item at index 0; 
-(c) Hashable elements only — every marble's label (its hash value) must never change, so Python can generate a fingerprint for it and look it up instantly.
+-  (a) No duplicates — dropping in a marble that is already present changes nothing, because a set can hold only one copy of any value; 
+-  (b) No fixed order — marbles shake around freely, so there is no "first" or "last" marble, and you cannot ask for the item at index 0; 
+-  (c) Hashable elements only — every marble's label (its hash value) must never change, so Python can generate a fingerprint for it and look it up instantly.
+
 ```python
 s = {1, 2, 2, 3}
 print(s) # {1, 2, 3} -> duplicate 2 silently dropped
 ```
-These three properties are not independent quirks — they follow from a single implementation choice: Python stores a set's elements in a hash table, not in a sequential array like a list. A hash table has no notion of "position", so ordering and indexing are impossible by construction; and it can only place an object if that object produces a stable hash value, so mutable, unhashable objects (lists, dicts, other sets) are rejected outright. Understanding this one fact — "a set is a hash table of keys with no values" — explains almost every rule covered in the rest of this chapter.
+
+These three properties are not independent quirks — they follow from a single implementation choice: Python stores a set's elements in a hash table, not in a sequential array like a list. 
+
+A hash table has no notion of "position", so ordering and indexing are impossible by construction; and it can only place an object if that object produces a stable hash value, so mutable, unhashable objects (lists, dicts, other sets) are rejected outright. 
+
+Understanding this one fact — "a set is a hash table of keys with no values" — explains almost every rule covered in the rest of this chapter.
 
 **Q2. Why do sets exist at all? (a) two jobs they specialise in (b) how they differ from that role in lists and dicts**
 
@@ -50,7 +56,9 @@ numbers = {10, 20, 30} # fine -- curly braces are unambiguous once non-empty
 student = {"name": "Anita", "age": 20} # this is a dict, not a set, despite the braces
 ```
 
-Once a set has at least one element, `{...}` is no longer ambiguous, because the presence of bare values (rather than key: value pairs) tells Python unambiguously that a set was intended. This is one of the very few places in Python where an empty literal and a non-empty literal of the "same" syntax actually construct different types, so it is worth memorising as a rule rather than reasoning it out each time: "`{}` is always a dict; `set()` is always a set."
+Once a set has at least one element, `{...}` is no longer ambiguous, because the presence of bare values (rather than key: value pairs) tells Python unambiguously that a set was intended. 
+
+This is one of the very few places in Python where an empty literal and a non-empty literal of the "same" syntax actually construct different types, so it is worth memorising as a rule rather than reasoning it out each time: "`{}` is always a dict; `set()` is always a set."
 
 **Q4. Sets support no indexing and no slicing — 
 (a) why not, structurally 
@@ -58,7 +66,9 @@ Once a set has at least one element, `{...}` is no longer ambiguous, because the
 (c) what *does* still work for visiting elements?**
 
 Lists, tuples, and strings support `s[0]` and `s[1:3]` because they are sequences — each element occupies a specific position, and Python's internal array remembers that position. 
+
 A set is built on a hash table instead: elements are scattered across internal buckets according to their hash value, not according to any insertion order, so the very concept of "the element at position 0" does not exist. 
+
 Attempting to index a set therefore raises `TypeError: 'set' object is not subscriptable`, and attempting to slice it is equally invalid.
 
 ```python
@@ -94,11 +104,14 @@ print(s)
 print(len(s), type(s)) # 3 <class 'set'>
 ```
 
-Note that `set("hello")` converts the *string* into a set of its individual characters — `{'h', 'e', 'l', 'o'}` — because a string is itself an iterable of one-character strings; this surprises beginners who expect the whole string to become a single element (that mistake resurfaces later with `.update()` vs `.add()`, covered in Q13). In short: use `{...}` when you are typing out literal values by hand, and use `set(iterable)` whenever the values already exist inside some other collection that you want de-duplicated or converted.
+Note that `set("hello")` converts the *string* into a set of its individual characters — `{'h', 'e', 'l', 'o'}` — because a string is itself an iterable of one-character strings; this surprises beginners who expect the whole string to become a single element (that mistake resurfaces later with `.update()` vs `.add()`, covered in Q13). 
+
+In short: use `{...}` when you are typing out literal values by hand, and use `set(iterable)` whenever the values already exist inside some other collection that you want de-duplicated or converted.
 
 **Q6. `len()` and `type()` on a set — are these set-specific functions, and what do they report?**
 
 `len(s)` and `type(s)` are **general-purpose Python built-ins** — they work with lists, tuples, dictionaries, strings, and virtually every other container type — they are not exclusive or specific to sets. 
+
 They are, however, used constantly while working with sets because a set has no .length attribute or numeric index to fall back on, so these two built-ins are often the *only* convenient way to inspect a set's size and confirm its type.
 
 ```python
@@ -143,9 +156,11 @@ for row in matrix: # outer loop, read first
         unique_values_loop.add(value)
 ```
 
-**Reading rule for nested comprehensions:** always read the for clauses strictly left to right — the *first* for you encounter is the *outer* loop, and the *second* for is the *inner* loop, exactly mirroring how you would nest the nested for statements if you wrote them out longhand (as shown above). This "left-to-right = outer-to-inner" rule is the single most useful trick for decoding any nested comprehension, list or set, that you will encounter later in the book.
+**Reading rule for nested comprehensions:** always read the for clauses strictly left to right — the *first* for you encounter is the *outer* loop, and the *second* for is the *inner* loop, exactly mirroring how you would nest the nested for statements if you wrote them out longhand (as shown above). 
 
-**Q8. In a set, True 1 and False 0 collapse together — (a) why (b) what survives when all four appear in one collection?**
+This "left-to-right = outer-to-inner" rule is the single most useful trick for decoding any nested comprehension, list or set, that you will encounter later in the book.
+
+**Q8. In a set, `True` and `1` and `False` and `0` collapse together — (a) why (b) what survives when all four appear in one collection?**
 
 In Python, booleans are a subtype of int, and critically `True == 1` and `False == 0` evaluate to `True`. Since a set's uniqueness rule is based on equality (and matching hash values — `hash(True) == hash(1)` and `hash(False) == hash(0)`), a set can only ever keep **one** representative from any group of mutually-equal values, regardless of how many "different-looking" spellings you tried to insert.
 
@@ -155,11 +170,17 @@ result = {value for value in values}
 print(result) # {0, 1, 'Python'} (order may vary)
 ```
 
-Notice which spelling "wins": Python keeps whichever of the equal values was inserted *first* — so if `1` appeared before `True` in the source iterable, the set stores `1`, not `True` (though it prints and compares identically either way, since they are equal). This is a subtle but real gotcha when you deduplicate mixed data — e.g. building a set of "flags" that mix booleans and `0/1` integers from different data sources will silently merge them into a single bucket. If you need to distinguish `True` from `1` and `False` from `0`, sets are the wrong tool; use a `list` or check `type(x)` is `bool` explicitly.
+Notice which spelling "wins": Python keeps whichever of the equal values was inserted *first* — so if `1` appeared before `True` in the source iterable, the set stores `1`, not `True` (though it prints and compares identically either way, since they are equal). 
+
+This is a subtle but real gotcha when you deduplicate mixed data — e.g. building a set of "flags" that mix booleans and `0/1` integers from different data sources will silently merge them into a single bucket. 
+
+If you need to distinguish `True` from `1` and `False` from `0`, sets are the wrong tool; use a `list` or check `type(x)` is `bool` explicitly.
 
 **Q9. Hashability — (a) what makes an object hashable (b) which built-in types qualify/disqualify and why (c) how does this give `O(1)` average-case membership testing internally?**
 
-An object is **hashable** if it produces a fixed, unchanging integer "fingerprint" via the built-in `hash()` function throughout its entire lifetime. Integers, floats, strings, and tuples (provided every element inside the tuple is itself hashable) qualify, because none of them can be mutated after creation. Lists, dictionaries, and plain sets are **not hashable**, precisely because their contents *can* change — if the contents changed, the hash value would have to change too, which would break the hash table that relies on it staying constant.
+An object is **hashable** if it produces a fixed, unchanging integer "fingerprint" via the built-in `hash()` function throughout its entire lifetime. Integers, floats, strings, and tuples (provided every element inside the tuple is itself hashable) qualify, because none of them can be mutated after creation. 
+
+Lists, dictionaries, and plain sets are **not hashable**, precisely because their contents *can* change — if the contents changed, the hash value would have to change too, which would break the hash table that relies on it staying constant.
 
 ```python
 print(hash("Python")) # some integer, unchanged for this session
@@ -167,9 +188,10 @@ print(hash((1, 2))) # tuples are hashable if their contents are
 ```
 
 Internally, Python stores a set's elements in a **hash table** (the same mechanism a dict uses for its keys). When you run `x` in `my_set` or insert an element, Python performs three steps: 
-(1) compute `hash(x)`; 
-(2) use that hash value to compute exactly which "bucket" in the underlying table x belongs to; 
-(3) check only that bucket rather than scanning the whole collection. 
+-  (1) compute `hash(x)`; 
+-  (2) use that hash value to compute exactly which "bucket" in the underlying table x belongs to; 
+-  (3) check only that bucket rather than scanning the whole collection. 
+
 Because step 3 touches a near-constant number of items regardless of how large the set is, membership testing has **average-case `O(1)` (constant) time complexity** — looking something up in a set of 10 elements takes roughly the same time as in a set of 10 million elements, which is the single biggest performance reason to prefer sets over lists for membership-heavy code.
 
 **Q10. Tuple-in-a-set exception — (a) why is (1, 2, "a") allowed inside a set but (1, [2, 3]) is not (b) what does "hashability is recursive" mean?**

@@ -212,11 +212,15 @@ s = {1, 2, (3, 4)}
 print(s) # {1, 2, (3, 4)} -- fully hashable now
 ```
 
-This is what "**hashability is recursive**" means in practice: Python does not just check the outer object's type; it must be able to compute `hash()` on every nested value before it can compute a hash for the whole. A frozenset is the standard fix when you genuinely need a mutable-looking collection inside a set or tuple — since frozenset is itself immutable and hashable, `(1, frozenset({2, 3}))` is perfectly valid, whereas `(1, {2, 3})` (a real, mutable set nested inside) is not.
+This is what "**hashability is recursive**" means in practice: Python does not just check the outer object's type; it must be able to compute `hash()` on every nested value before it can compute a hash for the whole. 
+
+A frozenset is the standard fix when you genuinely need a mutable-looking collection inside a set or tuple — since frozenset is itself immutable and hashable, `(1, frozenset({2, 3}))` is perfectly valid, whereas `(1, {2, 3})` (a real, mutable set nested inside) is not.
 
 **Q11. Set-in-set nesting — (a) why does `{{1, 2}, {3, 4}}` raise `TypeError` (b) what is the correct fix?**
 
-Sets are themselves mutable — you can `.add()` or `.remove()` elements from them at any time — and mutable objects are never hashable (see Q9/Q10). Since every element stored inside an *outer* set must be hashable, you cannot place an ordinary, mutable set as an element of another set; Python raises `TypeError: unhashable type: 'set'` the moment it tries to compute a hash for the inner set.
+Sets are themselves mutable — you can `.add()` or `.remove()` elements from them at any time — and mutable objects are never hashable (see Q9/Q10). 
+
+Since every element stored inside an *outer* set must be hashable, you cannot place an ordinary, mutable set as an element of another set; Python raises `TypeError: unhashable type: 'set'` the moment it tries to compute a hash for the inner set.
 
 ```python
 try:
@@ -230,6 +234,7 @@ print(valid_nested_set) # {frozenset({1, 2}), frozenset({3, 4})}
 ```
 
 The fix mirrors the list-vs-tuple substitution used elsewhere in the chapter: wherever a mutable structure is being rejected for hashability reasons, its immutable sibling almost always solves the problem — `list → tuple`, and here, `set → frozenset`. 
+
 This pattern (needing a "collection of collections" that must itself be a set, so the inner collections must be frozen) shows up in real code whenever you are grouping combinations of tags, permissions, or categories and need to deduplicate the *groups themselves*.
 
 **Q12. Structural comparison — list vs dict vs set: (a) ordering (b) duplicates (c) access method (d) mutability (e) empty-literal syntax for each?**
@@ -263,6 +268,7 @@ If you find yourself writing `if item not in my_list:` before appending, in a ho
 **Q13. `.add()` vs `.update()` — (a) how do they treat their argument differently (b) walk through the classic string-splitting mistake**
 
 `.add(elem)` inserts exactly **one** hashable object as a single new element — whatever you pass in, verbatim, becomes the element. `.update(*iterables)` instead treats its argument(s) as **`iterables`**, unpacks them, and inserts each individual item they yield as a *separate* element of the set. 
+
 This distinction becomes a trap the moment the argument is a string, because a string is itself an iterable of one-character strings.
 
 ```python
@@ -327,7 +333,9 @@ G -->|Yes| H[".clear()"]
 
 **Q15. Modifying a set while iterating over it — (a) what happens and why (b) the correct fix**
 
-Changing the *size* of a set (adding or removing elements) while a for loop is actively iterating over that same set raises `RuntimeError: Set changed size during iteration`. This happens because Python's set iterator walks the underlying hash table directly; if the table is resized or rearranged mid-walk (which removal/insertion can trigger), the iterator's internal position becomes invalid and unsafe to continue.
+Changing the *size* of a set (adding or removing elements) while a for loop is actively iterating over that same set raises `RuntimeError: Set changed size during iteration`. 
+
+This happens because Python's set iterator walks the underlying hash table directly; if the table is resized or rearranged mid-walk (which removal/insertion can trigger), the iterator's internal position becomes invalid and unsafe to continue.
 
 ```python
 numbers = {1, 2, 3, 4, 5}
@@ -339,7 +347,9 @@ except RuntimeError as e:
     print("Error:", e) # Set changed size during iteration
 ```
 
-The standard fix is to **iterate over a copy while mutating the original**: call `numbers.copy()` (which creates an independent shallow copy of the set) to drive the loop, and apply `.remove()``.add()` calls to the original numbers variable. Because the loop no longer walks the same object it is mutating, no internal position is ever invalidated:
+The standard fix is to **iterate over a copy while mutating the original**: call `numbers.copy()` (which creates an independent shallow copy of the set) to drive the loop, and apply `.remove()``.add()` calls to the original numbers variable. 
+
+Because the loop no longer walks the same object it is mutating, no internal position is ever invalidated:
 
 ```python
 numbers = {1, 2, 3, 4, 5}
@@ -425,7 +435,11 @@ python_only = python_students - data_science_students # difference -> {'Alice','
 exactly_one = python_students ^ data_science_students # symmetric diff -> {'Alice','Bob','Eve','Frank'}
 ```
 
-**Difference is emphatically not commutative**: `A - B` keeps whatever belongs to A alone, while `B - A` keeps whatever belongs to B alone — these are generally two completely different sets (`{1,2}` vs `{4,5}` in the example above), so `A - B != B - A` in general. Union and intersection, by contrast, *are* commutative (`A | B == B | A` and `A & B == B & A`), because "everything in either" and "everything in both" do not care about the order you name the two sets — only difference (and, less obviously, symmetric difference's *construction*, though its *result* happens to be order-independent) cares about direction.
+**Difference is emphatically not commutative**: `A - B` keeps whatever belongs to A alone, while `B - A` keeps whatever belongs to B alone — these are generally two completely different sets (`{1,2}` vs `{4,5}` in the example above), 
+
+So `A - B != B - A` in general. 
+
+Union and intersection, by contrast, *are* commutative (`A | B == B | A` and `A & B == B & A`), because "everything in either" and "everything in both" do not care about the order you name the two sets — only difference (and, less obviously, symmetric difference's *construction*, though its *result* happens to be order-independent) cares about direction.
 
 **Q19. Subset, proper subset, superset, and disjoint — (a) define each (b) exact distinction between subset and proper subset?**
 
@@ -445,11 +459,15 @@ print(python_students < python_students) # False -- a set is a subset but not a 
 print(python_students.isdisjoint(photography_club)) # True -- no overlap at all
 ```
 
-The distinction that trips people up is exactly what happens **when the two sets are equal**: `A <= A` is always `True` (a set is trivially a subset of itself), but `A < A` is always `False`, because the proper-subset relation additionally demands that `B` be *strictly larger* — containing at least one element `A` lacks. So "subset" allows equality, "proper subset" forbids it; this mirrors the everyday mathematical distinction between `≤` and `<`.
+The distinction that trips people up is exactly what happens **when the two sets are equal**: `A <= A` is always `True` (a set is trivially a subset of itself), but `A < A` is always `False`, because the proper-subset relation additionally demands that `B` be *strictly larger* — containing at least one element `A` lacks. 
+
+So "subset" allows equality, "proper subset" forbids it; this mirrors the everyday mathematical distinction between `≤` and `<`.
 
 **Q20. `frozenset` — (a) what is it (b) why is it hashable when set is not (c) two practical consequences of that hashability?**
 
-A frozenset is the **immutable** counterpart to set — once created via frozenset(iterable), you can never `.add()`, `.remove()`, `.discard()`, or `.clear()` it; any attempt raises `AttributeError` (e.g. 'frozenset' object has no attribute 'add'). Because its contents can never change after construction, Python can safely compute a single, permanent hash value for it — which is exactly the property that makes set itself *not* hashable (a set's contents, and therefore its "identity" for hashing purposes, can change at any moment).
+A frozenset is the **immutable** counterpart to set — once created via frozenset(iterable), you can never `.add()`, `.remove()`, `.discard()`, or `.clear()` it; any attempt raises `AttributeError` (e.g. 'frozenset' object has no attribute 'add'). 
+
+Because its contents can never change after construction, Python can safely compute a single, permanent hash value for it — which is exactly the property that makes set itself *not* hashable (a set's contents, and therefore its "identity" for hashing purposes, can change at any moment).
 
 ```python
 group1 = frozenset({"Python", "Mathematics"})

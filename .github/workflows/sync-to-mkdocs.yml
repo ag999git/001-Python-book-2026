@@ -9,37 +9,54 @@ jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Full Mirror
+      - name: Checkout Main Repository
         uses: actions/checkout@v4
 
-      - name: Checkout MkDocs Repo
+      - name: Checkout Target MkDocs Repo
         uses: actions/checkout@v4
         with:
           repository: ag999git/001-mkdocs
           path: mkdocs-repo
           token: ${{ secrets.MIRROR_TOKEN }}
 
-      - name: Sync specific folders
+      - name: Sync Folders & Clean GitBook Artifacts
         run: |
+          # Create docs folder inside target repo if it doesn't exist
+          mkdir -p mkdocs-repo/docs
+
+          # Clear previous content inside docs directory
           rm -rf mkdocs-repo/docs/*
-          
+
+          # Copy chapter folders, images, and colab-nb
           for folder in 01-* 02-* 03-* 04-* 05-* 06-* 07-* 08-* 09-* 10-* images colab-nb; do
             if [ -d "$folder" ]; then
               cp -r "$folder" mkdocs-repo/docs/
             fi
           done
-          
-          # Delete GitBook files
-          find mkdocs-repo/docs -name "summary.md" -delete
-          
-          # Rename GitBook README.md to MkDocs index.md
-          find mkdocs-repo/docs -name "README.md" -execdir mv {} index.md \;
 
-      - name: Commit and Push to MkDocs Repo
+          # Remove GitBook summary files (case-insensitive)
+          find mkdocs-repo/docs -iname "summary.md" -delete
+
+          # Rename GitBook README.md files to MkDocs index.md
+          find mkdocs-repo/docs -iname "readme.md" -execdir mv {} index.md \;
+
+      - name: Commit and Push Changes
+        env:
+          PAT_TOKEN: ${{ secrets.MIRROR_TOKEN }}
         run: |
           cd mkdocs-repo
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # Set up authenticated URL for reliable pushing
+          git remote set-url origin https://x-access-token:${PAT_TOKEN}@github.com/ag999git/001-mkdocs.git
+          
           git add -A
-          git diff --cached --quiet || git commit -m "Update content from mirror"
-          git push
+          
+          # Only commit and push if changes exist
+          if ! git diff --cached --quiet; then
+            git commit -m "Automated sync from primary textbook repo"
+            git push origin main
+          else
+            echo "No changes detected to push."
+          fi

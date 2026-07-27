@@ -9,10 +9,11 @@
 # 1. The Core Concept
 
 Previously, we established that if:
+- $A$ is a square matrix  
+- $\vec{v}$ is a non-zero vector  
+- $\lambda$ is a scalar
 
-- \( A \) is a square matrix  
-- \( v \) is a non-zero vector  
-- \( $\lambda\$) is a scalar  
+
 
 then:
 

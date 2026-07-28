@@ -1,29 +1,24 @@
-
-
 # Eigen Decomposition: A Detailed Guide
 
 > *Note:* The topic of eigen decomposition may appear mathematical. However, it is essential for understanding advanced topics like Singular Value Decomposition (SVD). If you are not interested in SVD, you may skip this section.
 
 ---
 
-# 1. The Core Concept
+## 1. The Core Concept
 
 Previously, we established that if:
+
 - $A$ is a square matrix  
 - $\vec{v}$ is a non-zero vector  
-- $\lambda$ is a scalar
-
-
+- $\lambda$ is a scalar  
 
 then:
 
-$A\vec{v}$ = $\lambda$ $\vec{v}$
-
-
+$$A\vec{v} = \lambda \vec{v}$$
 
 ### Interpretation
 
-- The matrix $\( A \)$ acts on vector $\vec{v}$
+- The matrix $A$ acts on vector $\vec{v}$
 - The result is a **scaled version of the same vector**
 
 This means:
@@ -35,15 +30,15 @@ This means:
 ### Cases of Eigenvalues
 
 | Condition | Meaning |
-|----------|--------|
-| \( $\lambda$ = 1 \) | Vector remains unchanged |
-| \( $\lambda$ > 1 \) | Vector is stretched |
-| \( 0 < $\lambda$ < 1 \) | Vector is compressed |
-| \( $\lambda$ < 0 \) | Direction is reversed |
+|---|---|
+| $\lambda = 1$ | Vector remains unchanged |
+| $\lambda > 1$ | Vector is stretched |
+| $0 < \lambda < 1$ | Vector is compressed |
+| $\lambda < 0$ | Direction is reversed |
 
 ---
 
-# 2. The Logic Behind Decomposition
+## 2. The Logic Behind Decomposition
 
 Why do we decompose a matrix?
 
@@ -52,82 +47,51 @@ It is just like breaking a machine into parts to understand it.
 
 ---
 
-## Step 1: Eigenvalues and Eigenvectors
+### Step 1: Eigenvalues and Eigenvectors
 
-
-
-
-We can arrange the eigenvectors as columns into a matrix Q:
-
-For a $matrix \( A \)$ of dimensions  $\( n \times n \)$:
+For a matrix $A$ of dimensions $n \times n$:
 
 - Suppose the Eigenvalues are:  
-  \[
-  $\lambda_1, \lambda_2, \dots, \lambda_n$
-  \]
+  $$\lambda_1, \lambda_2, \dots, \lambda_n$$
 
-- And the corresponding Eigenvectors are :  
-  \[
-  $\vec{v_1}$, $\vec{v_2}$ , $\dots$, $\vec{v_n}$
-  \]
+- And the corresponding Eigenvectors are:  
+  $$\vec{v_1}, \vec{v_2}, \dots, \vec{v_n}$$
 
 ---
 
-## Step 2: Construct Matrix \( Q \)
-Then we can arrange the eigenvectors as columns into a matrix Q:
+### Step 2: Construct Matrix $Q$
 
-$$
-Q = [v_1 \; v_2 \; \dots \; v_n]
-$$
+We can arrange the eigenvectors as columns into a matrix $Q$:
 
+$$Q = [\vec{v_1} \quad \vec{v_2} \quad \dots \quad \vec{v_n}]$$
 
 **Columns are eigenvectors**
 
 ---
 
-## Step 3: Construct Diagonal Matrix ( $\Lambda\$ )
-Next we can arrange the eigenvalues into a diagnolal matrix ( $\Lambda\$ ) as follows:
+### Step 3: Construct Diagonal Matrix $\Lambda$
 
+Next, we arrange the eigenvalues into a diagonal matrix $\Lambda$:
 
-$$
-\Lambda =
-\begin{bmatrix}
-\lambda_1 & 0 & \cdots & 0 \\
-0 & \lambda_2 & \cdots & 0 \\
-\vdots & \vdots & \ddots & \vdots \\
-0 & 0 & \cdots & \lambda_n
-\end{bmatrix}
-$$
+$$\Lambda = \begin{bmatrix} \lambda_1 & 0 & \cdots & 0 \\ 0 & \lambda_2 & \cdots & 0 \\ \vdots & \vdots & \ddots & \vdots \\ 0 & 0 & \cdots & \lambda_n \end{bmatrix}$$
 
 ---
 
-## Step 4: Key Equation
-Using the definition $A\vec{v}$ = $\lambda$ $\vec{v}$ , we can write a combined matrix equation for all the eigenvalues simultaneously as follows:
+### Step 4: Key Equation
 
-$$
-AQ = Q\Lambda
-$$
+Using the definition $A\vec{v} = \lambda \vec{v}$, we write a combined matrix equation for all eigenvalues simultaneously:
 
-If \( Q \) is invertible:
+$$AQ = Q\Lambda$$
 
+If $Q$ is invertible:
 
-$$
-A = Q \Lambda Q^{-1}
-$$
+$$A = Q \Lambda Q^{-1}$$
 
 ---
 
-## Interpretation
+### Interpretation
 
 Eigen Decomposition represents:
 
 ```text
 A = Rotation → Scaling → Rotation back
-```
-
-
-
-
-
-
-

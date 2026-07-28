@@ -1,7 +1,7 @@
 
 
 
-## Difference between Python lists and Numpy arrays
+## Difference between Python lists and Numpy arrays 
 
 This script demonstrates the **key differences between Python Lists and NumPy Arrays**.  
 Both are used to store collections of data, but they behave differently in terms of:

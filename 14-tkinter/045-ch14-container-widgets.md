@@ -1,6 +1,6 @@
 
 
-## Part 2: The Online GitHub Reference Appendix
+## Part 2: The Online GitHub Reference Appendix (technical reference for Tkinter and Ttk container widgets)
 This is a comprehensive technical reference for Tkinter and Ttk container widgets. This document expands upon Chapter 14 of the textbook, providing an exhaustive API lookup, keyword definitions, and engineering checklists for production-grade software development.
 
 ### 1. Unified Core Options (All Containers)

@@ -205,10 +205,10 @@
 * [Understanding Coordinate Data and Grid/Matrix Data in Matplotlib](15-matplotlib/020-ch15-grid-matrix.md)
 * [Why Do We Need Violin Plots?](15-matplotlib/050-ch15-violin1.md)
 * [Stem Plots](15-matplotlib/060-ch15-matplotlib-stem-plot1.md)
-* [Conceptual Questions 1](https://github.com/ag999git/001-Python-book-2026/blob/main/15-matplotlib/069-ch15-conceptual-qa-main1.md)
-* [Conceptual Question 2](https://github.com/ag999git/001-Python-book-2026/blob/main/15-matplotlib/070-ch15-conceptual-qa.md)
-* [Matplotlib- Scriptinmg questions/ answers](https://github.com/ag999git/001-Python-book-2026/blob/main/15-matplotlib/080-ch15-scripting-qa.md)
-* [Introduction to 3D Plotting](https://github.com/ag999git/001-Python-book-2026/blob/main/15-matplotlib/090-ch15-3d-plot.md)
+* [Conceptual Questions 1](15-matplotlib/069-ch15-conceptual-qa-main1.md)
+* [Conceptual Question 2](15-matplotlib/070-ch15-conceptual-qa.md)
+* [Matplotlib- Scriptinmg questions/ answers](15-matplotlib/080-ch15-scripting-qa.md)
+* [Introduction to 3D Plotting](15-matplotlib/090-ch15-3d-plot.md)
 
 ## Chapter 16: Unittest
 

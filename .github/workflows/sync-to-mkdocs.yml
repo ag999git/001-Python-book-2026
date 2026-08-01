@@ -10,8 +10,12 @@ jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Main Repository
+      - name: Checkout Primary Repository
         uses: actions/checkout@v4
+        with:
+          repository: ag999git/001-Python-book-2026
+          path: primary-repo
+          token: ${{ secrets.MIRROR_TOKEN }}
 
       - name: Checkout Target MkDocs Repo
         uses: actions/checkout@v4
@@ -22,24 +26,39 @@ jobs:
 
       - name: Sync Folders & Clean GitBook Artifacts
         run: |
-          # Create docs folder inside target repo if it doesn't exist
-          mkdir -p mkdocs-repo/docs
+          # 1. Debug: Check if index.md exists in Primary Repo
+          echo "Checking for index.md in Primary Repo:"
+          ls -F primary-repo/index.md || echo "index.md NOT FOUND in primary-repo root"
 
-          # Clear previous content inside docs directory
+          # 2. Setup folders
+          mkdir -p mkdocs-repo/docs
           rm -rf mkdocs-repo/docs/*
 
-          # Copy ALL numbered chapter folders, images, resources, and colab-nb
+          # 3. Copy folders
+          cd primary-repo
           for folder in [0-9][0-9]-* images resources colab-nb; do
             if [ -d "$folder" ]; then
-              cp -r "$folder" mkdocs-repo/docs/
+              cp -r "$folder" ../mkdocs-repo/docs/
+              echo "Copied folder: $folder"
             fi
           done
 
-          # Remove GitBook summary files (case-insensitive)
-          find mkdocs-repo/docs -iname "summary.md" -delete
+          # 4. Copy index.md with explicit check
+          if [ -f "index.md" ]; then
+            cp index.md ../mkdocs-repo/docs/
+            echo "Successfully copied index.md to mkdocs-repo/docs/"
+          else
+            echo "WARNING: index.md not found in primary-repo root!"
+          fi
+          cd ..
 
-          # Rename GitBook README.md files to MkDocs index.md
+          # 5. Final cleanup
+          find mkdocs-repo/docs -iname "summary.md" -delete
           find mkdocs-repo/docs -iname "readme.md" -execdir mv {} index.md \;
+          
+          # 6. Final Debug: List what is currently in docs
+          echo "Current content of docs folder:"
+          ls -R mkdocs-repo/docs/
 
       - name: Commit and Push Changes
         env:
@@ -48,15 +67,11 @@ jobs:
           cd mkdocs-repo
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          
-          # Set up authenticated URL for reliable pushing
           git remote set-url origin https://x-access-token:${PAT_TOKEN}@github.com/ag999git/001-mkdocs.git
           
-          git add -A
-          
-          # Only commit and push if changes exist
+          git add docs/
           if ! git diff --cached --quiet; then
-            git commit -m "Automated sync from primary textbook repo (Chapters 01-21)"
+            git commit -m "Sync: Added index.md and updated chapters"
             git push origin main
           else
             echo "No changes detected to push."

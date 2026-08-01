@@ -249,6 +249,7 @@
 ## Chapter 19 Strings (Beyond Basics)
 
 * [Introduction](19-strings/README.md)
+* [Google Colab NB Chapter 19](https://github.com/ag999git/001-Python-book-2026/blob/main/colab-nb/19_strings_beyond_basics.ipynb)
 * [Assignment: Beyond The Basics- Timezones, Calendars, And Datetimes](19-strings/050-ch19-assignment-timezone.md)
 * [Conceptual Questions (With Answers)](19-strings/080-ch19-conceptual-qa.md)
 * [Scripting Questions (With Answers)](19-strings/090-ch19-scripting-qa.md)
@@ -256,11 +257,13 @@
 ## Chapter 20 Lists (Beyond Basics)
 
 * [Introduction](20-lists/README.md)
+* [Google Colab NB: Chapter 20](https://github.com/ag999git/001-Python-book-2026/blob/main/colab-nb/20_lists.ipynb)
 * [Lists: Conceptual Questions (With Answers)](20-lists/50-ch20-qa.md)
 
 ## Chapter 21: Tuples; Dictionaries: Sets (Beyond Basics)
 
 * [Introduction](21-tuples-dicts-sets/README.md)
+* [Google Colab NB: Chapter 21](https://github.com/ag999git/001-Python-book-2026/blob/main/colab-nb/21_tuples_dictionaries_sets.ipynb)
 * [Tuples: Conceptual Questions (With Answers)](21-tuples-dicts-sets/50-ch21-tuples-conceptual-qa.md)
 * [Tuples: Scripting Questions (With Answers)](21-tuples-dicts-sets/70-ch21-tuples-scripting-qa.md)
 * [Dictionaries: Conceptual Questions (With Answers)](21-tuples-dicts-sets/80-ch21-dictionary-conceptual-qa.md)

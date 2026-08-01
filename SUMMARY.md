@@ -204,7 +204,7 @@
 * [Data Types and Data Visualization Before Learning Matplotlib](15-matplotlib/010-ch15-data-types.md)
 * [Understanding Coordinate Data and Grid/Matrix Data in Matplotlib](15-matplotlib/020-ch15-grid-matrix.md)
 * [Why Do We Need Violin Plots?](15-matplotlib/050-ch15-violin1.md)
-* [Stem Plots](15-matplotlib/060-ch15-matplotlib-stem-plot1.md)
+* [Stem Plots](15-matplotlib/ch15-matplotlib-stem-plot1.md)
 * [Conceptual Questions 1](15-matplotlib/069-ch15-conceptual-qa-main1.md)
 * [Conceptual Question 2](15-matplotlib/070-ch15-conceptual-qa.md)
 * [Matplotlib- Scriptinmg questions/ answers](15-matplotlib/080-ch15-scripting-qa.md)

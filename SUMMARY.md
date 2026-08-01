@@ -200,7 +200,20 @@
 
 ## Chapter 15: Matplotlib
 
+* [Introduction to Matplotlib](15-matplotlib/README.md)
 * [Data Types and Data Visualization Before Learning Matplotlib](15-matplotlib/010-ch15-data-types.md)
+* [Understanding Coordinate Data and Grid/Matrix Data in Matplotlib](15-matplotlib/020-ch15-grid-matrix.md)
+* [Why Do We Need Violin Plots?](15-matplotlib/050-ch15-violin1.md)
+* [Stem Plots](15-matplotlib/060-ch15-matplotlib-stem-plot1.md)
+* [Conceptual Questions 1](https://github.com/ag999git/001-Python-book-2026/blob/main/15-matplotlib/069-ch15-conceptual-qa-main1.md)
+* []()
+* []()
+* []()
+* []()
+* []()
+* []()
+* []()
+* []()
 
 
 

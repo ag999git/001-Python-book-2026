@@ -206,6 +206,30 @@
 * [Why Do We Need Violin Plots?](15-matplotlib/050-ch15-violin1.md)
 * [Stem Plots](15-matplotlib/060-ch15-matplotlib-stem-plot1.md)
 * [Conceptual Questions 1](https://github.com/ag999git/001-Python-book-2026/blob/main/15-matplotlib/069-ch15-conceptual-qa-main1.md)
+* [Conceptual Question 2](https://github.com/ag999git/001-Python-book-2026/blob/main/15-matplotlib/070-ch15-conceptual-qa.md)
+* [Matplotlib- Scriptinmg questions/ answers](https://github.com/ag999git/001-Python-book-2026/blob/main/15-matplotlib/080-ch15-scripting-qa.md)
+* [Introduction to 3D Plotting](https://github.com/ag999git/001-Python-book-2026/blob/main/15-matplotlib/090-ch15-3d-plot.md)
+
+## Chapter 16: Unittest
+
+* [Introduction](https://github.com/ag999git/001-Python-book-2026/blob/main/16-unittest/README.md)
+* [Understanding Pytest Command-Line Flags](https://github.com/ag999git/001-Python-book-2026/blob/main/16-unittest/010-ch16-pytest-flags.md)
+* [Further Study & Research Project: Breaking the Chains of Rigid Test Architecture](https://github.com/ag999git/001-Python-book-2026/blob/main/16-unittest/020-ch16-unittest-disadvantage-rigid-oop-style.md)
+* [Advanced Fixture Lifecycles and Optimization](https://github.com/ag999git/001-Python-book-2026/blob/main/16-unittest/030-ch16-payment-gateway.md)
+* [Dependency Injection in Pytest Fixtures](https://github.com/ag999git/001-Python-book-2026/blob/main/16-unittest/040-ch16-dependency-injection.md)
+* [Online resource- User Registration validation example](https://github.com/ag999git/001-Python-book-2026/blob/main/16-unittest/060-ch16-user-registration.md)
+* [Project & Research Task: The Distributed Test Suite](https://github.com/ag999git/001-Python-book-2026/blob/main/16-unittest/065-ch16-conftest-py.md)
+* [MagicMock — An Introduction](https://github.com/ag999git/001-Python-book-2026/blob/main/16-unittest/067-ch16-magicmock.md)
+* [Exception Testing in pytest — Why pytest.raises is better than try/ except](https://github.com/ag999git/001-Python-book-2026/blob/main/16-unittest/070-ch16-pytest-raises-vs-try-except.md)
+* [Project Title: The “Micro-Precision” Tax Calculator (Using Parameterized Testing)](https://github.com/ag999git/001-Python-book-2026/blob/main/16-unittest/080-ch16-tax-collector-project.md)
+* [Understanding the "Unknown Marker" Warning](https://github.com/ag999git/001-Python-book-2026/blob/main/16-unittest/090-ch16-config-files.md#understanding-the-unknown-marker-warning)
+* [Conceptual Questions with Answers](https://github.com/ag999git/001-Python-book-2026/blob/main/16-unittest/095-ch16-conceptual-qa.md)
+* [Scripting Questions with Answers](https://github.com/ag999git/001-Python-book-2026/blob/main/16-unittest/097-ch16-scripting-qa.md)
+
+
+
+
+
 * []()
 * []()
 * []()

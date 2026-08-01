@@ -197,3 +197,18 @@
 * [Tkinter Conceptual Questions & Answers](14-tkinter/095-ch14-conceptual-qa.md)
 * [Scripting Question/ Answers (TKinter)](14-tkinter/097-ch14-scripting-qa.md)
 
+
+## Chapter 15: Matplotlib
+
+* [Data Types and Data Visualization Before Learning Matplotlib](15-matplotlib/010-ch15-data-types.md)
+
+
+
+
+
+
+
+
+
+
+

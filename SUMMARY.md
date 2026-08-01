@@ -43,8 +43,8 @@
 
 * [Introduction to Chapter 5](05-functions1/README.md)
 * [Chapter 5 Google Colab](05-functions1/000-ch5-colab.md)
-* [Math module in details](05-functions1/README.md)
-* [Chapter End Q & A](05-functions1/003-ch5-functions-qa.md)
+* [Chapter 5: Conceptual Questions (With Answers)](05-functions1/003-ch5-functions-qa.md)
+* [Chapter End Q & A](05-functions1/005-ch5-more-conceptual-qa.md)
 
 ## Chapter 6: Functions Part 2
 

@@ -17,7 +17,14 @@ jobs:
 
       - name: Push to Mirror
         env:
-          TOKEN: ${{ secrets.MIRROR_TOKEN }}
+          MIRROR_TOKEN: ${{ secrets.MIRROR_TOKEN }}
         run: |
-          git remote add mirror https://x-access-token:${TOKEN}@github.com/ag999git/001-mirror.git
+          # Configure git
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          
+          # Add the mirror remote
+          git remote add mirror https://x-access-token:${MIRROR_TOKEN}@github.com/ag999git/001-mirror.git
+          
+          # Push the changes
           git push mirror HEAD:main --force

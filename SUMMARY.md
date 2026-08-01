@@ -230,20 +230,20 @@
 ## Language Supported API
 
 
-* [Introduction](https://github.com/ag999git/001-Python-book-2026/blob/main/17-language-supported-api/README.md)
-* [Exercise: Convert a NamedTuple into a Dictionary](https://github.com/ag999git/001-Python-book-2026/blob/main/17-language-supported-api/010-ch17-namedtuple2dict.md)
-* [Real-World Python: Practical Uses for Standard Library Modules](https://github.com/ag999git/001-Python-book-2026/blob/main/17-language-supported-api/020-ch17-real-world-use.md)
-* [Chapter 17: Python Libraries for Data Structures and Algorithms: Conceptual Questions with Answers](https://github.com/ag999git/001-Python-book-2026/blob/main/17-language-supported-api/060-ch17-conceptual-qa.md)
-* [Chapter 17 — Scripting Questions: Easy](https://github.com/ag999git/001-Python-book-2026/blob/main/17-language-supported-api/065-ch17-scripting-qa-easy.md)
-* [Chapter 17 - Scripting Questions: Hard](https://github.com/ag999git/001-Python-book-2026/blob/main/17-language-supported-api/070-ch17-scripting-qa-hard.md)
+* [Introduction](17-language-supported-api/README.md)
+* [Exercise: Convert a NamedTuple into a Dictionary](17-language-supported-api/010-ch17-namedtuple2dict.md)
+* [Real-World Python: Practical Uses for Standard Library Modules](17-language-supported-api/020-ch17-real-world-use.md)
+* [Chapter 17: Python Libraries for Data Structures and Algorithms: Conceptual Questions with Answers](17-language-supported-api/060-ch17-conceptual-qa.md)
+* [Chapter 17 — Scripting Questions: Easy](17-language-supported-api/065-ch17-scripting-qa-easy.md)
+* [Chapter 17 - Scripting Questions: Hard](17-language-supported-api/070-ch17-scripting-qa-hard.md)
 
 
 
 ## Chapter 18: Design Patterns
 
 * [Design Patterns in Python: Introduction](18-design-patterns/README.md)
-* [Design Pattern: Conceptual Questions with Answers](https://github.com/ag999git/001-Python-book-2026/blob/main/18-design-patterns/060-ch18-conceptualqa.md)
-* [Design Patterns in Python: Scripting Questions (With Answers)](https://github.com/ag999git/001-Python-book-2026/blob/main/18-design-patterns/080-ch18-scriptsqa.md)
+* [Design Pattern: Conceptual Questions with Answers](18-design-patterns/060-ch18-conceptualqa.md)
+* [Design Patterns in Python: Scripting Questions (With Answers)](18-design-patterns/080-ch18-scriptsqa.md)
 * []()
 * []()
 * []()

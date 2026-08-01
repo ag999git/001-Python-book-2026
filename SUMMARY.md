@@ -241,7 +241,7 @@
 
 ## Chapter 18: Design Patterns
 
-* [Design Patterns in Python: Introduction](https://github.com/ag999git/001-Python-book-2026/blob/main/18-design-patterns/README.md)
+* [Design Patterns in Python: Introduction](18-design-patterns/README.md)
 * [Design Pattern: Conceptual Questions with Answers](https://github.com/ag999git/001-Python-book-2026/blob/main/18-design-patterns/060-ch18-conceptualqa.md)
 * [Design Patterns in Python: Scripting Questions (With Answers)](https://github.com/ag999git/001-Python-book-2026/blob/main/18-design-patterns/080-ch18-scriptsqa.md)
 * []()

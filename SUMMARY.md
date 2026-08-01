@@ -174,6 +174,7 @@
 ## Chapter 13: Regular Expressions
 
 * [Introduction to Chapter 13](13-regular-exp/README.md)
+* [Google Colab NB: Chapter 13](https://github.com/ag999git/001-Python-book-2026/blob/main/colab-nb/13_regex.ipynb)
 * [Chapter Scripts in Google Colab Notebook](https://github.com/ag999git/001-Python-book-2026/blob/main/colab-nb/ch13_regex.ipynb)
 * [Capturing versus non-capturing groups](13-regular-exp/60-ch13-re-capturing-noncapturing.md)
 * [Naming styles in Python programming](13-regular-exp/75-ch13-naming-styles.md)
@@ -187,6 +188,7 @@
 
 ## Chapter 14: TKinter
 * [Introduction to Chapoter 14- TKinter](14-tkinter/README.md)
+* [Google Colab NB: Chapter 14](https://github.com/ag999git/001-Python-book-2026/blob/main/colab-nb/ch14-tkinter.ipynb)
 * [Advanced Window Configuration & Lifecycle Management in Tkinter](14-tkinter/040-ch14-advance-window-config.md)
 * [Part 2: The Online GitHub Reference Appendix (technical reference for Tkinter and Ttk container widgets)](14-tkinter/045-ch14-container-widgets.md)
 * [Research / Project Question Investigating Image Persistence in Tkinter (PhotoImage Bug)](14-tkinter/050-ch14-photoimage.md)
@@ -201,6 +203,7 @@
 ## Chapter 15: Matplotlib
 
 * [Introduction to Matplotlib](15-matplotlib/README.md)
+* [Google Colab NB: Chapter 15](https://github.com/ag999git/001-Python-book-2026/blob/main/colab-nb/ch15_matplotlib.ipynb)
 * [Data Types and Data Visualization Before Learning Matplotlib](15-matplotlib/010-ch15-data-types.md)
 * [Understanding Coordinate Data and Grid/Matrix Data in Matplotlib](15-matplotlib/020-ch15-grid-matrix.md)
 * [Why Do We Need Violin Plots?](15-matplotlib/050-ch15-violin1.md)
@@ -227,10 +230,11 @@
 * [Scripting Questions with Answers](16-unittest/097-ch16-scripting-qa.md)
 
 
-## Language Supported API
+## Chapter 17: Language Supported API (Python Libraries for Data Structures)
 
 
 * [Introduction](17-language-supported-api/README.md)
+* [Google Colab NB: Chapter 17](https://github.com/ag999git/001-Python-book-2026/blob/main/colab-nb/ch17_Python_libraries_for_data_structures_algorithms.ipynb)
 * [Exercise: Convert a NamedTuple into a Dictionary](17-language-supported-api/010-ch17-namedtuple2dict.md)
 * [Real-World Python: Practical Uses for Standard Library Modules](17-language-supported-api/020-ch17-real-world-use.md)
 * [Chapter 17: Python Libraries for Data Structures and Algorithms: Conceptual Questions with Answers](17-language-supported-api/060-ch17-conceptual-qa.md)
@@ -242,6 +246,7 @@
 ## Chapter 18: Design Patterns
 
 * [Design Patterns in Python: Introduction](18-design-patterns/README.md)
+* [Google Colab NB: Design Patterns](https://github.com/ag999git/001-Python-book-2026/blob/main/colab-nb/18_design_patterns.ipynb)
 * [Design Pattern: Conceptual Questions with Answers](18-design-patterns/060-ch18-conceptualqa.md)
 * [Design Patterns in Python: Scripting Questions (With Answers)](18-design-patterns/080-ch18-scriptsqa.md)
 

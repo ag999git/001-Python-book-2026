@@ -19,12 +19,21 @@ jobs:
         env:
           MIRROR_TOKEN: ${{ secrets.MIRROR_TOKEN }}
         run: |
-          # Configure git
+          # 1. Configure git
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           
-          # Add the mirror remote
+          # 2. Create a temporary branch to push
+          git checkout -b mirror-branch
+          
+          # 3. Remove the .github folder from this branch so it doesn't get pushed
+          # This prevents the "workflow scope" permission error
+          rm -rf .github
+          git add .
+          git commit -m "Mirroring content (excluding workflows)"
+          
+          # 4. Add the mirror remote
           git remote add mirror https://x-access-token:${MIRROR_TOKEN}@github.com/ag999git/001-mirror.git
           
-          # Push the changes
-          git push mirror HEAD:main --force
+          # 5. Push this branch to the mirror repo's main branch
+          git push mirror mirror-branch:main --force

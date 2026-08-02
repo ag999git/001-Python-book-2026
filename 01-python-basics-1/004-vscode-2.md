@@ -12,12 +12,15 @@ This guide explains how to install VS Code, configure Python/Jupyter inside it, 
 
 ## Table of contents
 * [PART 1 — Install VS Code](004-vscode-2.md#part-1--install-vs-code)
-* []()
-* []()
-* []()
-* []()
-* []()
-* []()
+* [PART 2 — Install Required Extensions](004-vscode-2.md#part-2--install-required-extensions)
+* [PART 3 — Open Your Project Folder](004-vscode-2.md#part-3--open-your-project-folder)
+* [PART 4 — Select the Correct Python Interpreter](004-vscode-2.md#part-4--select-the-correct-python-interpreter)
+* [PART 5 — Create a Virtual Environment (Recommended)](004-vscode-2.md#part-5--create-a-virtual-environment-recommended)
+* [PART 6 — Create a Python File in VS Code](004-vscode-2.md#part-6--create-a-python-file-in-vs-code)
+* [PART 7 — Jupyter Notebooks Inside VS Code](004-vscode-2.md#part-7--jupyter-notebooks-inside-vs-code)
+* [PART 8 — Launch Jupyter in Browser (Optional)](004-vscode-2.md#part-8--launch-jupyter-in-browser-optional)
+* [PART 9 — Common Problems & Fixes](004-vscode-2.md#part-9--common-problems--fixes)
+* [PART 10 — Summary Checklist](004-vscode-2.md#part-10--summary-checklist)
 
 ***
 

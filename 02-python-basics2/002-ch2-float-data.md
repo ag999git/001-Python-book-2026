@@ -91,6 +91,7 @@ print("str(float('-inf'))->", str(float('-inf')))  # str(float('-inf'))-> -inf
 
 ```
 
+[Back to the Table of Contents](002-ch2-float-data.md#table-of-contents)
 
 #### Block 3 — type(), isinstance(), format()
 
@@ -125,7 +126,7 @@ print("format(float('nan'), 'f')->", format(float('nan'), 'f'))  # format(float(
 
 ```
 
-
+[Back to the Table of Contents](002-ch2-float-data.md#table-of-contents)
 
 #### Block 4 — is_integer(), round()
 - integer-like floats.
@@ -158,7 +159,7 @@ print("round(-3.75, 1)->", round(-3.75, 1))  # round(-3.75, 1)-> -3.8
 # Rounded to 1 decimal place.
 
 ```
-
+[Back to the Table of Contents](002-ch2-float-data.md#table-of-contents)
 
 #### Block 5 — pow() and infinity NaN/ Arithmetic
 - negative powers.
@@ -242,6 +243,7 @@ print("float('-inf') ** -1->", float('-inf') ** -1)
 # Negative infinity with negative exponent produces -0.0 (IEEE-754 negative zero).
 
 ```
+[Back to the Table of Contents](002-ch2-float-data.md#table-of-contents)
 
 #### Block 6 — sys.getsizeof() and hash() for floats
 - Explain why size never changes
@@ -302,6 +304,7 @@ print("hash(float('-inf'))->", hash(float('-inf')))
 # Negative infinity hashes to negative of infinity's hash.
 
 ```
+[Back to the Table of Contents](002-ch2-float-data.md#table-of-contents)
 
 #### BLOCK 7 — float() Constructor + float.fromhex()
 
@@ -412,7 +415,7 @@ print("float.fromhex('0x0.0p+0')->", float.fromhex('0x0.0p+0'))
 # float([])                     # Error: list cannot convert to float
 
 ```
-
+[Back to the Table of Contents](002-ch2-float-data.md#table-of-contents)
 
 #### BLOCK 8 — Special float Methods: is_integer(), Final Tests
 
@@ -503,7 +506,7 @@ print("0.0 ** 0->", 0.0 ** 0)
 ```
 
 
-
+[Back to the Table of Contents](002-ch2-float-data.md#table-of-contents)
 
 
 ### Python `float` — Detailed Beginner + Advanced Notes
@@ -556,6 +559,7 @@ y = 4.2e-3    # 4.2 × 10⁻³ = 0.0042
 ```
 
 ---
+[Back to the Table of Contents](002-ch2-float-data.md#table-of-contents)
 
 #### 3. Basic Float Operations
 
@@ -613,6 +617,7 @@ Output:
 ```
 
 ---
+[Back to the Table of Contents](002-ch2-float-data.md#table-of-contents)
 
 #### 6. Special Float Values (IEEE-754)
 
@@ -656,6 +661,7 @@ float(False)  # 0.0
 ```
 
 ---
+[Back to the Table of Contents](002-ch2-float-data.md#table-of-contents)
 
 #### 8. Floats vs Decimal vs Fraction (Advanced)
 
@@ -700,6 +706,7 @@ float(10**100)   # loses precision
 ```
 
 ---
+[Back to the Table of Contents](002-ch2-float-data.md#table-of-contents)
 
 #### 10. Best Practices for Students
 
@@ -732,6 +739,8 @@ math.isclose(a, b)
 - Some decimal values cannot be represented exactly.
 - Use `isclose`, `Decimal`, or `Fraction` to avoid precision problems.
 - Ideal for real-world numerical computation, but not for exact arithmetic.
+
+[Back to the Table of Contents](002-ch2-float-data.md#table-of-contents)
 
 ### Quiz
 
@@ -814,6 +823,7 @@ print(x + y)
 Because 0.1 and 0.2 cannot be represented exactly in binary floating-point.
 
 ---
+[Back to the Table of Contents](002-ch2-float-data.md#table-of-contents)
 
 #### INTERMEDIATE LEVEL (Q&A)
 
@@ -878,6 +888,7 @@ Binary floating-point numbers cannot exactly represent __________.
 **Most decimal fractions** (e.g., 0.1, 0.2, 0.3).
 
 ---
+[Back to the Table of Contents](002-ch2-float-data.md#table-of-contents)
 
 #### ADVANCED LEVEL (Q&A)
 
@@ -972,6 +983,7 @@ print(x)
 Output is not 100.0 because rounding error compounds.
 
 ---
+[Back to the Table of Contents](002-ch2-float-data.md#table-of-contents)
 
 ### EXTRA CHALLENGE (Q&A)
 
@@ -1035,3 +1047,4 @@ print(math.fsum(nums)) # safe: high-precision summation
 ```
 
 ---
+[Back to the Table of Contents](002-ch2-float-data.md#table-of-contents)

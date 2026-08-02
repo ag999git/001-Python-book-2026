@@ -106,6 +106,7 @@ print(dict(grade_book))
 ```
 
 **Explanation:** Because we used `defaultdict(list)`, the first time Python sees the grade "A", it realizes the key doesn't exist. Instead of crashing with a `KeyError`, it silently creates an empty list `[]` for "A", and then appends "Alice" to it.
+[Back to the Table of Contents](020-ch17-real-world-use.md#table-of-contents)
 
 ### 1.4 `OrderedDict`: Most Recently Used (MRU) Cache
 **Usage:** Web browsers and apps keep a "Recently Viewed" list. When you view an old item again, it gets pulled out of the middle of the list and moved to the very end.

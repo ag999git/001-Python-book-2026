@@ -47,6 +47,7 @@ z.imag   # 4.0
 Internally, Python stores complex numbers as **two 64-bit floats**, making them efficient and precise.
 
 ---
+[Back to the Table of Contents](004-ch2-complex-numbers-advanced.md#table-of-contents)
 
 ### 2. Creating Complex Numbers
 
@@ -67,6 +68,7 @@ z = 5j
 
 ---
 
+[Back to the Table of Contents](004-ch2-complex-numbers-advanced.md#table-of-contents)
 ### 3. Basic Operations
 
 Python supports all common arithmetic operators:
@@ -102,6 +104,7 @@ z = cmath.rect(r, phi)   # converts back to rectangular form
 ```
 
 ---
+[Back to the Table of Contents](004-ch2-complex-numbers-advanced.md#table-of-contents)
 
 ### 5. IEEE-754 Behavior and Edge Cases
 
@@ -124,6 +127,7 @@ math.isnan(z.imag)
 ```
 
 ---
+[Back to the Table of Contents](004-ch2-complex-numbers-advanced.md#table-of-contents)
 
 ### 6. Comparison of Complex Numbers
 
@@ -160,6 +164,7 @@ np.fft.fft([1,2,3])
 ```
 
 ---
+[Back to the Table of Contents](004-ch2-complex-numbers-advanced.md#table-of-contents)
 
 ### 8. Performance Notes
 
@@ -184,6 +189,7 @@ NumPy uses **vectorized** complex operations → **extremely fast** for scientif
 
 
 
+[Back to the Table of Contents](004-ch2-complex-numbers-advanced.md#table-of-contents)
 
 ### Advanced Complex Number Examples in Python
 
@@ -254,3 +260,5 @@ print("np.abs(arr1) ->", np.abs(arr1))
 print("FFT ->", np.fft.fft([1,2,3]))
 # [ 6.+0.j        -1.+1.73205081j -1.-1.73205081j]
 ```
+
+[Back to the Table of Contents](004-ch2-complex-numbers-advanced.md#table-of-contents)

@@ -4,6 +4,17 @@
 
 ## Advanced Guide to Complex Numbers in Python
 
+### Table of Contents
+* [1. Representation of Complex Numbers](004-ch2-complex-numbers-advanced.md#1-representation-of-complex-numbers)
+* [2. Creating Complex Numbers](004-ch2-complex-numbers-advanced.md#2-creating-complex-numbers)
+* [3. Basic Operations](004-ch2-complex-numbers-advanced.md#3-basic-operations)
+* [4. Euler's Formula and Polar Representation](004-ch2-complex-numbers-advanced.md#4-eulers-formula-and-polar-representation)
+* [5. IEEE-754 Behavior and Edge Cases](004-ch2-complex-numbers-advanced.md#5-ieee-754-behavior-and-edge-cases)
+* [6. Comparison of Complex Numbers](004-ch2-complex-numbers-advanced.md#6-comparison-of-complex-numbers)
+* [7. Useful Scientific Applications](004-ch2-complex-numbers-advanced.md#7-useful-scientific-applications)
+* [8. Performance Notes](004-ch2-complex-numbers-advanced.md#8-performance-notes)
+* []()
+
 Python provides **built-in support** for complex numbers.  
 Unlike many languages where complex numbers require external libraries, Python includes a full complex number type in the core language.  
 This guide covers complex numbers from basics to advanced internals, IEEE-754 behavior, edge cases, and scientific computing applications.

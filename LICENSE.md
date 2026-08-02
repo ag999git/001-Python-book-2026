@@ -16,4 +16,26 @@ By exercising the Licensed Rights (defined below), You accept and agree to be bo
 For the full legal text of this license, please visit:
 https://creativecommons.org/licenses/by/4.0/legalcode
 
+## 📄 License & Attribution
+
+This work, including all written content, docs, and code examples, is licensed under a [Creative Commons Attribution 4.0 International License (CC BY 4.0)](https://creativecommons.org/licenses/by/4.0/).
+
+### How to Attribute
+If you share, adapt, translate, or build upon any content from this repository or the companion website, please provide credit using the following format:
+
+> **[Python Programming Packages and Libraries]** © 2026 by **[Anurag Gupta]** is licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).  
+> Companion materials available at: https://ag999git.github.io/001-mkdocs/
+
+#### Citation Example (BibTeX)
+If you are citing this work in academic or formal writing:
+
+```bibtex
+@book{yourname2026pythonbook,
+  author    = {[Anurag Gupta]},
+  title     = {[Python Programming Packages and Libraries]},
+  year      = {2026},
+  publisher = {[McGraw Hill India]},
+  url       = {[https://ag999git.github.io/001-mkdocs/](https://ag999git.github.io/001-mkdocs/)}
+}
+
 

@@ -1,5 +1,6 @@
 # Python Data Types
 
+## Table of Contents
 * [1. What Is a Python Integer?](001-ch2-python-data-types.md#1-what-is-a-python-integer)
 * [2. Arbitrary Precision (Unlimited Size)](001-ch2-python-data-types.md#2-arbitrary-precision-unlimited-size)
 * [3. Integer Operations](001-ch2-python-data-types.md#3-integer-operations)

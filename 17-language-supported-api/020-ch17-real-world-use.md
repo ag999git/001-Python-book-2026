@@ -7,6 +7,17 @@
 # Real-World Python: Practical Uses for Standard Library Modules
 Below are practical, real-world examples of how to use the specialized data structures and tools covered in Chapter 17. 
 
+## Table of Contents
+* [1. The collections Module](020-ch17-real-world-use.md#1-the-collections-module)
+* [2. The heapq Module](020-ch17-real-world-use.md#2-the-heapq-module)
+* [3. The bisect Module](020-ch17-real-world-use.md#3-the-bisect-module)
+* [4. The queue Module](020-ch17-real-world-use.md#4-the-queue-module)
+* [5. The enum Module](020-ch17-real-world-use.md#5-the-enum-module)
+* [6. dataclasses](020-ch17-real-world-use.md#6-dataclasses)
+* [7. functools Module](020-ch17-real-world-use.md#7-functools-module)
+* [8. itertools Module](020-ch17-real-world-use.md#8-itertools-module)
+
+
 ---
 
 ## 1. The `collections` Module

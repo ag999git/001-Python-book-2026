@@ -37,6 +37,7 @@ x = x + 5   # creates a new int object; the old one is unused
 ```
 
 ***
+[Back to the Table of Contents](001-ch2-python-data-types.md#table-of-contents)
 
 ### 2. Arbitrary Precision (Unlimited Size)
 
@@ -57,6 +58,7 @@ In languages like C, Java, C++, the size (32-bit, 64-bit) is fixed.\
 Python internally uses a dynamic array of machine words to store large integers.
 
 ***
+[Back to the Table of Contents](001-ch2-python-data-types.md#table-of-contents)
 
 ### 3. Integer Operations
 
@@ -81,6 +83,7 @@ print(15/-4) # Output: -3.75
 ```
 
 ***
+[Back to the Table of Contents](001-ch2-python-data-types.md#table-of-contents)
 
 ### 4. Bitwise Operations (Advanced Feature)
 
@@ -100,6 +103,8 @@ Example:
 ```python
 print(10 << 3)    # 80
 ```
+
+[Back to the Table of Contents](001-ch2-python-data-types.md#table-of-contents)
 
 ### 5. Advance concept:- Explanation of Bitwise Operation: `10 << 3`
 
@@ -167,6 +172,8 @@ Shifting left by `n` bits is equivalent to multiplying by `2ⁿ`:
 ```
 
 </details>
+
+[Back to the Table of Contents](001-ch2-python-data-types.md#table-of-contents)
 
 ### 6. Advance concept:- Meaning of the Statement:- “Large integers can be shifted arbitrarily because Python supports arbitrary precision.”
 
@@ -250,6 +257,8 @@ Python handles this because it expands the integer size automatically.
 
 </details>
 
+[Back to the Table of Contents](001-ch2-python-data-types.md#table-of-contents)
+
 ### 7. Type Conversions
 
 #### Convert to int:
@@ -276,6 +285,8 @@ int(1e3) # scientific notation float to int (truncates) because 1e3 is a float
 
 ```
 
+[Back to the Table of Contents](001-ch2-python-data-types.md#table-of-contents)
+
 ### 8. Integer to other types:
 
 ```python
@@ -285,6 +296,8 @@ print(str(123)) # "123" # int to string
 ```
 
 ***
+
+[Back to the Table of Contents](001-ch2-python-data-types.md#table-of-contents)
 
 ### 9. Relationship of int with `bool` (Subclassing)
 
@@ -391,6 +404,7 @@ Meaning:
 * `False` behaves as `0`
 
 ***
+[Back to the Table of Contents](001-ch2-python-data-types.md#table-of-contents)
 
 ### 10. Interactions of int with float and complex (Type Promotion)
 
@@ -420,6 +434,7 @@ This is called the **numeric tower**.
 ***
 
 ***
+[Back to the Table of Contents](001-ch2-python-data-types.md#table-of-contents)
 
 ### Advance Concept:- 11. Memory Usage
 
@@ -515,6 +530,7 @@ print(int("0"*100 + "1")) # Large string with leading zeros to int conversion
 ```
 
 ***
+[Back to the Table of Contents](001-ch2-python-data-types.md#table-of-contents)
 
 ### 12. Common Pitfalls
 
@@ -532,6 +548,7 @@ print(2**200) #1606938044258990275541962092341162602522202993782792835301376
 ```
 
 ***
+[Back to the Table of Contents](001-ch2-python-data-types.md#table-of-contents)
 
 ### 13. Advance Concept:- Big Integer Mathematics
 
@@ -563,6 +580,8 @@ pow(a, b, mod)  # fast modular exponentiation
 ***
 
 </details>
+[Back to the Table of Contents](001-ch2-python-data-types.md#table-of-contents)
+
 
 ### 14. Advance Concept:- Understanding Performance of Integer Operations in Python
 
@@ -654,6 +673,8 @@ These advanced algorithms treat multiplication like polynomial convolution using
 
 </details>
 
+[Back to the Table of Contents](001-ch2-python-data-types.md#table-of-contents)
+
 ### Advance Concept:- Internal Representation (CPython)
 
 CPython stores integers using a structure:
@@ -674,6 +695,8 @@ Key notes:
 ***
 
 ***
+[Back to the Table of Contents](001-ch2-python-data-types.md#table-of-contents)
+
 
 ### Summary of small versus large integer usage in Python
 
@@ -682,5 +705,7 @@ Key notes:
 * Python automatically chooses optimal multiplication algorithms depending on size:
   * Standard or Karatsuba for mid-sized numbers
   * FFT-based algorithms for huge numbers
+ 
+[Back to the Table of Contents](001-ch2-python-data-types.md#table-of-contents)
 
 This combination allows Python to support massive integers while still keeping performance as efficient as possible.

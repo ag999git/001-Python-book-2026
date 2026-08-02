@@ -87,6 +87,7 @@ Install:
   (Orange circular icon)
 
 ***
+[Back to Table of Contents](004-vscode-2.md#table-of-contents)
 
 #### **PART 3 — Open Your Project Folder**
 
@@ -106,6 +107,7 @@ C:\python-projects\my_project
 Your folder appears on the left sidebar (Explorer).
 
 ***
+[Back to Table of Contents](004-vscode-2.md#table-of-contents)
 
 #### **PART 4 — Select the Correct Python Interpreter**
 
@@ -135,6 +137,7 @@ Pick one of:
 Interpreter shows in the bottom-right corner in VS Code.
 
 ***
+[Back to Table of Contents](004-vscode-2.md#table-of-contents)
 
 #### **PART 5 — Create a Virtual Environment (Recommended)**
 
@@ -175,6 +178,7 @@ pip install notebook jupyterlab ipykernel
 ```
 
 ***
+[Back to Table of Contents](004-vscode-2.md#table-of-contents)
 
 #### **PART 6 — Create a Python File in VS Code**
 
@@ -200,6 +204,7 @@ Ctrl + F5
 ```
 
 ***
+[Back to Table of Contents](004-vscode-2.md#table-of-contents)
 
 #### **PART 7 — Jupyter Notebooks Inside VS Code**
 
@@ -255,6 +260,7 @@ Click it → choose:
 * **Python 3.12 (.venv)**
 
 ***
+[Back to Table of Contents](004-vscode-2.md#table-of-contents)
 
 #### **PART 8 — Launch Jupyter in Browser (Optional)**
 
@@ -279,6 +285,7 @@ http://localhost:8888/
 ```
 
 ***
+[Back to Table of Contents](004-vscode-2.md#table-of-contents)
 
 #### **PART 9 — Common Problems & Fixes**
 
@@ -316,6 +323,7 @@ pip install ipykernel
 Restart VS Code.
 
 ***
+[Back to Table of Contents](004-vscode-2.md#table-of-contents)
 
 #### **PART 10 — Summary Checklist**
 
@@ -336,3 +344,5 @@ Restart VS Code.
 #### Setup Complete!
 
 You now have a fully working environment for Python + Jupyter inside VS Code on Windows.
+
+[Back to Table of Contents](004-vscode-2.md#table-of-contents)

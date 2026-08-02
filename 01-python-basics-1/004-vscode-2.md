@@ -11,10 +11,17 @@ The table below provides direct access to our course resources: (1) The full rep
 This guide explains how to install VS Code, configure Python/Jupyter inside it, select interpreters, create virtual environments, and run notebooks inside VS Code.
 
 ## Table of contents
+* [PART 1 — Install VS Code]()
+* []()
+* []()
+* []()
+* []()
+* []()
+* []()
 
 ***
 
-**PART 1 — Install VS Code**
+### **PART 1 — Install VS Code**
 
 **Step 1: Download VS Code**
 

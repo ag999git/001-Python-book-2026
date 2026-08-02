@@ -46,7 +46,7 @@ This guide explains how to install VS Code, configure Python/Jupyter inside it, 
 VS Code will launch.
 
 ***
-
+[Back to Table of Contents](004-vscode-2.md#table-of-contents)
 #### **PART 2 — Install Required Extensions**
 
 **Step 1: Open Extensions Panel**
@@ -70,6 +70,8 @@ Install:
 
 * **Python — by Microsoft**\
   (Blue/yellow Python logo)
+
+  [Back to Table of Contents](004-vscode-2.md#table-of-contents)
 
 **Step 3: Install Jupyter Extension**
 

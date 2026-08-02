@@ -21,7 +21,7 @@ This guide explains how to install VS Code, configure Python/Jupyter inside it, 
 
 ***
 
-### **PART 1 — Install VS Code**
+#### **PART 1 — Install VS Code**
 
 **Step 1: Download VS Code**
 
@@ -44,7 +44,7 @@ VS Code will launch.
 
 ***
 
-**PART 2 — Install Required Extensions**
+#### **PART 2 — Install Required Extensions**
 
 **Step 1: Open Extensions Panel**
 
@@ -83,7 +83,7 @@ Install:
 
 ***
 
-**PART 3 — Open Your Project Folder**
+#### **PART 3 — Open Your Project Folder**
 
 You must open a FOLDER, not individual files.
 
@@ -102,7 +102,7 @@ Your folder appears on the left sidebar (Explorer).
 
 ***
 
-**PART 4 — Select the Correct Python Interpreter**
+#### **PART 4 — Select the Correct Python Interpreter**
 
 The most important step.
 
@@ -131,7 +131,7 @@ Interpreter shows in the bottom-right corner in VS Code.
 
 ***
 
-**PART 5 — Create a Virtual Environment (Recommended)**
+#### **PART 5 — Create a Virtual Environment (Recommended)**
 
 **Step 1: Open VS Code terminal**
 
@@ -171,7 +171,7 @@ pip install notebook jupyterlab ipykernel
 
 ***
 
-**PART 6 — Create a Python File in VS Code**
+#### **PART 6 — Create a Python File in VS Code**
 
 1. In Explorer (left), click **New File** icon\
    (looks like a piece of paper)
@@ -196,7 +196,7 @@ Ctrl + F5
 
 ***
 
-**PART 7 — Jupyter Notebooks Inside VS Code**
+#### **PART 7 — Jupyter Notebooks Inside VS Code**
 
 **Option A — Create a new notebook**
 
@@ -251,7 +251,7 @@ Click it → choose:
 
 ***
 
-**PART 8 — Launch Jupyter in Browser (Optional)**
+#### **PART 8 — Launch Jupyter in Browser (Optional)**
 
 From terminal:
 
@@ -275,7 +275,7 @@ http://localhost:8888/
 
 ***
 
-**PART 9 — Common Problems & Fixes**
+#### **PART 9 — Common Problems & Fixes**
 
 **VS Code shows wrong Python version**
 
@@ -312,7 +312,7 @@ Restart VS Code.
 
 ***
 
-**PART 10 — Summary Checklist**
+#### **PART 10 — Summary Checklist**
 
 | Step | What to Do                          |
 | ---- | ----------------------------------- |

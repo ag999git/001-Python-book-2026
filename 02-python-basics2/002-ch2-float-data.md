@@ -60,7 +60,7 @@ print("9.6 % 2.4->", 9.6 % 2.4)  # 9.6 % 2.4-> 0.0
 
 
 
-
+[Back to the Table of Contents](002-ch2-float-data.md#table-of-contents)
 
 #### Block 2 abs(), repr(), str()
 - Show float formatting

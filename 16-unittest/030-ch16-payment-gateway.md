@@ -60,6 +60,8 @@ graph TD
 
 To understand the practical implications of session scoping without relying on live external networks, we implement an application simulation representing an external financial gateway (e.g., Stripe or PayPal).
 
+[Back to the Table of Contents](030-ch16-payment-gateway.md#table-of-contents)
+
 ### 1. Target Implementation: `payment_gateway.py`
 
 This module acts as a stateful emulator. It enforces linear state progression (Connection $\rightarrow$ Processing $\rightarrow$ Disconnection) and introduces simulated network latency.
@@ -101,6 +103,8 @@ class PaymentGateway:
         return f"Payment of ${amount:.2f} Processed Successfully."
 
 ```
+
+[Back to the Table of Contents](030-ch16-payment-gateway.md#table-of-contents)
 
 ### 2. Automated Test Suite: `test_payments.py`
 
@@ -187,6 +191,7 @@ In standard Python, a `return` statement hands back control and completely destr
     
 -   Everything **after** `yield` is executed as the **Teardown Phase** (Resource cleanup).
     
+[Back to the Table of Contents](030-ch16-payment-gateway.md#table-of-contents)
 
 #### 3. Output of the pytest (with flag -s) shows that resources are optimized
 
@@ -222,7 +227,7 @@ While session scoping provides substantial performance gains, it introduces defi
 
 Because every test function across the entire test runner process interacts with the exact same instance of the `PaymentGateway`, state modifications pose an immediate threat.
 
-> ⚠️ **The Risk:** If `test_high_value_transaction` explicitly drops or corrupts the internal state of the gateway instance (e.g., changing `gateway_session.is_connected = False` during a failure injection test), every subsequent test execution following it will fail cascadingly. Tests lose their isolation guarantees ($I$ in the standard **FIRST** testing principles).
+> **The Risk:** If `test_high_value_transaction` explicitly drops or corrupts the internal state of the gateway instance (e.g., changing `gateway_session.is_connected = False` during a failure injection test), every subsequent test execution following it will fail cascadingly. Tests lose their isolation guarantees ($I$ in the standard **FIRST** testing principles).
 
 ### 2. Thread Safety and Concurrency Violations
 
@@ -231,5 +236,7 @@ If you accelerate test execution using parallel execution plugins such as `pytes
 ### 3. Structural Scaling and File Placement
 
 In scaled multi-directory testing frameworks, declaring a session fixture inside a single test file restricts its accessibility. To expose session-scoped setups globally without explicit imports, they must be housed within a centralized, specialized orchestration file named `conftest.py` positioned at the project's root directory.
+
+[Back to the Table of Contents](030-ch16-payment-gateway.md#table-of-contents)
 
 

@@ -74,6 +74,8 @@ When pytest starts, it first discovers tests and then applies any command-line f
 ![How pytest processes flags](/resources/ch16-pytest-090-how-process-flags.png)
 
 
+[Back to the Table of Contents](010-ch16-pytest-flags.md#table-of-contents)
+
 ## The -v Flag (Verbose Mode)
 
 ### Purpose
@@ -155,6 +157,7 @@ test1112.py::test_multiplication PASSED                                         
 ```
 
 ----------
+[Back to the Table of Contents](010-ch16-pytest-flags.md#table-of-contents)
 
 ## The -s Flag (Show `print()` Output)
 
@@ -212,6 +215,7 @@ Hello
 Now the output is visible.
 
 ----------
+[Back to the Table of Contents](010-ch16-pytest-flags.md#table-of-contents)
 
 ## Why Does Pytest Hide `print()` Output?
 
@@ -266,6 +270,8 @@ test1112.py::test_balance PASSED                                                
 
 
 ----------
+
+[Back to the Table of Contents](010-ch16-pytest-flags.md#table-of-contents)
 
 ## The -k Flag (Test Selection)
 
@@ -358,6 +364,9 @@ test_withdraw
 
 ----------
 
+[Back to the Table of Contents](010-ch16-pytest-flags.md#table-of-contents)
+
+
 ## How -k Works
 
 ![How -k works](/resources/ch16-pytest-095-flag-k.png)
@@ -403,6 +412,8 @@ Meaning:
 | Run one group of tests | pytest -k deposit |
 | Debug one test | pytest -v -s -k deposit |
 | Debug a failing test | pytest -v -s |
+
+[Back to the Table of Contents](010-ch16-pytest-flags.md#table-of-contents)
 
 ### Common Beginner Mistakes
 
@@ -454,6 +465,9 @@ A common workflow during development is:
 8. Fix the bug
 9. Run the full test suite
 ```
+
+[Back to the Table of Contents](010-ch16-pytest-flags.md#table-of-contents)
+
 
 
 

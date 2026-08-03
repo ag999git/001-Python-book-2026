@@ -2,6 +2,13 @@
 
 # Dependency Injection in Pytest Fixtures
 
+## Table of Contents
+* [Research Question](040-ch16-dependency-injection.md#research-question)
+* [Practical Example](040-ch16-dependency-injection.md#practical-example)
+* [Further discussion](040-ch16-dependency-injection.md#further-discussion)
+* [Flow for EACH test (test_injection / test_connect / test_state)](040-ch16-dependency-injection.md#flow-for-each-test-test_injection--test_connect--test_state)
+* [SAME FLOW applies to all 3 tests](040-ch16-dependency-injection.md#same-flow-applies-to-all-3-tests)
+
 ## Research Question
 
 What is **dependency injection**, and how does pytest use fixtures to automatically provide objects to test functions?

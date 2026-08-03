@@ -45,6 +45,7 @@ class Database:
         return "connected"
 
 ```
+[Back to Table of Contents](040-ch16-dependency-injection.md#same-flow-applies-to-all-3-tests)
 
 #### test_database.py
 The file used for testing database.py
@@ -114,6 +115,8 @@ def test_state(db):
 
 ```
 
+[Back to Table of Contents](040-ch16-dependency-injection.md#same-flow-applies-to-all-3-tests)
+
 ## Further discussion
 
 
@@ -147,6 +150,8 @@ pytest performs the following steps:
 3.  It executes the fixture function
 4.  It receives the returned object
 5.  It injects that object into the test function parameter
+
+[Back to Table of Contents](040-ch16-dependency-injection.md#same-flow-applies-to-all-3-tests)
 
 ### Flow for EACH test (test_injection / test_connect / test_state)
 
@@ -187,6 +192,8 @@ test completes
 
 ```
 
+
+[Back to Table of Contents](040-ch16-dependency-injection.md#same-flow-applies-to-all-3-tests)
 
 ### SAME FLOW applies to all 3 tests
 
@@ -239,6 +246,10 @@ assert db.new_flag
 
 
 ```
+
+[Back to Table of Contents](040-ch16-dependency-injection.md#same-flow-applies-to-all-3-tests)
+
+
 
 
 

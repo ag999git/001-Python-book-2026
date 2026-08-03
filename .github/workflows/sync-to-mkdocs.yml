@@ -1,1 +1,80 @@
-
+name: Sync to MkDocs Repo
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Primary Repository
+        uses: actions/checkout@v4
+        with:
+          repository: ag999git/001-Python-book-2026
+          path: primary-repo
+          token: ${{ secrets.MIRROR_TOKEN }}
+      - name: Checkout Target MkDocs Repo
+        uses: actions/checkout@v4
+        with:
+          repository: ag999git/001-mkdocs
+          path: mkdocs-repo
+          token: ${{ secrets.MIRROR_TOKEN }}
+      - name: Sync Folders & Clean GitBook Artifacts
+        run: |
+          # 1. Debug: Check if index.md exists in Primary Repo
+          echo "Checking for index.md in Primary Repo:"
+          ls -F primary-repo/index.md || echo "index.md NOT FOUND in primary-repo root"
+          # 2. Setup folders
+          mkdir -p mkdocs-repo/docs
+          rm -rf mkdocs-repo/docs/*
+          # 3. Copy folders
+          cd primary-repo
+          for folder in [0-9][0-9]-* images resources colab-nb; do
+            if [ -d "$folder" ]; then
+              cp -r "$folder" ../mkdocs-repo/docs/
+              echo "Copied folder: $folder"
+            fi
+          done
+          # 3b. Fix root-relative image paths for MkDocs project-page hosting.
+          # Source markdown uses root-relative paths like "/resources/foo.png"
+          # which work on GitHub's preview and on GitBook (site root = docs root),
+          # but this MkDocs site is served under a subpath:
+          #   https://ag999git.github.io/001-mkdocs/
+          # so those links need the "/001-mkdocs" prefix to resolve correctly.
+          echo "Rewriting root-relative image paths for MkDocs subpath hosting:"
+          find ../mkdocs-repo/docs -name "*.md" -print0 | xargs -0 sed -i \
+            -e 's#](/resources/#](/001-mkdocs/resources/#g' \
+            -e 's#](/images/#](/001-mkdocs/images/#g'
+          echo "Path rewrite complete."
+          # 4. Copy index.md with explicit check
+          if [ -f "index.md" ]; then
+            cp index.md ../mkdocs-repo/docs/
+            echo "Successfully copied index.md to mkdocs-repo/docs/"
+          else
+            echo "WARNING: index.md not found in primary-repo root!"
+          fi
+          cd ..
+          # 5. Final cleanup
+          find mkdocs-repo/docs -iname "summary.md" -delete
+          find mkdocs-repo/docs -iname "readme.md" -execdir mv {} index.md \;
+          
+          # 6. Final Debug: List what is currently in docs
+          echo "Current content of docs folder:"
+          ls -R mkdocs-repo/docs/
+      - name: Commit and Push Changes
+        env:
+          PAT_TOKEN: ${{ secrets.MIRROR_TOKEN }}
+        run: |
+          cd mkdocs-repo
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git remote set-url origin https://x-access-token:${PAT_TOKEN}@github.com/ag999git/001-mkdocs.git
+          
+          git add docs/
+          if ! git diff --cached --quiet; then
+            git commit -m "Sync: Added index.md and updated chapters"
+            git push origin main
+          else
+            echo "No changes detected to push."
+          fi

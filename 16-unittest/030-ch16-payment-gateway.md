@@ -4,6 +4,16 @@
 
 #  Advanced Fixture Lifecycles and Optimization
 
+## Table of Contents
+* [Theoretical Foundation: Session Scope](030-ch16-payment-gateway.md#theoretical-foundation-session-scope)
+* [Application Simulation Architectural Design](030-ch16-payment-gateway.md#application-simulation-architectural-design)
+* [1. Target Implementation: payment_gateway.py](030-ch16-payment-gateway.md#1-target-implementation-payment_gatewaypy)
+* [2. Automated Test Suite: test_payments.py](030-ch16-payment-gateway.md#2-automated-test-suite-test_paymentspy)
+* [Discussion](030-ch16-payment-gateway.md#discussion)
+* [Architectural & Core Concepts](030-ch16-payment-gateway.md#architectural--core-concepts)
+* [Precautions & Concerns in using session scope](030-ch16-payment-gateway.md#precautions--concerns-in-using-session-scope)
+
+
 ## Theoretical Foundation: Session Scope
 
 In real world software development, test suites may have hundreds or thousands of test cases. When executing these tests, certain infrastructure requirements—such as establishing database connections, or authenticating with external APIs— create heavy burdern on the computational resources.

@@ -8,6 +8,19 @@ Pytest provides many command-line options that control how tests are executed an
 
  Mastering a few commonly used flags can greatly improve the testing experience and make pytest much easier to use in real-world projects.
 
+## Table of Contents
+
+* [Introduction](010-ch16-pytest-flags.md#introduction)
+* [Mental Model](010-ch16-pytest-flags.md#mental-model)
+* [How Pytest Processes Flags](010-ch16-pytest-flags.md#how-pytest-processes-flags)
+* [The -v Flag (Verbose Mode)](010-ch16-pytest-flags.md#the--v-flag-verbose-mode)
+* [The -s Flag (Show print() Output)](010-ch16-pytest-flags.md#the--s-flag-show-print-output)
+* [Why Does Pytest Hide print() Output?](010-ch16-pytest-flags.md#why-does-pytest-hide-print-output)
+* [The -k Flag (Test Selection)](010-ch16-pytest-flags.md#the--k-flag-test-selection)
+* [Combining Flags](010-ch16-pytest-flags.md#combining-flags)
+* [Typical Pytest Workflow](010-ch16-pytest-flags.md#typical-pytest-workflow)
+
+
 
 # Understanding Common Pytest Command-Line Flags
 

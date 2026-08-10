@@ -300,6 +300,10 @@ You can run the above script in Google Colab (Same notebook from GitHub) [![Open
 
 #### 5. Python Keywords — Meaning + Example in form of a Table are given below
 
+The table below groups keywords by concept — logic, conditionals, loops, functions, exceptions, scope, and so on — rather than alphabetically, since that order matches how you'll actually meet these ideas as you learn. If you want a fast alphabetical lookup instead, jump to the **Appendix: Alphabetical Keyword Quick Reference** at the end of this chapter.
+
+
+
 | Keyword    | Meaning / Simple Explanation        | Example Sentence (Code)  | Real-Life Example / Analogy                                 |
 | ---------- | ----------------------------------- | ------------------------ | ----------------------------------------------------------- |
 | `and`      | Both conditions must be true        | if x > 0 and y > 0:      | “I will go for a walk if it’s sunny and I have free time.”  |

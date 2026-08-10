@@ -15,13 +15,14 @@ You can also visit my GitHub repository or the Google Colab notebooks by clickin
 
 #### Table of Contents   
 
-* [1. Python Keywords — Meaning, Code Example, Real-Life Analogy](001-python-basics.md#1-python-keywords-meaning-code-example-real-life-analogy)
+
 * [2 Comparison between Hash and triple quotes](001-python-basics.md#2-comparison-between-hash-and-triple-quotes)
 * [3. Good Rules for Writing Identifiers in Python](001-python-basics.md#3-good-rules-for-writing-identifiers-in-python)
 * [4. What are PEP and PEP 8 in Python? (Simple Explanation)](001-python-basics.md#4-what-are-pep-and-pep-8-in-python-simple-explanation)
 * [5. Table: Identifiers vs Variables](001-python-basics.md#5-table-identifiers-vs-variables)
 * [6. Python Keywords — Meaning + Example in form of a Table](001-python-basics.md#6-python-keywords--meaning--example-in-form-of-a-table-are-given-below)
 * [6. Debugging](001-python-basics.md#7-debugging-python-scripts-on-an-ide)
+* [7. Python Keywords — Meaning, Code Example, Real-Life Analogy](001-python-basics.md#1-python-keywords-meaning-code-example-real-life-analogy)
 
 
 

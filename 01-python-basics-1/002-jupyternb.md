@@ -674,9 +674,6 @@ Provides documentation, shortcuts, and references.
 
 
 
-![UI of Screen 2 of Jupyter Notebook](https://github.com/ag999git/python-book-2026/blob/main/all-book-images/Screen-shot-UI-2-Jupyter-notebook-menu-bar-and-others.jpg)
-
-
 ![UI of Screen 2 of Jupyter Notebook](https://raw.githubusercontent.com/ag999git/python-book-2026/main/all-book-images/Screen-shot-UI-2-Jupyter-notebook-menu-bar-and-others.jpg?token=GHSAT0AAAAAADWNQADFWQECDVUBDASFDOBG2TZSDWQ)
 
 ##### The above screen shot shows the Jupyter Notebook Toolbar as placed on the UI

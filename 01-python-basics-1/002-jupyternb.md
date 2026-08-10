@@ -678,7 +678,7 @@ Provides documentation, shortcuts, and references.
 
 ##### The above screen shot shows the Jupyter Notebook Toolbar as placed on the UI
 
-![Screenshot of Jupyter Notebook Toolbar](https://github.com/ag999git/python-book-2026/blob/main/all-book-images/2-Screen-shot-UI-2-Jupyter-notebook-tool-bar-and-others.jpg)
+![Screenshot of Jupyter Notebook Toolbar](https://github.com/ag999git/001-Python-book-2026/blob/main/resources/ch-001-Jupyter-notebook-menu-bar.jpg)
 
 
 ##### The above screen shot shows the various tools on the Jupyter Notebook Toolbar

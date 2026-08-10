@@ -31,7 +31,7 @@ Hash (#) and triple quotes (''' or """)
 
 [Back to Table of Contents](001-python-basics.md#table-of-contents)
 
-**1. Hash (#) — Single-Line Comments**
+**1.1. Hash (#) — Single-Line Comments**
 
 * Starts with # and continues to the end of the line.
 * Used mainly for explaining **logic**, **steps**, or **reasoning** inside the code.
@@ -40,7 +40,7 @@ Hash (#) and triple quotes (''' or """)
 * Can be used for multi-line comments by repeating # on each line.
 * Ignored entirely by the Python interpreter.
 
-**2. Triple Quotes (''' or """) — Multi-Line Strings Used as Comments**
+**1.2. Triple Quotes (''' or """) — Multi-Line Strings Used as Comments**
 
 * Written using triple single quotes ''' or triple double quotes """.
 * Technically creates a **multi-line string**, not a true comment — but becomes a "comment" only if unused.
@@ -50,7 +50,7 @@ Hash (#) and triple quotes (''' or """)
 * Tools like Sphinx, pydoc, and IDEs can automatically extract them.
 * Can also be placed on one line as a single-line docstring.
 
-Comparison:-
+Comparison Table:-
 
 | Feature / Purpose    | # Single-Line Comment                    | ''’ / """ Multi-Line Comment (Docstring)                        |
 | -------------------- | ---------------------------------------- | --------------------------------------------------------------- |
@@ -97,7 +97,7 @@ These rules are required by Python itself:-
 
 [Back to Table of Contents](001-python-basics.md#table-of-contents)
 
-**4.1 PEP = Python Enhancement Proposal**
+**3.1 PEP = Python Enhancement Proposal**
 
 A **PEP is a document** that explains:
 
@@ -118,7 +118,7 @@ Imagine a school where teachers write proposals to improve rules:
 
 Python developers do the same → they write **PEPs** to propose improvements.
 
-**4.2 What is PEP 8**
+**3.2 What is PEP 8**
 
 You can check out details of PEP 8 [here](https://peps.python.org/pep-0008/)
 
@@ -135,7 +135,7 @@ PEP 8 tells Python programmers:
 **Think of PEP 8 like English grammar rules but for Python.**\
 Just like grammar makes English easier to read, PEP 8 makes Python code easier for everyone to understand.
 
-**4.3  PEP  8**
+**3.3  PEP  8**
 
 * | PEP 8 Topic                       | What It Means                                                                                        | PEP 8 Example (Correct)                                                                      | Non-PEP 8 Example (Incorrect)                                           |
   | --------------------------------- | ---------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
@@ -158,7 +158,7 @@ Just like grammar makes English easier to read, PEP 8 makes Python code easier f
   | Spacing After Commas              | Put a space after commas                                                                             | sum(1, 2, 3)                                                                                 | sum(1,2,3)                                                              |
   | Single Statement per Line         | Use one statement per line                                                                           | <p>x = 1;<br>y = 2 (preferred to split in two lines)</p>                                     | x = 1; y = 2 (not recommended in practice)                              |
 
-**4.4 Pep 8 Vs Non-pep 8 Examples**
+**3.4 Pep 8 Vs Non-pep 8 Examples**
 
 [Back to Table of Contents](001-python-basics.md#table-of-contents)
 
@@ -280,7 +280,7 @@ You can run the above script in Google Colab (From Google Drive) [![Open In Cola
 
 You can run the above script in Google Colab (Same notebook from GitHub) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/ag999git/001-Python-book-2026/blob/main/colab-nb/01Chapter1_pep.ipynb)
 
-#### 5. Table: Identifiers vs Variables
+#### 4. Table: Identifiers vs Variables
 
 [Back to Table of Contents](001-python-basics.md#table-of-contents)
 
@@ -296,7 +296,7 @@ You can run the above script in Google Colab (Same notebook from GitHub) [![Open
 | **Error if missing?**  | Undefined identifier → NameError                           | Same, because variable name is an identifier |
 | **Used for**           | Naming program components                                  | Storing and manipulating data                |
 
-#### 6. Python Keywords — Meaning + Example in form of a Table are given below
+#### 5. Python Keywords — Meaning + Example in form of a Table are given below
 
 | Keyword    | Meaning / Simple Explanation        | Example Sentence (Code)  | Real-Life Example / Analogy                                 |
 | ---------- | ----------------------------------- | ------------------------ | ----------------------------------------------------------- |
@@ -335,7 +335,7 @@ You can run the above script in Google Colab (Same notebook from GitHub) [![Open
 
 [Back toTable of Contents](001-python-basics.md#table-of-contents)
 
-#### 7. Debugging Python scripts on an IDE
+#### 6. Debugging Python scripts on an IDE
 
 The following flowchart shows how to debug a Python script
 
@@ -390,7 +390,7 @@ Below is a short, clear walk-through of each step in the above flowchart. It giv
 
 
 
-#### 1. Python Keywords — Meaning, Code Example, Real-Life Analogy
+#### 7. Python Keywords — Meaning, Code Example, Real-Life Analogy
 
 The following table has 4 columns.
 

@@ -51,7 +51,7 @@ Hash (#) and triple quotes (''' or """)
 * Tools like Sphinx, pydoc, and IDEs can automatically extract them.
 * Can also be placed on one line as a single-line docstring.
 
-Comparison Table:-
+Table 1: Comparison Table:-
 
 | Feature / Purpose    | # Single-Line Comment                    | ''’ / """ Multi-Line Comment (Docstring)                        |
 | -------------------- | ---------------------------------------- | --------------------------------------------------------------- |
@@ -137,6 +137,7 @@ PEP 8 tells Python programmers:
 Just like grammar makes English easier to read, PEP 8 makes Python code easier for everyone to understand.
 
 **3.3  PEP  8**
+Table 2: PEP 8
 
 * | PEP 8 Topic                       | What It Means                                                                                        | PEP 8 Example (Correct)                                                                      | Non-PEP 8 Example (Incorrect)                                           |
   | --------------------------------- | ---------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------- |
@@ -329,10 +330,11 @@ You can run the above script in Google Colab (Same notebook from GitHub) [![Open
 | `global`   | Use global variable                 | global count             | Taking money from main family wallet.                       |
 | `nonlocal` | Use outer function variable         | nonlocal total           | Helper using owner’s cash drawer.                           |
 | `with`     | Automatic setup + cleanup           | with open("a.txt") as f: | “With washing machine, wash + clean happens automatically.” |
-| `yield`    | Return values one at a time         | yield item               | Tree gives mangoes one by one.                              |
-| `del`      | Delete variable/item                | del numbers\[0]          | Throw away old notebook.                                    |
-| `exec`     | Execute Python code dynamically     | exec("print('Hello')")   | “Follow these written instructions exactly.”                |
-| `print`    | Show output                         | print("Hello")           | Saying something out loud.                                  |
+| `yield`    | Return values one at a time         | yield item               | Tree gives mangoes one by one.                               |
+| `del`      | Delete variable/item                | del numbers[0]           | Throw away old notebook.                                     |
+| `None`     | Represents “nothing”                | x = None                 | An empty seat with no one sitting.                           |
+| `True`     | Boolean true value                  | flag = True               | A switch turned ON.                                          |
+| `False`    | Boolean false value                 | flag = False              | A switch turned OFF.                                         |
 
 [Back toTable of Contents](001-python-basics.md#table-of-contents)
 

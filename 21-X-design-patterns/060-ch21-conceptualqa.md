@@ -82,17 +82,7 @@ ________________________________________
 
 ![Flowchart](/resources/ch16-21-qa2.png)
 
-```mermaid
-flowchart LR  
-  
-A["1. Design Patterns"]  
-  
-A --> B["2. Creational<br/>Object Creation"]  
-  
-A --> C["3. Structural<br/>Object Organization"]  
-  
-A --> D["4. Behavioral<br/>Object Communication"]
-```
+
 ________________________________________
 **Q3. Explain the Factory Method Pattern. What problem does it solve? How does it improve software compared to directly creating objects?**
 

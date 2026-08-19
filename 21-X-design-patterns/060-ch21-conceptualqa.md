@@ -29,7 +29,7 @@ For example:
 - Observer is a design pattern.
 - Binary Search is an algorithm. 
 
-![Flowchart](https://github.com/ag999git/001-Python-book-2026/blob/main/resources/ch16-21-design-patterns-qa1.png)
+![Flowchart](/resources/ch16-21-design-patterns-qa1.png)
 
 
 

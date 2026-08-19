@@ -51,7 +51,7 @@ Think of these flags as controlling different aspects of pytest.
 
 ### Visual Representation
 
-![Visual Representation](/resources/ch20-pytest-080-flags-mental-model.png)
+![Visual Representation](/resources/ch16-pytest-080-flags-mental-model.png)
 
 
 ### Important Terminology

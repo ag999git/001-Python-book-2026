@@ -112,17 +112,10 @@ ________________________________________
 | Changes affect many locations | Changes usually affect only the factory |
 | Strong coupling | Loose coupling |
 ________________________________________
-```mermaid
-flowchart LR  
-  
-A["1. Client requests object"]  
-  
-A --> B["2. Factory Method"]  
-  
-B --> C["3. Factory creates object"]  
-  
-C --> D["4. Client uses object"]
-```
+
+
+![Flowchart](/resources/ch-16-21-qa3.png)
+
 
 
 ________________________________________

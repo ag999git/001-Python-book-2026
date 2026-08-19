@@ -10,15 +10,15 @@ Pytest provides many command-line options that control how tests are executed an
 
 ## Table of Contents
 
-* [Introduction](010-ch16-pytest-flags.md#introduction)
-* [Mental Model](010-ch16-pytest-flags.md#mental-model)
-* [How Pytest Processes Flags](010-ch16-pytest-flags.md#how-pytest-processes-flags)
-* [The -v Flag (Verbose Mode)](010-ch16-pytest-flags.md#the--v-flag-verbose-mode)
-* [The -s Flag (Show print() Output)](010-ch16-pytest-flags.md#the--s-flag-show-print-output)
-* [Why Does Pytest Hide print() Output?](010-ch16-pytest-flags.md#why-does-pytest-hide-print-output)
-* [The -k Flag (Test Selection)](010-ch16-pytest-flags.md#the--k-flag-test-selection)
-* [Combining Flags](010-ch16-pytest-flags.md#combining-flags)
-* [Typical Pytest Workflow](010-ch16-pytest-flags.md#typical-pytest-workflow)
+* [Introduction](010-ch20-pytest-flags.md#introduction)
+* [Mental Model](010-ch20-pytest-flags.md#mental-model)
+* [How Pytest Processes Flags](010-ch20-pytest-flags.md#how-pytest-processes-flags)
+* [The -v Flag (Verbose Mode)](010-ch20-pytest-flags.md#the--v-flag-verbose-mode)
+* [The -s Flag (Show print() Output)](010-ch20-pytest-flags.md#the--s-flag-show-print-output)
+* [Why Does Pytest Hide print() Output?](010-ch20-pytest-flags.md#why-does-pytest-hide-print-output)
+* [The -k Flag (Test Selection)](010-ch20-pytest-flags.md#the--k-flag-test-selection)
+* [Combining Flags](010-ch20-pytest-flags.md#combining-flags)
+* [Typical Pytest Workflow](010-ch20-pytest-flags.md#typical-pytest-workflow)
 
 
 
@@ -51,7 +51,7 @@ Think of these flags as controlling different aspects of pytest.
 
 ### Visual Representation
 
-![Visual Representation](/resources/ch16-pytest-080-flags-mental-model.png)
+![Visual Representation](/resources/ch20-pytest-080-flags-mental-model.png)
 
 
 ### Important Terminology
@@ -74,7 +74,7 @@ When pytest starts, it first discovers tests and then applies any command-line f
 ![How pytest processes flags](/resources/ch16-pytest-090-how-process-flags.png)
 
 
-[Back to the Table of Contents](010-ch16-pytest-flags.md#table-of-contents)
+[Back to the Table of Contents](010-ch20-pytest-flags.md#table-of-contents)
 
 ## The -v Flag (Verbose Mode)
 
@@ -157,7 +157,7 @@ test1112.py::test_multiplication PASSED                                         
 ```
 
 ----------
-[Back to the Table of Contents](010-ch16-pytest-flags.md#table-of-contents)
+[Back to the Table of Contents](010-ch20-pytest-flags.md#table-of-contents)
 
 ## The -s Flag (Show `print()` Output)
 
@@ -215,7 +215,7 @@ Hello
 Now the output is visible.
 
 ----------
-[Back to the Table of Contents](010-ch16-pytest-flags.md#table-of-contents)
+[Back to the Table of Contents](010-ch20-pytest-flags.md#table-of-contents)
 
 ## Why Does Pytest Hide `print()` Output?
 
@@ -225,7 +225,7 @@ Output capture collects printed text and hides it unless the test fails or the u
 
 ### Output Capture Flow
 
-![Output Capture Flow](/resources/ch16-pytest-092-flags-output-capture.png)
+![Output Capture Flow](/resources/ch20-pytest-092-flags-output-capture.png)
 
 
 ### Why Use -s ?
@@ -271,7 +271,7 @@ test1112.py::test_balance PASSED                                                
 
 ----------
 
-[Back to the Table of Contents](010-ch16-pytest-flags.md#table-of-contents)
+[Back to the Table of Contents](010-ch20-pytest-flags.md#table-of-contents)
 
 ## The -k Flag (Test Selection)
 
@@ -364,7 +364,7 @@ test_withdraw
 
 ----------
 
-[Back to the Table of Contents](010-ch16-pytest-flags.md#table-of-contents)
+[Back to the Table of Contents](010-ch20-pytest-flags.md#table-of-contents)
 
 
 ## How -k Works
@@ -399,7 +399,7 @@ Meaning:
 
 ### Combined Execution Flow
 
-![Combined Execution Flow](/resources/ch16-pytest-096-combining-tests.png)
+![Combined Execution Flow](/resources/ch20-pytest-096-combining-tests.png)
 
 
 ### Common Development Scenarios
@@ -466,4 +466,4 @@ A common workflow during development is:
 9. Run the full test suite
 ```
 
-[Back to the Table of Contents](010-ch16-pytest-flags.md#table-of-contents)
+[Back to the Table of Contents](010-ch20-pytest-flags.md#table-of-contents)

@@ -31,18 +31,7 @@ For example:
 
 ![Flowchart](https://github.com/ag999git/001-Python-book-2026/blob/main/resources/ch16-21-design-patterns-qa1.png)
 
-```mermaid
-flowchart LR
 
-A["1. Identify recurring design problem"]
---> B["2. Select suitable design pattern"]
-
-B --> C["3. Implement pattern in Python"]
-
-C --> D["4. Build flexible software"]
-
-D --> E["5. Easier maintenance and extension"]
-```
 
 **Q2. Classify design patterns. Compare Creational, Structural and Behavioral patterns. When is each category used?**
 •	Answer

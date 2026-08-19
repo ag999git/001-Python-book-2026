@@ -182,18 +182,9 @@ ________________________________________
 | Less flexible | More flexible |
 ________________________________________
 Flowchart
+![Flowchart](/resources/ch16-21-august-qa-5.png)
 
-```mermaid
-flowchart LR
 
-A["1. Original Function"]
-
-A --> B["2. Apply Python Decorator"]
-
-B --> C["3. Wrapper Adds New Behaviour"]
-
-C --> D["4. Execute Enhanced Function"]
-```
 
 **Q6. Explain the Abstract Factory Pattern. What problem does it solve? How does it ensure that related objects are created together?**
 

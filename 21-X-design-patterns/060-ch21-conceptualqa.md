@@ -152,19 +152,7 @@ ________________________________________
 Flowchart
 ![Flowchart](/resources/ch16-21-august-2026-04.png)
 
-```mermaid
-flowchart LR  
-  
-A["Object Required?"]  
-  
-A --> B["Need only one shared instance?"]  
-  
-B -->|Yes| C["Use Singleton"]  
-  
-B -->|No| D["Need flexible object creation?"]  
-  
-D -->|Yes| E["Use Factory Method"]
-```
+
 ________________________________________
 **Q5. Explain the Decorator Pattern. How does it differ from inheritance? Why are Python decorators considered a Pythonic alternative?**
 

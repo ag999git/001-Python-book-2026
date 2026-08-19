@@ -228,20 +228,9 @@ Comparison Table
 | Error-prone | More maintainable |
 ________________________________________
 Flowchart
+![Flowchart](/resources/ch16-21-august-2026-10.png)
 
-```mermaid
-flowchart LR
 
-A["1. Create Builder"]
-
---> B["2. Add Part 1"]
-
-B --> C["3. Add Part 2"]
-
-C --> D["4. Add Optional Parts"]
-
-D --> E["5. Build Final Object"]
-```
 
 **Q8. Explain the Adapter Pattern. What problem does it solve? How does it help integrate incompatible classes?**
 

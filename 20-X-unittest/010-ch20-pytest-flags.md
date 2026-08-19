@@ -225,7 +225,7 @@ Output capture collects printed text and hides it unless the test fails or the u
 
 ### Output Capture Flow
 
-![Output Capture Flow](/resources/ch20-pytest-092-flags-output-capture.png)
+![Output Capture Flow](/resources/ch16-pytest-092-flags-output-capture.png)
 
 
 ### Why Use -s ?

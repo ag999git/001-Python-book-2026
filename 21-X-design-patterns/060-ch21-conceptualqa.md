@@ -206,21 +206,9 @@ Comparison Table
 ________________________________________
 Flowchart
 
-```mermaid
-flowchart LR  
-  
-A["1. Client requests GUI"] --> B["2. Choose Factory"]  
-  
-B --> C["3. WindowsFactory or MacFactory"]  
-  
-C --> D["4. Create Button"]  
-  
-C --> E["5. Create Checkbox"]  
-  
-D --> F["6. Matching GUI"]  
-  
-E --> F
-```
+![Flowchart](/resources/ch16-21-august-2026-05.png)
+
+
 ________________________________________
 **Q7. Explain the Builder Pattern. Why is it preferred when constructing complex objects? Compare it with using a constructor having many parameters.**
 

@@ -399,7 +399,7 @@ Meaning:
 
 ### Combined Execution Flow
 
-![Combined Execution Flow](/resources/ch20-pytest-096-combining-tests.png)
+![Combined Execution Flow](/resources/ch16-pytest-096-combining-tests.png)
 
 
 ### Common Development Scenarios

@@ -150,6 +150,7 @@ ________________________________________
 | Useful for shared resources | Useful for flexible object creation |
 ________________________________________
 Flowchart
+![Flowchart](/resources/ch16-21-august-2026-04.png)
 
 ```mermaid
 flowchart LR  

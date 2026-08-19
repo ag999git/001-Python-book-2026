@@ -79,6 +79,9 @@ ________________________________________
 | Structural | Organizing objects | How should objects be connected? |
 | Behavioral | Object communication | How should objects interact? |
 ________________________________________
+
+![Flowchart](/resources/ch16-21-qa2.png)
+
 ```mermaid
 flowchart LR  
   

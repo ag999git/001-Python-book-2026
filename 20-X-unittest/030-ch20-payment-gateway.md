@@ -5,13 +5,13 @@
 #  Advanced Fixture Lifecycles and Optimization
 
 ## Table of Contents
-* [Theoretical Foundation: Session Scope](030-ch16-payment-gateway.md#theoretical-foundation-session-scope)
-* [Application Simulation Architectural Design](030-ch16-payment-gateway.md#application-simulation-architectural-design)
-* [1. Target Implementation: payment_gateway.py](030-ch16-payment-gateway.md#1-target-implementation-payment_gatewaypy)
-* [2. Automated Test Suite: test_payments.py](030-ch16-payment-gateway.md#2-automated-test-suite-test_paymentspy)
-* [Discussion](030-ch16-payment-gateway.md#discussion)
-* [Architectural & Core Concepts](030-ch16-payment-gateway.md#architectural--core-concepts)
-* [Precautions & Concerns in using session scope](030-ch16-payment-gateway.md#precautions--concerns-in-using-session-scope)
+* [Theoretical Foundation: Session Scope](030-ch20-payment-gateway.md#theoretical-foundation-session-scope)
+* [Application Simulation Architectural Design](030-ch20-payment-gateway.md#application-simulation-architectural-design)
+* [1. Target Implementation: payment_gateway.py](030-ch20-payment-gateway.md#1-target-implementation-payment_gatewaypy)
+* [2. Automated Test Suite: test_payments.py](030-ch20-payment-gateway.md#2-automated-test-suite-test_paymentspy)
+* [Discussion](030-ch20-payment-gateway.md#discussion)
+* [Architectural & Core Concepts](030-ch20-payment-gateway.md#architectural--core-concepts)
+* [Precautions & Concerns in using session scope](030-ch20-payment-gateway.md#precautions--concerns-in-using-session-scope)
 
 
 ## Theoretical Foundation: Session Scope
@@ -60,7 +60,7 @@ graph TD
 
 To understand the practical implications of session scoping without relying on live external networks, we implement an application simulation representing an external financial gateway (e.g., Stripe or PayPal).
 
-[Back to the Table of Contents](030-ch16-payment-gateway.md#table-of-contents)
+[Back to the Table of Contents](030-ch20-payment-gateway.md#table-of-contents)
 
 ### 1. Target Implementation: `payment_gateway.py`
 
@@ -104,7 +104,7 @@ class PaymentGateway:
 
 ```
 
-[Back to the Table of Contents](030-ch16-payment-gateway.md#table-of-contents)
+[Back to the Table of Contents](030-ch20-payment-gateway.md#table-of-contents)
 
 ### 2. Automated Test Suite: `test_payments.py`
 
@@ -191,7 +191,7 @@ In standard Python, a `return` statement hands back control and completely destr
     
 -   Everything **after** `yield` is executed as the **Teardown Phase** (Resource cleanup).
     
-[Back to the Table of Contents](030-ch16-payment-gateway.md#table-of-contents)
+[Back to the Table of Contents](030-ch20-payment-gateway.md#table-of-contents)
 
 #### 3. Output of the pytest (with flag -s) shows that resources are optimized
 
@@ -237,4 +237,4 @@ If you accelerate test execution using parallel execution plugins such as `pytes
 
 In scaled multi-directory testing frameworks, declaring a session fixture inside a single test file restricts its accessibility. To expose session-scoped setups globally without explicit imports, they must be housed within a centralized, specialized orchestration file named `conftest.py` positioned at the project's root directory.
 
-[Back to the Table of Contents](030-ch16-payment-gateway.md#table-of-contents)
+[Back to the Table of Contents](030-ch20-payment-gateway.md#table-of-contents)

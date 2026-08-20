@@ -257,17 +257,7 @@ Flowchart
 
 ![Flowchart](/resources/ch16-21-august-qa-question-8.png)
 
-```mermaid
-flowchart LR
 
-A["1. Client"]
-
---> B["2. Adapter"]
-
-B --> C["3. Existing Class"]
-
-C --> D["4. Existing Method Executes"]
-```
 ________________________________________
 Q9. Explain the Facade Pattern. How does it simplify the use of complex subsystems? Give suitable situations where it is useful.
 

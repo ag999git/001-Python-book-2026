@@ -536,19 +536,7 @@ Comparison Table
 ________________________________________
 Flowchart
 
-```mermaid
-flowchart LR
-
-A["1. Programming Problem"]
-
---> B["2. Classical Design Pattern"]
-
-A --> C["3. Python Language Feature"]
-
-B --> D["4. Working Solution"]
-
-C --> D
-```
+![Flowchart](/resources/ch16-21-august-2026-qa-question-17.png)
 
 
 ________________________________________

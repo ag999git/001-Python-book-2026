@@ -630,18 +630,4 @@ Comparison Table
 ________________________________________
 Flowchart
 
-```mermaid
-flowchart LR
-
-A["1. Programming Problem"]
-
-A --> B{"2. Simple Solution Sufficient?"}
-
-B -->|Yes| C["Use Simple Design"]
-
-B -->|No| D["Choose Appropriate Design Pattern"]
-
-D --> E["Maintainable Software"]
-
-C --> E
-```
+![Flowchart](/resources/ch16-21-august-2026-qa-question-20.png)

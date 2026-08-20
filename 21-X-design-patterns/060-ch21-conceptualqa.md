@@ -283,19 +283,7 @@ Flowchart
 
 ![Flowchart](/resources/ch16-21-august-2026-qa-question9.png)
 
-```mermaid
-flowchart LR
 
-A["1. Client"]
-
---> B["2. Facade"]
-
-B --> C["3. Subsystem A"]
-
-B --> D["4. Subsystem B"]
-
-B --> E["5. Subsystem C"]
-```
 ______________________________________
 **Q10. Compare the Decorator, Adapter and Facade patterns. Although all are structural patterns, how do their purposes differ?**
 
@@ -321,17 +309,11 @@ Comparison Table
 ________________________________________
 Flowchart
 
-```mermaid
-flowchart LR
+![Flowchart](/resources/ch16-21-august-2026-qa-question-10.png)
 
-A["Structural Patterns"]
 
-A --> B["Decorator<br/>Adds Behaviour"]
 
-A --> C["Adapter<br/>Changes Interface"]
 
-A --> D["Facade<br/>Simplifies Access"]
-```
 ________________________________________
 
 

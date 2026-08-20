@@ -603,21 +603,7 @@ Example Combination
 ________________________________________
 Flowchart
 
-```mermaid
-flowchart LR
-
-A["Application"]
-
---> B["Factory"]
-
-A --> C["Observer"]
-
-A --> D["Strategy"]
-
-A --> E["Decorator"]
-
-A --> F["Facade"]
-```
+![Flowchart](/resources/ch16-21-august-2026-qa-question-19.png)
 ________________________________________
 
 Q20. What are anti-patterns? Explain common design-pattern mistakes such as over-engineering, God Object and cargo-cult programming. How can they be avoided?

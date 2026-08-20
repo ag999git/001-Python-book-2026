@@ -438,25 +438,7 @@ Comparison Table
 
 ________________________________________
 Flowchart
-```mermaid
-flowchart LR
-
-A["1. Client"]
-
---> B["2. Select Strategy"]
-
-B --> C["3. Strategy A"]
-
-B --> D["4. Strategy B"]
-
-B --> E["5. Strategy C"]
-
-C --> F["6. Execute"]
-
-D --> F
-
-E --> F
-```
+![Flowchart](/resources/ch16-21-august-2026-qa-question-14.png)
 ________________________________________
 **Q15. Explain the Command Pattern. How does it help in implementing undo operations, menus and task queues?**
 

@@ -570,21 +570,7 @@ Decision Guide
 ________________________________________
 Flowchart
 
-```mermaid
-flowchart LR
-
-A["1. Identify Problem"]
-
-A --> B{"2. Object Creation?"}
-
-B -->|Yes| C["Creational Pattern"]
-
-B -->|No| D{"3. Object Organization?"}
-
-D -->|Yes| E["Structural Pattern"]
-
-D -->|No| F["Behavioral Pattern"]
-```
+![Flowchart](/resources/ch16-21-august-2026-qa-question-18.png)
 
 ________________________________________
 Q19. Why are multiple design patterns sometimes combined in a single application? Explain with suitable examples.

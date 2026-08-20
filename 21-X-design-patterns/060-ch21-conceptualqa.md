@@ -345,26 +345,10 @@ ________________________________________
 ________________________________________
 Flowchart
 
+![Flowchart](/resources/ch16-21-august-2026-qa-question-11.png)
 
-```mermaid
-flowchart LR
 
-A["1. Company"]
 
-A --> B["2. Department A"]
-
-A --> C["3. Department B"]
-
-B --> D["4. Employee 1"]
-
-B --> E["5. Employee 2"]
-
-C --> F["6. Employee 3"]
-
-G["7. Client"] --> A
-
-A --> H["8. Same display() method used for all"]
-```
 
 ________________________________________
 **Q12. Explain the Proxy Pattern. Why is it used? Compare it with directly accessing an object.**

@@ -214,65 +214,25 @@
 * [Matplotlib- Scriptinmg questions/ answers](15-matplotlib/080-ch15-scripting-qa.md)
 * [Introduction to 3D Plotting](15-matplotlib/090-ch15-3d-plot.md)
 
-## Chapter 16: Unittest
 
-* [Introduction](16-unittest/README.md)
-* [Understanding Pytest Command-Line Flags](16-unittest/010-ch16-pytest-flags.md)
-* [Further Study & Research Project: Breaking the Chains of Rigid Test Architecture](16-unittest/020-ch16-unittest-disadvantage-rigid-oop-style.md)
-* [Advanced Fixture Lifecycles and Optimization](16-unittest/030-ch16-payment-gateway.md)
-* [Dependency Injection in Pytest Fixtures](16-unittest/040-ch16-dependency-injection.md)
-* [Online resource- User Registration validation example](16-unittest/060-ch16-user-registration.md)
-* [Project & Research Task: The Distributed Test Suite](16-unittest/065-ch16-conftest-py.md)
-* [MagicMock — An Introduction](16-unittest/067-ch16-magicmock.md)
-* [Exception Testing in pytest — Why pytest.raises is better than try/ except](16-unittest/070-ch16-pytest-raises-vs-try-except.md)
-* [Project Title: The “Micro-Precision” Tax Calculator (Using Parameterized Testing)](16-unittest/080-ch16-tax-collector-project.md)
-* [Understanding the "Unknown Marker" Warning](16-unittest/090-ch16-config-files.md#understanding-the-unknown-marker-warning)
-* [Conceptual Questions with Answers](16-unittest/095-ch16-conceptual-qa.md)
-* [Scripting Questions with Answers](16-unittest/097-ch16-scripting-qa.md)
+## Chapter 16: Language Supported API (Python Libraries for Data Structures)
 
 
-## Chapter 17: Language Supported API (Python Libraries for Data Structures)
-
-
-* [Introduction](17-language-supported-api/README.md)
+* [Introduction](16-language-supported-api/README.md)
 * [Google Colab NB: Chapter 17](https://github.com/ag999git/001-Python-book-2026/blob/main/colab-nb/ch17_Python_libraries_for_data_structures_algorithms.ipynb)
-* [Exercise: Convert a NamedTuple into a Dictionary](17-language-supported-api/010-ch17-namedtuple2dict.md)
-* [Real-World Python: Practical Uses for Standard Library Modules](17-language-supported-api/020-ch17-real-world-use.md)
-* [Chapter 17: Python Libraries for Data Structures and Algorithms: Conceptual Questions with Answers](17-language-supported-api/060-ch17-conceptual-qa.md)
-* [Chapter 17 — Scripting Questions: Easy](17-language-supported-api/065-ch17-scripting-qa-easy.md)
-* [Chapter 17 - Scripting Questions: Hard](17-language-supported-api/070-ch17-scripting-qa-hard.md)
+* [Exercise: Convert a NamedTuple into a Dictionary](16-language-supported-api/010-ch16-namedtuple2dict.md)
+* [Real-World Python: Practical Uses for Standard Library Modules](16-language-supported-api/020-ch16-real-world-use.md)
+* [Chapter 16: Python Libraries for Data Structures and Algorithms: Conceptual Questions with Answers](16-language-supported-api/060-ch16-conceptual-qa.md)
+* [Chapter 16 — Scripting Questions: Easy](16-language-supported-api/065-ch16-scripting-qa-easy.md)
+* [Chapter 17 - Scripting Questions: Hard](16-language-supported-api/070-ch16-scripting-qa-hard.md)
 
 
 
-## Chapter 18: Design Patterns
-
-* [Design Patterns in Python: Introduction](18-design-patterns/README.md)
-* [Google Colab NB: Design Patterns](https://github.com/ag999git/001-Python-book-2026/blob/main/colab-nb/18_design_patterns.ipynb)
-* [Design Pattern: Conceptual Questions with Answers](18-design-patterns/060-ch18-conceptualqa.md)
-* [Design Patterns in Python: Scripting Questions (With Answers)](18-design-patterns/080-ch18-scriptsqa.md)
 
 
-## Chapter 19 Strings (Beyond Basics)
 
-* [Introduction](19-strings/README.md)
-* [Google Colab NB Chapter 19](https://github.com/ag999git/001-Python-book-2026/blob/main/colab-nb/19_strings_beyond_basics.ipynb)
-* [Assignment: Beyond The Basics- Timezones, Calendars, And Datetimes](19-strings/050-ch19-assignment-timezone.md)
-* [Conceptual Questions (With Answers)](19-strings/080-ch19-conceptual-qa.md)
-* [Scripting Questions (With Answers)](19-strings/090-ch19-scripting-qa.md)
 
-## Chapter 20 Lists (Beyond Basics)
 
-* [Introduction](20-lists/README.md)
-* [Google Colab NB: Chapter 20](https://github.com/ag999git/001-Python-book-2026/blob/main/colab-nb/20_lists.ipynb)
-* [Lists: Conceptual Questions (With Answers)](20-lists/50-ch20-qa.md)
 
-## Chapter 21: Tuples; Dictionaries: Sets (Beyond Basics)
 
-* [Introduction](21-tuples-dicts-sets/README.md)
-* [Google Colab NB: Chapter 21](https://github.com/ag999git/001-Python-book-2026/blob/main/colab-nb/21_tuples_dictionaries_sets.ipynb)
-* [Tuples: Conceptual Questions (With Answers)](21-tuples-dicts-sets/50-ch21-tuples-conceptual-qa.md)
-* [Tuples: Scripting Questions (With Answers)](21-tuples-dicts-sets/70-ch21-tuples-scripting-qa.md)
-* [Dictionaries: Conceptual Questions (With Answers)](21-tuples-dicts-sets/80-ch21-dictionary-conceptual-qa.md)
-* [Dictionaries: Scripting Questions (With Answers)](21-tuples-dicts-sets/90-ch21-dictionary-scripting-qa.md)
-* [Sets: Conceptual Questions (With Answers)](21-tuples-dicts-sets/95-ch21-sets-conceptual-qa.md)
-* [Sets: Scripting Questions (With Answers)](21-tuples-dicts-sets/98-ch21-sets-scripting-qa.md)
+

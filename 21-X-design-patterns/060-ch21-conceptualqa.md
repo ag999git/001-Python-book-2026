@@ -280,6 +280,9 @@ ________________________________________
 
 ________________________________________
 Flowchart
+
+![Flowchart](/resources/ch16-21-august-2026-qa-question9.png)
+
 ```mermaid
 flowchart LR
 

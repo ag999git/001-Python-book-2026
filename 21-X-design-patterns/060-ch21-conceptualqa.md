@@ -504,21 +504,7 @@ Comparison Table
 ________________________________________
 Flowchart
 
-```mermaid
-flowchart LR
-
-A["1. Client"]
-
-A --> B["2. Iterator"]
-
-B --> C["3. Next Element"]
-
-C --> D["4. Process Element"]
-
-D --> B
-
-B --> E["5. End of Collection"]
-```
+![Flowchart](/resources/ch16-21-august-2026-qa-question-16.png)
 
 ________________________________________
 **Q17. Explain Pythonic Design Patterns. How do Python features such as decorators, context managers, mixins, duck typing and dataclasses simplify classical design patterns?**

@@ -404,19 +404,8 @@ Comparison Table
 
 ________________________________________
 Flowchart
-```mermaid
-flowchart LR
 
-A["1. Subject State Changes"]
-
---> B["2. Notify Observers"]
-
-B --> C["3. Observer A Updates"]
-
-B --> D["4. Observer B Updates"]
-
-B --> E["5. Observer C Updates"]
-```
+![Flowchart](/resources/ch16-21-august-2026-qa-question-13.png)
 
 
 ________________________________________

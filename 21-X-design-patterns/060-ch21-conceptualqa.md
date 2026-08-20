@@ -377,19 +377,7 @@ Comparison Table
 ________________________________________
 Flowchart
 
-```mermaid
-flowchart LR
-
-A["1. Client"]
-
---> B["2. Proxy"]
-
-B --> C["3. Permission / Logging / Cache"]
-
-C --> D["4. Real Object"]
-
-D --> E["5. Perform Operation"]
-```
+![Flowchart](/resources/ch16-21-august-2026-qa-question12.png)
 
 
 ________________________________________

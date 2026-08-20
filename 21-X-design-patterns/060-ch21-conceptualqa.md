@@ -469,19 +469,8 @@ Comparison Table
 ________________________________________
 Flowchart
 
-```mermaid
-flowchart LR
+![Flowchart](/resources/ch16-21-august-2026-qa-question15.png)
 
-A["1. User Action"]
-
---> B["2. Create Command Object"]
-
-B --> C["3. Store / Queue Command"]
-
-C --> D["4. Execute Command"]
-
-D --> E["5. Receiver Performs Action"]
-```
 ________________________________________
 .
 **Q16. Explain the Iterator and Template Method patterns. What problems do they solve? Compare their purposes and typical applications.**

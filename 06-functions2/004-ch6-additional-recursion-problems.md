@@ -6,6 +6,7 @@ Here, that idea is applied to five classic problems: computing powers, checking 
 
 ---
 
+
 ## 1. Recursive Function to Compute $a^b$
 
 A natural example of recursion is computing $a^{b}$, where $a$ (the base) and $b$ (a non-negative integer exponent).

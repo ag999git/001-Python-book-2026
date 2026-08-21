@@ -1,343 +1,254 @@
-### Additional Problems on recursion
+# Additional Problems on Recursion
 
-### 1. Recursive Function to Compute $a^b$
+This chapter builds on the introduction to recursion given earlier in the book. There, you learned the two ingredients every recursive function needs — a **base case** (the condition that stops the recursion) and a **recursive case** (where the function calls itself on a smaller version of the problem).
 
-Another useful example of recursion is computing the value of:  $a^{b}$, where $a$ (base) and $b$ (exponent) are non-negative integers.
+Here, that idea is applied to five classic problems: computing powers, checking palindromes, finding the GCD, solving the Tower of Hanoi, and testing whether a number is even. Each problem is solved two ways where useful — a recursive way (to build your understanding of recursion) and the simple, everyday Python way (so you know what to actually use in real code). Working through all five will make the *pattern* of recursive thinking — reduce the problem, trust the smaller call, combine the results — feel natural well beyond these specific examples.
 
+---
+
+## 1. Recursive Function to Compute $a^b$
+
+A natural example of recursion is computing $a^{b}$, where $a$ (the base) and $b$ (a non-negative integer exponent).
 
 For example:
 
-$2^5 = 2 × 2 × 2 × 2 × 2 = 32$
+$$2^5 = 2 \times 2 \times 2 \times 2 \times 2 = 32$$
 
-<div align="left">
- 
+The recursive definition mirrors the mathematical one exactly:
+
 $$
-a^b = \begin{cases} 
-1 & \text{if } b = 0 \\ 
-a \times a^{(b-1)} & \text{if } b > 0 
+a^b =
+\begin{cases}
+1 & \text{if } b = 0 \\
+a \times a^{(b-1)} & \text{if } b > 0
 \end{cases}
 $$
 
-</div>
+In words: *"a to the power b" is just a multiplied by "a to the power (b − 1)"* — a smaller version of the same problem — and the recursion bottoms out when the exponent hits 0.
 
-
-Key Components of the Recursive Algorithm
+**Key components of the recursive algorithm**
 
 | Component | Description |
 | --- | --- |
-| Base case | When b=0b = 0b=0, return 1 |
-| Recursive case | Multiply a by the result of ab−1a^{b-1}ab−1 |
-| Progress toward base case | The exponent decreases by 1 in each call |
-
+| Base case | When $b = 0$, return 1 |
+| Recursive case | Multiply $a$ by the result of $a^{(b-1)}$ |
+| Progress toward base case | The exponent decreases by 1 on every call |
 
 ```python
-
-# Recursive function to compute a^b (base raised to exponent)
-# The exponent is reduced by 1 in every recursive call
+# Recursive function to compute a^b (base raised to exponent).
+# The exponent is reduced by 1 on every recursive call,
 # until the base case (exponent = 0) is reached.
 
 def power_recursive(base, exponent):
-    
-    # Returns base raised to the power exponent using recursion.
-    
+    """Return base raised to the power exponent, using recursion."""
+
     # ---------- BASE CASE ----------
     # Any number raised to the power 0 is equal to 1
     if exponent == 0:
-        print("Reached base case: exponent = 0 → returning 1")
+        print("Reached base case: exponent = 0 -> returning 1")
         return 1
 
     # ---------- RECURSIVE CASE ----------
-    # Reduce the exponent and call the function again
-    print(f"Computing {base}^{exponent} → calling {base}^{exponent - 1}")
-
-    # Recursive call with smaller exponent
+    # Call the function again with the exponent reduced by 1
+    print(f"Computing {base}^{exponent} -> calling {base}^{exponent - 1}")
     partial_result = power_recursive(base, exponent - 1)
 
-    # Multiply base with result returned from recursion
+    # Multiply base by the value returned from the recursive call
     result = base * partial_result
 
-    # Show the computation during the return phase
-    print(f"Returning: {base}^{exponent} = {base} × {partial_result} = {result}")
-
+    # Show the computation as the recursion "unwinds" (returns)
+    print(f"Returning: {base}^{exponent} = {base} x {partial_result} = {result}")
     return result
 
-# Test cases
-# Each tuple contains (base, exponent)
 
+# Test cases: each tuple holds (base, exponent)
 test_cases = [
     (2, 5),   # 2^5 = 32
     (3, 4),   # 3^4 = 81
     (5, 0),   # 5^0 = 1
     (7, 1),   # 7^1 = 7
-    (4, 3)    # 4^3 = 64
+    (4, 3),   # 4^3 = 64
 ]
 
-# Run the recursive function on each test case in the list and print the results
 for base, exponent in test_cases:
-
     print("\n----------------------------------")
     print(f"Computing {base}^{exponent}")
-
     result = power_recursive(base, exponent)
-
     print(f"Final Result: {base}^{exponent} = {result}")
-
 ```
 
+> **In real code:** Python already gives you this via the built-in `base ** exponent` or `pow(base, exponent)`. Writing `power_recursive()` is a learning exercise, not something you'd use in production — but the pattern (multiply by a smaller version of the same call) reappears constantly in recursive algorithms.
 
-### 2. Using Recursion to Check Whether a String Is a Palindrome
+---
 
-A palindrome is a word, phrase, or sequence of characters that reads the same forward and backward.
+## 2. Using Recursion to Check Whether a String Is a Palindrome
 
-Examples:
-```python
+A **palindrome** is a word, phrase, or sequence of characters that reads the same forwards and backwards — for example `madam`, `level`, and `racecar`.
+
+**Idea behind the recursive solution:** a string is a palindrome if
+
+1. its first and last characters match, **and**
+2. the substring left after removing those two characters is *also* a palindrome.
+
+Tracing `"madam"`:
+
+```
 madam
-level
-racecar
+ ↑   ↑        first ('m') == last ('m')  →  check the middle: "ada"
 
+ ada
+  ↑           first ('a') == last ('a')  →  check the middle: "d"
+
+ d             length 1 → automatically a palindrome (base case)
 ```
 
-Each of these strings remains the same when the characters are reversed.
-
-Idea Behind the Recursive Solution
-
-A string is a palindrome if:
-
-The first character and last character are the same.
-
-The remaining middle portion of the string is also a palindrome.
-
-For example:
-
-```python
-madam
-Step-by-step comparison:
-
-m   ada   m
-↑         ↑
-match
-Now check the inner string:
-
-ada
-Again:
-
-a  d  a
-↑     ↑
-match
-Now check:
-d
-A single character is always a palindrome.
-
-```
-
-**Recursive Logic**
-
-  
+**Recursive logic**
 
 | Condition | Result |
 | --- | --- |
 | Length ≤ 1 | Palindrome (base case) |
-| First ≠ Last | Not a palindrome |
-| First = Last | Recursively check the inner substring |
+| First character ≠ last character | Not a palindrome |
+| First character = last character | Recursively check the inner substring |
 
-
-Thus the recursion continues until the string becomes empty or one character long.
+The recursion keeps shrinking the string by one character from each end until it becomes empty or a single character — at which point it's trivially a palindrome.
 
 ##### Recursive Python Implementation
 
 ```python
-
-
-# Recursive function to check whether a string is a palindrome
+# Recursive function to check whether a string is a palindrome.
 # A palindrome reads the same forward and backward.
 
 def is_palindrome(text):
-
-    # Returns True if 'text' is a palindrome, otherwise False.
+    """Return True if text is a palindrome, otherwise False."""
 
     # ---------- BASE CASE ----------
-    # If the string has length 0 or 1,
-    # it is automatically a palindrome
+    # A string of length 0 or 1 is always a palindrome
     if len(text) <= 1:
         return True
 
     # ---------- MISMATCH CHECK ----------
-    # Compare the first and last characters
+    # If the outer characters differ, it can never be a palindrome,
+    # so we can stop immediately without checking further
     if text[0] != text[-1]:
-        return False   # characters differ → not a palindrome
+        return False
 
     # ---------- RECURSIVE CASE ----------
-    # Remove first and last characters
-    # and test the remaining substring
+    # Outer characters match, so strip them off
+    # and recursively test what's left in the middle
     inner_text = text[1:-1]
-
     return is_palindrome(inner_text)
 
 
-
-# Testing the palindrome function.
-
+# Testing the palindrome function
 print(is_palindrome("level"))            # True
 print(is_palindrome("madam"))            # True
 print(is_palindrome("racecar"))          # True
 print(is_palindrome("python"))           # False
 print(is_palindrome("neveroddoreven"))   # True
-print(is_palindrome(""))                 # True (empty string)
-print(is_palindrome("a"))                # True (single character)
-
+print(is_palindrome(""))                 # True  (empty string)
+print(is_palindrome("a"))                # True  (single character)
 ```
-
 
 #### Optional Improvement (Often Done in Real Programs)
 
-Real programs often ignore spaces and case differences.
+Real programs usually want to treat phrases like `"Never Odd Or Even"` as palindromes too, ignoring spaces and letter case. To do that, normalize the string *before* checking it:
 
-Example:
 ```python
-"Never Odd Or Even"
+text = text.lower().replace(" ", "")   # lowercase + remove spaces
 ```
 
-To handle this, we convert the string to lowercase and remove spaces before checking.
+Add this line at the top of `is_palindrome()` (before the base-case check) if you want the function to ignore spacing and capitalization.
 
-Example preprocessing:
+---
 
-`text = text.lower().replace(" ", "")`
+## 3. Recursive Function to Find the GCD (Greatest Common Divisor)
 
+The **Greatest Common Divisor (GCD)** of two integers is the largest positive integer that divides both of them exactly.
 
+For example, to find $\gcd(48, 18)$: the common divisors of 48 and 18 are $1, 2, 3, 6$ — and the largest of these is 6. So $\gcd(48, 18) = 6$.
 
-### 3. Recursive Function to Find GCD (Greatest Common Divisor)
+##### Euclid's Algorithm
 
-The Greatest Common Divisor (GCD) of two integers is the largest positive integer that divides both numbers exactly.
+One of the most efficient ways to compute the GCD is **Euclid's Algorithm**, based on the identity:
 
-For example: find $GCD(48, 18)$
+$$\gcd(a, b) = \gcd(b, \ a \bmod b)$$
 
-Note that the common divisors of 48 and 18 are: $1, 2, 3, 6$
-But the largest of these is 6.
-So $GCD(48, 18) = 6$
+where $a \bmod b$ is the remainder when $a$ is divided by $b$. Each step replaces the pair $(a, b)$ with the smaller pair $(b, a \bmod b)$, and the recursion continues until the remainder becomes 0. At that point:
 
-##### Euclid’s Algorithm
+$$\gcd(a, 0) = a$$
 
-It is one of the most efficient methods to compute the GCD is Euclid’s Algorithm.
+This is the base case of the recursion.
 
-The algorithm is based on the mathematical identity: $gcd(a,b)=gcd(b,amodb)$
-
-where a mod b is the remainder when a is divided by b.
-
-The recursion continues until the remainder becomes 0.
-
-At that point: $gcd(a,0)=a$
-
-This becomes the base case of the recursion.
-
-Example
-
-```python
-
-Find GCD(48,18)
-
-gcd(48,18)
-= gcd(18, 48 % 18)
-= gcd(18,12)
-
-= gcd(12, 18 % 12)
-= gcd(12,6)
-
-= gcd(6, 12 % 6)
-= gcd(6,0)
-
-GCD = 6
+**Worked example**
 
 ```
+gcd(48, 18)
+= gcd(18, 48 % 18)   = gcd(18, 12)
+= gcd(12, 18 % 12)   = gcd(12, 6)
+= gcd(6,  12 % 6)    = gcd(6, 0)
 
-Recursive Python Implementation
+gcd(6, 0) = 6   →   GCD = 6
+```
 
+##### Recursive Python Implementation
 
 ```python
+# Recursive function to compute the GCD of two integers
+# using Euclid's Algorithm.
 
-# Recursive function to compute the nth Fibonacci number
+def gcd_recursive(a, b):
+    """Return the greatest common divisor of a and b using recursion."""
 
-def fibonacci_recursive(n):
-    # Returns the nth Fibonacci number using recursion.
-    # There are 2 base cases: Fibonacci(0) = 0 and Fibonacci(1) = 1
+    # ---------- BASE CASE ----------
+    # When b becomes 0, a itself is the GCD
+    if b == 0:
+        print(f"Base case reached: gcd({a}, 0) = {a}")
+        return a
 
-    # -------- Base Case 1 --------
-    # If n = 0, return 
-    if n == 0:
-        return 0
+    # ---------- RECURSIVE CASE ----------
+    # Replace (a, b) with (b, a % b) and call the function again
+    remainder = a % b
+    print(f"gcd({a}, {b}) -> gcd({b}, {remainder})")
+    return gcd_recursive(b, remainder)
 
-    # -------- Base Case 2 --------
-    # If n = 1, return 1 
-    elif n == 1:
-        return 1
-
-    # -------- Recursive Case --------
-    # Compute the sum of the previous two Fibonacci numbers
-    return fibonacci_recursive(n - 1) + fibonacci_recursive(n - 2)
 
 # Test calls
-
-print(f"Fibonacci(5)  → {fibonacci_recursive(5)}")   # 5
-print(f"Fibonacci(6)  → {fibonacci_recursive(6)}")   # 8
-print(f"Fibonacci(7)  → {fibonacci_recursive(7)}")   # 13
-print(f"Fibonacci(10) → {fibonacci_recursive(10)}")  # 55
-
-
+print(f"GCD(48, 18) = {gcd_recursive(48, 18)}")   # 6
+print(f"GCD(100, 75) = {gcd_recursive(100, 75)}")  # 25
+print(f"GCD(17, 5)  = {gcd_recursive(17, 5)}")    # 1  (co-prime numbers)
 ```
 
-The following diagram shows the flow of execution 
+> **In real code:** Python's standard library already provides this as `math.gcd(a, b)`. As with `power_recursive()` above, writing it yourself is valuable purely for understanding *how* Euclid's Algorithm works step by step.
 
-Below is a diagram that illustrates Euclid’s Algorithm for computing GCD using recursion.
+The diagram below illustrates Euclid's Algorithm for computing $\gcd(48, 18)$, with numbered blocks so you can follow the flow step by step.
 
-The diagram shows the execution for: $gcd(48,18)$ . It has numbered blocks so students can follow the algorithm step-by-step.
+![GCD recursion flowchart](https://github.com/ag999git/001-Python-book-2026/raw/main/resources/ch-6-functions2-gcd-recursion.png)
 
-
-![GCD](https://github.com/ag999git/001-Python-book-2026/blob/main/resources/ch-6-functions2-gcd-recursion.png)
-
-
-The following table explains each block in the flow chart:-
-
-  
-
-  
+**What each block in the flowchart does**
 
 | Block No. | Block Description | What Happens in This Step | Example |
 | --- | --- | --- | --- |
-| 1 | Start | Begin the algorithm with two numbers a and b whose GCD we want to find. | gcd(48, 18) |
-| 2 | Check if b = 0 | This is the base condition. If b = 0, the algorithm stops. | Check if 18 = 0 |
-| 3 | Compute remainder | Calculate the remainder when a is divided by b using the modulo operator %. | 48 % 18 = 12 |
-| 4 | Recursive call | Replace a with b and b with the remainder and call the function again. | gcd(18, 12) |
-| 5 | Repeat process | Continue repeating the same steps until b becomes 0. | gcd(12, 6) → gcd(6, 0) |
-| 6 | Return result | When b = 0, the value of a is the GCD. | gcd(6, 0) = 6 |
+| 1 | Start | Begin the algorithm with two numbers `a` and `b` whose GCD we want to find. | `gcd(48, 18)` |
+| 2 | Check if b = 0 | This is the base condition — if `b = 0`, the algorithm stops. | Check if `18 = 0` |
+| 3 | Compute remainder | Calculate the remainder when `a` is divided by `b`, using the modulo operator `%`. | `48 % 18 = 12` |
+| 4 | Recursive call | Replace `a` with `b`, and `b` with the remainder, then call the function again. | `gcd(18, 12)` |
+| 5 | Repeat process | Keep repeating the same steps until `b` becomes 0. | `gcd(12, 6) → gcd(6, 0)` |
+| 6 | Return result | When `b = 0`, the current value of `a` is the GCD. | `gcd(6, 0) = 6` |
 
+---
 
-### 4. Recursive function to implement Tower of Hanoi
+## 4. Recursive Function to Implement the Tower of Hanoi
 
-The recursion solution to the Tower of Hanoi is given in details in the book.
+The full recursive solution to the Tower of Hanoi is explained in detail earlier in the book. This section adds a complete move-by-move trace and a line-by-line breakdown of the script, so you can see exactly how the recursion unfolds.
 
-Some additional points are mentioned here
+#### Complete Table of Tower of Hanoi States for 5 Disks
 
-#### Below is the complete table of Tower of Hanoi states for 5 disks.
+**Conventions used:**
+- Source = A, Auxiliary = B, Destination = C
+- Each list shows disks from **largest → smallest**, read **left → right**
+- Move 0 = initial state, Move 31 = final solved state
 
-Conventions used:
-
-Source = A
-
-Auxiliary = B
-
-Destination = C
-
-Lists show disks largest → smallest (left → right).
-
-Move 0 = initial state
-
-Move 31 = final solved state
-
-  
-    
-
-  
-
-| Move | Disk Moved | Move | A (Source) | B (Aux) | C (Dest) |
+| Move | Disk Moved | Direction | A (Source) | B (Aux) | C (Dest) |
 | --- | --- | --- | --- | --- | --- |
 | 0 | – | Initial | [5,4,3,2,1] | [] | [] |
 | 1 | 1 | A→C | [5,4,3,2] | [] | [1] |
@@ -372,325 +283,203 @@ Move 31 = final solved state
 | 30 | 2 | B→C | [1] | [] | [5,4,3,2] |
 | 31 | 1 | A→C | [] | [] | [5,4,3,2,1] |
 
-  
-Given below is the script which implements the Tower of Hanoi problem
+Note that a 5-disk puzzle takes $2^5 - 1 = 31$ moves in total — which matches the last row above.
+
+##### The Full Script
 
 ```python
-
-# Tower of Hanoi using three lists representing towers A, B, C. Each list acts
-# like a stack. In the list leftmost item is at bottom (Biggest) and rightmost 
-# is at top (Smallest). The script also counts and displays move numbers.
+# Tower of Hanoi, using three lists to represent towers A, B, and C.
+# Each list behaves like a stack:
+#   - the LEFTMOST item is the BOTTOM of the tower (the biggest disk)
+#   - the RIGHTMOST item is the TOP of the tower (the smallest disk)
+# The script also counts and displays the move number for each step.
 
 def print_towers(towers):
     """Display the current state of all three towers."""
     print(f"A: {towers['A']}   B: {towers['B']}   C: {towers['C']}")
     print("-" * 40)
 
+
 def move_disk(towers, source, target, move_counter):
-    # Move top disk from one tower to another also increment the move counter
+    """Move the top disk from 'source' tower to 'target' tower,
+    and update the shared move counter."""
 
-    disk = towers[source].pop()     # Remove top disk from source
-    towers[target].append(disk)     # Place disk on target
+    disk = towers[source].pop()      # Remove top disk from source
+    towers[target].append(disk)      # Place it on top of target
 
-    move_counter[0] += 1            # Increment move count
+    move_counter[0] += 1             # Increment the shared move count
 
-    print(f"Move {move_counter[0]}: disk from {source} → {target}")
+    print(f"Move {move_counter[0]}: disk from {source} -> {target}")
     print_towers(towers)
+
 
 def hanoi_recursive(n, source, target, auxiliary, towers, move_counter):
     """
-    Recursive solution to Tower of Hanoi.
+    Recursive solution to the Tower of Hanoi.
 
-    n         -> number of disks
-    source    -> source tower (A/B/C)
-    target    -> target tower (A/B/C)
-    auxiliary -> auxiliary tower (A/B/C)
-    towers    -> dictionary storing the towers
-    move_counter -> list used to track number of moves
+    n            -> number of disks still to move
+    source       -> tower the disks start on      (A/B/C)
+    target       -> tower the disks must end up on (A/B/C)
+    auxiliary    -> the spare tower used along the way (A/B/C)
+    towers       -> dictionary storing the three towers
+    move_counter -> single-item list used to track total moves
+                    (see note below on why this is a list, not an int)
     """
 
-    # -------- Base Case --------
+    # -------- BASE CASE --------
+    # Only one disk left: move it directly, no further recursion needed
     if n == 1:
         move_disk(towers, source, target, move_counter)
         return
 
-    # -------- Recursive Case --------
-
-    # Step 1: Move n-1 disks from source → auxiliary
+    # -------- RECURSIVE CASE --------
+    # Step 1: move the top (n - 1) disks out of the way, onto auxiliary
     hanoi_recursive(n - 1, source, auxiliary, target, towers, move_counter)
 
-    # Step 2: Move largest disk from source → target
+    # Step 2: move the single largest remaining disk to its final spot
     move_disk(towers, source, target, move_counter)
 
-    # Step 3: Move n-1 disks from auxiliary → target
+    # Step 3: move the (n - 1) disks from auxiliary onto target,
+    #         completing the stack on top of the disk placed in Step 2
     hanoi_recursive(n - 1, auxiliary, target, source, towers, move_counter)
 
-# INITIAL SETUP
+
+# ---------------- INITIAL SETUP ----------------
 
 num_disks = 3
 
-# Towers represented as a dictionary. Create initial state for tower A with 
-# disks from largest on left to smallest on right.
-initial_state_A = list(range(num_disks, 0, -1)) 
-# Initialize towers with initial_state_A for tower A. Empty lists for B & C
+# Tower A starts with all disks, largest on the left (bottom)
+# down to smallest on the right (top). B and C start empty.
+initial_state_A = list(range(num_disks, 0, -1))
 towers = {"A": initial_state_A, "B": [], "C": []}
 
-# Move counter stored in a list so recursion can update it
+# move_counter is a one-item list (not a plain int) so that every
+# recursive call can update the *same* counter — see the explanation below.
 move_counter = [0]
 
 print("Initial State")
 print_towers(towers)
 
-# Solve the puzzle
+# Solve the puzzle: move all disks from A to C, using B as the spare
 hanoi_recursive(num_disks, "A", "C", "B", towers, move_counter)
 
-# Display total moves
 print(f"Total moves required: {move_counter[0]}")
-
 ```
 
-#### Detailed discussion of the script given above.
-The following section discusses the above script in detaila
+#### Line-by-Line Discussion of the Script
 
-##### 1. Representation of Towers and conventions used in the script
+##### How the towers are represented
 
-The towers are represented using Python lists.
+The towers are plain Python lists, where the **left side is the bottom** and the **right side is the top**:
 
 ```python
-
-Example initial state for 3 disks:
-A: [3, 2, 1]
-B: []
-C: []
-
+# Example initial state for 3 disks:
+# A: [3, 2, 1]   ->  3 (largest, at the bottom)
+#                    2
+#                    1 (smallest, at the top)
+# B: []
+# C: []
 ```
 
-Important conventions used in the script:
-
-  
-
-| List Position | Meaning |
-| --- | --- |
-| Left side | Bottom of tower |
-| Right side | Top of tower |
-
-Thus:
+They're grouped together in a dictionary so each tower can be referred to by name:
 
 ```python
-
-[3, 2, 1]
-
-means
-
-3 (largest disk at bottom)
-2
-1 (smallest disk at top)
-2. The towers Dictionary
-
+towers = {"A": initial_state_A, "B": [], "C": []}
+# Access individual towers as towers["A"], towers["B"], towers["C"]
 ```
 
-The three towers are stored in a dictionary:
+##### `print_towers()`
 
-`towers = {"A": initial_state_A, "B": [], "C": []}`
+Displays the current configuration of all three towers, so you can visually follow how the disks move after every step.
 
-This allows us to refer to towers by name:
-```python
+##### `move_disk()`
 
-towers["A"]
-towers["B"]
-towers["C"]
-
-Example state:
-
-A: [3]
-B: [2]
-C: [1]
-
-```
-
-
-##### 2. The `print_towers()` Function
-
-Purpose: Displays the current configuration of the towers.
-
-Function definition:
-
-`def print_towers(towers):`
-
-
-This function helps the reader visualize how disks move after each step.
-
-##### 4. The `move_disk()` Function
-
-Purpose: Moves one disk from a source tower to a target tower.
-
-Function definition:
-`move_disk(towers, source, target, move_counter)`
-
-Parameters:
+Moves exactly one disk from a `source` tower to a `target` tower, and updates the shared move counter.
 
 | Parameter | Meaning |
 | --- | --- |
-| towers | dictionary containing the three towers |
-| source | tower from which disk is removed |
-| target | tower to which disk is moved |
-| move_counter | counts the number of moves |
+| `towers` | dictionary containing the three towers |
+| `source` | tower the disk is removed from |
+| `target` | tower the disk is placed onto |
+| `move_counter` | shared counter tracking the number of moves so far |
 
+Since Python lists behave like stacks:
+- `towers[source].pop()` removes and returns the **top** (last) item of the list — the smallest, topmost disk.
+- `towers[target].append(disk)` places that disk on **top** of the target tower.
 
+##### Why `move_counter` is a list, not a plain integer
 
+`move_counter = [0]` looks unusual — why not just use an integer? The reason is that **integers are immutable** in Python: if you passed a plain `int` into a recursive function and incremented it there, each recursive call would get its *own* copy, and the changes wouldn't be visible to the other calls once they returned.
 
-##### 5. Removing top disk, placing disk on target tower and incrementing move counter
-**The following line of script removes disk from top**
-`disk = towers[source].pop()  # Remove top disk`
+A **list is mutable**, so every recursive call receives a reference to the *same* list. When any call does `move_counter[0] += 1`, that change is visible to every other call sharing the same list — giving all of them a single, correctly-shared move count.
 
-Since lists behave like stacks, `.pop()` removes the top disk.
-
-**The following line in script places the disk on the target tower**
-
-`towers[target].append(disk)  #Place disk on target tower`
-
-**The following line of script increments the counter representing number of moves**
-`move_counter[0] += 1`
-
-
-
-##### 6. The `move_counter` Variable
-`move_counter = [0]`
-
-Why a list instead of a normal integer? Because lists are mutable objects in Python.
-
-When recursion calls functions repeatedly, the list allows all recursive calls to update the same counter.
-
-Thus every move increases the same shared counter.
-
-##### 7. The `hanoi_recursive()` Function
-
-This is the core algorithm.
-
-Function definition:
-
-`hanoi_recursive(n, source, target, auxiliary, towers, move_counter)`
-
-Parameters:
-  
+##### `hanoi_recursive()` — the core algorithm
 
 | Parameter | Meaning |
 | --- | --- |
-| n | number of disks to move |
-| --- | --- |
-| source | tower where disks start |
-| --- | --- |
-| target | tower where disks must go |
-| --- | --- |
-| auxiliary | temporary tower used during movement |
-| --- | --- |
-| towers | dictionary storing towers |
-| --- | --- |
-| move_counter | counts moves |
-| --- | --- |
+| `n` | number of disks still to move |
+| `source` | tower the disks start on |
+| `target` | tower the disks must end up on |
+| `auxiliary` | spare tower used temporarily during the move |
+| `towers` | dictionary storing the towers |
+| `move_counter` | shared counter tracking total moves |
 
-
-###### 8. The Base Case
+**Base case:**
 
 ```python
-
 if n == 1:
     move_disk(...)
 ```
 
-If only one disk remains, simply move it directly from source to target.
+If only one disk remains, it's moved directly from `source` to `target`, and the recursion for this branch stops.
 
-Example:
+**Recursive case — three steps:**
 
-`A → C`
+| Step | What Happens | Example (3 disks, A→C via B) |
+| --- | --- | --- |
+| 1 | Move the top $n-1$ disks from `source` to `auxiliary` (out of the way) | Move disks 1 and 2 from A → B |
+| 2 | Move the single largest disk from `source` to `target` | Move disk 3 from A → C |
+| 3 | Move the $n-1$ disks from `auxiliary` onto `target` | Move disks 1 and 2 from B → C |
 
-This stops the recursion.
+##### Overall flow of the program
 
-##### 9. The Recursive Case
-
-When more than one disk exists, the algorithm performs three steps.
-
-**Step 1**
-
-Move n−1 disks from source → auxiliary
-
-`hanoi_recursive(n-1, source, auxiliary, target)`
-
-Example: Move disks 1 and 2 from A → B
-
-**Step 2**
-
-Move the largest disk from source → target
-
-`move_disk(...)`
-
-Example: Move disk 3 from A → C
-
-**Step 3**
-
-Move the n−1 disks from auxiliary → target
-
-`hanoi_recursive(n-1, auxiliary, target, source)`
-
-Example: Move disks 1 and 2 from B → C
-
-###### Overall Flow of the Program
-
-```python
-
+```
 Initial state printed
         ↓
-hanoi_recursive called
+hanoi_recursive() called
         ↓
-Recursive breakdown of problem
+Problem repeatedly broken down (recursive Step 1, then Step 3)
         ↓
-Each move performed using move_disk()
+Each individual disk moved via move_disk() (recursive Step 2 / base case)
         ↓
-Towers printed after each move
+Towers printed after every move
         ↓
-Final state reached
+Final state reached, all disks on tower C
         ↓
 Total moves displayed
 ```
 
+---
 
+## 5. Recursive Function to Test Whether a Number Is Even (Not Very Efficient)
 
-### 5. Recursive function to find a number is even or not. (Not very efficient)
+Even/odd testing can also be done recursively — mainly as an exercise in recursive thinking, not because it's a good way to solve the problem.
 
-We can test a number to be even or odd by recursion also. The steps are as follows:-
+> **Tip:** This method is useful **for learning recursion**, not for efficiency. In real code, always use the modulus operator: `n % 2 == 0`.
 
- - If number is negative, reverse its sign. 
- - Base condition is when    number is 0 or 1. If 0 it is even, if 1 it is odd.
- - Recursively subtract 2 from the number until it becomes less than 2
-
-> [!TIP]
-A number can be tested for **evenness or oddness** using recursion.  
-However, this is mainly useful **for learning recursion**, not for efficiency. In practice, Python programmers normally use the **modulus operator (`%`)**.
-
-Idea Behind the Recursive Method. The recursive method is based on the following observations:
-
-  
+**Idea behind the recursive method**
 
 | Observation | Explanation |
 | --- | --- |
-| Even numbers differ by 2 | If a number is even, subtracting 2 repeatedly will eventually reach 0 |
-| Odd numbers differ by 2 | If a number is odd, subtracting 2 repeatedly will eventually reach 1 |
+| Even numbers differ from 0 by a multiple of 2 | Subtracting 2 repeatedly from an even number eventually reaches 0 |
+| Odd numbers differ from 1 by a multiple of 2 | Subtracting 2 repeatedly from an odd number eventually reaches 1 |
 
+The rules, in order:
 
-Thus we use the following rules:
-
-1.  If the number is **negative**, convert it to positive (because even/odd property does not change).  
-2.  If the number becomes **0**, it is **even**. _(Base case)_
-    
-3.  If the number becomes **1**, it is **odd**. _(Base case)_
-    
-4.  Otherwise subtract **2** and repeat the process recursively.
-
-Recursive Logic
-
-  
-
-  
+1. If the number is **negative**, convert it to positive first (sign doesn't affect evenness/oddness).
+2. If the number is **0**, it's **even**. *(base case)*
+3. If the number is **1**, it's **odd**. *(base case)*
+4. Otherwise, subtract **2** and repeat.
 
 | Condition | Result |
 | --- | --- |
@@ -699,69 +488,49 @@ Recursive Logic
 | n > 1 | check (n − 2) recursively |
 
 ```python
-
-# ------------------------------------------------------------
-# Recursive function to determine whether a number is even
-# ------------------------------------------------------------
-# The function repeatedly subtracts 2 from the number
-# until it reaches one of the base cases (0 or 1).
-# ------------------------------------------------------------
+# Recursive function to determine whether a number is even.
+# It repeatedly subtracts 2 from the number until it reaches
+# one of the two base cases (0 or 1).
 
 def is_even_recursive(n):
     """
-    Returns True if the number is even
-    Returns False if the number is odd
-    Uses recursion for demonstration purposes.
+    Return True if n is even, False if n is odd.
+    Implemented recursively for demonstration purposes only —
+    prefer 'n % 2 == 0' in real code (see note at the end).
     """
 
-    # Convert negative numbers to positive
-    # (Even/odd property does not change with sign)
+    # Normalize negative numbers to positive first,
+    # since evenness/oddness doesn't depend on sign
     n = abs(n)
 
-    # ---------- Base Cases ----------
-    # If n becomes 0, the number is even
+    # ---------- BASE CASES ----------
     if n == 0:
-        return True
-
-    # If n becomes 1, the number is odd
+        return True     # 0 is even
     if n == 1:
-        return False
+        return False    # 1 is odd
 
-    # ---------- Recursive Case ----------
-    # Reduce the problem size by subtracting 2
+    # ---------- RECURSIVE CASE ----------
+    # Shrink the problem by subtracting 2, then recurse
     return is_even_recursive(n - 2)
 
 
-# ------------------------------------------------------------
 # Example calls
-# ------------------------------------------------------------
-
-print("-92 is even?  ", is_even_recursive(-92))   # True  (-92 → 92 → even)
+print("-92 is even? ", is_even_recursive(-92))   # True  (-92 -> 92 -> even)
 print("17 is even?  ", is_even_recursive(17))    # False (odd)
-print("100 is even?  ", is_even_recursive(100))   # True  (even)
-
+print("100 is even? ", is_even_recursive(100))   # True  (even)
 ```
 
-##### Example Trace: Checking if 7 is Even
-
-The recursive calls proceed as follows:
-
-  
+##### Example Trace: Checking if 7 Is Even
 
 | Step | Function Call |
 | --- | --- |
-| 1 | is_even_recursive(7) |
-| 2 | is_even_recursive(5) |
-| 3 | is_even_recursive(3) |
-| 4 | is_even_recursive(1) |
-| 5 | Base case reached → return False |
-  
+| 1 | `is_even_recursive(7)` |
+| 2 | `is_even_recursive(5)` |
+| 3 | `is_even_recursive(3)` |
+| 4 | `is_even_recursive(1)` |
+| 5 | Base case reached → returns `False` |
 
-
-##### Visual Representation of the Recursion
-
-```python
-
+```
 is_even_recursive(7)
       ↓
 is_even_recursive(5)
@@ -771,44 +540,17 @@ is_even_recursive(3)
 is_even_recursive(1)
       ↓
 Base case → return False
-
 ```
 
 ##### Why This Method Is Not Efficient
 
-Although recursion works here, it is not efficient for large numbers.
+For large numbers, this recursive approach needs one function call for every 2 units of `n`. For example, `is_even_recursive(1_000_000)` would make roughly 500,000 recursive calls before reaching a base case — and Python's default recursion limit (around 1000) means it would actually crash with a `RecursionError` long before finishing.
 
-Example:
+Compare that to the direct approach:
 
-`is_even_recursive(1,000,000)`
+```python
+n % 2 == 0
+```
 
-This would require 500,000 recursive calls.
-
-The efficient method is:
-
-`n % 2 == 0`
-
-which completes in one step.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+which completes in a single step, regardless of how large `n` is. **This is the version you should actually use** — the recursive version above exists purely to practice thinking recursively.
 

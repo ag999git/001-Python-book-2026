@@ -236,7 +236,11 @@
 * [Scripting Questions (With Answers)](17-strings/090-ch17-scripting-qa.md)
 
 
+## Chapter 18 Lists (Beyond Basics)
 
+* [Introduction](20-lists/README.md)
+* [Google Colab NB: Chapter 20](https://github.com/ag999git/001-Python-book-2026/blob/main/colab-nb/20_lists.ipynb)
+* [Lists: Conceptual Questions (With Answers)](18-lists/50-ch18-qa.md)
 
 
 

@@ -255,6 +255,33 @@
 * [Sets: Scripting Questions (With Answers)](19-tuples-dicts-sets/98-ch19-sets-scripting-qa.md)
 
 
+## Chapter 20: Unittest
+
+* [Introduction](20-unittest/README.md)
+* [Understanding Pytest Command-Line Flags](20-unittest/010-ch20-pytest-flags.md)
+* [Further Study & Research Project: Breaking the Chains of Rigid Test Architecture](20-unittest/020-ch20-unittest-disadvantage-rigid-oop-style.md)
+* [Advanced Fixture Lifecycles and Optimization](20-unittest/030-ch20-payment-gateway.md)
+* [Dependency Injection in Pytest Fixtures](20-unittest/040-ch20-dependency-injection.md)
+* [Online resource- User Registration validation example](20-unittest/060-ch20-user-registration.md)
+* [Project & Research Task: The Distributed Test Suite](20-unittest/065-ch20-conftest-py.md)
+* [MagicMock — An Introduction](20-unittest/067-ch20-magicmock.md)
+* [Exception Testing in pytest — Why pytest.raises is better than try/ except](20-unittest/070-ch20-pytest-raises-vs-try-except.md)
+* [Project Title: The “Micro-Precision” Tax Calculator (Using Parameterized Testing)](20-unittest/080-ch20-tax-collector-project.md)
+* [Understanding the "Unknown Marker" Warning](20-unittest/090-ch20-config-files.md#understanding-the-unknown-marker-warning)
+* [Conceptual Questions with Answers](20-unittest/095-ch20-conceptual-qa.md)
+* [Scripting Questions with Answers](20-unittest/097-ch20-scripting-qa.md)
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

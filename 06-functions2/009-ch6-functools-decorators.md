@@ -1,114 +1,129 @@
-# Using functools.wraps in decorators Chapter 6
+# Chapter 6.9 — Using `functools.wraps` in Decorators
 
-`functools` is a Python standard library module that provides tools for working with functions, especially higher-order functions such as decorators. These **higher-order functions**—functions **operate on other functions** (for example modifying them, wrapping them, or combining them).
+## What this page covers
 
-The function `functools.wraps()` is commonly used in decorators to preserve the metadata of the original function.
+This page explains **`functools.wraps`**, a small but important tool from Python's standard `functools` module that every decorator-writer should know. It builds directly on the earlier sections of Chapter 6, which introduced decorators — functions that wrap other functions to add extra behaviour (logging, timing, access checks, and so on).
 
-### Uses of functool
+The problem `functools.wraps` solves is simple to state but easy to miss as a beginner: **when you wrap a function with a decorator, Python "forgets" the original function's name, docstring, and other metadata — unless you tell it not to.** This page shows you exactly what goes wrong, why it happens, and how `functools.wraps` fixes it, using two worked examples you can run yourself.
 
-It is especially useful for:
+By the end of this page you should be able to:
+- Explain, in your own words, why a decorated function can lose its identity.
+- Use `@functools.wraps(func)` correctly in your own decorators.
+- Recognise the "manual" way of preserving metadata, and understand why `functools.wraps` is the better option.
 
-* **Decorators**
-* **Function caching**
-* **Partial functions**
-* **Functional programming utilities**
+---
 
-### Commonly used tools in `functools` include:
+## 1. What is `functools`?
 
-| Function        | Purpose                                                 |
-| --------------- | ------------------------------------------------------- |
-| wraps           | Used when writing decorators to preserve metadata       |
-| lru\_cache      | Caches function results for faster repeated calls       |
-| partial         | Fixes some arguments of a function                      |
-| reduce          | Applies a function cumulatively to items of an iterable |
-| total\_ordering | Simplifies writing comparison methods in classes        |
+`functools` is a module in the Python standard library (so no `pip install` is needed — just `import functools`). It provides tools for working with **higher-order functions**: functions that operate *on* other functions, for example by modifying them, wrapping them, or combining them.
 
-### Why `functools` is important for **decorators**
+`functools` is useful well beyond decorators. Here are the tools you'll run into most often:
 
-When we create a decorator, the **original function gets wrapped by another function**.
+| Function | Purpose | Typical use case |
+|---|---|---|
+| `wraps` | Preserves a function's identity (name, docstring, etc.) when it's wrapped by a decorator | Writing well-behaved decorators |
+| `lru_cache` | Caches a function's return values so repeated calls with the same arguments are instant | Speeding up expensive or recursive functions |
+| `partial` | Creates a new function with some arguments "pre-filled" | Simplifying a function call that's repeated with the same fixed arguments |
+| `reduce` | Applies a function cumulatively to the items of an iterable, reducing it to a single value | Totals, running products, combining a list into one result |
+| `total_ordering` | Fills in the missing comparison methods (`<`, `<=`, `>`, `>=`) for a class, given just two | Making custom objects sortable without writing every comparison by hand |
 
-Without `functools`, some important information about the original function is **lost**, such as:
+This chapter focuses only on `wraps`, since it's the one you'll use every single time you write a decorator.
 
-* function name
-* docstring
-* help documentation
+---
 
-`functools.wraps()` **copies this metadata from the original function to the wrapper function**.
+## 2. Why `functools.wraps` matters for decorators
 
-### The Problem of loss of identity when using wrappers
+When you apply a decorator, the **original function gets wrapped by another function** — usually one just called `wrapper`. If you're not careful, Python ends up "forgetting" some important facts about the original function, including:
 
-In Python, every function is an object. Like any object, it has an ID Card (Metadata). This card contains:
+- its **name**
+- its **docstring**
+- its **help documentation**
 
-`__name__`: The name of the function (e.g., "bark").
+`functools.wraps()` copies this metadata from the original function onto the wrapper function, so that from the outside, the decorated function still looks and behaves like itself.
 
-`__doc__`: The docstring (e.g., """This function makes a sound.""").
+### Why does this happen at all?
 
-`__annotations__`: Information about type hints.
+Every Python function is an object, and like any object it carries metadata — think of it as the function's **ID card**:
 
-When you decorate a function, you are performing a reassignment.
+| Attribute | What it stores | Example |
+|---|---|---|
+| `__name__` | The function's name | `"bark"` |
+| `__doc__` | The docstring | `"""This function makes a sound."""` |
+| `__annotations__` | Type hints (parameter and return types) | `{'food': str}` |
+| `__module__` | Which file/module the function was defined in | `"__main__"` |
+
+Here's the part that trips up most beginners: `@decorator` syntax is just shorthand. Writing
 
 ```python
-
-# What the @ decorator actually does:
-bark = log_action(bark)
+@my_decorator
+def bark():
+    ...
 ```
 
-Now, the variable bark no longer points to the original "barking" code. It points to the wrapper function inside your decorator. If a debugger or a documentation tool looks at bark, it sees the wrapper's identity (Such as `__name__`, `__doc__` etc), not the original one.
-
-### The solution is to use an "Identity Copier"
-
-@functools.wraps(func) acts as an "Identity copier". What it does is that it copies the identity of the original (Wrapped) function and gives it to the wrapper inside the decorator. It does this by deep-copying the following attributes from the original function to the wrapper:
-
-* Name: Changes wrapper back to bark.
-* Docstring: Keeps your helpful documentation alive.
-* Module: Keeps track of where the function was originally defined.
-
-Showing how identity of wrapped function changes Before vs. After bapplying `@functools.wraps(func)`.
-
-### Example 1
-
-#### Case A: Without `@functools.wraps` (The Identity is Lost)
+is exactly the same as writing:
 
 ```python
+def bark():
+    ...
+bark = my_decorator(bark)
+```
 
-# NO import functools used here!
+`my_decorator(bark)` runs, and whatever it *returns* — typically the inner `wrapper` function — is what gets **reassigned** to the name `bark`. From that point on, the name `bark` no longer points at your original code; it points at `wrapper`. So if a debugger, a documentation tool, or `help()` inspects `bark`, it sees `wrapper`'s ID card, not the original function's.
+
+### The fix: `functools.wraps` as an "identity copier"
+
+`@functools.wraps(func)` acts like an identity copier. Placed just above your inner `wrapper` function, it copies key attributes — including `__name__`, `__doc__`, `__module__`, and `__wrapped__` (a reference back to the original function) — from the *original* function (`func`) onto the `wrapper`. The result: your decorated function keeps looking like itself from the outside, even though it's technically running extra code underneath.
+
+---
+
+## 3. Example 1: Seeing the identity loss (and the fix)
+
+### Case A — Without `functools.wraps` (identity is lost)
+
+```python
+# NOTE: functools is not imported here on purpose,
+# so you can see what goes wrong without it.
 
 # --- THE DECORATOR ---
 def my_decorator(func):
-    # NOTICE: The 'Identity Copier' is missing!
+    # This inner function is what actually replaces `bark`
+    # once the decorator runs. Notice there is no "identity
+    # copier" applied to it yet.
     def wrapper(*args, **kwargs):
+        # *args and **kwargs let wrapper accept ANY arguments,
+        # so this decorator works on functions with any signature.
         print("--- Start of Wrapper ---")
-        result = func(*args, **kwargs)
+        result = func(*args, **kwargs)   # call the original function
         print("--- End of Wrapper ---")
         return result
-    return wrapper
+    return wrapper   # the decorator hands back `wrapper`, not `bark`
 
-# --- THE FUNCTION ---
-@my_decorator  
+# --- THE FUNCTION BEING DECORATED ---
+@my_decorator
 def bark():
-    """Make Sound"""
+    """Make Sound"""   # docstring: explains what the function does
     print("Woof!")
 
-# --- THE TEST ---
-# This is where you will see the problem:
-print(f"1. Function Name: {bark.__name__}") 
-# EXPECTED: bark | ACTUAL: wrapper
+# --- CHECKING THE DAMAGE ---
+print(f"1. Function Name: {bark.__name__}")
+# Expected if nothing were lost: bark
+# Actual: wrapper   <-- the identity has been overwritten
 
-print(f"2. Function Doc:  {bark.__doc__}")  
-# EXPECTED: Make Sound | ACTUAL: None
-
+print(f"2. Function Doc:  {bark.__doc__}")
+# Expected: Make Sound
+# Actual: None   <-- the docstring is gone too
 ```
 
-### Case : With `@functools.wraps` (The Identity is Retained)
+**For beginners:** nothing here is "broken" in the sense of causing an error — `bark()` still runs and still prints `"Woof!"`. The problem is invisible until something inspects the function's metadata: a debugger, a documentation generator like Sphinx, an IDE's autocomplete/tooltip, or a teammate calling `help(bark)`. In a small script this may not matter; in a real codebase with many decorators, it makes bugs much harder to track down, because every traceback and every `help()` call points to a generic `wrapper` instead of the function you actually meant.
+
+### Case B — With `functools.wraps` (identity is retained)
 
 ```python
-
 import functools
 
 # --- THE DECORATOR ---
 def my_decorator(func):
-    # This 'copies' the ID card from bark() to the wrapper
-    @functools.wraps(func) 
+    @functools.wraps(func)   # copies bark's ID card onto wrapper
     def wrapper(*args, **kwargs):
         print("--- Start of Wrapper ---")
         result = func(*args, **kwargs)
@@ -116,57 +131,68 @@ def my_decorator(func):
         return result
     return wrapper
 
-# --- THE FUNCTION ---
+# --- THE FUNCTION BEING DECORATED ---
 @my_decorator
-def bark():  # This is the function we are decorating
-    """Make Sound"""  # This is the docstring (the 'manual')
+def bark():                # the function we are decorating
+    """Make Sound"""       # docstring — now preserved thanks to wraps
     print("Woof!")
 
-# --- THE TEST ---
-print(f"1. Function Name: {bark.__name__}")  # EXPECTED: bark | ACTUAL: bark (because of functools.wraps())
-print(f"2. Function Doc:  {bark.__doc__}")  # EXPECTED: Make Sound | ACTUAL: Make Sound (because of functools.wraps())
+# --- CHECKING THE FIX ---
+print(f"1. Function Name: {bark.__name__}")
+# Expected: bark | Actual: bark  (fixed, thanks to functools.wraps)
+
+print(f"2. Function Doc:  {bark.__doc__}")
+# Expected: Make Sound | Actual: Make Sound  (fixed)
 
 print("-" * 20)
-bark()  # This will show the wrapper's print statements, but the function name and docstring will be correct due to functools.wraps()
-
+bark()
+# Still shows the wrapper's print statements (that's the whole
+# point of a decorator!) — but bark's name and docstring are correct.
 ```
 
-### Table showing the identity attributes of the "wrapped" function without using and with using functools.wraps
+### Before vs. after, at a glance
 
-| Feature Tested   | Before: Without functools.wraps | After: With functools.wraps               |
-| ---------------- | ------------------------------- | ----------------------------------------- |
-| bark.**name**    | "wrapper" (The generic mask)    | "bark" (The correct name)                 |
-| bark.**doc**     | None (The docstring is lost)    | "Make Sound" (The docstring is preserved) |
-| Debug Tracebacks | Show errors in wrapper.         | Show errors in bark.                      |
-| help(bark)       | Shows info for the wrapper.     | Shows info for the bark function.         |
+| Feature tested | Without `functools.wraps` | With `functools.wraps` |
+|---|---|---|
+| `bark.__name__` | `"wrapper"` — the generic mask | `"bark"` — the correct name |
+| `bark.__doc__` | `None` — docstring lost | `"Make Sound"` — docstring preserved |
+| Debug tracebacks | Point to `wrapper` | Point to `bark` |
+| `help(bark)` | Shows generic wrapper info | Shows the real `bark` documentation |
+
 
 ### Diagram shows situation without and with using functools
 
+
+
+
 ![Diagram shows situation without and with using functools](../.gitbook/assets/ch-6-using-functools.png)
 
-### Example 2
+---
 
-#### Case A: Manual way to do exactly what functools.wraps does automatically.
+## 4. Example 2: The manual approach (and why `functools.wraps` is better)
 
-Before functools.wraps existed, programmers had to manually "fix" the identity of the function. To do this, you manually overwrite the wrapper attributes with the values from the original func.
+Before `functools.wraps` existed (or if you ever need to see what it's doing under the hood), you could fix the identity problem by hand, by copying each attribute across yourself.
+
+### Case A — Manual identity copying
 
 ```python
-
 def food_safety_check(func):
     def wrapper(food_type):
         prohibited_foods = ["Chocolate", "Cakes", "Ice Cream", "Onions"]
         if food_type in prohibited_foods:
             print(f"ALERT: {food_type} is dangerous for pets! Action blocked.")
+            # No return here, so this branch implicitly returns None.
         else:
             print(f"{food_type} is safe.")
-            return func(food_type)
+            return func(food_type)   # only run the real function if it's safe
 
     # --- MANUAL IDENTITY COPIER ---
-    # Instead of @functools.wraps(func), we do this:
+    # This is exactly what @functools.wraps(func) would do for us,
+    # spelled out one attribute at a time.
     wrapper.__name__ = func.__name__
     wrapper.__doc__ = func.__doc__
     wrapper.__module__ = func.__module__
-    
+
     return wrapper
 
 @food_safety_check
@@ -175,35 +201,46 @@ def feed_pet(food):
     print(f"Eating the {food} now. Yum!")
 
 # --- TEST ---
-print(f"Function Name: {feed_pet.__name__}") # Shows 'feed_pet'
-print(f"Function Doc:  {feed_pet.__doc__}")  # Shows the 'Feeds the pet...' string
-
+print(f"Function Name: {feed_pet.__name__}")  # "feed_pet"
+print(f"Function Doc:  {feed_pet.__doc__}")   # "Feeds the pet..."
 ```
 
-#### Case B: Using functools
+This works, but it's easy to forget an attribute (there are more than the three shown here, such as `__annotations__` and `__wrapped__`), and it's three extra lines to write in *every single decorator you ever create*.
+
+### Case B — The `functools.wraps` way
 
 ```python
-
 import functools
 
 def food_safety_check(func):
-    @functools.wraps(func)
+    @functools.wraps(func)   # does everything Case A did manually, in one line
     def wrapper(food_type):
         prohibited_foods = ["Chocolate", "Cakes", "Ice Cream", "Onions"]
         if food_type in prohibited_foods:
             print(f"ALERT: {food_type} is dangerous for pets! Action blocked.")
         else:
             print(f"{food_type} is safe.")
-            return func(food_type) # Run the original function
+            return func(food_type)   # run the original function
     return wrapper
 
 @food_safety_check
-def feed_pet(food):  # This is the function we are decorating
+def feed_pet(food):
+    """Feeds the pet the specified food item."""
     print(f"Eating the {food} now. Yum!")
 
-# Usage
-feed_pet("Carrot")    # Allowed
-feed_pet("Chocolate") # Blocked by decorator
-
-
+# --- USAGE ---
+feed_pet("Carrot")     # allowed -> prints "Carrot is safe." then "Eating the Carrot now. Yum!"
+feed_pet("Chocolate")  # blocked -> prints the ALERT message only
 ```
+
+**For beginners:** the *behaviour* of `feed_pet` is identical in both cases — the only difference is that Case B keeps `feed_pet.__name__` and `feed_pet.__doc__` intact, using one decorator line instead of three manual assignments. That's the entire value proposition of `functools.wraps`: same result, less code, nothing to forget.
+
+---
+
+## 5. Quick recap
+
+- A decorator replaces your original function with a `wrapper` function — that's how decorators add behaviour.
+- Without help, the `wrapper` function's own metadata (`__name__`, `__doc__`, etc.) shows up instead of the original function's.
+- `@functools.wraps(func)`, placed directly above your `wrapper` definition, copies the original function's metadata onto `wrapper` automatically.
+- **Rule of thumb:** if you're writing a decorator with an inner `wrapper` function, add `@functools.wraps(func)` above it. There's essentially no downside, and it will save you (or someone using your code) a confusing debugging session later.
+

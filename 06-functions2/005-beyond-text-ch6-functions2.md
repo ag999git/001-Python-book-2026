@@ -1,750 +1,542 @@
+# Beyond the Text: Extended Research Tasks for Chapter 6 (Functions)
 
+The main chapter on functions introduced you to `*args` and `**kwargs`, default arguments, and general function design. This section pushes past the basics with eight self-contained "research tasks" — short investigations that connect what you've learned about functions to real libraries (Matplotlib), to how computers actually store data (endianness), and to a handful of classic algorithms and Python idioms (pseudo-random number generation, iterable unpacking, and brute-force string search).
 
-### Task 1 — Investigate a Real Python Library Function
+Each task follows the same pattern: a research question, followed by a model answer with explanation, tables, and a runnable script. You don't need to complete them in order — pick whichever concept you want to explore, work through the question yourself first, and then compare your answer with the model solution given here. Tasks 6 onward use ideas (classes, in Task 6) that are covered later in the book, so feel free to revisit those tasks after finishing the relevant chapter.
 
-The plotting function in **Matplotlib** has the following simplified form:
+---
 
-`plot(x, y, *args, **kwargs)`
+## Task 1 — Investigate a Real Python Library Function
 
-#### Research Question
+The plotting function in **Matplotlib** has the following simplified signature:
 
-Explain why the designers of Matplotlib chose to use `*args` and `**kwargs` in this function instead of defining a very long list of parameters.
+```python
+plot(x, y, *args, **kwargs)
+```
 
-Your explanation should address the following points:
+### Research Question
 
-1.  What are the **mandatory arguments** in `plot()`?
-2.  What types of values can be passed using **`*args`**?
-3.  What types of options are typically passed using **`**kwargs`**?
-4.  Why is this design useful when a library **adds new features in later versions**?
-5.  How does this design help **old programs continue to run without modification**?
+Why did the designers of Matplotlib choose `*args` and `**kwargs` here, instead of listing out every possible parameter explicitly? Your explanation should address:
 
+1. What are the **mandatory arguments** in `plot()`?
+2. What kinds of values can be passed using **`*args`**?
+3. What kinds of options are typically passed using **`**kwargs`**?
+4. Why is this design useful when a library **adds new features in later versions**?
+5. How does this design help **old programs keep running without modification**?
 
-#### Model Answers Task 1 — Investigate a Real Python Library Function
+### Model Answer
 
-You can access Matplotlib documentation [here](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.plot.html)
+You can browse the official signature and options in the [Matplotlib documentation](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.plot.html).
 
-Function signature (simplified):
+#### A. Mandatory arguments
 
-`plot(x, y, *args, **kwargs)`
+The only two arguments `plot()` truly requires are:
 
-#### A. Mandatory arguments of the function
+- `x` → the x-coordinates of the points to plot
+- `y` → the y-coordinates of the points to plot
 
-The **mandatory arguments** of the function are:
+```python
+plt.plot(x, y)
+```
 
--   `x` → list/array of x-coordinates
-    
--   `y` → list/array of y-coordinates
-    
+These specify the **data that must be plotted** — without them, there's nothing to draw.
 
-Example:
+#### B. What `*args` is used for
 
-`plt.plot(x, y)`
+`*args` collects any extra **positional** arguments. In Matplotlib, this is almost always a single compact **formatting string** that controls color, marker style, and line style all at once:
 
-These specify the **data points that must be plotted**. If you dont provide the data points, then obviously, the points cannot be plotted
-
-----------
-
-#### B. What can be passed using `*args`
-
-`*args` allows additional **positional arguments**.
-
-In Matplotlib, these are usually **formatting strings** that control:
-
--   color
-    
--   marker style
-    
--   line style
-    
-
-Example:
-
-`plt.plot(x, y, "ro--")`
-
-
-  
-Meaning: 
+```python
+plt.plot(x, y, "ro--")
+```
 
 | Symbol | Meaning |
 | --- | --- |
-| r | red color |
-| o | circle marker |
-| -- | dashed line |
+| `r` | red color |
+| `o` | circle marker |
+| `--` | dashed line |
 
-So `*args` allows **compact style specifications**.
+`*args` is entirely **optional** — if you don't supply one, Matplotlib falls back to its default style (a solid blue line).
 
-But providing *args is optional. If you dont provide any *args, then the library will use the default values
+#### C. What `**kwargs` is used for
 
-#### C. What can be passed using `**kwargs`
+`**kwargs` collects **keyword** arguments — named settings you can mix and match freely:
 
-`**kwargs` allows **keyword arguments** for many optional settings.
-
-Examples:
-
-`plt.plot(x, y, color="green", linewidth=3, marker="o")`
-
-Common keyword parameters include:
-
-  
+```python
+plt.plot(x, y, color="green", linewidth=3, marker="o")
+```
 
 | Parameter | Purpose |
 | --- | --- |
-| color | Line color |
-| linewidth | Line thickness |
-| marker | Marker shape |
-| linestyle | Line pattern |
-| label | Legend label |
+| `color` | Line color |
+| `linewidth` | Line thickness |
+| `marker` | Marker shape |
+| `linestyle` | Line pattern |
+| `label` | Text shown in the legend |
 
-These options make the plot **highly customizable**.
+This is what makes the plot **highly customizable** without needing a separate named parameter for every possible option.
 
-----------
+#### D. Why this helps when the library adds new features
 
-#### D. Why this design helps when libraries add new features
+Suppose a later version of Matplotlib introduces a brand-new option, say `alpha=0.5` (controlling transparency). Because `plot()` accepts `**kwargs`, it can absorb this new keyword automatically — **no change to the function's signature is required**. Existing code such as:
 
-If a library developer adds a new option such as:
+```python
+plt.plot(x, y)
+```
 
-`alpha=0.5`
-
-the function can still accept it through `**kwargs`.
-
-Old code like:
-
-`plt.plot(x,y)`
-
-continues to work without modification.
-
-Thus `**kwargs` allows **future extension of the library**.
-
-----------
+keeps working exactly as before, while new code can immediately start using `alpha=0.5` the moment it's documented.
 
 #### E. How this helps backward compatibility
 
-Backward compatibility means **old programs continue to run after library updates**.
+**Backward compatibility** means old programs keep running correctly after a library is updated. Because every new option arrives as an *optional* keyword argument tucked inside `**kwargs`, adding features never breaks a function's existing call sites — it only ever adds new, opt-in behavior on top of what already works.
 
-Example: Old program:
+> **Takeaway:** `*args` and `**kwargs` aren't just a convenience for writing less code — they're a deliberate design choice that lets a library's public API grow over time without ever forcing existing users to rewrite their code.
 
-`plt.plot(x,y)`
+---
 
-Later library version adds new parameter:
+## Task 2 — Documentation Investigation
 
-`plt.plot(x,y,alpha=0.7)`
+Visit the official documentation page for `matplotlib.pyplot.plot()` ([link](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.plot.html)) and find **five keyword arguments** it accepts.
 
-Old programs still work because the new parameters are **optional keyword arguments stored in `**kwargs`**.
-
-
-
-
-
-### Task 2 — Documentation Investigation
-
-
-Visit the official Matplotlib documentation for:
-
-
-`matplotlib.pyplot.plot()`	
-
-You can access Matplotlib documentation [here](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.plot.html)
-
-Find and list **five keyword arguments** that can be passed to the function.
-
-Example format:
-
-
+### Model Solution
 
 | Keyword Argument | Purpose |
 | --- | --- |
-| color | Sets line color |
-| linewidth | Sets thickness |
-| marker | Controls point markers |
-| linestyle | Controls line style |
-| label | Text for legend |
+| `color` | Sets the color of the line |
+| `linewidth` | Controls the thickness of the line |
+| `marker` | Specifies the marker symbol drawn at each data point |
+| `linestyle` | Defines the pattern of the line (solid, dashed, dotted, ...) |
+| `label` | Provides the text used in the legend |
+| `alpha` | Controls transparency (0 = fully transparent, 1 = fully opaque) |
+| `markersize` | Controls the size of the markers |
+| `markerfacecolor` | Sets the fill color inside each marker |
 
-#### Model solution Task 2 — Documentation Investigation
-
-Example keyword arguments for `matplotlib.pyplot.plot()`:
-
-
-| Keyword Argument | Purpose |
-| --- | --- |
-| color | Sets the color of the line |
-| linewidth | Controls thickness of the line |
-| marker | Specifies the marker symbol |
-| linestyle | Defines the pattern of the line |
-| label | Provides a label used in the legend |
-| alpha | Controls transparency |
-| markersize | Size of markers |
-| markerfacecolor | Color inside markers |
-
-Example usage:
-
-`plt.plot(x, y, color="red", linewidth=2, marker="o")`
-
-----------
-### Task 3 — Programming Experiment
-
-Write a Python program that calls `plot()` in **three different ways**:
-
-1.  Using only **mandatory arguments**
-    
-2.  Using **`*args` formatting string**
-    
-3.  Using **`**kwargs` options**
-    
-
-Example template:
+Example combining several of these:
 
 ```python
+plt.plot(x, y, color="red", linewidth=2, marker="o")
+```
 
-import  matplotlib.pyplot  as  plt  
-  
-x  = [1,2,3,4]  
-y  = [1,4,9,16]  
-  
-# Case 1: Mandatory arguments only  
-plt.plot(x,y)  
-  
-# Case 2: Using *args formatting  
-plt.plot(x,y,"ro--")  
-  
-# Case 3: Using **kwargs  
-plt.plot(x,y,color="green",linewidth=3)  
-  
+---
+
+## Task 3 — Programming Experiment
+
+Write a program that calls `plot()` in three different ways — using only mandatory arguments, using `*args`, and using `**kwargs` — and observe how each changes the appearance of the plot.
+
+### Model Solution
+
+```python
+import matplotlib.pyplot as plt
+
+x = [1, 2, 3, 4]
+y = [1, 4, 9, 16]
+
+# Case 1: Mandatory arguments only (x, y) — uses Matplotlib's defaults
+plt.plot(x, y)
+
+# Case 2: *args — a compact formatting string
+# "r" = red, "o" = circle markers, "--" = dashed line
+plt.plot(x, y, "ro--")
+
+# Case 3: **kwargs — explicit, named keyword options
+plt.plot(x, y, color="green", linewidth=3)
+
 plt.show()
 ```
 
-Explain how each version changes the appearance of the plot.
-#### Model solution Task 3 — Programming Experiment
+*Note: in a real script, each `plot()` call would normally target a separate figure (or use `plt.figure()` between them) so the three styles don't overlap on the same axes — they're shown together here purely to compare the syntax.*
 
-Example script:
-
-```python
-
-import  matplotlib.pyplot  as  plt  
-  
-x  = [1,2,3,4]  
-y  = [1,4,9,16]  
-  
-# Case 1: Mandatory arguments only  
-plt.plot(x, y)  
-  
-# Case 2: Using *args formatting string  
-plt.plot(x, y, "ro--")  
-
-# Case 3: Using **kwargs  
-plt.plot(x, y, color="green", linewidth=3)  
-  
-plt.show()
-```
-
-##### Explanation
+### Explanation
 
 | Case | Code | Result |
 | --- | --- | --- |
-| 1 | plt.plot(x,y) | Default blue line |
-| 2 | plt.plot(x,y,"ro--") | Red dashed line with circle markers |
-| 3 | plt.plot(x,y,color="green",linewidth=3) | Thick green line |
+| 1 | `plt.plot(x, y)` | Default solid blue line, no markers |
+| 2 | `plt.plot(x, y, "ro--")` | Red dashed line with circle markers |
+| 3 | `plt.plot(x, y, color="green", linewidth=3)` | Thick solid green line |
 
-Observations:
+**Observations:**
+- `*args` is best for **quick, compact style shorthand** you can type in a hurry.
+- `**kwargs` is best for **precise, self-documenting customization** — `color="green"` is clearer to a reader than a cryptic formatting code.
 
--   `*args` provides **short style formatting**
-    
--   `**kwargs` provides **detailed customization**
-    
+---
 
-----------
-### Task 4 — API Design Thinking
+## Task 4 — API Design Thinking
 
-Suppose you are designing a library function for plotting data.
+Suppose you're designing a plotting library function yourself. You could write it in two different styles:
 
-You could define the function in two ways.
-
-##### Version A (Rigid)
-
-`def  plot(x, y, color="blue", linewidth=1, marker=None,  
-  linestyle="-", label=None, grid=False):`
-
-##### Version B (Flexible)
-
-`def  plot(x, y, *args, **kwargs):`
-
-##### Question
-
-Explain why **Version B is often preferred in large libraries** ?.
-
-Discuss the following:
-
--   flexibility
-    
--   future extension
-    
--   backward compatibility
-    
--   readability of documentation
-
-
-
-
-#### Model Solution Task 4 — API Design Thinking
-
-Two possible designs:
-
-##### Version A (Rigid)
-
+**Version A (Rigid) — every option is a named parameter:**
 
 ```python
-
-def  plot(x, y, color="blue", linewidth=1, marker=None,  
-  linestyle="-", label=None, grid=False):
-
+def plot(x, y, color="blue", linewidth=1, marker=None,
+         linestyle="-", label=None, grid=False):
+    ...
 ```
 
-##### Version B (Flexible)
-
-`def  plot(x, y, *args, **kwargs):`
-
-----------
-
-##### Why Version B is preferred in large libraries
-
-  
-
-  
-
-| Feature | Version A | Version B |
-| --- | --- | --- |
-| Flexibility | Limited | Very high |
-| Future extension | Difficult | Easy |
-| Backward compatibility | Harder | Easier |
-| Parameter count | Fixed | Unlimited |
-
-
-
-### Task 5: Endianness in Computer Systems
-In computer architecture, endianness refers to the order in which bytes are stored in memory when representing multi-byte data such as integers. Two common conventions are: (1) Big-endian – the most significant byte (MSB) is stored first. (2) Little-endian – the least significant byte (LSB) is stored first.
-Your Tasks:- (1) Study the concepts big-endian and little-endian byte ordering. (2) Explain the difference between these two formats with the help of a small example (for instance, how the number 0x12345678 would be stored in memory). (3) Use Python to determine the endianness of your computer system using the sys module. (4) Write a short Python script that: (a) Prints the system’s byte order. (b) Demonstrates how a number is stored in both little-endian and big-endian formats.
-Hint: The sys module contains an attribute called byteorder.
-
-#### Answer
-
-The `sys` module contains an attribute called `byteorder`.
-
-`sys.byteorder`
-
-Possible values are:
-
-`"little"`  
-`"big"`
-
-
-#### A. Conceptual Explanation
-
-When computers store numbers larger than one byte, they must decide **which byte goes first in memory**.
-
-Suppose we want to store the **32-bit hexadecimal number**
-
-`0x12345678`
-
-This number contains **4 bytes**:
-
-12   34   56   78
-
-#### B. Big-Endian Representation
-
-In **big-endian systems**, the **most significant byte is stored first**.
-
-Memory order:
-
-`12   34   56   78`
-
-This format is sometimes called **network byte order** and is commonly used in network protocols.
-
-----------
-
-#### C. Little-Endian Representation
-
-In **little-endian systems**, the **least significant byte is stored first**.
-
-Memory order:
-
-`78   56   34   12`
-
-Most modern processors such as **Intel x86 and AMD** use **little-endian format**.
-
-----------
-
-#### D. How to Detect Endianness in Python
-
-Python provides the attribute:
-
-`sys.byteorder`
-
-This returns either:
-
-`"little"`
-
-or
-
-`"big"`
-
-depending on the architecture of the computer.
-
-----------
-
-#### E. Python Demonstration Script
-
-This script demonstrates both the **system byte order** and **how integers are stored in different endian formats**.
+**Version B (Flexible) — options are absorbed by `*args`/`**kwargs`:**
 
 ```python
+def plot(x, y, *args, **kwargs):
+    ...
+```
 
-# Demonstration of Endianness in Python
+### Question
+
+Explain why **Version B is usually preferred in large libraries**, considering flexibility, future extension, backward compatibility, and documentation readability.
+
+### Model Solution
+
+| Feature | Version A (Rigid) | Version B (Flexible) |
+| --- | --- | --- |
+| Flexibility | Limited to the parameters listed | Very high — accepts anything the implementation chooses to handle |
+| Adding new options later | Requires editing the function signature | New options are simply read out of `**kwargs` — no signature change |
+| Backward compatibility | Risk of breaking old calls if parameters are reordered or renamed | Old calls are unaffected, since new options are always optional |
+| Parameter count | Fixed at design time | Effectively unlimited |
+| Documentation readability | Every parameter is visible directly in the signature — easy to read at a glance | The signature alone doesn't show what's accepted; you must consult the docs |
+
+**The trade-off:** Version A is more *discoverable* — an IDE's autocomplete can show you every valid parameter immediately. Version B is more *extensible* — it can absorb new features for years without ever changing its outward signature. This is exactly why large, evolving libraries like Matplotlib favor Version B for their most-used functions, while smaller, stable utility functions in your own code are often better off as Version A, where explicit parameters make misuse easier to catch.
+
+---
+
+## Task 5 — Endianness in Computer Systems
+
+**Endianness** describes the order in which the individual bytes of a multi-byte value (such as a 32-bit integer) are stored in memory. There are two common conventions:
+
+- **Big-endian** — the most significant byte (MSB) is stored first.
+- **Little-endian** — the least significant byte (LSB) is stored first.
+
+### Tasks
+
+1. Study big-endian and little-endian byte ordering.
+2. Explain the difference with an example — how would `0x12345678` be stored under each convention?
+3. Use Python's `sys` module to determine your own system's endianness.
+4. Write a script that prints the system's byte order and demonstrates storing a number both ways.
+
+> **Hint:** the `sys` module has an attribute called `sys.byteorder`.
+
+### Model Answer
+
+#### A. Conceptual explanation
+
+When a computer stores a number that's larger than a single byte, it has to decide **which byte to place first in memory**. Consider the 32-bit hexadecimal number:
+
+```
+0x12345678
+```
+
+This value is made up of four separate bytes: `12`, `34`, `56`, and `78`.
+
+#### B. Big-endian representation
+
+In a big-endian system, the **most significant byte comes first**:
+
+```
+Memory order:  12  34  56  78
+```
+
+This ordering is sometimes called **network byte order**, because it's the standard used by most network protocols (TCP/IP included).
+
+#### C. Little-endian representation
+
+In a little-endian system, the **least significant byte comes first**:
+
+```
+Memory order:  78  56  34  12
+```
+
+Most modern desktop and laptop processors — including Intel and AMD x86/x86-64 chips — use little-endian format.
+
+#### D. Detecting endianness in Python
+
+Python exposes this directly through:
+
+```python
+sys.byteorder
+```
+
+which returns either `"little"` or `"big"`, depending on the machine Python is running on.
+
+#### E. Demonstration script
+
+```python
+# Demonstration of endianness in Python.
+# Endianness determines the order in which the individual bytes
+# of a multi-byte number are stored in memory.
 
 import sys
 
-print("System Byte Order:", sys.byteorder)  # Shows the byte order of the system (either 'little' or 'big')
+# sys.byteorder reports the NATIVE byte order of the machine
+# this script is currently running on ('little' or 'big').
+print("System Byte Order:", sys.byteorder)
 print("-" * 40)
 
-# Example integer (32-bit number)
+# Example integer (fits within 4 bytes / 32 bits)
 number = 0x12345678
-
 print("Original number (hex):", hex(number))
 
-# Convert integer into bytes using big-endian format
-big_endian_bytes = number.to_bytes(4, byteorder='big')  # 4 bytes for a 32-bit integer
+# int.to_bytes(length, byteorder) converts an integer into its raw
+# byte representation. We ask for 4 bytes since 0x12345678 needs
+# exactly 4 bytes (32 bits) to represent it fully.
+big_endian_bytes = number.to_bytes(4, byteorder="big")
+little_endian_bytes = number.to_bytes(4, byteorder="little")
 
-# Convert integer into bytes using little-endian format
-little_endian_bytes = number.to_bytes(4, byteorder='little')  # 4 bytes for a 32-bit integer
+# In big-endian, the most significant byte (0x12) is stored first.
+print("Big-endian byte order:")
+print(list(big_endian_bytes))   # [18, 52, 86, 120]  -> 0x12, 0x34, 0x56, 0x78
 
-print("Big-endian byte order:")  # In big-endian, the most significant byte (MSB) is stored first.
-print(list(big_endian_bytes))  # Output will show the byte values in big-endian order
+# In little-endian, the least significant byte (0x78) is stored first.
+print("Little-endian byte order:")
+print(list(little_endian_bytes))  # [120, 86, 52, 18] -> 0x78, 0x56, 0x34, 0x12
 
-print("Little-endian byte order:")  # In little-endian, the least significant byte (LSB) is stored first.
-print(list(little_endian_bytes))  # Output will show the byte values in little-endian order
-
-# Display hexadecimal representation
-print("Big-endian (hex):", big_endian_bytes.hex())  # Hexadecimal representation of big-endian bytes
-print("Little-endian (hex):", little_endian_bytes.hex())  # Hexadecimal representation of little-endian bytes
-
-
+# .hex() gives a compact hexadecimal string view of the same bytes
+print("Big-endian (hex):", big_endian_bytes.hex())       # 12345678
+print("Little-endian (hex):", little_endian_bytes.hex()) # 78563412
 ```
 
-### 6. Research Task: Implementing a Pseudo Random Number Generator in Python
+> **Why this matters in practice:** endianness becomes important whenever raw bytes cross a boundary — reading a binary file created on a different machine, parsing network packets, or working with low-level formats like images and audio. Get the byte order wrong, and a perfectly valid number turns into nonsense.
 
-Most programming languages provide built-in functions for generating random numbers. However, these numbers are not truly random; they are generated using algorithms called **Pseudo Random Number Generators (PRNGs)**. One of the earliest and simplest PRNG algorithms is the **Linear Congruential Generator (LCG)**. The algorithm generates a sequence of integers using the recurrence relation:
+---
 
-$$
-X_{n+1} = (a \cdot X_n + c) \pmod m
-$$
+## Task 6 — Implementing a Pseudo-Random Number Generator
 
-**Where:**
-* $X$ is the sequence of pseudorandom values.
-* $a$ is the multiplier, where $0 < a < m$.
-* $c$ is the increment, where $0 < c < m$.
-* $X_0$ is the start value (the seed).
-* $m$ is the modulus.
+*(This task uses the `class` keyword from Python's Object-Oriented Programming chapter — feel free to return to it after covering OOP if you haven't yet.)*
 
-Typical parameter values used in many systems are: 
-(1) m = 2^31 
-(2) a = 1103515245 
-(3) c = 12345
+Most languages' "random" numbers aren't truly random — they're produced by a **Pseudo-Random Number Generator (PRNG)**, a deterministic algorithm that produces a sequence which merely *looks* statistically random. One of the oldest and simplest PRNGs is the **Linear Congruential Generator (LCG)**, defined by the recurrence:
 
-(This problem uses OOP concept of Class, so you may do this after studying the chapter on OOP)
+$$X_{n+1} = (a \cdot X_n + c) \bmod m$$
 
-**Your Tasks: 
-- (1)** Study the concept of **Pseudo Random Number Generators (PRNG)**. 
-- (2) Understand how the **Linear Congruential Generator (LCG)** produces a sequence of numbers. 
-- (3) Write a **Python class** that: 
-    - (a) Stores the seed value. 
-    - (b) Generates the next pseudorandom number using the LCG formula. 
-- (4) Add a method that **scales the result to a floating-point number between 0 and 1**. 
-- (5) Demonstrate the generator by printing the first **few values of the sequence**.
+where:
 
-**Questions to Think About: (1)** What happens if the **seed value changes**? (2) Why are these numbers called **pseudo-random** instead of truly random?
+| Symbol | Meaning |
+| --- | --- |
+| $X_n$ | the current value in the sequence |
+| $a$ | the multiplier ($0 < a < m$) |
+| $c$ | the increment ($0 < c < m$) |
+| $X_0$ | the seed — the starting value |
+| $m$ | the modulus, which bounds the range of generated values |
 
-#### Script which implements this task
+A commonly used set of parameters (borrowed from older C standard libraries) is $m = 2^{31}$, $a = 1103515245$, $c = 12345$.
 
-Given below is a script which implements this task
+### Tasks
 
+1. Study PRNGs and how the LCG produces its sequence.
+2. Write a Python class that stores the seed and generates the next value via the LCG formula.
+3. Add a method that scales the integer output into a float in $[0, 1)$.
+4. Demonstrate the generator by printing a few values.
+
+**Questions to think about:** What happens if you change the seed? Why are these numbers called *pseudo*-random rather than truly random?
+
+### Model Solution
 
 ```python
-
-# Linear Congruential Generator (LCG)
-# A simple pseudo-random number generator algorithm
+# Linear Congruential Generator (LCG) — a simple pseudo-random
+# number generator based on the recurrence:
+#     X(n+1) = (a * X(n) + c) mod m
 
 
 class LinearCongruentialGenerator:
     """
-    This class implements the Linear Congruential Generator algorithm.
+    Implements the Linear Congruential Generator algorithm.
 
     Formula:
         X(n+1) = (a * X(n) + c) mod m
 
     where:
-        X(n) = current state (seed)
+        X(n) = current internal state (starts at the seed)
         a    = multiplier
         c    = increment
-        m    = modulus
+        m    = modulus (bounds every generated value to [0, m))
     """
 
     def __init__(self, seed=1):
-        """
-        Constructor initializes the generator parameters
-        and starting seed.
-        """
+        """Store the LCG parameters and the initial seed."""
 
-        # Standard parameters used in many C libraries
-        self.a = 1103515245       # multiplier
-        self.c = 12345            # increment
-        self.m = 2**31            # modulus
+        # Standard parameters used in many historical C libraries.
+        # Changing these changes the statistical properties of the
+        # sequence — they are not arbitrary.
+        self.a = 1103515245   # multiplier
+        self.c = 12345        # increment
+        self.m = 2 ** 31      # modulus
 
-        # Initial seed (starting value)
+        # 'state' holds the current value in the sequence.
+        # It starts out equal to the seed, and is updated
+        # every time next_int() is called.
         self.state = seed
 
     def next_int(self):
-        """
-        Generate the next pseudorandom integer.
-        Updates the internal state.
-        """
+        """Generate and return the next integer in the sequence,
+        updating the generator's internal state in the process."""
 
-        # Apply LCG formula
         self.state = (self.a * self.state + self.c) % self.m
-
-        # Return the new value
         return self.state
 
     def next_float(self):
-        """
-        Convert the generated integer into a floating-point
-        number between 0 and 1.
-        """
+        """Generate the next value, scaled to a float in [0, 1)."""
 
-        # Generate next integer
         value = self.next_int()
-
-        # Scale result to [0, 1)
+        # Dividing by m maps any value in [0, m) down to [0, 1)
         return value / self.m
 
 
-# Demonstration of the generator
+# ---------------- Demonstration ----------------
+
 print("Demonstrating Linear Congruential Generator")
 
-# Create generator object with a seed
+# Two independent generators with different seeds
 lcg = LinearCongruentialGenerator(seed=123456)
-
-print("\nFirst 5 pseudorandom integers:")
-
-for i in range(5):
-    print(f"X_{i+1} =", lcg.next_int())
-
-
-# Demonstrate floating-point random numbers
-print("Random numbers scaled to range [0,1):")
 lcg2 = LinearCongruentialGenerator(seed=100)
 
+print("\nFirst 5 pseudorandom integers (seed=123456):")
 for i in range(5):
-    print(lcg2.next_float())
+    print(f"X_{i + 1} =", lcg.next_int())
 
-
+print("\nFirst 5 pseudorandom floats in [0, 1) (seed=100):")
+for i in range(5):
+    print(round(lcg2.next_float(), 6))
 ```
 
-#### Key Concepts 
+### Key Concepts
 
 #### A. Deterministic randomness
 
-If the **seed is the same**, the **sequence will always be the same**.
+Given the **same seed**, an LCG always produces the **exact same sequence** of numbers. `LinearCongruentialGenerator(seed=10)` will output identical values every single time it's run — this is what makes the sequence *reproducible*, which is invaluable for debugging and for scientific results that need to be repeatable.
 
-Example:
+#### B. Why it's called "pseudo-random"
 
-`LinearCongruentialGenerator(seed=10)`
-
-always produces the **same sequence**.
-
-----------
-
-#### B. Why the generator is called "pseudo-random"
-
-The numbers **look random**, but they are actually produced by a **deterministic formula**.
-
-----------
+The output *looks* statistically random — it passes many simple randomness tests — but it's actually generated by a completely deterministic formula. Anyone who knows the seed and the formula can predict every future value exactly. True randomness (e.g. from atmospheric noise or radioactive decay) has no such formula behind it.
 
 #### C. Role of each parameter
-The following table summarizes the role of various parameters used in the equation to generate PRNG
-
-  
 
 | Parameter | Role |
 | --- | --- |
-| seed | starting value |
-| a | multiplier |
-| c | increment |
-| m | modulus controlling range |
+| `seed` | The starting value; changing it produces a completely different (but still reproducible) sequence |
+| `a` | The multiplier — strongly affects the statistical quality of the sequence |
+| `c` | The increment — added on every step |
+| `m` | The modulus — controls the range of possible output values |
 
+> **A caution for real use:** the classic LCG shown here is fine for demonstrations, but it is **not suitable for cryptography or security-sensitive randomness** — its output is predictable once a few values are known. For everyday non-cryptographic use, Python's built-in `random` module (based on the far stronger Mersenne Twister algorithm) is the right tool; for anything security-related, use the `secrets` module instead.
 
-### 7. Research Task: Unpacking of Iterables in Python
+---
 
-In Python, it is possible to **unpack elements of an iterable (such as a list or tuple) directly into variables**. Normally, the number of variables must exactly match the number of elements in the iterable.
+## Task 7 — Unpacking of Iterables in Python
 
-However, Python provides a powerful feature called **Partial Unpacking** that allows one variable to collect the remaining elements of the iterable. This is done using the **asterisk (`*`) operator**, sometimes called a **star expression**.
+Python lets you unpack the elements of an iterable (a list, tuple, etc.) directly into separate variables. Normally, the number of variables must match the number of elements exactly. **Partial unpacking**, using a starred (`*`) variable, relaxes that rule by letting one variable absorb *all* the leftover elements — as a list.
 
-When a variable is prefixed with `*`, it collects **all remaining unassigned elements** from the iterable.
+### A. Important characteristics
 
-#### A. Important Characteristics
+1. A variable prefixed with `*` collects **multiple elements** at once.
+2. Those collected elements are always stored as a **list**, regardless of the original iterable's type.
+3. Only **one** starred variable is allowed per unpacking statement.
+4. It can appear at the **beginning**, **middle**, or **end** of the assignment.
 
-1.  The variable prefixed with `*` collects **multiple elements**.
-    
-2.  The collected elements are stored as a **list**.
-    
-3.  Only **one starred variable** can appear in a single unpacking operation.
-    
-4.  The starred variable can appear **at the beginning, middle, or end** of the assignment.
-    
+### B. Research Tasks
 
-#### B. Research Tasks
+1. Study how iterable unpacking works.
+2. Explain partial unpacking with `*`.
+3. Write examples capturing elements at the end, in the middle, and at the beginning.
+4. Observe the type of the variable that collects the leftover elements.
 
-1.  Study how **iterable unpacking** works in Python.
-    
-2.  Explain the concept of **partial unpacking using the `*` operator**.
-    
-3.  Write Python examples demonstrating:
-    
-    -   capturing elements at the **end**
-        
-    -   capturing elements in the **middle**
-        
-    -   capturing elements at the **beginning**
-        
-4.  Observe the **type of the variable that collects the remaining elements**.
-    
-
-----------
-
-#### C. Script which implements the above task
-
+### C. Demonstration Script
 
 ```python
+# Demonstration of partial unpacking of iterables in Python.
 
-# Demonstration of Partial Unpacking of Iterables in Python
-
-# Example 1: Catching elements at the end
+# ---- Example 1: catching elements at the end ----
 print("Example 1: Catching elements at the end")
 
-# The first two variables get the first two elements
-# The starred variable collects the remaining elements
-first, second, *tail = [10, 20, 30, 40, 50]  # The list has 5 elements. first=10, second=20, tail=[30, 40, 50]
-
-print("first =", first, "second =", second, "tail =", tail)  # Output will show the values of first, second, and tail
+# The first two variables take the first two elements;
+# the starred variable ('tail') soaks up everything left over.
+first, second, *tail = [10, 20, 30, 40, 50]
+print("first =", first, "second =", second, "tail =", tail)
+# first = 10  second = 20  tail = [30, 40, 50]
 
 print("-----------------------------------")
 
-# Example 2: Catching elements in the middle
+# ---- Example 2: catching elements in the middle ----
 print("Example 2: Catching elements in the middle")
 
-# First variable takes the first element
-# Last variable takes the last element
-# Starred variable collects everything in between
+# 'start' takes the first element, 'last' takes the last element,
+# and 'middle' collects everything in between.
 start, *middle, last = [1, 2, 3, 4, 5, 6]
-
 print("start =", start, "middle =", middle, "last =", last)
+# start = 1  middle = [2, 3, 4, 5]  last = 6
 
 print("-----------------------------------")
 
-# Example 3: Catching elements at the beginning
+# ---- Example 3: catching elements at the beginning ----
 print("Example 3: Catching elements at the beginning")
 
-# Starred variable collects elements at the beginning
+# The starred variable can just as easily appear first.
 *beginning, second_last, last = [100, 200, 300, 400, 500]
-
 print("beginning =", beginning, "second_last =", second_last, "last =", last)
+# beginning = [100, 200, 300]  second_last = 400  last = 500
 
 print("-----------------------------------")
 
-# Example 4: Using partial unpacking with tuples
+# ---- Example 4: partial unpacking with tuples ----
 print("Example 4: Using partial unpacking with tuples")
 
 data = (11, 22, 33, 44, 55)
-
 a, *b = data
-
 print("a =", a, "b =", b)
-print("Type of b:", type(b))  # Always a list
+
+# Even though 'data' is a tuple, the starred variable 'b' is
+# still a list — partial unpacking ALWAYS produces a list,
+# regardless of the source iterable's type.
+print("Type of b:", type(b))
 
 print("-----------------------------------")
 
-# Example 5: Star variable collecting zero elements
+# ---- Example 5: starred variable collecting zero elements ----
 print("Example 5: Star variable collecting zero elements")
 
+# There's nothing left over once x and y take their values,
+# so 'rest' simply ends up as an empty list — not an error.
 x, y, *rest = [5, 10]
-
-print("x =", x, "y =", y, "rest =", rest)  #
-
+print("x =", x, "y =", y, "rest =", rest)
+# x = 5  y = 10  rest = []
 ```
 
+> **Where this shows up in real code:** partial unpacking is especially handy when working with function results of unknown or variable length — for example, separating a header row from the rest of a dataset (`header, *rows = data`), or peeling off the first and last items from a sequence while ignoring the middle (`first, *_, last = values`, where `_` is a conventional "I don't care about this" name).
 
-### 8. Task: Implementing the Brute-Force String Searching Algorithm in Python
+---
 
-Searching for a **substring (pattern)** inside a larger **string (text)** is a common problem in computer science.
+## Task 8 — The Brute-Force String Searching Algorithm
 
-One of the simplest methods to perform this task is the **Brute-Force String Searching Algorithm**.
+Finding a **pattern** (a short string) inside a larger **text** is one of the most common problems in computer science. The simplest approach is the **brute-force string search**: check every possible position where the pattern *could* start, comparing character by character, and move on as soon as a mismatch is found.
 
-The algorithm works by **checking every possible alignment** of the pattern within the text.
+### Basic Idea
 
-#### Basic Idea
+Let the text $T$ have length $m$ and the pattern $P$ have length $n$. The algorithm:
 
-Suppose:
-
--   **Text (T)** has length **m**
-    
--   **Pattern (P)** has length **n**
-    
-
-The algorithm works as follows:
-
-1.  Align the beginning of **P** with the first character of **T**.
-    
-2.  Compare characters of **P** with corresponding characters of **T**.
-    
-3.  If all characters match → the pattern is found.
-    
-4.  If a mismatch occurs → slide the pattern **one position to the right**.
-    
-5.  Repeat until:
-    
-    -   the pattern is found, or
-        
-    -   all possible positions have been checked.
-        
+1. Aligns the start of $P$ with the first character of $T$.
+2. Compares $P$ against the corresponding characters of $T$.
+3. If every character matches → the pattern is found at this position.
+4. If any character mismatches → slide $P$ one position to the right and try again.
+5. Repeat until the pattern is found, or every possible starting position (from index 0 to $m - n$) has been tried.
 
 ### Tasks
 
-1.  Study the **Brute-Force string searching algorithm**.
-    
-2.  Explain how the **pattern slides over the text**.
-    
-3.  Write a Python function that:
-    
-    -   takes **text** and **pattern** as inputs
-        
-    -   returns the **starting index of the match**
-        
-    -   returns **-1 if the pattern is not found**
-        
-4.  Test your program with a few example strings.
-    
+1. Study the brute-force algorithm.
+2. Explain how the pattern slides across the text.
+3. Write a function `brute_force_search(text, pattern)` that returns the starting index of the first match, or `-1` if no match exists.
+4. Test it on a few example strings.
 
-----------
+### Worked Example
 
-#### The following table shows how the matching takes place.
-The script implementing the problem is as follows
+For `text1 = "acdabcdacabcd"` and `pattern1 = "cdac"`, here's every alignment the algorithm tries before it finds a match:
 
-In the following script, the text given is `text1 = "acdabcdacabcd"`
-The pattern given is `pattern1 = "cdac"`
+| Starting index | Aligned text characters | Match? |
+| --- | --- | --- |
+| 0 | `acda` vs `cdac` | No — mismatch at the very first character |
+| 1 | `cdab` vs `cdac` | No — mismatches on the 4th character (`b` ≠ `c`) |
+| 2 | `dabc` vs `cdac` | No — mismatch at the first character |
+| 3 | `abcd` vs `cdac` | No — mismatch at the first character |
+| 4 | `bcda` vs `cdac` | No — mismatch at the first character |
+| 5 | `cdac` vs `cdac` | **Yes — full match** |
 
+So `brute_force_search("acdabcdacabcd", "cdac")` should return `5`.
 
+The following table shows the above process in more details:
 
-  
-
-  
-
-  
 
   
 
@@ -761,63 +553,66 @@ The pattern given is `pattern1 = "cdac"`
 
 
 
-#### The script implementing the problem is as follows
 
+
+
+### Model Solution
 
 ```python
-
-# Brute Force String Search Algorithm
+# Brute-force string search algorithm.
+# Tries every possible starting position of 'pattern' within 'text',
+# comparing character by character and stopping at the first mismatch.
 
 def brute_force_search(text, pattern):
     """
-    Searches for 'pattern' inside 'text' using the brute force method.
+    Search for 'pattern' inside 'text' using the brute-force method.
 
     Parameters
     ----------
     text : str
-        The larger string in which we search.
-
+        The larger string to search within.
     pattern : str
-        The substring we want to find.
+        The substring being searched for.
 
     Returns
     -------
     int
-        Starting index of the pattern if found.
-        Returns -1 if pattern is not present.
+        The starting index of the first match, or -1 if the
+        pattern does not occur anywhere in the text.
     """
 
-    # Length of text and pattern
-    m = len(text)  # Length of the text string
-    n = len(pattern)  # Length of the pattern string
+    m = len(text)     # length of the text
+    n = len(pattern)  # length of the pattern
 
-    # Try every possible alignment of pattern in text
+    # The pattern can only start at indices 0 .. (m - n) inclusive —
+    # beyond that point, there aren't enough characters left in the
+    # text for the pattern to fit.
     for i in range(m - n + 1):
 
         print(f"\nChecking alignment starting at text index {i}")
+        match = True  # assume a match until we find evidence otherwise
 
-        match = True  # Assume match unless mismatch found
+        # Compare the pattern against the text, one character at a time
+        for j in range(n):
+            print(f"Comparing text[{i + j}]='{text[i + j]}' "
+                  f"with pattern[{j}]='{pattern[j]}'")
 
-        # Compare characters one by one
-        for j in range(n):  # Loop through each character in the pattern
+            if text[i + j] != pattern[j]:
+                print("Mismatch found -> shift pattern to the right")
+                match = False
+                break  # no point checking the rest of this alignment
 
-            print(f"Comparing text[{i+j}]='{text[i+j]}' with pattern[{j}]='{pattern[j]}'")  # Show the characters being compared
-
-            if text[i + j] != pattern[j]:  # If characters do not match
-                print("Mismatch found → shift pattern to the right")
-                match = False  # Set match to False if a mismatch is found
-                break
-
-        # If all characters matched
-        if match:  # If we completed the inner loop without breaking, it means we found a match
+        # If the inner loop finished without ever setting match = False,
+        # every character lined up — we've found the pattern.
+        if match:
             print("Pattern found!")
-            return i  # Return the starting index of the pattern in the text
+            return i
 
-    # Pattern not found
+    # We tried every possible alignment and never found a full match.
     return -1
 
 
-# Test Examples
+# ---------------- Test ----------------
 
 text1 = "acdabcdacabcd"
 pattern1 = "cdac"
@@ -826,37 +621,33 @@ result = brute_force_search(text1, pattern1)
 
 print("\nFinal Result:")
 print("Pattern found at index:", result)
-
-
 ```
 
-The output to above script is 
+**Output:**
 
-
-```python
-
+```
 Checking alignment starting at text index 0
 Comparing text[0]='a' with pattern[0]='c'
-Mismatch found → shift pattern to the right
+Mismatch found -> shift pattern to the right
 
 Checking alignment starting at text index 1
 Comparing text[1]='c' with pattern[0]='c'
 Comparing text[2]='d' with pattern[1]='d'
 Comparing text[3]='a' with pattern[2]='a'
 Comparing text[4]='b' with pattern[3]='c'
-Mismatch found → shift pattern to the right
+Mismatch found -> shift pattern to the right
 
 Checking alignment starting at text index 2
 Comparing text[2]='d' with pattern[0]='c'
-Mismatch found → shift pattern to the right
+Mismatch found -> shift pattern to the right
 
 Checking alignment starting at text index 3
 Comparing text[3]='a' with pattern[0]='c'
-Mismatch found → shift pattern to the right
+Mismatch found -> shift pattern to the right
 
 Checking alignment starting at text index 4
 Comparing text[4]='b' with pattern[0]='c'
-Mismatch found → shift pattern to the right
+Mismatch found -> shift pattern to the right
 
 Checking alignment starting at text index 5
 Comparing text[5]='c' with pattern[0]='c'
@@ -867,26 +658,7 @@ Pattern found!
 
 Final Result:
 Pattern found at index: 5
-
-
 ```
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+> **Efficiency note:** in the worst case, brute-force search compares every pattern character against every text position, giving it $O(m \times n)$ time complexity — fine for short strings, but slow on large texts with a lot of repeated characters. Python's built-in `text.find(pattern)` uses a far more optimized algorithm internally and should always be preferred in real code; writing `brute_force_search()` yourself is valuable purely to understand *how* string searching works underneath the hood.
 

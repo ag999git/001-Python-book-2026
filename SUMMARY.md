@@ -272,7 +272,12 @@
 * [Scripting Questions with Answers](20-unittest/097-ch20-scripting-qa.md)
 
 
+## Chapter 21: Design Patterns
 
+* [Design Patterns in Python: Introduction](21-design-patterns/README.md)
+* [Google Colab NB: Design Patterns](https://github.com/ag999git/001-Python-book-2026/blob/main/colab-nb/18_design_patterns.ipynb)
+* [Design Pattern: Conceptual Questions with Answers](21-design-patterns/060-ch21-conceptualqa.md)
+* [Design Patterns in Python: Scripting Questions (With Answers)](21-design-patterns/080-ch21-scriptsqa.md)
 
 
 

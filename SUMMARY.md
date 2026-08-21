@@ -243,6 +243,26 @@
 * [Lists: Conceptual Questions (With Answers)](18-lists/50-ch18-qa.md)
 
 
+## Chapter 19: Tuples; Dictionaries: Sets (Beyond Basics)
+
+* [Introduction](19-tuples-dicts-sets/README.md)
+* [Google Colab NB: Chapter 21](https://github.com/ag999git/001-Python-book-2026/blob/main/colab-nb/21_tuples_dictionaries_sets.ipynb)
+* [Tuples: Conceptual Questions (With Answers)](19-tuples-dicts-sets/50-ch19-tuples-conceptual-qa.md)
+* [Tuples: Scripting Questions (With Answers)](19-tuples-dicts-sets/70-ch19-tuples-scripting-qa.md)
+* [Dictionaries: Conceptual Questions (With Answers)](19-tuples-dicts-sets/80-ch19-dictionary-conceptual-qa.md)
+* [Dictionaries: Scripting Questions (With Answers)](19-tuples-dicts-sets/90-ch19-dictionary-scripting-qa.md)
+* [Sets: Conceptual Questions (With Answers)](19-tuples-dicts-sets/95-ch19-sets-conceptual-qa.md)
+* [Sets: Scripting Questions (With Answers)](19-tuples-dicts-sets/98-ch19-sets-scripting-qa.md)
+
+
+
+
+
+
+
+
+
+
 
 
 

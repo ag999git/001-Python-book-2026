@@ -227,6 +227,13 @@
 * [Chapter 17 - Scripting Questions: Hard](16-language-supported-api/070-ch16-scripting-qa-hard.md)
 
 
+## Chapter 17 Strings (Beyond Basics)
+
+* [Introduction](17-strings/README.md)
+* [Google Colab NB Chapter 19](https://github.com/ag999git/001-Python-book-2026/blob/main/colab-nb/19_strings_beyond_basics.ipynb)
+* [Assignment: Beyond The Basics- Timezones, Calendars, And Datetimes](17-strings/050-ch17-assignment-timezone.md)
+* [Conceptual Questions (With Answers)](17-strings/080-ch17-conceptual-qa.md)
+* [Scripting Questions (With Answers)](17-strings/090-ch17-scripting-qa.md)
 
 
 

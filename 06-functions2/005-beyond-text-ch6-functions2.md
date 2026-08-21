@@ -6,6 +6,7 @@ Each task follows the same pattern: a research question, followed by a model ans
 
 ---
 
+
 ## Task 1 — Investigate a Real Python Library Function
 
 The plotting function in **Matplotlib** has the following simplified signature:

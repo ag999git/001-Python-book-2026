@@ -28,6 +28,9 @@ A **circular reference** occurs when two (or more) objects hold references to ea
 | **The result** | The two objects form what this page calls an **"island of isolation"**: unreachable from your code, but not eligible for cleanup, because the standard reference counter only sees that *something* still points to them — it doesn't check whether that "something" is itself unreachable. |
 | **The solution** | Python has a second, backup mechanism: the **Generational Garbage Collector** (`gc` module). It periodically scans memory for exactly this kind of island, and — unlike simple reference counting — is able to recognise and break these mutual links, freeing the memory. |
 
+![Flowchart](/resources/ch-7august-2026-circular-reference.png)
+
+
 ```mermaid
 flowchart LR
     subgraph Reachable["Reachable from your code"]

@@ -1,4 +1,4 @@
-# Chapter 7.9 — Research Question: What Is a Memory Leak in Python?
+# Chapter 7 — Research Question: What Is a Memory Leak in Python?
 
 ## What this page covers
 

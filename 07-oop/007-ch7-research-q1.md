@@ -1,5 +1,5 @@
 
-# Chapter 7.7 — Research Question: Circular References and the Garbage Collector
+# Chapter 7 — Research Question: Circular References and the Garbage Collector
 
 ## What this page covers
 

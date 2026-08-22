@@ -27,15 +27,10 @@ A **memory leak** happens when a program keeps holding on to memory it no longer
 | **Complex circular references** | Certain object graphs — especially ones with custom `__del__()` methods, or reference cycles spread across C extensions — can confuse or slow down the generational collector | The collector may need extra passes to untangle them, or (in older Python versions, pre-3.4) may refuse to collect cycles involving `__del__()` at all |
 | **The result, either way** | Your program's RAM usage keeps climbing over time | Eventually the OS runs out of memory to give the process, and it slows to a crawl or crashes |
 
-```mermaid
-flowchart LR
-    A[Program starts] --> B[Objects are created<br/>during normal operation]
-    B --> C{Are all references<br/>to old objects removed<br/>when no longer needed?}
-    C -->|Yes| D[Objects become unreachable<br/>Garbage Collector frees them]
-    D --> B
-    C -->|No - still referenced<br/>somewhere, e.g. a growing list| E[Objects stay alive forever<br/>RAM usage keeps climbing]
-    E --> F[Eventually: slowdown or<br/>out-of-memory crash]
-```
+
+![Flowchart](/resources/ch-7august-2026-memory-leak.png)
+
+
 
 ---
 

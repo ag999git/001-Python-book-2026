@@ -166,6 +166,10 @@ sequenceDiagram
 
 Overriding `__del__()` in your own class does **not** give you control over memory management itself — it just lets you "hook in" with your own cleanup code at the exact moment right before Python frees the memory. The full sequence looks like this:
 
+
+![Flowchart](resources/ch-7-august-2026-del-diagram.png)
+
+
 ```mermaid
 flowchart TD
     A["Reference count reaches 0"] --> B{"Did you define\n__del__() in your class?"}

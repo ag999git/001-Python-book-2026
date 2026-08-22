@@ -156,7 +156,7 @@ sequenceDiagram
     Note over Heap: Memory reclaimed by Garbage Collector
 ```
 
-### Another way of visualizing how __del__() operates is as follows:
+### Another way of visualizing how `__del__()` operates is as follows:
 
 ![Figure: How del works](../.gitbook/assets/ch07-oop-del.png)
 

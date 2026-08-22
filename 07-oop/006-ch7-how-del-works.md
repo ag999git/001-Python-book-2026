@@ -1,5 +1,5 @@
 
-# Chapter 7.6 — How `del` and `__del__()` Really Work
+# Chapter 7 — How `del` and `__del__()` Really Work
 
 ## What this page covers
 

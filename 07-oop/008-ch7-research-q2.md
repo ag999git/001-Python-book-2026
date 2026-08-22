@@ -122,11 +122,10 @@ It helps to remember that a Python list doesn't *contain* objects directly — i
 
 ## When should you use which?
 
-```mermaid
-flowchart TD
-    A["Do you need to modify the\ninner objects independently?"] -->|No, read-only or immutable data| B["Use shallow copy\n(copy.copy) -- faster, less memory"]
-    A -->|Yes, inner objects will be\nmodified separately| C["Use deep copy\n(copy.deepcopy) -- safe, independent"]
-```
+![Flowchart](/resources/ch-7-august-2026-deep-copy-2.png)
+
+
+
 
 - **Choose a shallow copy** when the inner objects are immutable (like numbers or strings), or when you specifically *want* the copy and original to stay linked — for example, two different "views" over the same underlying data that should always agree.
 - **Choose a deep copy** whenever you're duplicating a structure of **mutable** objects (like a list of `Pet` objects) and you need the copy to be a truly independent snapshot — for example, saving a backup of a game state before letting the player make changes, where the backup must never be affected by what happens next.

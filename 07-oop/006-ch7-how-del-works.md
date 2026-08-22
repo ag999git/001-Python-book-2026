@@ -137,24 +137,10 @@ End of script.
 | `del p1` | Count becomes **1** | No — `p2` still holds a reference |
 | `del p2` | Count becomes **0** | **Yes** — memory is released |
 
-```mermaid
-sequenceDiagram
-    participant You as Your code
-    participant Stack
-    participant Heap as Heap (Tiger object)
+![Sequence Diagram](/resources/ch-7-august-2026-del-diagram-2.png)
 
-    You->>Stack: p1 = Pet("Tiger")
-    Stack->>Heap: create object, refcount = 1
-    You->>Stack: p2 = p1
-    Stack->>Heap: refcount = 2
-    You->>Stack: del p1
-    Stack->>Heap: remove p1 label, refcount = 1
-    Note over Heap: Object survives (p2 still points to it)
-    You->>Stack: del p2
-    Stack->>Heap: remove p2 label, refcount = 0
-    Heap-->>You: __del__() runs automatically
-    Note over Heap: Memory reclaimed by Garbage Collector
-```
+
+
 
 ### Another way of visualizing how `__del__()` operates is as follows:
 

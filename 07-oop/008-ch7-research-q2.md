@@ -35,24 +35,10 @@ Python's `copy` module provides two different ways to duplicate data, and the di
 
 ### Visualizing the difference
 
-```mermaid
-flowchart TB
-    subgraph Original["original_shelter list"]
-        O["original_shelter[0]"]
-    end
-    subgraph Shallow["shallow_shelter list (new list object)"]
-        S["shallow_shelter[0]"]
-    end
-    subgraph Deep["deep_shelter list (new list object)"]
-        D["deep_shelter[0]"]
-    end
-    TigerShared["Tiger object\n(name = 'Tiger')"]
-    TigerClone["Tiger CLONE\n(name = 'Tiger')"]
+![Flowchart](/resources/ch-7-august-2026-deep-copy.png)
 
-    O --> TigerShared
-    S -.->|same reference| TigerShared
-    D --> TigerClone
-```
+
+
 
 Notice that `original_shelter[0]` and `shallow_shelter[0]` both point at the **same** `Tiger` object — that's what "shallow" means here. `deep_shelter[0]`, on the other hand, points at a completely separate `Tiger` clone, with its own independent memory address.
 

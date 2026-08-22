@@ -31,21 +31,6 @@ A **circular reference** occurs when two (or more) objects hold references to ea
 ![Flowchart](/resources/ch-7august-2026-circular-reference.png)
 
 
-```mermaid
-flowchart LR
-    subgraph Reachable["Reachable from your code"]
-        dog_label["dog (Stack label)"]
-        cat_label["cat (Stack label)"]
-    end
-    subgraph Island["Island of Isolation (Heap)"]
-        Tiger["Tiger object<br/>friend -> Kitty"]
-        Kitty["Kitty object<br/>friend -> Tiger"]
-    end
-    dog_label -.->|deleted| Tiger
-    cat_label -.->|deleted| Kitty
-    Tiger -->|self.friend| Kitty
-    Kitty -->|self.friend| Tiger
-```
 
 The dotted arrows above show the links that `del dog` and `del cat` remove. Notice that even after both are deleted, the solid arrows — `Tiger.friend → Kitty` and `Kitty.friend → Tiger` — remain, keeping both objects alive as far as reference counting is concerned.
 

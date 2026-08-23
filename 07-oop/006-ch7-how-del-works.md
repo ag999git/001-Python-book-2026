@@ -26,18 +26,9 @@ Every value your program creates — a number, a string, or an instance of your 
 
 A variable name in the Stack doesn't hold the object itself — it holds the **memory address** of the object on the Heap. This link between a name and an object is called a **reference**.
 
-```mermaid
-flowchart LR
-    subgraph Stack["Stack (variable names)"]
-        p1["p1"]
-        p2["p2"]
-    end
-    subgraph Heap["Heap (actual objects)"]
-        obj["Pet object<br/>name = 'Tiger'<br/>refcount = 2"]
-    end
-    p1 -- reference --> obj
-    p2 -- reference --> obj
-```
+![Flowchart](/resources/ch-7-oop-del-working-memory-ref.png)
+
+
 
 In the diagram above, `p1` and `p2` are two different *names*, but both point at the **same single object** on the Heap. This is exactly what happens when you write `p2 = p1` — you're not copying the `Pet`, you're just creating a second label for the same warehouse shelf.
 

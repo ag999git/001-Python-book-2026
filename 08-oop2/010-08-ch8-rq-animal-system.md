@@ -76,20 +76,9 @@ The assignment has `Cat` inherit from `Animal` only, while `Dog` inherits from b
 
 ## Visualizing the class hierarchy
 
-```mermaid
-graph TD
-    AnimalABC[Animal - Abstract Base Class]
-    FriendlyClass[Friendly]
-    DogClass[Dog]
-    CatClass[Cat]
-    ObjectRoot[object]
+![Flowchart](/resources/ch8-inheritene-august2026-animal-management-system.png)
 
-    ObjectRoot --> AnimalABC
-    ObjectRoot --> FriendlyClass
-    AnimalABC --> DogClass
-    FriendlyClass --> DogClass
-    AnimalABC --> CatClass
-```
+
 
 *(This diagram uses plain `graph TD` syntax with simple boxes and arrows only — no subgraphs, no styled/labeled edges, no special characters in labels — so it should paste cleanly into draw.io via Extras → Edit Diagram.)*
 

@@ -166,18 +166,8 @@ This design rests on one observation from real-world programs: **most objects di
 
 ### The mechanism, step by step
 
-```mermaid
-flowchart TD
-    A["You call gc.collect()"] --> B["Your program briefly pauses\n('stop the world')"]
-    B --> C["GC traces every reference\nin the target generation"]
-    C --> D{"Found objects that reference\neach other, but nothing\nreachable from the Stack?"}
-    D -- Yes --> E["Mark them as garbage\n(an 'island')"]
-    D -- No --> F["Leave them alone"]
-    E --> G["Break the circular links"]
-    G --> H["Reference counts drop to 0\n-> __del__() fires -> memory freed"]
-    F --> I["Resume your program"]
-    H --> I
-```
+![Flowchart](/resources/ch-7august-2026-circular-reference--2.png)
+
 
 1. **Detection:** calling `gc.collect()` briefly pauses your running program.
 2. **Tracing:** the GC walks through every object in the generation it's checking, following every reference ("arrow") it can find.

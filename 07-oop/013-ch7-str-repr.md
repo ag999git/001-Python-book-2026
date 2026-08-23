@@ -40,18 +40,9 @@ Both are answered below, alongside the original two cases from the book, so you 
 
 If a class defines `__repr__()` but does **not** define `__str__()`, then calling `str()` (or `print()`) will automatically **fall back to using `__repr__()` instead.** Python only does this substitution in one direction — `__repr__()` is treated as the more fundamental, "always available" representation.
 
-```mermaid
-flowchart TD
-    A["print(obj) or str(obj) is called"] --> B{"Does the class\ndefine __str__()?"}
-    B -- Yes --> C["Use __str__()'s output"]
-    B -- No --> D{"Does the class\ndefine __repr__()?"}
-    D -- Yes --> E["Fall back to __repr__()'s output"]
-    D -- No --> F["Fall back further, to Python's\ndefault object description\n(e.g. <__main__.Pet object at 0x...>)"]
+![Flowchart](/resources/ch-7-august-2026-str-versus-repr.png)
 
-    G["repr(obj) is called"] --> H{"Does the class\ndefine __repr__()?"}
-    H -- Yes --> I["Use __repr__()'s output"]
-    H -- No --> F
-```
+
 
 Notice the asymmetry: `repr()` **never** falls back to `__str__()`. Only `str()`/`print()` are willing to fall back to `__repr__()`. This is why defining `__repr__()` alone still gives you working, sensible output everywhere, while defining `__str__()` alone leaves `repr()` using Python's generic, not-very-useful default.
 

@@ -20,7 +20,6 @@ This is worth working through carefully, because these eleven properties aren't 
 
 ## Problem Statement
 
-*(Kept exactly as set in the assignment.)*
 
 > Design a Python program that demonstrates all major properties of inheritance, including: (1) Is-A relationship, (2) Code reuse, (3) Method Resolution Order (MRO), (4) Overriding, (5) Polymorphism, (6) `super()`, (7) Constructor behavior, (8) Dynamic binding, (9) Encapsulation, (10) Extensibility, (11) Maintainability.
 

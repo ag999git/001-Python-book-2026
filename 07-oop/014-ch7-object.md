@@ -88,22 +88,7 @@ You can see the complete list yourself at any time with `dir(object)`.
 
 ## Visualizing the hierarchy
 
-```mermaid
-graph TD
-    ObjectRoot[object - the root of everything]
-    Dog[Dog - explicit: class Dog of object]
-    Cat[Cat - implicit: class Cat]
-    IntType[int - built in type]
-    StrType[str - built in type]
 
-    ObjectRoot --> Dog
-    ObjectRoot --> Cat
-    ObjectRoot --> IntType
-    ObjectRoot --> StrType
-```
-
-
-## Another diagram
 
 The following flowchart shows the hierarchy of some inbuilt and user created classes. Note:- Exceptions as a class are discussed in the chapter on exceptions
 

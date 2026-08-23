@@ -37,17 +37,8 @@ The original exercise checks `__str__` specifically. As a natural extension: **i
 
 ## Understanding the check, visually
 
-```mermaid
-graph TD
-    ObjectClass[object class - defines str, init, repr, etc]
-    PetClass[Pet class - empty, just pass]
-    IdentityCheck[Pet.str is object.str]
-    Result[True - same method, not a copy]
+![Flowchart](/resources/ch8-august-2026-multiple-inherit-inspecting-built-in.png)
 
-    ObjectClass --> PetClass
-    PetClass --> IdentityCheck
-    IdentityCheck --> Result
-```
 
 
 

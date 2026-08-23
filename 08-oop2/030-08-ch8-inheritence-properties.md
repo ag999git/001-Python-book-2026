@@ -1,6 +1,6 @@
 
 
-# Chapter 8.30 — Assignment: The Eleven Properties of Inheritance
+# Chapter 8 — Assignment: The Eleven Properties of Inheritance
 
 ## What this page covers
 

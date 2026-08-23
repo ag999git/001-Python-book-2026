@@ -42,14 +42,10 @@ Everything about the sequence — every future "random" number — is completely
 
 Because the formula above is **linear** (no squaring, no exponentials — just multiplication and addition), seeing just a few consecutive outputs is enough to set up simple equations and solve for the hidden constants. There are two attack scenarios, depending on how much the attacker already knows:
 
-```mermaid
-flowchart TD
-    A["Attacker observes a few\nconsecutive LCG outputs"] --> B{"Are a and m\nalready known?"}
-    B -- "Yes, only c is unknown" --> C["Attack 1: recover c\nfrom 2 outputs"]
-    B -- "No, only m is known" --> D["Attack 2: recover BOTH\na and c from 3 outputs"]
-    C --> E["Attacker can now predict\nevery future output"]
-    D --> E
-```
+
+![Flowchart](/resources/ch-7-oop-prng-vulnerability.png)
+
+
 
 #### Attack 1 — Finding `c` (when `a` and `m` are already known)
 

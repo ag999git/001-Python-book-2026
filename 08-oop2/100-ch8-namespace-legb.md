@@ -108,7 +108,7 @@ print("Modified name:->", d.name)
 ```
 
 
-![Flowchart](/resources/ch-8-august-2026-namespaces-and-legb-rules.png)
+![Flowchart](/resources/ch-8-august-2026-namespaces-and-legb-rules--corrected-2.png)
 
 ### What this confirms
 
@@ -142,23 +142,11 @@ One more important subtlety: **assignment behaves differently from access.** Whe
 
 ### LEGB, visualized
 
-```mermaid
-graph TD
-    Lookup[Python needs to resolve a variable name]
-    Local[1 - Local - inside the current function]
-    Enclosing[2 - Enclosing - inside any outer nested function]
-    Global[3 - Global - at module or file level]
-    Builtin[4 - Built-in - Python's own predefined names]
-    NotFound[NameError - not found anywhere]
 
-    Lookup --> Local
-    Local --> Enclosing
-    Enclosing --> Global
-    Global --> Builtin
-    Builtin --> NotFound
-```
 
-*(In reality Python stops at the FIRST match rather than always reaching the end — this diagram shows the full checking order, not a guaranteed full traversal.)*
+![Flowchart](/resources/ch-8-august-2026-namespaces-and-legb-rules.png)
+
+
 
 ---
 

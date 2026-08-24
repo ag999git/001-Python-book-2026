@@ -67,17 +67,10 @@ They differ only in *when* and *how* that storing happens.
 | **2. Decorator Registration** | Registration happens automatically, right at the moment each class is *defined*, via `@decorator` syntax | Cleaner and safer than manual registration — much harder to forget |
 | **3. Automatic Registration** | The base class itself automatically tracks every subclass that's ever created, with no extra code needed on each subclass | Best for large systems and frameworks, where you can't rely on every contributor remembering to register their own classes |
 
-```mermaid
-graph TD
-    Goal[Goal - look up classes by name at runtime]
-    Manual[Approach 1 - Manual - explicit register call]
-    Decorator[Approach 2 - Decorator - automatic at definition]
-    Auto[Approach 3 - init_subclass - fully automatic]
 
-    Goal --> Manual
-    Goal --> Decorator
-    Goal --> Auto
-```
+![Flowchart](/resources/ch-8-august-2026-3-approaches-to-class-registration.png)
+
+
 
 
 

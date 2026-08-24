@@ -187,19 +187,10 @@ Extract file, line, function, code
 (Optional) traceback.format_exc() → full string
 ```
 
-The same flow, as a flowchart (plain Mermaid `flowchart TD` syntax, which should import cleanly into [draw.io](https://app.diagrams.net/)):
+The same flow, as a flowchart 
 
-```mermaid
-flowchart TD
-    A["Error occurs inside level3()"] --> B["Exception object 'e' created"]
-    B --> C["e.__traceback__ accessed directly"]
-    C --> D["traceback.extract_tb(e.__traceback__)"]
-    D --> E["List of frames: tb_list"]
-    E --> F["Loop through frames"]
-    F --> G["Extract file, line, function, code per frame"]
-    G --> H["traceback.format_exc() -- full string"]
-    H --> I["finally: program continues"]
-```
+![Flowchart](/resources/ch-9-exceptions-august-2026-exception-object-traceback-module.png)
+
 
 ### The Script
 

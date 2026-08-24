@@ -525,11 +525,8 @@ In practice, printing the whole exception object (`print(e)`) or its string form
 2. `IndexError` (invalid position in a sequence) and `KeyError` (invalid key in a dictionary) are both **subclasses** of `LookupError`.
 3. This means a single `except LookupError:` block can catch either problem — useful when your code doesn't care *which specific kind* of "not found" occurred, just that a lookup failed.
 
-```mermaid
-flowchart TD
-    A[LookupError] --> B[IndexError]
-    A --> C[KeyError]
-```
+![Flowchart](/resources/ch-9-exceptions-august-2026-conceptual-question-bank02.png)
+
 
 ```python
 def get_item(data, key_or_index):

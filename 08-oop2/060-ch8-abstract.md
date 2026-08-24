@@ -53,22 +53,9 @@ The script below defines `Dog(Walker)` and `Fish(Swimmer)` as single-inheritance
 
 ## Visualizing the hierarchy
 
-```mermaid
-graph TD
-    PetABC[Pet - Abstract Base Class]
-    Walker[Walker]
-    Swimmer[Swimmer]
-    Dog[Dog]
-    Fish[Fish]
-    Amphibian[Amphibian]
+![Flowchart](/resources/ch-8-august-2026-ABC-pet-abstract-base-class.png)
 
-    PetABC --> Walker
-    PetABC --> Swimmer
-    Walker --> Dog
-    Swimmer --> Fish
-    Walker --> Amphibian
-    Swimmer --> Amphibian
-```
+
 
 
 

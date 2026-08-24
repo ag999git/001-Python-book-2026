@@ -84,21 +84,8 @@ else:
 4. This "bubbling up" repeats, one level at a time, until either a matching handler is found somewhere in the chain of calls, or the very top of the program is reached.
 5. If it reaches the top without ever being caught, Python's own default handler takes over: it prints a traceback and stops the program.
 
-```mermaid
-flowchart TD
-    A["Exception raised in level3()"] --> B{"except block in level3()?"}
-    B -- No --> C["Propagate to caller: level2()"]
-    C --> D{"except block in level2()?"}
-    D -- No --> E["Propagate to caller: level1()"]
-    E --> F{"except block in level1()?"}
-    F -- No --> G["Propagate to top-level script"]
-    G --> H{"except block there?"}
-    H -- No --> I["Python's default handler: print traceback, stop program"]
-    H -- Yes --> J["Handled -- program continues"]
-    F -- Yes --> J
-    D -- Yes --> J
-    B -- Yes --> J
-```
+![Flowchart](/resources/ch-9-exceptions-august-2026-conceptual-question-bank1.png)
+
 
 > **New term — "bubbling up" / "propagation":** this is just the everyday name for an exception moving outward through the chain of function calls, level by level, until something catches it. See the [official Python docs on the exception-handling statement](https://docs.python.org/3/reference/compound_stmts.html#the-try-statement) for the formal description of this process.
 

@@ -1,266 +1,219 @@
 
 
+# Chapter 8.80 — `__new__()` versus `__init__()`
 
+## What this page covers
 
+Every earlier chapter page that used `__init__()` treated it as "the constructor" — the method that runs automatically when you create an object. That's a useful simplification for most everyday code, but it's not the whole story. This page reveals the step that actually happens *before* `__init__()`: a separate dunder method called `__new__()`, which is responsible for the physical creation of the object, before `__init__()` ever gets a chance to fill it with data.
 
-## `__new__()` versus `__init__()`
+Understanding this distinction matters for two reasons. First, it deepens your mental model of exactly what happens when you write `MyClass()` — useful for debugging unusual object-creation bugs. Second, `__new__()` unlocks a small set of genuinely useful advanced patterns — most notably the **Singleton pattern**, demonstrated on this page — that simply aren't possible using `__init__()` alone, because by the time `__init__()` runs, the object already exists and can't be swapped out for a different one.
 
+**A few terms used throughout, explained simply, with links for more detail:**
+- **Constructor** — in most everyday Python discussion, "the constructor" informally refers to `__init__()`. This page shows that, more precisely, object creation is really a *two-step* process, with `__new__()` handling creation and `__init__()` handling setup.
+- **Singleton pattern** — a design pattern that restricts a class to having only ever one single object in existence, no matter how many times you try to create one. ([Wikipedia: Singleton pattern](https://en.wikipedia.org/wiki/Singleton_pattern))
+- **Metaclass** — a class whose instances are themselves classes (i.e., "a class of a class"). This is an advanced topic, mentioned briefly below for completeness, with a link for further reading. ([Python docs: Metaclasses](https://docs.python.org/3/reference/datamodel.html#metaclasses))
+- **Immutable type** — a type whose value cannot be changed after creation (e.g. `str`, `tuple`, `int`). Covered further in the section below on why `__new__()` matters for these types specifically.
 
+---
 
--   Object creation in Python happens in **two steps**:
-- Step 1: `__new__()` → creates the object.
-- Step 2: `__init__()` → initializes the object
+## Object creation happens in two steps
 
-----------
+Object creation in Python is a **two-step process**, not one:
 
-### Simple Definition
+- **Step 1:** `__new__()` → creates the object
+- **Step 2:** `__init__()` → initializes the object
 
--   `__new__()`:
-    
-    > Creates and returns a **new object (instance)**
-    
--   `__init__()`:
-    
-    > Initializes the **attributes of the object**
+### Simple definitions
 
+- **`__new__()`**: creates and returns a **new object (instance)**.
+- **`__init__()`**: initializes the **attributes** of an object that already exists.
 
-### Comparative table
+---
 
-  
+## Comparative table
 
 | Feature | `__new__()` | `__init__()` |
-| --- | --- | --- |
-| Purpose | Creates object | Initializes object |
-| Type | Static-like method | Instance method |
-| First parameter | cls (class) | self (object) |
-| Called when | Before object exists | After object exists |
-| Return value | Must return object | Must return None |
-| Controls | Object creation | Object customization |
+|---|---|---|
+| Purpose | Creates the object | Initializes the object |
+| Type | Static-like method (though technically a special case — see the note below) | Instance method |
+| First parameter | `cls` (the class itself) | `self` (the specific object) |
+| Called when | **Before** the object exists | **After** the object exists |
+| Return value | Must return the new object | Must return `None` |
+| Controls | Object *creation* | Object *customization* |
 | Called first? | Yes | No |
-| Can skip next step? | Yes. Calling `__new__()` can skip calling `__init__()` | No. Since `__init__()` is called after `__new__()`, so cannot skip it |
+| Can the next step be skipped? | Yes — if `__new__()` doesn't return a proper object, `__init__()` is skipped entirely | No — since `__init__()` only ever runs *after* `__new__()` has already produced an object |
+
+*(Note on "static-like": `__new__()` is technically implemented as a `staticmethod` internally, but it's special-cased by Python to automatically receive `cls` as its first argument, unlike a normal `@staticmethod` you'd write yourself — hence "static-like" rather than a plain static method.)*
+
+---
+
+## Flow of execution, visualized
+
+![Flowchart](/resources/ch-8-august-2026-new-vs-init.png)
 
 
-### Flow of Execution
+---
 
-```python
-
-(1) Call ClassName()
-      ↓
-(2) __new__(cls)
-      ↓
-(3) returns object
-      ↓
-(4) __init__(self)
-
-```
-
-### The following script shows the use of `__new__()` and `__init__()`
+## Basic demonstration
 
 ```python
-
-# Basic demonstration of __new__ and __init__
-
 class Pet:
 
-    # __init__() always gets called after an object is created. It is responsible for initializing the attributes of the object. 
-    # If __new__() does not return an instance of the class, then __init__() will not be called, and the object will not be initialized properly. 
-    # Therefore, it is crucial to call super().__new__(cls) within the __new__() method to ensure that an object is created before any initialization logic is executed in __init__(). This allows us to have control over the object creation process while still ensuring that the necessary initialization steps are performed correctly.
-    
-    def __init__(self):  # (initializer method)
+    def __init__(self):
+        # Step 2: __init__() ALWAYS runs after __new__() has already
+        # successfully produced an object -- its job here is simply
+        # to fill in that object's starting data.
         print("Step 2: __init__() called")
         self.name = "Default Pet"
-    
-    # __new__() always gets called before __init__() when an object is created. 
-    # It is responsible for creating and returning a new instance of the class. If __new__() does not return an instance of the class, then __init__() will not be called, and the object will not be initialized properly. Therefore, it is crucial to call super().__new__(cls) within the __new__() method to ensure that an object is created before any initialization logic is executed in __init__(). This allows us to have control over the object creation process while still ensuring that the necessary initialization steps are performed correctly.
-    
-    def __new__(cls):  # (object creation method)
-        print("Step 1: __new__() called")
-        # If you want to create an object, you must call the __new__() method of the parent class (object) to actually create the object. 
-        # This is done using super().__new__(cls), which ensures that the object is created properly according to the class hierarchy and memory management rules of Python. 
-        # If you do not call super().__new__(cls), no object will be created, and you will not be able to initialize it with __init__() or use it in any meaningful way.
-        obj = super().__new__(cls)  # Create object. 
-        return obj  # Must return object
 
-# Create object
-p = Pet()  
+    def __new__(cls):
+        # Step 1: __new__() runs FIRST, before any object exists yet.
+        # 'cls' here is the class itself (Pet), not an object.
+        print("Step 1: __new__() called")
+
+        # Crucially: we must call the PARENT class's __new__() (object's
+        # own version) to actually perform the real, low-level memory
+        # allocation. Overriding __new__() doesn't mean reinventing
+        # object creation from scratch -- it means adding our own logic
+        # AROUND the real creation step, which object still handles.
+        obj = super().__new__(cls)
+        return obj   # __new__() MUST return the created object.
+
+
+p = Pet()
 # Output:
 # Step 1: __new__() called
 # Step 2: __init__() called
-
 ```
 
+### Important concept
 
-### Important Concept
+- `__new__()` creates the object and returns it.
+- That returned object is exactly what becomes `self`, the moment `__init__()` runs on it.
 
--   `__new__()` creates object → returns it
-    
--   That returned object becomes `self` in `__init__()`
-    
+### Very important rule
 
-----------
+> **If `__new__()` does not return an object, `__init__()` will not run at all.**
 
-### Very Important Rule
+---
 
-> If `__new__()` does not return an object → `__init__()` will not run
-
-----------
-
-### Script in which `super()` is not called
-In the following script, the line of script with `super()` is commented out.
-As a result, `__init__()` is not called and object is not created.
->If you want to override `__new__()`, you must call super() on `__new__(cls)` using the `cls` attribute.
-
+## What happens if `super().__new__(cls)` is never called
 
 ```python
-
 class Pet:
 
     def __new__(cls):
         print("__new__ called")
-        # super() not called → no object created
-        # obj = super().__new__(cls)  # No object created because super() is not called, so __init__() will not be called either, and the object will not be initialized properly.
-        # return obj  
-        return None
+        # The line below is intentionally commented out, to show what
+        # happens when the REAL object-creation step is skipped:
+        # obj = super().__new__(cls)
+        # return obj
+        return None   # Returning None means: "no object was created."
 
     def __init__(self):
         print("__init__ called")
 
+
 p = Pet()
 # Output:
 # __new__ called
+# (Notice "__init__ called" NEVER prints -- because __new__() didn't
+# return a real Pet object, Python has nothing to run __init__() ON,
+# so it skips that step entirely.)
 
-print(p)  # p is None because __new__() returned None, so no object was created and initialized, resulting in p being assigned the value None.
+print(p)
 # Output: None
-
-
+# 'p' is literally None here, because that's exactly what __new__()
+# returned -- Python doesn't silently create a "fallback" object for
+# you; whatever __new__() returns is exactly what you get back.
 ```
 
+**Rule of thumb:** if you override `__new__()`, you must call `super().__new__(cls)` (or otherwise produce and return a genuine object), or object creation quietly fails to produce anything usable.
 
+---
 
-### Using `__new__()` to ensure that only 1 instance of a class can be created
+## Using `__new__()` to build a Singleton
 
--   This script demonstrates how `__new__()` can be used to **control object creation**
-    
--   Normally:
-    
-    -   Every call to a class creates a **new object**
-        
--   But in some cases, we want:
-    
-    > Only **one object** of a class to exist (Singleton pattern)
-    
+This next script demonstrates one of `__new__()`'s most well-known real uses: making sure that **no matter how many times a class is "created," only one single object of it will ever actually exist.**
 
-----------
+Normally, calling a class multiple times creates a brand-new, separate object every single time. But sometimes a design genuinely calls for only one object to exist across an entire program — a shared configuration object, a single connection to a resource, or (as here) a demonstration `SingletonPet`.
 
-#### How This Script Ensures Only One Object
+### How this script ensures only one object exists
 
--   A class variable `_instance` stores the created object
-    
--   In `__new__()`:
-    
-    -   If `_instance` is `None` → create a new object
-        
-    -   If `_instance` already exists → return the same object
-        
--   Since `__new__()` controls object creation:
-    
-    -   No new object is created after the first one
-        
+- A class-level variable, `_instance`, stores the one object that's ever created (or `None`, if none has been created yet).
+- Inside `__new__()`:
+  - If `_instance` is still `None` → create a genuinely new object, and remember it.
+  - If `_instance` already holds an object → simply return that *same* existing object again, instead of creating a new one.
+- Because `__new__()` is what actually controls object creation, no *second* object is ever produced after the first.
 
-----------
-
-#### Key Idea
-
-> `__new__()` decides whether to create a new object or reuse an existing one
-
-
-### Script implementing singleton design pattern
-
+**Key idea:** `__new__()` decides *whether* to create a new object at all, or simply hand back one that already exists.
 
 ```python
-
-# Singleton using __new__()
-
 class SingletonPet:
-    _instance = None                              # (class attribute to store single object)
+    _instance = None   # Class attribute: starts empty, will later hold the ONE allowed object.
 
-    def __new__(cls):                             # (object creation method)
-        if cls._instance is None:                 # Check if object already exists
+    def __new__(cls):
+        if cls._instance is None:
+            # Step 1: No object exists yet -- create the first (and
+            # ONLY) real one, using the proper super().__new__(cls) call.
             print("Creating object")
-            cls._instance = super().__new__(cls)  # Create object using super() to ensure proper object creation. This is crucial for the singleton pattern to work correctly, as it allows us to control the instantiation process and ensure that only one instance of the class is created throughout the program.
-        else:  # If object already exists, return existing object
+            cls._instance = super().__new__(cls)
+        else:
+            # Step 2: An object already exists -- do NOT create a new
+            # one. Simply fall through to returning the existing object.
             print("Using existing object")
         return cls._instance
 
-    def __init__(self):                            # (initializer method)
+    def __init__(self):
+        # Step 3: Note that __init__() still runs EVERY time
+        # SingletonPet() is called, even on the second, third, etc.
+        # call -- __new__() only controls whether a NEW object is
+        # made, not whether __init__() runs on whatever gets returned.
         print("Initializing object")
 
-# Test the singleton implementation
 
-s1 = SingletonPet()  # This will create a new object since _instance is initially None
+s1 = SingletonPet()
 # Output:
 # Creating object
-s2 = SingletonPet()  # s2 won't create a new object, it will return the existing object s1
+# Initializing object
+
+s2 = SingletonPet()
 # Output:
 # Using existing object
+# Initializing object
 
 print("Are both objects same?", s1 is s2)
-# Output:
-# Are both objects same? True
-
-
+# Output: Are both objects same? True
 ```
 
+### A follow-up question worth exploring
 
+Notice from the output above that `"Initializing object"` prints **twice** — once for `s1`, and again for `s2` — even though `s2` is really just `s1` in disguise. As a follow-up exercise: **is this a problem?** Specifically, if `__init__()` did something more consequential than printing a message — say, resetting `self.name = "New Pet"` — would that cause `s2 = SingletonPet()` to accidentally reset data that `s1` had already changed? Try adding a mutable attribute to `SingletonPet`, change it after creating `s1`, then create `s2` and check whether your change survived. (This is a well-known subtlety of implementing Singletons this way, and worth experiencing directly rather than just reading about.)
 
+---
 
+## The lifecycle of object creation: a closer look
 
+1. **The two-step process:** object creation is a dual-stage sequence — first `__new__()` (allocation), then `__init__()` (initialization).
+2. **Creation vs. setup:** `__new__()` is the method that creates and returns a raw, empty instance; `__init__()` is the method that populates that instance with data.
+3. **Arguments:** `__new__()` receives `cls` (the class itself) as its first argument; `__init__()` receives `self` (the specific instance that `__new__()` just created).
+4. **The silent ancestor:** every class automatically inherits a default `__new__()` from the base `object` class (see the earlier chapter page, "Implicit Inheritance from `object`"), which handles the actual low-level memory allocation you never normally need to think about.
+5. **The return requirement:** if you override `__new__()` yourself, you **must** return a real instance — typically by calling `super().__new__(cls)`, as shown throughout this page.
+6. **The dependency:** `__init__()` only runs if `__new__()` returns an instance of that specific class (or one of its subclasses) — as demonstrated in the "what happens if `super()` is never called" example above.
+7. **Return types:** `__new__()` must return the instance itself; `__init__()`, by contrast, must always return `None` (Python will raise a `TypeError` if you try to make `__init__()` return anything else).
+8. **The orchestrator:** classes are "callable" (i.e., you can write `MyClass()` at all) because their metaclass, `type`, implements a special `__call__` method behind the scenes.
+9. **The hidden sequence:** when you write `MyClass()`, it's actually `type.__call__` that runs first, and *that* is what internally triggers the `__new__()` → `__init__()` sequence you've seen throughout this page.
+10. **Immutable types:** `__new__()` is the *only* place you can customize the creation of immutable types like `tuple`, `str`, or `int`, because by the time `__init__()` would normally run, the object is already "frozen" and can't be changed — so any customization has to happen earlier, during `__new__()`.
+11. **Use cases for `__new__()`:** advanced patterns like Singletons (as shown above), intercepting object creation inside metaclasses, or subclassing immutable built-in types.
+12. **Use cases for `__init__()`:** the vast majority (roughly 99%) of everyday tasks — setting instance attributes and establishing an object's initial state, exactly as every earlier chapter page in this book has done.
 
-### The Lifecycle of Object Creation: `__new__()` vs `__init__()`
+---
 
-1.  **The Two-Step Process:** Object creation is a dual-stage sequence: first **`__new__()`** (Allocation) and then **`__init__()`** (Initialization).
-    
-2.  **Creation vs. Setup:** `__new__()` is the **constructor** that creates and returns a raw, empty instance; `__init__()` is the **initializer** that populates that instance with data.
-    
-3.  **Arguments:** `__new__()` receives `cls` (the class itself) as its first argument, while `__init__()` receives `self` (the instance created by `__new__()`).
-    
-4.  **The Silent Ancestor:** Every class inherits a default `__new__()` from the base `object` class, which handles the low-level memory allocation.
-    
-5.  **The Return Requirement:** If you override `__new__()`, you **must** return an instance, typically by calling `super().__new__(cls)`.
-    
-6.  **The Dependency:** `__init__()` is only triggered if `__new__()` returns an instance of that specific class (or a subclass).
-    
-7.  **Return Types:** `__new__()` must return the instance; conversely, `__init__()` must always return `None`.
-    
-8.  **The Orchestrator:** Classes are "callable" because their metaclass (`type`) implements `__call__`.
-    
-9.  **The Hidden Sequence:** When you call `MyClass()`, `type.__call__` is what actually executes the `__new__()` → `__init__()` sequence behind the scenes.
-    
-10.  **Immutable Types:** `__new__()` is the only way to customize the creation of immutable types (like `tuple`, `str`, or `int`), because by the time `__init__()` runs, the object is already "frozen."
-    
-11.  **Use Cases for `__new__()`:** Use it for advanced patterns like **Singletons**, Intercepting object creation in **Metaclasses**, or inheriting from **Immutable built-ins**.
-    
-12.  **Use Cases for `__init__()`:** Use it for **99% of tasks**, such as setting instance attributes and initial state.
+## Quick recap
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+- Creating an object is really **two separate steps**: `__new__()` builds it, `__init__()` fills it in — most of the time you never notice this, because the default `__new__()` inherited from `object` does its job silently.
+- **If `__new__()` doesn't return a proper object** (as in the `return None` example), `__init__()` is skipped entirely — this is the single most important rule to remember from this page.
+- **The Singleton pattern** is the classic real-world use for overriding `__new__()`: by checking and reusing a stored `_instance`, a class can guarantee that only one object of it will ever exist — but as the follow-up question above shows, remember that `__init__()` still runs on every call, which is a subtlety worth testing for yourself.
+- For the overwhelming majority of classes you'll write, **you only ever need `__init__()`** — overriding `__new__()` is a specialized tool for a small number of advanced situations (Singletons, metaclasses, immutable type customization), not something to reach for by default.
 
 

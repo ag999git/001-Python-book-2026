@@ -1,231 +1,202 @@
 
 
 
-# PROJECT TASK — `__slots__` (Memory Optimization)
+# Chapter 8.130 — Project: Optimizing Pet Objects Using `__slots__`
+
+## What this page covers
+
+This page builds directly on the earlier chapter page about `__dict__`, which showed that every object normally stores its attributes in its own personal dictionary. This project explores the trade-off behind that convenience: keeping a full dictionary on every single object costs memory, and if your program creates a very large number of objects (thousands or millions of small objects, for instance), that overhead can genuinely add up. `__slots__` is Python's built-in mechanism for opting out of `__dict__` entirely, on a per-class basis, trading away some flexibility in exchange for a smaller memory footprint per object.
+
+This is a genuinely practical, real-world optimization technique — not just a theoretical curiosity. It's commonly used in performance-sensitive code that creates huge numbers of small, simple objects (data records, graph nodes, particles in a simulation, and similar cases), where the memory saved per object, multiplied across millions of objects, becomes significant.
+
+---
+
+## Objective
+
+By completing this project you will:
+- Understand **why `__dict__` consumes memory**
+- Learn how `__slots__` **removes `__dict__`**
+- Compare the behaviour of a normal class against a class using `__slots__`
+- Understand the **limitations and trade-offs** involved
+
+---
+
+## Task Description
 
 
 
-## “Optimizing Pet Objects Using `__slots__` in Python”
+You are required to:
 
-----------
+**Step 1:** Create a normal class `PetNormal`, with `name` and `age`, stored using `self.name`, `self.age`.
 
-## OBJECTIVE 
+**Step 2:** Create a class `PetSlots`, defining `__slots__ = ['name', 'age']`, using the same attributes as above.
 
-By completing this you will:
+**Step 3:** Create objects: `p1 = PetNormal("Tommy", 5)` and `p2 = PetSlots("Bruno", 3)`.
 
--   Understand **why `__dict__` consumes memory**
--   Learn how `__slots__` **removes `__dict__`**
--   Compare behavior of:
-    -   Normal class
-    -   Class with `__slots__`
--   Understand **limitations and trade-offs**
+**Step 4:** Compare namespaces — print `p1.__dict__`, then try `p2.__dict__`. Observe and explain the difference.
 
-----------
+**Step 5:** Add a new attribute dynamically — try `p1.color = "Brown"` and `p2.color = "Black"`. Observe which works and which fails.
 
-## TASK DESCRIPTION. You are required to:
-
-### STEP 1: Create a normal class
-
--   Create class `PetNormal`
--   Add:
-    -   `name`
-    -   `age`
--   Store them using `self.name`, `self.age`
-
-----------
-
-### STEP 2: Create a class using `__slots__`
-
--   Create class `PetSlots`
--   Define:
-
-`__slots__  = ['name', 'age']`
-
--   Use same attributes as above
-
-----------
-
-### STEP 3: Create objects
-
--   Create:
-    -   `p1 = PetNormal("Tommy", 5)`
-    -   `p2 = PetSlots("Bruno", 3)`
-
-----------
-
-### STEP 4: Compare namespaces
-
--   Print: `print(p1.__dict__)`
-
--   Try: `print(p2.__dict__)`
-
-Observe and explain difference
-
-----------
-
-### STEP 5: Add new attribute dynamically
-
--   Try:
-
-`p1.color =  "Brown"  `
-`p2.color =  "Black"`
-
-Observe:
-
--   Which works?
--   Which fails?
-
-----------
-
-### STEP 6: Memory comparison (conceptual)
-
--   Use:
-
-
+**Step 6:** Compare memory (conceptually), using:
 ```python
-import  sys  
-print(sys.getsizeof(p1))  
+import sys
+print(sys.getsizeof(p1))
 print(sys.getsizeof(p2))
 ```
-Compare sizes (even if small difference)
 
+**Step 7:** Write an explanation covering: what `__dict__` is, what `__slots__` does, why dynamic attributes fail on a `__slots__` class, and when to actually use `__slots__`.
 
+### Dos and don'ts
 
-### STEP 7: Write explanation
+**Do:**
+- Use the same attribute names in both classes
+- Print outputs clearly
+- Add comments explaining the behaviour
 
-Student must explain:
+**Don't:**
+- Use different attribute names between the two classes
+- Skip error handling
+- Assume `__slots__` improves *speed* — the focus here is specifically **memory**, not execution speed
 
--   What is `__dict__`
--   What `__slots__` does
--   Why dynamic attributes fail
--   When to use `__slots__`
+### Hints (very important)
 
-----------
+- `__slots__` → **removes the instance's `__dict__`**
+- Without `__dict__` → no dynamic (unplanned) attributes are possible
+- Think of it as: **fixed structure vs. flexible structure**
 
-### 8. DOs and DON’Ts
+### A follow-up question worth exploring
 
-#### DO:
+Step 6 compares `sys.getsizeof()` for a single `PetNormal` object against a single `PetSlots` object — and the actual difference for just one object is often smaller than you might expect (see the note on this in the script below). As a follow-up exercise: **create 100,000 objects of each class in a loop, and compare the *total* memory difference** (you can use `sys.getsizeof()` summed across all objects, or a library like `tracemalloc` for a more accurate picture). This should make the real-world benefit of `__slots__` far more visible than comparing just one object of each type ever could.
 
--   Use same attributes in both classes
--   Print outputs clearly
--   Add comments explaining behavior
+---
 
-#### DON’T:
-
--   Don’t use different attribute names
--   Don’t skip error handling
--   Don’t assume `__slots__` improves speed (focus on memory)
-
-----------
-
-### 9. HINTS (Very Important)
-
--   `__slots__` → **removes instance `__dict__`**
--   Without `__dict__` → no dynamic attributes
--   Think:  Fixed structure vs flexible structure”
-
-----------
-
-### Expected Observations
-
-  
+## Expected observations
 
 | Feature | `PetNormal` | `PetSlots` |
-| --- | --- | --- |
-| Has `__dict__` | Yes | No |
-| Dynamic attributes | Allowed | Not allowed |
-| Memory usage | Higher | Lower |
+|---|---|---|
+| Has `__dict__`? | Yes | No |
+| Dynamic attributes allowed? | Yes | No |
+| Memory usage (at scale) | Higher | Lower |
 | Flexibility | High | Low |
 
 
-### Script
+![Flowchart](/resources/ch-8-august-2026-pet-slots-project.png)
 
+---
+
+## The script
 
 ```python
-
-
-# STEP 1: NORMAL CLASS
-
-class PetNormal:  # Normal class without __slots__
+# ============================================================
+# STEP 1: A NORMAL CLASS -- keeps the default __dict__
+# ============================================================
+class PetNormal:
     def __init__(self, name, age):
         self.name = name
         self.age = age
 
-# STEP 2: CLASS WITH __slots__
 
-class PetSlots:  # Class with __slots__
-    __slots__ = ['name', 'age']  # __slots__ restricts attributes to only 'name' and 'age'. 
-    # This means that instances of PetSlots can only have these two attributes, and they will 
-    # not have a __dict__ to store attributes dynamically.
+# ============================================================
+# STEP 2: A CLASS USING __slots__ -- opts out of __dict__
+# ============================================================
+class PetSlots:
+    # Declaring __slots__ tells Python: "instances of this class will
+    # ONLY ever have these named attributes -- nothing else." Because
+    # of this promise, Python doesn't need to give each instance a
+    # full __dict__ at all; it can store 'name' and 'age' in a more
+    # compact, fixed-size internal structure instead.
+    __slots__ = ['name', 'age']
 
-    def __init__(self, name, age):  # The __init__ method initializes the name and age attributes for instances of PetSlots.
+    def __init__(self, name, age):
         self.name = name
         self.age = age
 
-# STEP 3: OBJECT CREATION
 
-p1 = PetNormal("Tommy", 5)  # This line creates an instance of the PetNormal class with the name "Tommy" and age 5. Since PetNormal does not use __slots__, it has a __dict__ that can store attributes dynamically.
+# ============================================================
+# STEP 3: OBJECT CREATION
+# ============================================================
+p1 = PetNormal("Tommy", 5)
 p2 = PetSlots("Bruno", 3)
 
 
+# ============================================================
 # STEP 4: NAMESPACE COMPARISON
+# ============================================================
+print("PetNormal __dict__:", p1.__dict__)
+# Output: PetNormal __dict__: {'name': 'Tommy', 'age': 5}
+# PetNormal has no __slots__, so it keeps the default, fully dynamic
+# __dict__ that every ordinary object gets (see the earlier chapter
+# page on __dict__ for the full explanation of this).
 
-print("PetNormal __dict__:", p1.__dict__)  
-# Output: PetNormal __dict__: {'name': 'Tommy', 'age': 5}. 
-# This line prints the __dict__ of p1 instance, which shows the attributes and their values in a dictionary 
-# format. Since PetNormal does not use __slots__, it has a __dict__ that can store attributes dynamically.
-
-try:  # This block attempts to access the __dict__ attribute of the p2 instance, which is an instance of 
-    # PetSlots. Since PetSlots uses __slots__, it does not have a __dict__ attribute, and trying to access 
-    # it will raise an AttributeError. The except block catches this error and prints a message indicating 
-    # that PetSlots has no __dict__.
+try:
     print("PetSlots __dict__:", p2.__dict__)
 except AttributeError as e:
-    print("PetSlots has no __dict__:", e)  # error message in e indicates 'PetSlots' object has no attribute '__dict__'. 
+    print("PetSlots has no __dict__:", e)
+# Output: PetSlots has no __dict__: 'PetSlots' object has no attribute '__dict__'
+# This is the entire point of __slots__: PetSlots objects are built
+# WITHOUT a __dict__ at all -- there's nothing there to print.
 
 
+# ============================================================
 # STEP 5: DYNAMIC ATTRIBUTE ADDITION
+# ============================================================
 
-# This Works because PetNormal allows dynamic attributes due to the presence of __dict__. When we add a new attribute 'color' to the p1 instance, it is stored in the __dict__ and can be accessed without any issues.
+# This WORKS, because PetNormal still has a __dict__ -- adding a new
+# key, "color", is exactly the same operation as adding a new key to
+# any other dictionary.
 p1.color = "Brown"
-print("PetNormal new attribute:", p1.color)
+print("PetNormal new attribute:", p1.color)   # -> PetNormal new attribute: Brown
 
-# This Fails because PetSlots does not allow dynamic attributes due to the use of __slots__. When we try to add a new attribute 'color' to the p2 instance, it raises an AttributeError. The except block catches this error and prints a message indicating that we cannot add new attributes to PetSlots.
+# This FAILS, because PetSlots has no __dict__ to add a new key to --
+# Python has nowhere to physically store an attribute that wasn't
+# declared in __slots__ ahead of time.
 try:
     p2.color = "Black"
 except AttributeError as e:
     print("Cannot add new attribute to PetSlots:", e)
+# Output: Cannot add new attribute to PetSlots: 'PetSlots' object has
+# no attribute 'color'
 
-# STEP 6: MEMORY COMPARISON. Using __slots__ can save memory by preventing the creation of a __dict__ for each instance, which can be beneficial when creating many instances of a class. The sys.getsizeof() function is used to compare the memory usage of instances of PetNormal and PetSlots. We expect that the instance of PetSlots will use less memory than the instance of PetNormal due to the absence of a __dict__.
 
-from shutil import which
-from shutil import which
+# ============================================================
+# STEP 6: MEMORY COMPARISON
+# ============================================================
 import sys
 
-print("Memory (PetNormal):", sys.getsizeof(p1)) 
-# Output: Memory (PetNormal): 48. 
-# This line prints the memory size of the p1 instance, which is an instance of PetNormal. 
-# The memory size includes the __dict__ that allows for dynamic attributes, which contributes 
-# to a larger memory footprint.
-
-print("Memory (PetSlots):", sys.getsizeof(p2))  
-# Output: Memory (PetSlots): 48. 
-# This line prints the memory size of the p2 instance, which is an instance of PetSlots. 
-# The memory size may be smaller than that of PetNormal due to the use of __slots__, which prevents 
-# the creation of a __dict__ and thus reduces memory usage. However, the actual memory size can 
-# vary based on the implementation and may not always be smaller than PetNormal, but it 
-# generally allows for more efficient memory usage when creating many instances.
-
-
+print("Memory (PetNormal):", sys.getsizeof(p1))
+print("Memory (PetSlots):", sys.getsizeof(p2))
+# A note on interpreting this output: sys.getsizeof() only measures
+# the size of the OBJECT ITSELF -- for PetNormal, this does NOT
+# automatically include the separate __dict__ object it points to
+# (you'd need to add sys.getsizeof(p1.__dict__) to get the full
+# picture). Because of this, the difference between a SINGLE
+# PetNormal and a SINGLE PetSlots object can look smaller than you'd
+# expect from this comparison alone. The real savings from __slots__
+# become obvious at SCALE -- see the follow-up question above for an
+# exercise that makes this much more visible.
 ```
 
+---
 
+## Explanation (Step 7)
 
+**What is `__dict__`?** As covered on the earlier chapter page, `__dict__` is the actual dictionary Python uses to store an object's own attributes — every ordinary object gets one automatically, and it's what makes adding new attributes to an object at any time ("dynamic attributes") possible.
 
+**What does `__slots__` do?** Declaring `__slots__` inside a class body tells Python exactly which attribute names instances of this class are allowed to have, ahead of time. In exchange for that restriction, Python stops giving instances a `__dict__` at all, storing the declared attributes in a smaller, fixed-size structure instead.
 
+**Why do dynamic attributes fail on a `__slots__` class?** Without a `__dict__`, there's simply no flexible container left to add a new key to — Python has no mechanism to attach an attribute that wasn't explicitly declared in `__slots__`, so it raises an `AttributeError` instead.
 
+**When should you actually use `__slots__`?** When you're creating a **very large number** of instances of a simple class with a small, fixed, well-known set of attributes, and per-object memory usage genuinely matters for your program. It's not a general-purpose optimization for every class — for the vast majority of everyday code, the flexibility of a normal `__dict__`-based class is worth far more than the memory it costs.
 
+---
 
+## Quick recap
+
+- **Every ordinary Python object stores its own attributes in a `__dict__`**, which gives it the flexibility to gain new attributes at any time — but that flexibility isn't free; the dictionary itself takes up memory.
+- **`__slots__` trades that flexibility for a smaller memory footprint**, by declaring a fixed, known set of attribute names up front and removing `__dict__` entirely.
+- **The cost is real: no dynamic attributes at all** — anything not explicitly listed in `__slots__` will raise an `AttributeError` the moment you try to assign it.
+- **The benefit only becomes meaningful at scale** — comparing `sys.getsizeof()` for a single object of each kind understates the real difference, since `__dict__`'s own memory cost isn't included in that measurement; the follow-up exercise above (creating 100,000 objects of each kind) shows the real-world impact far more clearly.
+- **`__slots__` is a specialized tool for memory-sensitive, large-scale object creation** — not a general-purpose habit to apply to every class you write.
 
 
 

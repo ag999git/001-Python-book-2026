@@ -1,6 +1,4 @@
 
-
-
 # Chapter 10.20 — Text Files vs. Binary Files
 
 ## What this page covers
@@ -48,8 +46,8 @@ Getting this distinction right matters immediately and practically: opening an i
 
 ## Deciding which mode to use
 
-![Flowchart](/resources/ch-10-august-2026-text-vs-binary.png)
 
+![Flowchart](/resources/ch-10-august-2026-text-vs-binary.png)
 
 
 A simple rule of thumb: if you'd expect to be able to open the file in a plain text editor and read something meaningful, it's a text file. If opening it in a text editor would show you a screen full of unreadable symbols, it's binary.
@@ -117,13 +115,13 @@ except TypeError as e:
 ```python
 # UTF-8 can represent virtually any character from any language --
 # this is exactly why "always specify encoding='utf-8'" is good advice.
-message = "Café résumé — 日本語"
+message = "Café résumé — नमस्ते दुनिया"
 
 with open("international.txt", "w", encoding="utf-8") as f:
     f.write(message)
 
 with open("international.txt", "r", encoding="utf-8") as f:
-    print(f.read())   # -> Café résumé — 日本語 (perfectly preserved)
+    print(f.read())   # -> Café résumé — नमस्ते दुनिया (perfectly preserved)
 
 # If you open the SAME file assuming the wrong encoding, you can get
 # garbled output or an outright error -- this is exactly what row 18
@@ -177,7 +175,5 @@ The table's row 9 states that text files are "usually larger" than binary files,
 - **Text mode works with `str` objects; binary mode works with `bytes` objects** — mixing the two (writing a string in binary mode, or reading binary data in text mode) raises an immediate, clear error, as shown above.
 - **Always specify an encoding explicitly** (`encoding="utf-8"` is the safe default) when working with text files, since relying on your operating system's assumed default can cause portability and Unicode issues later.
 - **Binary storage preserves exact bit-for-bit precision**, while text storage represents a number as characters, which can be less exact for values with many decimal digits — the `struct` module (shown above) is the standard tool for reading and writing exact binary number representations.
-
-
 
 

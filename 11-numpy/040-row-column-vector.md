@@ -41,7 +41,7 @@ By the end of this page you should be able to:
 
 ## Research / Project Question
 
-*(Reproduced exactly as set in the printed book — unchanged.)*
+
 
 > Study the concept of **row vectors and column vectors** in NumPy and
 > linear algebra.
@@ -88,17 +88,7 @@ matrix multiplication or geometric transformations — the same numbers,
 arranged the "wrong" way, can produce a completely different (or invalid)
 calculation.
 
-```mermaid
-flowchart TD
-    A["Same 3 values: 3, 5, 7"] --> B["Row vector - shape (1, 3)<br/>arranged side by side"]
-    A --> C["Column vector - shape (3, 1)<br/>arranged stacked vertically"]
-    B --> D["Used for: single data records,<br/>one row of a dataset"]
-    C --> E["Used for: points and vectors<br/>in transformations, matrix math"]
-```
-
-*(Plain boxes and arrows only — no subgraphs — so this should import
-cleanly into [draw.io](https://app.diagrams.net/) as well as render on
-GitHub/GitBook.)*
+![Flowchart](/resources/ch-11-numpy-august-2026-row-vs-column-vector.png)
 
 ---
 
@@ -230,11 +220,10 @@ where:
 - `x` is the **column vector** — it encodes the point (or points) being transformed, and
 - `y` is the resulting column vector, after the transformation has been applied.
 
-```mermaid
-flowchart LR
-    X["Original point<br/>column vector x"] --> M["Transformation matrix M<br/>(rotation, scaling, etc.)"]
-    M --> Y["New point<br/>column vector y = M x"]
-```
+
+![Flowchart](/resources/ch-11-numpy-august-2026-row-vs-column-vector-2.png)
+
+
 
 **Why a column, specifically?** The rule for matrix multiplication requires
 the number of *columns* in the first item to match the number of *rows* in
@@ -407,13 +396,8 @@ transformed,"** the way you'd think of a point moving through space. When
 in doubt, and especially when working with transformation matrices, the
 column vector is the safer, more conventional default.
 
-```mermaid
-flowchart TD
-    Q["Do you need to multiply by a<br/>transformation matrix (M x)?"] -->|Yes| CV["Use a column vector"]
-    Q -->|No| R["Are you representing one record<br/>of a dataset or one input example?"]
-    R -->|Yes| RV["Use a row vector"]
-    R -->|No| CV2["Column vector is usually the safer default"]
-```
+![Flowchart](/resources/ch-11-numpy-august-2026-row-vs-column-vector-3.png)
+
 
 ---
 

@@ -14,14 +14,14 @@ layers in a cake.
 
 The real point of this project isn't just building a 3D array — it's
 understanding **axes**, and specifically what happens when you tell NumPy
-to "sum along axis 0," "axis 1," or "axis 2." This single idea —
+to "sum along axis 0," "axis 1," or "axis 2." 
+
+This single idea —
 **collapsing one axis while keeping the others** — is the same idea behind
 almost every "reduce this data down" operation you'll later use in NumPy
-and pandas (totals, averages, counts, and so on), so it's worth taking the
-time to build a solid mental picture of it here, with a small example you
-can fully trace by hand.
+and pandas (totals, averages, counts, and so on).
 
-> **Quick glossary, before we start**
+> **Glossary of common terms**
 > - **Dimension / axis** — a "direction" along which an array's data is
 >   arranged. A 2D array has 2 axes (rows and columns); a 3D array has 3
 >   axes. See the [NumPy guide to array basics](https://numpy.org/doc/stable/user/absolute_beginners.html#understanding-data-types).

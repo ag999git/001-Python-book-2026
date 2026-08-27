@@ -7,7 +7,6 @@
 
 This page is a second set of twenty short scripting exercises, covering the same broad territory as the earlier "20 Programming Script Questions" page — inheritance patterns, MRO, abstraction, composition, namespaces, and a few new additions (virtual subclasses, class decorators, and enforcing `__eq__`/`__hash__` consistency). Working through both sets back to back is a good way to confirm that these ideas have become second nature, rather than something you can only recognize when reading about them.
 
-The questions and code are fixed, exactly as printed in the book. The original write-up around them used quite dense, formal language (the kind of phrasing you'd find in a software architecture document rather than a beginner's guide) — the version below explains the same twenty scripts in plain, everyday language instead, with fuller step comments, expected output added wherever it was missing, and links back to the specific earlier chapter pages that cover each idea in full depth.
 
 ---
 

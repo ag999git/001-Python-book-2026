@@ -173,13 +173,7 @@ runs out of dimensions on B's side, so it pads B with a `1` at the front.
 
 Both shapes now match exactly, so the arithmetic operation can proceed.
 
-```mermaid
-flowchart TD
-    A1["A: (8, 1, 6, 1)"] --> S1["Step 2: pad B on the left with 1<br/>B becomes (1, 7, 1, 5)"]
-    B1["B: (7, 1, 5)"] --> S1
-    S1 --> S2["Step 3: stretch every dimension that is 1"]
-    S2 --> R["Both shapes end up as (8, 7, 6, 5)<br/>Operation can proceed"]
-```
+![Flowchart](/resources/ch-11-numpy-august-2026-broadcasting2.png)
 
 ### The following figure shows the steps in broadcasting of Array A shape `(8, 1, 6, 1)` and Array B shape `(7, 1, 5)`
 

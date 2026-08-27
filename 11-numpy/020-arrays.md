@@ -1,14 +1,57 @@
 
 
 
+# Chapter 11 — Creating NumPy Arrays: A Complete Reference
+
+## About this reference
+
+NumPy is the library almost every numerical, data-science, and
+machine-learning tool in Python is built on. Before you can do anything
+useful with it — maths, statistics, image processing, plotting — you first
+need an **array** to work with. This page is a reference for **every common
+way to create one**, organised into three levels so you can learn them in a
+sensible order rather than all at once:
+
+- **Beginner** — the everyday, "I just need an array" functions you'll use
+  constantly (`np.array()`, `np.zeros()`, `np.arange()`, and similar).
+- **Intermediate** — functions for copying the *shape* of an existing array,
+  building identity/diagonal matrices, and creating coordinate grids.
+- **Advanced** — more specialised tools: building arrays from generators or
+  formulas, converting data efficiently, and generating random numbers for
+  simulations or machine-learning datasets.
+
+Each function is described the same way — what it's for, what you feed it,
+what you get back, and any mistake beginners commonly make with it — so you
+can also use this page as a quick lookup later, not just a first read.
+
+> **Quick glossary, before we start**
+> - **Array / `ndarray`** — NumPy's core data structure: a grid of values,
+>   all the same type. See the [NumPy absolute-beginners guide](https://numpy.org/doc/stable/user/absolute_beginners.html).
+> - **`shape`** — the size of an array along each dimension, written as a
+>   tuple, e.g. `(2, 3)` means 2 rows and 3 columns.
+> - **`dtype`** — short for "data type"; tells you (or tells NumPy) whether
+>   the values are whole numbers, decimals, text, etc. See the
+>   [NumPy data types guide](https://numpy.org/doc/stable/reference/arrays.dtypes.html).
+> - **Vectorized** — an operation applied to a whole array at once, instead
+>   of one value at a time in a loop.
+> - **Identity matrix** — a square grid of numbers with `1`s down the main
+>   diagonal and `0`s everywhere else; important in linear algebra. See
+>   [Khan Academy's explanation](https://www.khanacademy.org/math/algebra-home/alg-matrices/alg-identity-inverse-matrices/a/intro-to-identity-matrices).
+> - **Random seed / distribution** — "distribution" describes the *pattern*
+>   random numbers follow (e.g. every value equally likely, versus most
+>   values clustering near an average). See the
+>   [NumPy random sampling guide](https://numpy.org/doc/stable/reference/random/index.html).
 
 
+![Flowchart](/resources/ch-11-numpy-august-2026-numpy-array-creation-beginner-to-advanced.png)
+
+
+---
 
 # BEGINNER LEVEL FUNCTIONS
 
-
-
-
+These eight functions cover the great majority of everyday array creation.
+If you only remember a handful of NumPy functions, make it these.
 
 ## 1. `np.array()`
 
@@ -18,36 +61,36 @@
 
 **Parameters**
 
--   `object` → list, tuple, nested list
--   `dtype` → data type (optional)
--   `copy` → whether to copy data
--   `ndmin` → minimum number of dimensions
+- `object` → the data you already have: a list, tuple, or nested list
+- `dtype` → the data type to force (optional — NumPy will guess if you leave this out)
+- `copy` → whether to make a fresh copy of the data (`True` by default)
+- `ndmin` → the minimum number of dimensions the result should have
 
 **Output**
 
-NumPy ndarray
+A NumPy array (technically an `ndarray`).
 
 Example output:
 
 `array([1, 2, 3])`
 
-**Common Usage**
+**Common usage**
 
--   Convert Python lists to arrays
--   Creating matrices
+- Turning a Python list into a NumPy array
+- Building matrices from nested lists
 
-**Possible Errors**
+**Possible errors**
 
-`ValueError`: setting an array element with a sequence
+`ValueError: setting an array element with a sequence` — this happens when
+the inner lists of a nested list don't all have the same length, so NumPy
+can't arrange them into a neat rectangular grid.
 
-Occurs when nested lists have inconsistent lengths.
+**Important notes**
 
-**Important Notes**
+- NumPy automatically works out the data type for you if you don't specify one
+- This is the single most commonly used array-creation function
 
--   Automatically infers datatype
--   Most commonly used NumPy function
-
-----------
+---
 
 ## 2. `np.zeros()`
 
@@ -57,25 +100,25 @@ Occurs when nested lists have inconsistent lengths.
 
 **Parameters**
 
--   `shape` → tuple specifying dimensions
--   `dtype` → data type
+- `shape` → a tuple describing the array's dimensions, e.g. `(2, 3)`
+- `dtype` → the data type of the values (defaults to decimal/`float`)
 
 **Output**
 
-Array filled with zeros.
+An array of the given shape, filled entirely with `0`.
 
-**Common Usage**
+**Common usage**
 
--   Initialization of matrices
--   Placeholder arrays
+- Setting up an empty matrix before filling it in a loop
+- Creating a "blank slate" placeholder array
 
-**Possible Errors**
+**Possible errors**
 
-`TypeError`: '`int`' object is not iterable
+`TypeError: 'int' object is not iterable` — this happens if you pass a
+single plain number instead of a tuple for `shape` where NumPy expects one
+(e.g. writing `np.zeros(2, 3)` instead of `np.zeros((2, 3))`).
 
-Occurs when incorrect shape provided.
-
-----------
+---
 
 ## 3. `np.ones()`
 
@@ -85,14 +128,14 @@ Occurs when incorrect shape provided.
 
 **Output**
 
-Array filled with ones.
+An array of the given shape, filled entirely with `1`.
 
-**Common Usage**
+**Common usage**
 
--   Machine learning weight initialization
--   Matrix operations
+- Starting weights in a simple machine-learning model
+- General matrix operations where an all-ones starting point is useful
 
-----------
+---
 
 ## 4. `np.full()`
 
@@ -102,14 +145,14 @@ Array filled with ones.
 
 **Parameters**
 
--   `shape`
--   `fill_value`
+- `shape` → the dimensions of the array
+- `fill_value` → the single value used to fill every position
 
 **Output**
 
-Array filled with a constant value.
+An array of the given shape, filled entirely with `fill_value`.
 
-----------
+---
 
 ## 5. `np.arange()`
 
@@ -119,21 +162,27 @@ Array filled with a constant value.
 
 **Output**
 
-1D array.
+A one-dimensional array counting from `start` up to (but **not including**)
+`stop`, in steps of `step` — the same idea as Python's built-in `range()`,
+but producing a NumPy array.
 
 Example:
 
-`array([0,2,4,6,8])`
+`array([0, 2, 4, 6, 8])`
 
-**Common Usage**
+**Common usage**
 
-Generating numeric sequences.
+Generating a numeric sequence, e.g. for looping or for x-axis values on a
+chart.
 
-**Common Error**
+**Common error**
 
-Floating step sometimes produces unexpected results due to precision.
+Using a decimal (floating-point) `step` can sometimes produce one extra or
+one fewer value than you expect, because of how computers represent
+decimals internally. If you need an *exact* number of evenly spaced values,
+prefer `np.linspace()` below instead.
 
-----------
+---
 
 ## 6. `np.linspace()`
 
@@ -143,13 +192,16 @@ Floating step sometimes produces unexpected results due to precision.
 
 **Output**
 
-Evenly spaced array.
+An array of exactly `num` evenly spaced values between `start` and `stop`.
 
-**Important Note**
+**Important note**
 
-Includes the stop value.
+Unlike `np.arange()`, `np.linspace()` **includes** the `stop` value by
+default. This is the key difference to remember between the two: use
+`np.arange()` when you care about the *step size*, and `np.linspace()` when
+you care about the *exact number of values*.
 
-----------
+---
 
 ## 7. `np.eye()`
 
@@ -159,15 +211,17 @@ Includes the stop value.
 
 **Parameters**
 
--   N rows
--   M columns
--   k diagonal offset
+- `N` → number of rows
+- `M` → number of columns (defaults to the same as `N`, making a square matrix)
+- `k` → which diagonal gets the `1`s: `0` is the main diagonal, positive
+  values shift it up-and-right, negative values shift it down-and-left
 
 **Output**
 
-Identity matrix.
+An identity-style matrix — `1`s along the chosen diagonal, `0`s everywhere
+else.
 
-----------
+---
 
 ## 8. `np.random.rand()`
 
@@ -177,85 +231,86 @@ Identity matrix.
 
 **Output**
 
-Random array with values between 0 and 1.
+An array of the given shape, filled with random decimal values between `0`
+(inclusive) and `1` (exclusive), each equally likely — what statisticians
+call a **uniform distribution**.
 
-----------
+---
+
 ## Table (Beginner Level)
 
-| S.No | Method | Purpose | Example | Input | Output | Key Concept | When to Use | Important Note |
+| # | Method | Purpose | Example | Input | Output | Key concept | When to use | Important note |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | np.array() | Convert Python data to NumPy array | np.array([1,2,3]) | List / tuple | n-D array | Basic conversion | Almost always first step | Creates a new array |
-| 2 | np.zeros() | Create array of zeros | np.zeros((2,3)) | Shape | Numeric array | Initialization | Default values | dtype defaults to float |
-| 3 | np.ones() | Create array of ones | np.ones((3,3)) | Shape | Numeric array | Matrix creation | ML / matrices | Efficient initialization |
-| 4 | np.full() | Create constant array | np.full((2,2),7) | Shape + value | Numeric array | Constant arrays | Defaults | Flexible dtype |
-| 5 | np.arange() | Create sequence with step | np.arange(0,10,2) | Start/stop/step | 1D array | Range generation | Loops / sequences | Stop excluded |
-| 6 | np.linspace() | Evenly spaced values | np.linspace(0,1,5) | Start/stop/count | 1D array | Fixed number of values | Plotting | Includes endpoint |
-| 7 | np.eye() | Identity matrix | np.eye(3) | Size | Square matrix | Linear algebra basics | Matrix math | Supports diagonal offset |
-| 8 | np.random.rand() | Random floats | np.random.rand(2,2) | Dimensions | Numeric array | Random generation | Simulations | Uniform distribution |
+| 1 | `np.array()` | Convert existing data to a NumPy array | `np.array([1,2,3])` | List / tuple | n-D array | Basic conversion | Almost always your first step | Creates a new array by default |
+| 2 | `np.zeros()` | Create an array of zeros | `np.zeros((2,3))` | Shape | Numeric array | Initialization | Starting point before filling in values | `dtype` defaults to `float` |
+| 3 | `np.ones()` | Create an array of ones | `np.ones((3,3))` | Shape | Numeric array | Matrix creation | ML weight init / matrix maths | Efficient, common starting point |
+| 4 | `np.full()` | Create an array of one repeated value | `np.full((2,2),7)` | Shape + value | Numeric array | Constant arrays | Any fixed default value | Flexible `dtype` |
+| 5 | `np.arange()` | Create a sequence with a fixed step | `np.arange(0,10,2)` | Start/stop/step | 1D array | Range generation | Loops, simple sequences | `stop` value is excluded |
+| 6 | `np.linspace()` | Create a fixed *count* of evenly spaced values | `np.linspace(0,1,5)` | Start/stop/count | 1D array | Fixed number of values | Plotting axes | `stop` value is included |
+| 7 | `np.eye()` | Create an identity-style matrix | `np.eye(3)` | Size | Square matrix | Linear algebra basics | Matrix maths | Supports a diagonal offset (`k`) |
+| 8 | `np.random.rand()` | Create random decimals between 0 and 1 | `np.random.rand(2,2)` | Dimensions | Numeric array | Random generation | Simulations, quick test data | Uniform distribution |
 
-
-
-## Script
+## Script (Beginner)
 
 ```python
-
 # NumPy Array Creation Examples
 # Beginner level
 import numpy as np
 
-# 1 np.array()
-# NumPy array from a Python list. All elements are of the same type (integers in this case).
-a = np.array([1,2,3])  
+# Step 1 - np.array(): build a NumPy array directly from a Python list.
+# All elements here are integers, so NumPy stores them as one integer array.
+a = np.array([1, 2, 3])
 print(a)
 
-# Possible error:
-# np.array([[1,2],[3,4,5]])  # This will raise a ValueError because the inner lists have different lengths, making it impossible to create a regular 2D array. NumPy expects all rows to have the same number of columns for a 2D array.
+# Possible error to be aware of:
+# np.array([[1, 2], [3, 4, 5]])
+# This raises a ValueError, because the two inner lists have different
+# lengths (2 items vs. 3 items). NumPy needs every row of a 2D array to
+# have the same number of columns.
 
-# 2 np.zeros()  # NumPy array filled with zeros. The argument specifies the shape of the array. 
-# In this case, (2, 3) creates a 2D array with 2 rows and 3 columns, all initialized to zero.
-b = np.zeros((2,3))
+# Step 2 - np.zeros(): create an array filled entirely with zeros.
+# The shape (2, 3) means 2 rows and 3 columns.
+b = np.zeros((2, 3))
 print(b)
 
-# 3 np.ones()  # NumPy array filled with ones. The argument specifies the shape of the array. 
-# In this case, (3, 3) creates a 2D array with 3 rows and 3 columns, all initialized to one.
-c = np.ones((3,3))
+# Step 3 - np.ones(): create an array filled entirely with ones.
+# The shape (3, 3) means 3 rows and 3 columns.
+c = np.ones((3, 3))
 print(c)
 
-# 4 np.full()  # NumPy array filled with a constant value. The first argument specifies the shape, 
-# and the second argument specifies the fill value.
-d = np.full((2,2),7)
+# Step 4 - np.full(): create an array filled with one chosen value.
+# First argument is the shape, second argument is the fill value (7 here).
+d = np.full((2, 2), 7)
 print(d)
 
-# 5 np.arange()  # NumPy array with a range of values. 
-# The arguments specify the start, stop, and step values.
-e = np.arange(0,10,2)
+# Step 5 - np.arange(): create a sequence of numbers with a fixed step size.
+# Counts from 0 up to (but not including) 10, in steps of 2.
+e = np.arange(0, 10, 2)
 print(e)
 
-# 6 np.linspace()  # NumPy array with linearly spaced values. 
-# The arguments specify the start, stop, and number of values.
-f = np.linspace(0,1,5)
+# Step 6 - np.linspace(): create a fixed NUMBER of evenly spaced values.
+# 5 values spread evenly between 0 and 1, INCLUDING both endpoints.
+f = np.linspace(0, 1, 5)
 print(f)
 
-# 7 np.eye()  # NumPy array representing an identity matrix. 
-# The argument specifies the size of the matrix.
+# Step 7 - np.eye(): create an identity matrix (1s on the diagonal, 0s elsewhere).
+# The argument (3) is the size — a 3x3 square matrix.
 g = np.eye(3)
 print(g)
 
-# 8 np.random.rand()  # NumPy array with random values between 0 and 1. 
-# The arguments specify the shape of the array.
-h = np.random.rand(2,2)
+# Step 8 - np.random.rand(): create random decimals between 0 and 1.
+# The shape (2, 2) is given as two separate arguments, not a tuple.
+h = np.random.rand(2, 2)
 print(h)
-
-
-
-
 ```
 
-
+---
 
 # INTERMEDIATE LEVEL FUNCTIONS
 
-----------
+These functions build on the beginner set — copying the shape of an
+existing array, creating diagonal/identity matrices in more ways, and
+generating coordinate grids for plotting or image work.
 
 ## 9. `np.empty()`
 
@@ -265,17 +320,23 @@ print(h)
 
 **Output**
 
-Uninitialized array.
+An array of the given shape whose values are **not** set to anything in
+particular.
 
 **Important**
 
-Contains random memory values.
+Whatever happens to already be sitting in that block of memory is what you
+see — it is *not* guaranteed to be zero, and will look different (and
+essentially random) each time you run it.
 
-**Common Error**
+**Common error**
 
-Dont assume it contains zeros because it does not.
+Don't assume `np.empty()` gives you zeros — it doesn't. Use `np.zeros()`
+instead if you specifically want zeros; use `np.empty()` only when you plan
+to immediately overwrite every value yourself and just want the fastest
+possible allocation.
 
-----------
+---
 
 ## 10. `np.zeros_like()`
 
@@ -283,147 +344,157 @@ Dont assume it contains zeros because it does not.
 
 `np.zeros_like(a)`
 
-Creates zero array matching structure.
+Creates a new array of zeros that automatically matches the **shape and
+data type** of an existing array `a`, so you don't have to work those out
+and type them in yourself.
 
-----------
+---
 
 ## 11. `np.ones_like()`
 
-Same as above but fills with ones.
+Same idea as `np.zeros_like()`, but fills the new array with `1` instead of
+`0`.
 
-----------
+---
 
 ## 12. `np.full_like()`
 
-Copies structure with constant value.
+Same idea again, but fills the new array (matching the shape/type of an
+existing array) with any constant value you choose.
 
-----------
+---
 
 ## 13. `np.identity()`
 
-Simpler identity matrix function.
+A simpler, square-only version of `np.eye()` — just give it the size, and
+it returns an `N x N` identity matrix. Use `np.eye()` instead if you need a
+non-square matrix or a diagonal offset.
 
-----------
+---
 
 ## 14. `np.diag()`
 
-Creates or extracts diagonal.
+Does one of **two different things**, depending on what you give it:
 
-Common confusion:  
-Behavior depends on input dimension.
+- Given a **1D array/list**, it builds a full square matrix with those
+  values placed along the diagonal.
+- Given a **2D array/matrix**, it does the reverse — it *extracts* the
+  diagonal values and returns them as a 1D array.
 
-----------
+**Common confusion:** because the same function name does two opposite
+things depending on its input's shape, it's easy to call it expecting one
+behaviour and get the other. Always check whether what you're passing in
+is 1D or 2D.
+
+---
 
 ## 15. `np.logspace()`
 
-Logarithmic scale array.
+Like `np.linspace()`, but the values are spaced evenly on a **logarithmic**
+scale rather than a plain linear one — useful whenever a quantity spans
+several orders of magnitude (very small to very large), which comes up
+often in scientific and engineering work.
 
-Used in scientific computing.
-
-----------
+---
 
 ## 16. `np.meshgrid()`
 
-Used for coordinate grids.
+Takes two 1D arrays representing x-coordinates and y-coordinates, and
+expands them into two full 2D grids — one holding the x-value and one
+holding the y-value at every point on the grid. This is the standard way
+to prepare data for plotting a 3D surface or a contour map.
 
-Important in plotting surfaces.
-
-----------
+---
 
 ## 17. `np.indices()`
 
-Creates index matrices.
+Builds an array of the **row and column index numbers** for a grid of a
+given shape — handy any time you need to know *where* (not just *what*) a
+value sits, such as in image processing or custom matrix maths.
 
-Used in image processing and matrix math.
+---
 
-----------
+## Table (Intermediate Level)
 
-## Table (Intermediate level)
-
-  
-
-| S. No | Method | Purpose | Example | Input | Output | Shape Rule | Key Feature | Typical Use | Important Note |
+| # | Method | Purpose | Example | Input | Output | Shape rule | Key feature | Typical use | Important note |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 9 | np.empty() | Allocate array without initialization | np.empty((3,3)) | Shape | Numeric array | User-defined | Very fast allocation | Performance computing | Contains garbage values |
-| 10 | np.zeros_like() | Copy shape but fill with zeros | np.zeros_like(A) | Array | Same shape array | Matches input | Template arrays | Algorithms | Keeps structure |
-| 11 | np.ones_like() | Copy structure filled with ones | np.ones_like(A) | Array | Same shape | Same as source | Efficient replication | ML models | Keeps dtype |
-| 12 | np.full_like() | Copy shape with constant value | np.full_like(A,9) | Array | Same shape | Based on input | Structured duplication | Matrix templates | Consistent structure |
-| 13 | np.identity() | Identity matrix | np.identity(4) | Size | Square matrix | n × n | Simpler syntax | Linear algebra | Same as eye |
-| 14 | np.diag() | Create or extract diagonal | np.diag([1,2,3]) | Array | Matrix/vector | Depends on input | Dual behavior | Matrix operations | Input type matters |
-| 15 | np.logspace() | Logarithmic spacing | np.logspace(1,3,5) | Start/stop exp | 1D array | Fixed length | Log progression | Scientific computing | Engineering uses |
-| 16 | np.meshgrid() | Create coordinate grid | np.meshgrid(x,y) | Arrays | Grid arrays | Expanded grid | Useful in plotting | 3D surfaces | Visualization |
-| 17 | np.indices() | Create index grid | np.indices((3,3)) | Shape | Index arrays | Multi-dimensional | Matrix coordinates | Image processing | Advanced indexing |
+| 9 | `np.empty()` | Allocate an array without setting its values | `np.empty((3,3))` | Shape | Numeric array | User-defined | Very fast allocation | Performance-critical code | Contains leftover "garbage" values |
+| 10 | `np.zeros_like()` | Copy another array's shape, filled with zeros | `np.zeros_like(A)` | Array | Same-shape array | Matches input | Ready-made template | Algorithms needing a same-sized buffer | Keeps the same shape and dtype |
+| 11 | `np.ones_like()` | Copy another array's shape, filled with ones | `np.ones_like(A)` | Array | Same shape | Same as source | Efficient replication | ML model setup | Keeps the same dtype |
+| 12 | `np.full_like()` | Copy another array's shape, filled with a constant | `np.full_like(A,9)` | Array | Same shape | Based on input | Structured duplication | Building matrix templates | Keeps the shape consistent |
+| 13 | `np.identity()` | Create a square identity matrix | `np.identity(4)` | Size | Square matrix | `n × n` | Simpler syntax than `eye()` | Linear algebra | No diagonal-offset option (use `eye()` for that) |
+| 14 | `np.diag()` | Create OR extract a diagonal | `np.diag([1,2,3])` | Array | Matrix or vector | Depends on input | Works two opposite ways | Matrix operations | Check whether your input is 1D or 2D |
+| 15 | `np.logspace()` | Create values spaced on a log scale | `np.logspace(1,3,5)` | Start/stop exponent, count | 1D array | Fixed length | Logarithmic progression | Scientific/engineering ranges | Values span orders of magnitude |
+| 16 | `np.meshgrid()` | Build a coordinate grid from two axes | `np.meshgrid(x,y)` | Two 1D arrays | Two 2D grid arrays | Expanded grid | Pairs up every x with every y | 3D surface plotting | Mainly a visualization tool |
+| 17 | `np.indices()` | Build an array of row/column index numbers | `np.indices((3,3))` | Shape | Index arrays | Multi-dimensional | Reveals *position*, not value | Image processing, custom indexing | A more advanced/less common tool |
 
-
-## Script (For Intermediate)
-
+## Script (Intermediate)
 
 ```python
-
 # NumPy Array Creation Examples
 # Intermediate level
 import numpy as np
 
-# 9 np.empty()  # NumPy array that is uninitialized. The values in the array will be 
-# whatever happens to already be in that memory location, which can be random and 
-# unpredictable.
-a = np.empty((3,3))   # contains garbage values
+# Step 9 - np.empty(): allocate space for an array WITHOUT setting values.
+# Whatever numbers show up are just whatever was already in that memory —
+# don't rely on them being zero, or on them looking the same twice.
+a = np.empty((3, 3))
 print("np.empty():->\n", a)
 
-# 10 zeros_like  # NumPy array filled with zeros, having the same shape and type as a 
-# given array.
+# Step 10 - np.zeros_like(): create a same-shaped array of zeros, copying
+# the shape and dtype of 'a' automatically.
 b = np.zeros_like(a)
 print("np.zeros_like():->\n", b)
 
-# 11 ones_like  # NumPy array filled with ones, having the same shape and type as a 
-# given array.
+# Step 11 - np.ones_like(): same idea, but filled with ones instead.
 c = np.ones_like(a)
 print("np.ones_like():->\n", c)
 
-# 12 full_like  # NumPy array filled with a specified value, having the same shape 
-# and type as a given array.
-d = np.full_like(a,9)
+# Step 12 - np.full_like(): same idea again, but filled with a chosen
+# constant value (9 here) instead of zeros or ones.
+d = np.full_like(a, 9)
 print("np.full_like():->\n", d)
 
-# 13 identity  # NumPy array representing an identity matrix. The argument specifies 
-# the size of the matrix.
+# Step 13 - np.identity(): a simpler way to build a square identity matrix.
+# The single argument (4) gives a 4x4 matrix.
 e = np.identity(4)
 print("np.identity():->\n", e)
 
-# 14 diag  # NumPy array with a diagonal. The argument specifies the values for the 
-# diagonal.
-f = np.diag([1,2,3])  # f will be a 3x3 array with 1, 2, and 3 on the diagonal and zeros elsewhere.
-print("np.diag():->\n", f)  # np.diag() gives diagnol elements in a list. Here [1, 2, 3]
+# Step 14 - np.diag(): given a 1D list, BUILDS a matrix with those values
+# on the diagonal (and zeros everywhere else).
+f = np.diag([1, 2, 3])   # produces a 3x3 array with 1, 2, 3 on the diagonal
+print("np.diag() [build mode]:->\n", f)
 
-# extract diagonal. This will extract the diagonal elements from the array f and return 
-# them as a 1D array. In this case, it will return [1, 2, 3].
-print("np.diag(f):->\n", np.diag(f))  # np.diag(f) extracts the diagonal elements from the array f.
+# np.diag() also works the OPPOSITE way: given a 2D matrix, it EXTRACTS
+# just the diagonal values as a 1D array. Here it pulls [1, 2, 3] back out
+# of the matrix we just built.
+print("np.diag(f) [extract mode]:->\n", np.diag(f))
 
-# 15 logspace  # NumPy array with logarithmically spaced values. The arguments specify the start, stop, and number of values.
-g = np.logspace(1,3,5)  # 5 values from 10^1 to 10^3
+# Step 15 - np.logspace(): 5 values spaced evenly on a LOG scale,
+# from 10^1 (=10) to 10^3 (=1000).
+g = np.logspace(1, 3, 5)
 print("np.logspace():->\n", g)
 
-# 16 meshgrid  # NumPy arrays representing a grid. The arguments specify the ranges 
-# for the x and y coordinates.
-x = np.arange(3)  # This creates a 1D array with values [0, 1, 2]. It will be used as the x-coordinates for the grid.
-y = np.arange(3)  # This creates a 1D array with values [0, 1, 2]. It will be used as the y-coordinates for the grid.
-X, Y = np.meshgrid(x,y)  # This creates two 2D arrays, X and Y, that represent the grid of coordinates.
-print("np.meshgrid():->\n", X)
-print("np.meshgrid():->\n", Y)
+# Step 16 - np.meshgrid(): build a coordinate grid from two axis arrays.
+x = np.arange(3)          # x-coordinates: [0, 1, 2]
+y = np.arange(3)          # y-coordinates: [0, 1, 2]
+X, Y = np.meshgrid(x, y)  # X and Y together describe every (x, y) point on the grid
+print("np.meshgrid() X:->\n", X)
+print("np.meshgrid() Y:->\n", Y)
 
-# 17 indices  # NumPy array representing the indices of a grid. The argument specifies the shape of the grid.
-print("np.indices():->\n", np.indices((2,2)))  # This will create a 3D array where the first sub-array contains the row indices and the second sub-array contains the column indices for a 2x2 grid. The output will be:
-
-
+# Step 17 - np.indices(): build the row-index and column-index grids for
+# a 2x2 shape. The first sub-array is the row number of each cell; the
+# second sub-array is the column number of each cell.
+print("np.indices():->\n", np.indices((2, 2)))
 ```
 
-
-
-
+---
 
 # ADVANCED LEVEL FUNCTIONS
 
-----------
+These tools are more specialised: building arrays from generators or
+formulas, converting existing data efficiently, and generating random
+numbers for simulations, testing, or machine-learning datasets.
 
 ## 18. `np.fromiter()`
 
@@ -431,9 +502,11 @@ print("np.indices():->\n", np.indices((2,2)))  # This will create a 3D array whe
 
 `np.fromiter(iterable, dtype)`
 
-Efficient creation from generators.
+Builds an array directly from any Python iterable (such as a generator),
+one value at a time — useful when your data is a stream that would be
+wasteful to first convert into a full list.
 
-----------
+---
 
 ## 19. `np.fromfunction()`
 
@@ -441,157 +514,141 @@ Efficient creation from generators.
 
 `np.fromfunction(function, shape)`
 
-Generates array based on formula.
+Builds an array by calling `function` once for every position, passing in
+that position's row/column indices — a compact way to generate an array
+straight from a mathematical formula.
 
-----------
+---
 
 ## 20. `np.asarray()`
 
-Converts input to array without copying if possible.
+Converts input into an array, **without making an unnecessary copy** if the
+input is already a compatible NumPy array. This makes it a memory-efficient
+alternative to `np.array()` when you're not sure whether your input is
+already an array.
 
-Memory efficient.
-
-----------
+---
 
 ## 21. `np.asanyarray()`
 
-Similar to asarray but preserves subclasses.
+Behaves like `np.asarray()`, but if the input is already a *subclass* of
+NumPy's array type (a specialised variant), it preserves that subclass
+instead of converting it down to a plain array. This distinction rarely
+matters for beginners — it's mainly relevant once you start working with
+specialised array types.
 
-----------
+---
 
 ## 22. `np.random.randint()`
 
-Random integers.
+Generates random **whole numbers** within a given range — useful whenever
+you need discrete random values rather than decimals.
 
-----------
+---
 
 ## 23. `np.random.randn()`
 
-Normal distribution values.
+Generates random numbers from the **standard normal distribution** (the
+classic "bell curve," centred on `0` with a standard deviation of `1`) —
+as opposed to `np.random.rand()`, which spreads values evenly rather than
+clustering them near a centre.
 
-----------
+---
 
 ## 24. `np.random.choice()`
 
-Sampling from dataset.
+Randomly samples values **from an existing collection** you provide,
+rather than generating brand-new numbers — useful for shuffling, sampling
+a dataset, or simulating a dice roll from a specific set of outcomes.
 
-----------
+---
 
 ## 25. `np.random.uniform()`
 
-Uniform distribution random numbers.
+Generates random decimal numbers evenly spread across a range you choose —
+essentially `np.random.rand()` but letting you set your own lower and
+upper bounds instead of being fixed to `0`–`1`.
 
+---
 
-## Table (Advance Level)
+## Table (Advanced Level)
 
-
-  
-
-| S. No. | Method | Purpose | Example | Input | Output | Key Idea | Performance Benefit | Typical Use | Important Note |
+| # | Method | Purpose | Example | Input | Output | Key idea | Performance benefit | Typical use | Important note |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 18 | np.fromiter() | Create array from iterator | np.fromiter(range(5), int) | Iterable | 1D array | Stream processing | Memory efficient | Large data streams | dtype required |
-| 19 | np.fromfunction() | Generate array using formula | np.fromfunction(lambda i,j:i+j,(3,3)) | Function + shape | Computed array | Index-based creation | Vectorized generation | Mathematical modeling | Very powerful |
-| 20 | np.asarray() | Convert without copying | np.asarray(data) | Sequence | Array | Memory sharing | Avoid duplication | Performance tuning | Faster conversion |
-| 21 | np.asanyarray() | Preserve subclasses | np.asanyarray(data) | Array-like | Array/subclass | Flexible conversion | Specialized arrays | Advanced workflows | Rare in beginners |
-| 22 | np.random.randint() | Random integers | np.random.randint(0,10,(3,3)) | Range + shape | Integer array | Discrete random | Dataset generation | Simulations | ML datasets |
-| 23 | np.random.randn() | Gaussian distribution | np.random.randn(3,3) | Shape | Numeric array | Normal distribution | Statistical modeling | ML initialization | Standard normal |
-| 24 | np.random.choice() | Random sampling | np.random.choice(a,5) | Dataset | Random array | Sampling method | Supports probabilities | Data science | With/without replacement |
-| 25 | np.random.uniform() | Uniform distribution | np.random.uniform(0,5,10) | Range + size | Numeric array | Continuous random | Flexible distribution | Simulations | Common in statistics |
-
+| 18 | `np.fromiter()` | Build an array from an iterator/generator | `np.fromiter(range(5), int)` | Iterable | 1D array | Stream processing | Memory efficient for large streams | Large or lazy data sources | `dtype` must be given |
+| 19 | `np.fromfunction()` | Generate an array from a formula | `np.fromfunction(lambda i,j:i+j,(3,3))` | Function + shape | Computed array | Index-based creation | Vectorized generation | Mathematical modeling | Very flexible, slightly harder to read |
+| 20 | `np.asarray()` | Convert to array without copying unnecessarily | `np.asarray(data)` | Sequence | Array | Memory sharing | Avoids duplicate data | Performance-sensitive conversions | Faster than `np.array()` when input is already an array |
+| 21 | `np.asanyarray()` | Convert to array, preserving subclasses | `np.asanyarray(data)` | Array-like | Array or subclass | Flexible conversion | Keeps specialised array types intact | Advanced/specialised workflows | Rarely needed as a beginner |
+| 22 | `np.random.randint()` | Random whole numbers | `np.random.randint(0,10,(3,3))` | Range + shape | Integer array | Discrete random values | — | Simulations, test datasets | Upper bound is excluded |
+| 23 | `np.random.randn()` | Random numbers, bell-curve distributed | `np.random.randn(3,3)` | Shape | Numeric array | Normal ("Gaussian") distribution | — | Statistical modeling, ML init | Centred on 0, standard deviation 1 |
+| 24 | `np.random.choice()` | Randomly sample from existing values | `np.random.choice(a,5)` | Dataset | Random array | Sampling | Supports weighted probabilities | Data science, shuffling | Can sample with or without replacement |
+| 25 | `np.random.uniform()` | Random decimals in a chosen range | `np.random.uniform(0,5,10)` | Range + size | Numeric array | Continuous, evenly spread | Flexible range | Simulations, statistics | Range is fully under your control |
 
 ## Script (Advanced)
 
-
 ```python
-
 # NumPy Array Creation Examples
-# Advance level
+# Advanced level
 import numpy as np
 
-# 18 fromiter
-# np.fromiter() creates a NumPy array from an iterable object. 
-# The first argument is the iterable, and the second argument is the data type of 
-# the resulting array. In this example, we are creating an array from a range of 
-# integers from 0 to 4, and specifying that the data type should be integer.
+# Step 18 - np.fromiter(): build an array from a Python iterable (here, a
+# range object) one value at a time. dtype must always be specified.
 a = np.fromiter(range(5), dtype=int)
 print("np.fromiter():->\n", a)
 
-# 19 fromfunction
-# np.fromfunction() creates a NumPy array by executing a function over each coordinate.
-# The first argument is a function that takes as input the indices of the array, and 
-# the second argument is the shape of the array. In this example, we are creating 
-# a 3x3 array where each element is the sum of its row and column indices. 
-# The lambda function takes two arguments, i and j, which represent the row and 
-# column indices, respectively. The function returns the sum of i and j, which is used 
-# to populate the array.      
-b = np.fromfunction(lambda i, j: i + j, (3,3))
+# Step 19 - np.fromfunction(): build an array by calling a function once
+# per position. The lambda receives the (row, column) indices i, j and
+# returns the value that belongs at that position — here, simply i + j.
+b = np.fromfunction(lambda i, j: i + j, (3, 3))
 print("np.fromfunction():->\n", b)
 
-# 20 asarray
-# np.asarray() converts the input to a NumPy array. If the input is already a NumPy array, it will not create a new array but will 
-# return the original array. In this example, we are converting a Python list to a NumPy array. The 
-# resulting array will have the same values as the list, but it will be of type numpy.ndarray.   
-c = np.asarray([1,2,3])
+# Step 20 - np.asarray(): convert a list into an array. If the input were
+# already a NumPy array, this would return it as-is rather than copying it.
+c = np.asarray([1, 2, 3])
 print("np.asarray():->\n", c)
 
-# 21 asanyarray
-# np.asanyarray() is similar to np.asarray(), but it will not convert subclasses of ndarray to a base ndarray. 
-# If the input is already a NumPy array or a subclass of ndarray, it will return the original array. In this example, 
-# we are converting a NumPy array to a NumPy array using np.asanyarray(). Since the input is already a NumPy array, 
-# np.asanyarray() will simply return the original array without creating a new one. The output will be the same as 
-# the input array c. 
+# Step 21 - np.asanyarray(): behaves like asarray() here since 'c' is
+# already a plain ndarray — so it's simply returned unchanged.
 d = np.asanyarray(c)
 print("np.asanyarray():->\n", d)
 
-# 22 randint
-# np.random.randint() generates random integers from a specified range. The first two arguments specify 
-# the lower and upper bounds of the range (inclusive of the lower bound and exclusive of the upper bound), 
-# and the third argument specifies the shape of the output array. In this example, we are generating 
-# a 3x3 array of random integers between 0 and 9 (inclusive of 0 and exclusive of 10). The resulting 
-# array will contain random integers in the specified range, and the shape of the array will be 
-# 3 rows and 3 columns.     
-e = np.random.randint(0,10,(3,3))
+# Step 22 - np.random.randint(): random WHOLE numbers from 0 up to
+# (not including) 10, arranged in a 3x3 shape.
+e = np.random.randint(0, 10, (3, 3))
 print("np.random.randint():->\n", e)
 
-# 23 randn
-# np.random.randn() generates random numbers from a standard normal distribution (mean 0 and standard deviation 1). 
-# The arguments specify the shape of the output array. In this example, we are generating a 3x3 array of random 
-# numbers from a standard normal distribution. The resulting array will contain random floating-point numbers 
-# that are drawn from the specified distribution, and the shape of the array will be 3 rows and 3 columns. 
-# Each time you run this code, you will get different random numbers in the array. 
-f = np.random.randn(3,3)
+# Step 23 - np.random.randn(): random numbers from the standard normal
+# ("bell curve") distribution — most values land close to 0.
+# Re-running this line will give different numbers every time.
+f = np.random.randn(3, 3)
 print("np.random.randn():->\n", f)
 
-# 24 random choice
-# np.random.choice() generates a random sample from a given 1D array of values. 
-# The first argument is the array of values to choose from, and 
-# the second argument is the number of samples to generate. 
-# In this example, we are generating an array of 5 random samples from the array [10, 20, 30]. 
-# The resulting array will contain 5 random values that are selected from the specified array, 
-# and the values will be either 10, 20, or 30. Each time you run this code, you may get a 
-# different set of random values in the output array.   
-g = np.random.choice([10,20,30],5)
+# Step 24 - np.random.choice(): randomly PICK 5 values out of the given
+# list [10, 20, 30] (with repeats allowed by default).
+g = np.random.choice([10, 20, 30], 5)
 print("np.random.choice():->\n", g)
 
-# 25 uniform
-# np.random.uniform() generates random floating-point numbers from a uniform distribution over a specified range. 
-# The first two arguments specify the lower and upper bounds of the range, and 
-# the third argument specifies the shape of the output array. 
-# In this example, we are generating a 1D array of 10 random floating-point numbers 
-# between 0 and 5 (inclusive of 0 and exclusive of 5). The resulting array will contain 
-# random floating-point numbers that are uniformly distributed in the specified range, 
-# and the shape of the array will be 10 elements in a single dimension. Each time you run this code, 
-# you will get different random numbers in the array.  
-h = np.random.uniform(0,5,10)
+# Step 25 - np.random.uniform(): 10 random decimal numbers, evenly spread
+# between 0 (inclusive) and 5 (exclusive).
+h = np.random.uniform(0, 5, 10)
 print("np.random.uniform():->\n", h)
-
-
 ```
 
-## Complete NumPy Array Creation Map
+---
 
-```python
+## Complete NumPy Array-Creation Map
 
+The tree below groups every array-creation tool by *what kind of input it
+starts from* — useful as a "which function do I actually want?" lookup.
+
+![Flowchart](/resources/ch-11-numpy-august-2026-numpy-array-creation-complete-map.png)
+
+
+
+
+For reference, here is the same map in its original plain-text tree form:
+
+```text
 NumPy Array Creation
 │
 ├── From Existing Data
@@ -657,17 +714,45 @@ NumPy Array Creation
     ├── savez
     ├── savez_compressed
     ├── fromfile
-
-
 ```
 
+---
 
+## Summary: choosing the right function
 
+| If you want to… | Reach for… |
+| --- | --- |
+| Turn a list you already have into an array | `np.array()` or `np.asarray()` |
+| Start with a blank array of a given size | `np.zeros()`, `np.ones()`, or `np.full()` |
+| Match the shape of an array you already have | `np.zeros_like()`, `np.ones_like()`, `np.full_like()` |
+| Count up in equal steps | `np.arange()` (fixed step) or `np.linspace()` (fixed count) |
+| Build a matrix for linear algebra | `np.eye()`, `np.identity()`, `np.diag()` |
+| Prepare coordinates for plotting | `np.meshgrid()`, `np.indices()` |
+| Generate random test data | `np.random.rand()`, `randint()`, `randn()`, `choice()`, `uniform()` |
+| Build an array from a formula or generator | `np.fromfunction()`, `np.fromiter()` |
 
+---
 
+## Follow-up questions for practice
 
+*(These are additional, optional questions for self-testing — they don't
+replace or change any of the original reference content above.)*
 
-
+1. What's the practical difference between `np.arange(0, 1, 0.1)` and
+   `np.linspace(0, 1, 10)`? Run both and compare the exact number of values
+   each one produces.
+2. `np.zeros((3,3))` and `np.empty((3,3))` both create a 3×3 array — what's
+   the one important difference in what you'll actually see when you print
+   them?
+3. Using `np.diag()`, first build a matrix from the list `[4, 5, 6]`, then
+   feed that matrix straight back into `np.diag()` again. What do you get,
+   and why does the same function produce two different kinds of results?
+4. Why does `np.random.randn()` tend to produce values clustered close to
+   `0`, while `np.random.rand()` spreads its values evenly between `0` and
+   `1`? (Hint: look up "normal distribution" vs. "uniform distribution" in
+   the glossary links above.)
+5. Given an existing array `A`, write one line using a `_like()` function
+   that creates a same-shaped array filled with the value `-1`.
 
 
 

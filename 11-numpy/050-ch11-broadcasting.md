@@ -136,21 +136,7 @@ runs through.
 Here's the same logic as a Mermaid flowchart, for quick reference or
 editing:
 
-```mermaid
-flowchart TD
-    A[Compare shapes of A and B] --> B{Do they have the<br/>same number of dimensions?}
-    B -->|No| C[Pad the shorter shape<br/>with 1s on the LEFT]
-    B -->|Yes| D[Compare dimensions,<br/>right to left]
-    C --> D
-    D --> E{For each pair of dimensions:<br/>equal, or one of them is 1?}
-    E -->|Yes, all pairs OK| F[Stretch every dimension<br/>that is 1 to match the other]
-    E -->|No, some pair mismatches| G[Raise ValueError:<br/>shapes cannot be broadcast]
-    F --> H[Operation proceeds on<br/>the resulting matched shape]
-```
-
-*(Plain boxes, one diamond shape per decision, and arrows only — no
-subgraphs — so this should import cleanly into
-[draw.io](https://app.diagrams.net/) as well as render on GitHub/GitBook.)*
+![Flowchart](/resources/ch-11-numpy-august-2026-broadcasting1.png)
 
 ---
 

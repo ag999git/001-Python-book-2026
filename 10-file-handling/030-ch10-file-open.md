@@ -95,21 +95,9 @@ with open("research_demo.txt", mode="r", encoding="utf-8") as f:
     print("Remaining lines:", f.readlines())   # -> ['Line 2: Python File Handling\n']
 ```
 
-```mermaid
-graph TD
-    Open[Open file - pointer at 0]
-    Read10[read 10 - pointer moves to 10]
-    Seek0[seek 0 - pointer back to 0]
-    ReadLine[readline - reads Line 1, pointer moves]
-    ReadRest[readlines - reads everything remaining]
+![Flowchart](/resources/ch-10-file-object-behavior-2.png)
 
-    Open --> Read10
-    Read10 --> Seek0
-    Seek0 --> ReadLine
-    ReadLine --> ReadRest
-```
 
-*(This diagram uses plain `graph TD` syntax with simple boxes and arrows only — no subgraphs, no styled/labeled edges, no special characters in labels — so it should paste cleanly into draw.io via Extras → Edit Diagram.)*
 
 ### Step 3 — Demonstrating `buffering` and `errors`
 

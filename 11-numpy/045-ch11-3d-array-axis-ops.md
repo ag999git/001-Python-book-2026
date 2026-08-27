@@ -311,8 +311,7 @@ never three.
 
 ## Follow-up questions for practice
 
-*(These are additional, optional questions for self-testing — they don't
-replace or change the original study questions or task above.)*
+*(These are additional, optional questions for self-testing)
 
 1. What would `arr.sum(axis=0).sum(axis=0)` give you — i.e. collapsing
    axis 0 twice in a row? What single number do you expect, and why?

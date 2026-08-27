@@ -133,8 +133,7 @@ runs through.
 ![Broadcasting Decision Tree](/resources/ch11-broadcast-rule-flowchart.png)
 
 
-Here's the same logic as a Mermaid flowchart, for quick reference or
-editing:
+Here's the same logic as a different flowchart:
 
 ![Flowchart](/resources/ch-11-numpy-august-2026-broadcasting1.png)
 

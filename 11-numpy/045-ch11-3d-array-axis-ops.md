@@ -199,8 +199,8 @@ Write a script that:
 
 Every stage of the script below is labelled with a `# Step N -` comment,
 matching the four-part task above, so you can follow along without losing
-your place. Comments have also been added inline wherever a beginner is
-likely to pause and ask "wait, why that number?"
+your place. 
+Comments have also been added inline for easy understanding of the script.
 
 ```python
 # 3D Array Axis Exploration

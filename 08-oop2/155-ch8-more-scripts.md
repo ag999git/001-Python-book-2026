@@ -156,20 +156,9 @@ d1.action()   # -> Walking...
 d2.action()   # -> Swimming...
 ```
 
-```mermaid
-graph TD
-    Walker[Walker]
-    Swimmer[Swimmer]
-    Dog1[Dog1 Walker then Swimmer]
-    Dog2[Dog2 Swimmer then Walker]
+![Flowchart](/resources/ch-8-august-2026-scripting-question-II-q7.png)
 
-    Walker --> Dog1
-    Swimmer --> Dog1
-    Swimmer --> Dog2
-    Walker --> Dog2
-```
 
-*(This diagram uses plain `graph TD` syntax with simple boxes and arrows only — no subgraphs, no styled/labeled edges, no special characters in labels — so it should paste cleanly into draw.io via Extras → Edit Diagram.)*
 
 ---
 
@@ -267,17 +256,9 @@ print(f"RobotDog MRO: {RobotDog.__mro__}")
 # but the actual method-lookup chain (__mro__) is completely unaffected by it.
 ```
 
-```mermaid
-graph TD
-    Pet[Pet - ABC]
-    RobotDog[RobotDog - no real inheritance]
-    IsinstanceCheck[isinstance RobotDog Pet - True]
-    MROCheck[RobotDog dot mro - does not include Pet]
+![Flowchart](/resources/ch-8-august-2026-scripting-question-II-q11.png)
 
-    Pet -.->|registered| RobotDog
-    RobotDog --> IsinstanceCheck
-    RobotDog --> MROCheck
-```
+
 
 ---
 

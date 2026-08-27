@@ -38,7 +38,7 @@ data has; the other doesn't.
 - **`np.concatenate()` is the foundation** — you control the axis manually.
 - **`np.hstack()` and `np.vstack()` are shortcuts** built on top of it.
 - **`hstack` = horizontal (joins along columns); `vstack` = vertical (joins along rows).**
-- **For 1D arrays specifically, `vstack()` adds a new dimension, while `hstack()` does not.** This last point is the one worth slowing down for — it's exactly what the walkthrough below demonstrates.
+- **For 1D arrays specifically, `vstack()` adds a new dimension, while `hstack()` does not.** This last point is worthg noting .
 
 ---
 
@@ -191,7 +191,7 @@ always why. `hstack()` on 1D arrays never adds a dimension; `vstack()` on
 
 ---
 
-## Script 1 — A genuine 1D-array demonstration
+## Script 1 — A 1D-array demonstration
 
 The walkthrough above uses the 1D arrays `x = [1, 2]` and `y = [3, 4]`.
 Here's a runnable script using exactly those arrays, so you can confirm

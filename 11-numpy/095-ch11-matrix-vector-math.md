@@ -38,14 +38,9 @@ are exactly what `matrix @ vector` computes in a single line of Python.
 >   converting from degrees is a common early stumbling block. See
 >   [NumPy's `radians()` documentation](https://numpy.org/doc/stable/reference/generated/numpy.radians.html).
 
-```mermaid
-flowchart TD
-    A["Vector x"] --> B["Multiply by matrix M: y = M x"]
-    B --> C["Uniform scaling:<br/>same factor on every axis"]
-    B --> D["Non-uniform scaling:<br/>different factor per axis"]
-    B --> E["Reflection:<br/>flips across an axis or line"]
-    B --> F["Rotation:<br/>turns the vector by an angle"]
-```
+
+
+![Flowchart](/resources/ch-11-numpy-august-2026-vector-matrices-01.png)
 
 
 
@@ -428,7 +423,11 @@ $$
 
 **Example:** suppose we want to rotate the point
 
-$$\mathbf{x}=\begin{bmatrix} 1\\2\end{bmatrix}$$
+
+$$
+\mathbf{x} = \begin{bmatrix} 1 \\\\ 2 \end{bmatrix}
+$$
+
 
 by $90°$ ($\pi/2$ radians). Since $\cos(90°) = 0$ and $\sin(90°) = 1$:
 
@@ -448,22 +447,9 @@ $$
 > exactly where the mismatch is, and what the correct result is for the
 > vector the example originally names.
 
-**As printed (rotating $[1, 0]^T$, not $[1, 2]^T$):**
 
-$$
-\mathbf{x}^{\prime}=\left[\begin{array}{cc}
-0 & -1 \\
-1 & 0
-\end{array}\right]\left[\begin{array}{l}
-1 \\
-0
-\end{array}\right]=\left[\begin{array}{l}
-0 \\
-1
-\end{array}\right]
-$$
 
-**Corrected (actually rotating the stated vector $[1, 2]^T$):**
+**Rotating the vector $[1, 2]^T$):**
 
 $$
 \mathbf{x}^{\prime}=\left[\begin{array}{cc}
@@ -499,15 +485,9 @@ R = np.array([
 ])
 print("Rotation matrix R(90 degrees), rounded for readability:\n", np.round(R, 4))
 
-# Step 2 - Rotate the vector [1, 0], reproducing the calculation exactly
-# as printed in the book (see the note above about this vector choice).
-x_as_printed = np.array([1, 0]).reshape(2, 1)
-result_as_printed = R @ x_as_printed
-print("\nRotating [1, 0] by 90 degrees:\n", np.round(result_as_printed, 4))
-# Output: [[0], [1]] -- matches the book's printed calculation
 
-# Step 3 - Rotate the vector the example actually NAMES, [1, 2], to see
-# the corrected result.
+
+# Step 2 - Rotate the vector [1, 2]
 x_actual = np.array([1, 2]).reshape(2, 1)
 result_actual = R @ x_actual
 print("\nRotating [1, 2] by 90 degrees:\n", np.round(result_actual, 4))

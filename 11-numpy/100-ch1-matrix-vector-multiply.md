@@ -142,9 +142,10 @@ $x$ of dimension $n \times 1$.
   $m \times 1$.
 
 
-```
-
 ![Flowchart](/resources/ch-11-numpy-august-2026-vector-matrices-02.png)
+
+
+
 
 
 **The important insight:** matrix-to-vector multiplication doesn't just
@@ -293,23 +294,23 @@ instead). If you want a tidier printout, wrap the result in
 
 ### Uniform scaling
 
-![Uniform Scaling](https://github.com/ag999git/001-Python-book-2026/blob/main/resources/ch11-uniform-scaling-matrix-vector.png)
+![Uniform Scaling](/resources/ch11-uniform-scaling-matrix-vector.png)
 
 ### Non-uniform scaling
 
-![Non-Uniform scaling](https://github.com/ag999git/001-Python-book-2026/blob/main/resources/ch11-non-uniform-scaling-matrix-vector.png)
+![Non-Uniform scaling](/resources/ch11-non-uniform-scaling-matrix-vector.png)
 
 ### Reflection on X-axis
 
-![Reflection on X axis](https://github.com/ag999git/001-Python-book-2026/blob/main/resources/ch11-reflection-x-axis-matrix-vector.png)
+![Reflection on X axis](/resources/ch11-reflection-x-axis-matrix-vector.png)
 
 ### Reflection on Y-axis
 
-![Reflection on Y-axis](https://github.com/ag999git/001-Python-book-2026/blob/main/resources/ch11-reflection-y-axis-matrix-vector.png)
+![Reflection on Y-axis](/resources/ch11-reflection-y-axis-matrix-vector.png)
 
 ### Rotation by 90 degrees
 
-![Rotation by 90 degrees](https://github.com/ag999git/001-Python-book-2026/blob/main/resources/ch11-rotation-90-matrix-vector.png)
+![Rotation by 90 degrees](/resources/ch11-rotation-90-matrix-vector.png)
 
 > **Note:** the "Reflection on X-axis" image link had a small Markdown
 > syntax error in the original (`![...[(url)` instead of `![...](url)`),

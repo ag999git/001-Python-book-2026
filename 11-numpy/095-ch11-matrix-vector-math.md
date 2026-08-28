@@ -493,19 +493,23 @@ print("\nRotating [1, 2] by 90 degrees:\n", np.round(result_actual, 4))
 
 ---
 
+
+
 ## Summary: transformation matrices at a glance
 
-| Transformation | 2D matrix | Effect on $(x, y)$ |
+| Transformation | 2D matrix | Effect on (x, y) |
 | --- | --- | --- |
-| Uniform scaling (factor $k$) | $\begin{bmatrix} k & 0 \\ 0 & k \end{bmatrix}$ | $(kx, ky)$ — same stretch on both axes |
-| Non-uniform scaling | $\begin{bmatrix} \lambda_1 & 0 \\ 0 & \lambda_2 \end{bmatrix}$ | $(\lambda_1 x, \lambda_2 y)$ — different stretch per axis |
-| Reflect across X-axis | $\begin{bmatrix} 1 & 0 \\ 0 & -1 \end{bmatrix}$ | $(x, -y)$ |
-| Reflect across Y-axis | $\begin{bmatrix} -1 & 0 \\ 0 & 1 \end{bmatrix}$ | $(-x, y)$ |
-| Reflect through origin | $\begin{bmatrix} -1 & 0 \\ 0 & -1 \end{bmatrix}$ | $(-x, -y)$ |
-| Reflect across $y = x$ | $\begin{bmatrix} 0 & 1 \\ 1 & 0 \end{bmatrix}$ | $(y, x)$ |
-| Rotate by $\theta$ | $\begin{bmatrix} \cos\theta & -\sin\theta \\ \sin\theta & \cos\theta \end{bmatrix}$ | Turns the vector by angle $\theta$, keeping its length unchanged |
+| Uniform scaling (factor k) | `[k, 0]`<br>`[0, k]` | `(k*x, k*y)` -- same stretch on both axes |
+| Non-uniform scaling | `[λ1, 0]`<br>`[0, λ2]` | `(λ1*x, λ2*y)` -- different stretch per axis |
+| Reflect across X-axis | `[1, 0]`<br>`[0, -1]` | `(x, -y)` |
+| Reflect across Y-axis | `[-1, 0]`<br>`[0, 1]` | `(-x, y)` |
+| Reflect through origin | `[-1, 0]`<br>`[0, -1]` | `(-x, -y)` |
+| Reflect across y = x | `[0, 1]`<br>`[1, 0]` | `(y, x)` |
+| Rotate by θ | `[cos θ, -sin θ]`<br>`[sin θ, cos θ]` | Turns the vector by θ, length unchanged |
+
 
 ---
+
 
 ## Follow-up questions for practice
 

@@ -17,15 +17,18 @@ behind Principal Component Analysis (PCA), a large part of how Singular
 Value Decomposition works, and a common tool for analysing the stability
 of systems in engineering and physics.
 
-The original version of this chapter presented the theory on its own,
-without any NumPy code. Since this is a *Python* book, this improved
-version keeps every piece of the original mathematics exactly as written,
-and adds a working NumPy script at the end — so the equations
-$A\vec{v} = \lambda\vec{v}$ and $A = Q\Lambda Q^{-1}$ aren't just symbols on
+This writeup gives both the theory and implementation of eigen decomposition.
+
+
+
+So the equations
+$A\vec{v} = \lambda\vec{v}$ and $A = Q\Lambda Q^{-1}$ 
+
+aren't just symbols on
 a page, but things you can compute and verify for yourself in a few lines
 of code.
 
-> **Quick glossary, before we start**
+> **Glossary of terms**
 > - **Eigenvector** — a special vector that a given matrix only *stretches
 >   or shrinks*, without changing its direction, when multiplied against
 >   it.
@@ -66,15 +69,9 @@ This means:
 - The **direction remains unchanged**
 - Only the **magnitude changes**, by a factor of $\lambda$.
 
-```mermaid
-flowchart LR
-    A["Vector v"] --> B["Multiply by matrix A"]
-    B --> C["Result: lambda * v<br/>SAME direction, scaled magnitude"]
-```
 
-*(Plain boxes and arrows only, no subgraphs, so every diagram in this
-chapter should import cleanly into [draw.io](https://app.diagrams.net/) as
-well as render on GitHub/GitBook.)*
+![Flowchart](/resources/ch-11-numpy-august-2026-eigen-decomposition.png)
+
 
 **Beginner tip:** this is precisely what makes $\vec{v}$ special — for
 *almost any* vector, multiplying it by a matrix $A$ changes its direction
@@ -154,15 +151,11 @@ If $Q$ is invertible:
 
 $$A = Q \Lambda Q^{-1}$$
 
-```mermaid
-flowchart TD
-    A1["Matrix A, shape (n,n)"] --> B1["Find eigenvalues: lambda1...lambdaN"]
-    A1 --> B2["Find eigenvectors: v1...vN"]
-    B1 --> C1["Arrange into diagonal matrix Lambda"]
-    B2 --> C2["Arrange as columns into matrix Q"]
-    C1 --> D["Combine: A = Q x Lambda x Q-inverse"]
-    C2 --> D
-```
+
+
+![Flowchart](/resources/ch-11-numpy-august-2026-eigen-decomposition-02.png)
+
+
 
 ---
 

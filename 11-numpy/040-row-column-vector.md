@@ -221,7 +221,7 @@ where:
 - `y` is the resulting column vector, after the transformation has been applied.
 
 
-![Flowchart](/resources/ch-11-numpy-august-2026-row-vs-column-vector-2.png)
+![Flowchart](../resources/ch-11-numpy-august-2026-row-vs-column-vector-2.png)
 
 
 
@@ -308,7 +308,7 @@ multiplication, rather than just trusting that `@` does the right thing.
 
 
 
-![2D diagram showing a point rotated 90 degrees using a rotation matrix](/resources/ch11-final-vector-rotation.png)
+![2D diagram showing a point rotated 90 degrees using a rotation matrix](../resources/ch11-final-vector-rotation.png)
 
 ---
 
@@ -374,7 +374,7 @@ print(scaled_point)
 
 
 
-![Figure showing a point scaled using a diagonal scaling matrix](/resources/ch11-scaling-matrix.png)
+![Figure showing a point scaled using a diagonal scaling matrix](../resources/ch11-scaling-matrix.png)
 
 
 ---
@@ -396,7 +396,7 @@ transformed,"** the way you'd think of a point moving through space. When
 in doubt, and especially when working with transformation matrices, the
 column vector is the safer, more conventional default.
 
-![Flowchart](/resources/ch-11-numpy-august-2026-row-vs-column-vector-3.png)
+![Flowchart](../resources/ch-11-numpy-august-2026-row-vs-column-vector-3.png)
 
 
 ---

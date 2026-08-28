@@ -12,14 +12,11 @@ robotics, machine learning, and much of scientific computing — anywhere a
 program needs to rotate an image, resize a shape, or transform coordinates
 from one system into another.
 
-The original version of this chapter presented the mathematics on its own,
-without any accompanying code. Since this is a *Python* book, this
-improved version keeps every piece of the original mathematics exactly as
-written, and adds a working NumPy script alongside each concept — so you
-can see, very concretely, that these aren't just abstract formulas: they
+This resource disucsses in brief the mathematics behind vector-matrix multiplication. 
+I addition it also provides numPy scripts (with detailed explanations) to show how vectr-matrix multiplication is actually implemented in NumPy. Note that these aren't just abstract formulas: they
 are exactly what `matrix @ vector` computes in a single line of Python.
 
-> **Quick glossary, before we start**
+> **Glossary of terms**
 > - **Vector** — an ordered list of numbers; here, always written as a
 >   column (stacked vertically).
 > - **Matrix** — a rectangular grid of numbers, used here to *transform*

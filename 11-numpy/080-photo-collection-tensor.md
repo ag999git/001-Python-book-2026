@@ -9,16 +9,13 @@ chapter — arrays, shapes, and especially `np.stack()` — into one realistic,
 end-to-end example: turning a messy folder of photos into a single, tidy
 NumPy array that a machine-learning model could actually work with.
 
-It's a deliberately practical scenario. Real photo collections aren't
-naturally "array-shaped" — they're nested folders, inconsistent file
-counts, and (usually) wildly different image sizes. This case study walks
-through exactly what has to be true about your data before NumPy can
+ This case study walks through exactly what has to be true about your data before NumPy can
 represent it as one clean structure, and then builds that structure up one
-dimension at a time, so that by the end, a **6-dimensional array** (yes,
-six!) feels like a natural, logical destination rather than an intimidating
-wall of numbers.
+dimension at a time. 
+The purpose is to create a **6-dimensional array**.
 
-> **Quick glossary, before we start**
+
+> **Glossary of terms**
 > - **Tensor** — a general term for an array with any number of
 >   dimensions; a photo collection organized as described here ends up
 >   being a 6D tensor. See the
@@ -136,7 +133,7 @@ possible.
 
 ## 5. Task
 
-*(Reproduced from the printed book — unchanged.)*
+
 
 ### Objective
 

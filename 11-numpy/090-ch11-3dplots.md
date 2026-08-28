@@ -45,13 +45,7 @@ Understand how:
 - functions $Z = f(X, Y)$ create surfaces
 - Matplotlib visualizes them
 
-```mermaid
-flowchart LR
-    A["np.linspace(): 1D list of x values"] --> C["np.meshgrid(): full 2D grids X and Y"]
-    B["np.linspace(): 1D list of y values"] --> C
-    C --> D["Apply a formula: Z = f(X, Y)"]
-    D --> E["Matplotlib plot_surface(X, Y, Z): rendered 3D surface"]
-```
+![Flowchart](/resources/ch-11-numpy-august-2026-3D-surface.png)
 
 
 

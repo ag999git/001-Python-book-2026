@@ -18,7 +18,7 @@ This page is a research-level deep dive into the exact mechanism briefly introdu
 
 ## Research Question
 
-*(Kept exactly as set in the assignment.)*
+
 
 > How does Python's `io` module facilitate the transformation of raw data streams into Pandas DataFrames without physical file storage, and what are the performance implications of this memory-resident approach in modern data pipelines?
 
@@ -50,9 +50,6 @@ When working with Pandas, picking the right one of these two matters: `pd.read_c
 | Typical use case | Parsing a small CSV snippet, or a text-based API response | Processing a compressed or specially-formatted binary file |
 
 ![Flowchart](../resources/ch12-august-2026-memory-based-IO-01.png)
-
-
-
 
 ---
 

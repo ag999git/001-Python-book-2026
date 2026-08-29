@@ -5,9 +5,11 @@
 
 ## What this page covers
 
-This page is a research-level deep dive into the exact mechanism briefly introduced on the previous chapter page: how `io.StringIO` and `io.BytesIO` let Pandas read data that only exists in your computer's memory, without ever touching a real file on disk. Where the previous page used these tools as a convenient shortcut for runnable examples, this page investigates them properly — the difference between the two classes, their key methods, and a specific, genuinely common bug (the "initialization trap," covered in Section 6) that catches many people the first time they use these tools for real.
+This page is a research-level deep dive into the exact mechanism briefly introduced on the previous chapter page: how `io.StringIO` and `io.BytesIO` let Pandas read data that only exists in your computer's memory, without ever touching a real file on disk. 
 
-**A note on how this page is written:** the original material for this topic used fairly dense, formal language throughout — this version explains the same ideas in plain, everyday terms instead. Nothing about the actual technical content has changed, only how it's phrased.
+Where the previous page used these tools as a convenient shortcut for runnable examples, this page investigates them properly — the difference between the two classes, their key methods, and a specific, genuinely common bug (the "initialization trap," covered in Section 6) that catches many people the first time they use these tools for real.
+
+
 
 **A few terms used throughout, explained simply:**
 - **File-like object** — something that isn't a real file on disk, but behaves like one as far as Python's reading/writing functions are concerned — you can `.read()` from it, `.write()` to it, and move its cursor around, exactly like a real file. ([Python docs: `io` module](https://docs.python.org/3/library/io.html))

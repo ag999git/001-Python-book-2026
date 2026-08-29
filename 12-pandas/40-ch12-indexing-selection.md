@@ -18,7 +18,7 @@ Getting comfortable with these four approaches is genuinely foundational — alm
 
 ## Research Question
 
-*(Kept exactly as set in the assignment.)*
+
 
 > How can different indexing and selection techniques in Pandas (`[]`, `.`, `.loc[]`, `.iloc[]`, and slicing) be used to efficiently extract, filter, and manipulate structured data, and what are their comparative advantages, limitations, and appropriate use cases when working with real-world datasets such as the Palmer Penguins dataset?
 

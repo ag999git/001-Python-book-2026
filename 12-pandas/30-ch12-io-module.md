@@ -8,7 +8,7 @@
 
 The `io` module serves as Python’s primary interface for handling various types of I/O (Input/Output). While most beginners associate I/O with physical files on a hard drive, the `io` module allows developers to treat strings or bytes as "file-like objects." This is essential in data science when data is received via APIs or generated dynamically in memory.
 
-**Visual Hierarchy of the `io` Module:** ![Visual Hierarchy of io Module](https://github.com/ag999git/001-Python-book-2026/blob/main/resources/ch12-io-module.png)
+**Visual Hierarchy of the `io` Module:** 
 
 ![Visual Hierarchy of io Module](../.gitbook/assets/ch12-io-module.png)
 

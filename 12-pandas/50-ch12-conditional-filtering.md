@@ -55,6 +55,8 @@ df = sns.load_dataset("penguins")
 print("\n--- FIRST 5 ROWS ---")
 print("df.head()->", df.head())   # A quick first look at the data's shape and columns
 ```
+**Output**
+
 ```text
  STEP 0. IMPORT LIBRARIES AND LOAD DATASET
 
@@ -88,6 +90,8 @@ heavy_penguins = df[df['body_mass_g'] > 4000]
 print("\nPenguins with body_mass_g > 4000:")
 print("heavy_penguins.head()->", heavy_penguins.head())
 ```
+**Output**
+
 ```text
  STEP 1. BASIC BOOLEAN FILTERING
 
@@ -128,6 +132,8 @@ cond_not = df[~(df['species'] == 'Adelie')]
 print("\nPenguins that are NOT Adelie:")
 print("cond_not.head()->", cond_not.head())
 ```
+**Output**
+
 ```text
  STEP 2. COMBINING CONDITIONS
 
@@ -158,22 +164,10 @@ cond_not.head()->        species island  bill_length_mm  bill_depth_mm  flipper_
 
 **Why `&`/`|`/`~` instead of `and`/`or`/`not`?** Python's built-in `and`/`or`/`not` expect a *single* `True` or `False` value — but `df['species'] == 'Adelie'` produces an entire *Series* of hundreds of `True`/`False` values, one per row, not just one. Pandas's `&`, `|`, and `~` are specifically designed to compare two Series *element by element* (a "vectorized" operation, mentioned in the glossary above), which is exactly what's needed here.
 
-```mermaid
-graph TD
-    CondA[Condition A - one True or False per row]
-    CondB[Condition B - one True or False per row]
-    AndOp[A AND B - both true - use ampersand]
-    OrOp[A OR B - either true - use pipe]
-    NotOp[NOT A - flips true and false - use tilde]
 
-    CondA --> AndOp
-    CondB --> AndOp
-    CondA --> OrOp
-    CondB --> OrOp
-    CondA --> NotOp
-```
+![Flowchart](../resources/ch12-august-2026-conditional-filtering-01.png)
 
-*(This diagram uses plain `graph TD` syntax with simple boxes and arrows only — no subgraphs, no styled/labeled edges, no special characters in labels — so it should paste cleanly into draw.io via Extras → Edit Diagram.)*
+
 
 **Important:** always wrap each individual condition in its own parentheses — skipping this is one of the most common sources of errors, covered directly in Step 6.
 
@@ -254,6 +248,8 @@ safe_filter = df[df['sex'].str.contains('male', case=False, na=False)]
 print("\nFiltering 'male' safely (ignoring NaN):")
 print("safe_filter.head()->", safe_filter.head())
 ```
+**Output**
+
 ```text
  STEP 5. HANDLING NaN IN STRING FILTERING
 
@@ -307,7 +303,7 @@ Notice row 3 (which had a missing `sex` value, as seen back in Step 0's output) 
 # mask with non-boolean array containing NA / NaN values.
 ```
 
-**Corrected error-type summary:**
+**Error-type summary:**
 
 | # | Mistake | What actually goes wrong | Error raised |
 |---|---|---|---|
@@ -316,27 +312,10 @@ Notice row 3 (which had a missing `sex` value, as seen back in Step 0's output) 
 | 3 | Using `.str.contains()` on a non-text column | The `.str` accessor requires genuine text data | `AttributeError` |
 | 4 | Forgetting `na=False` on a column with missing values | A `NaN` in the filtering mask can't be interpreted as True/False | `ValueError` |
 
-```mermaid
-graph TD
-    A[Filtering code fails]
-    B{Did you forget parentheses around each condition}
-    C[TypeError - wrong precedence]
-    D{Did you use and or or instead of ampersand or pipe}
-    E[ValueError - ambiguous truth value]
-    F{Did you use dot str on a non text column}
-    G[AttributeError - str needs text]
-    H{Does the column have NaN without na equals False}
-    I[ValueError - cannot mask with NaN]
 
-    A --> B
-    B -->|Yes| C
-    B -->|No| D
-    D -->|Yes| E
-    D -->|No| F
-    F -->|Yes| G
-    F -->|No| H
-    H -->|Yes| I
-```
+
+![Flowchart](../resources/ch12-august-2026-conditional-filtering-02.png)
+
 
 ---
 

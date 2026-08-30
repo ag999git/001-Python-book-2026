@@ -67,21 +67,9 @@ Running `df.dropna(axis=1)` is equivalent to `df.dropna(axis=1, how='any')`:
 
 This is genuinely risky on a dataset like this one: since almost every column has *at least one* missing value somewhere, using this without thinking can remove most of your dataset's actual content — as Step 3(B) below demonstrates directly.
 
-```mermaid
-graph TD
-    Start[dropna called]
-    AxisChoice{axis is 0 or 1}
-    RowMode[axis 0 - treat each ROW as a unit]
-    ColMode[axis 1 - treat each COLUMN as a unit]
-    RowDrop[Drop the row if ANY value in it is missing]
-    ColDrop[Drop the column if ANY value in it is missing]
 
-    Start --> AxisChoice
-    AxisChoice -->|axis=0| RowMode --> RowDrop
-    AxisChoice -->|axis=1| ColMode --> ColDrop
-```
+![Flowchart](../resources/ch12-august-2026-missing-values-01.png)
 
-*(This diagram uses plain `graph TD` syntax with simple boxes and arrows only — no subgraphs, no styled/labeled edges, no special characters in labels — so it should paste cleanly into draw.io via Extras → Edit Diagram.)*
 
 ---
 
@@ -205,6 +193,8 @@ print("\n--- FIRST 5 ROWS OF ORIGINAL DATAFRAME ---")
 print(df.shape)          # Step 2: check the overall size FIRST.
 print("df.head()->", df.head())   # Step 3: a quick visual sanity check.
 ```
+**Output**
+
 ```text
 STEP 1. IMPORT LIBRARIES AND LOAD DATASET
 
@@ -288,6 +278,8 @@ print("\n STEP 2. IDENTIFYING MISSING VALUES")
 print("\nMissing values (True/False):->")
 print("df.isna().head()->", df.isna().head())
 ```
+**Output**
+
 ```text
 Missing values (True/False):->
 df.isna().head()->    species  island  bill_length_mm  bill_depth_mm  flipper_length_mm  body_mass_g    sex
@@ -307,6 +299,8 @@ df.isna().head()->    species  island  bill_length_mm  bill_depth_mm  flipper_le
 print("\nMissing values count per column:->")
 print("df.isna().sum()->", df.isna().sum())
 ```
+**Output**
+
 ```text
 Missing values count per column:->
 df.isna().sum()-> species               0
@@ -326,6 +320,8 @@ dtype: int64
 print("\nUsing isnull():->")
 print("df.isnull().sum()->", df.isnull().sum())
 ```
+**Output**
+
 ```text
 Using isnull():->
 df.isnull().sum()-> species               0
@@ -400,6 +396,8 @@ print("\nAfter dropping rows with missing values:")
 print("df_drop_rows.shape->", df_drop_rows.shape)
 print("df_drop_rows.head()->", df_drop_rows.head())
 ```
+**Output**
+
 ```text
 After dropping rows with missing values:
 df_drop_rows.shape-> (333, 7)
@@ -424,6 +422,8 @@ print("df_drop_cols.shape->", df_drop_cols.shape)
 print("df_drop_cols.head()->", df_drop_cols.head())
 print("df_drop_cols.columns->", df_drop_cols.columns)
 ```
+**Output**
+
 ```text
 After dropping columns with missing values:
 df_drop_cols.shape-> (344, 2)
@@ -510,6 +510,8 @@ df_mean['body_mass_g'] = df_mean['body_mass_g'].fillna(mean_value)
 print("\nFilled with mean:")
 print("df_mean['body_mass_g'].isna().sum()->", df_mean['body_mass_g'].isna().sum())
 ```
+**Output**
+
 ```text
 Mean of body_mass_g:-> 4201.754385964912
 Missing BEFORE fillna:-> 2
@@ -538,6 +540,8 @@ df_median['body_mass_g'] = df_median['body_mass_g'].fillna(median_value)
 print("\nFilled with median:")
 print("df_median['body_mass_g'].isna().sum()->", df_median['body_mass_g'].isna().sum())
 ```
+**Output**
+
 ```text
 Median of body_mass_g:-> 4050.0
 
@@ -560,6 +564,8 @@ df_mode['sex'] = df_mode['sex'].fillna(mode_value)
 print("\nFilled with mode:")
 print("df_mode['sex'].isna().sum()->", df_mode['sex'].isna().sum())
 ```
+**Output**
+
 ```text
 Mode of sex:-> Male
 
@@ -661,25 +667,7 @@ df = df.fillna(0)          # Option 1: reassign the result back to df
 df.fillna(0, inplace=True) # Option 2: use inplace=True to modify df directly
 ```
 
-```mermaid
-graph TD
-    A[fillna or dropna not behaving as expected]
-    B{Is the column genuinely numeric}
-    C[Use mean or median only for numeric columns]
-    D{Did you mean any values missing or all values missing}
-    E[how equals any drops if ANY value missing]
-    F[how equals all drops ONLY if EVERY value missing]
-    G{Did you assign the result back or use inplace}
-    H[Reassign - df equals df dot fillna value]
-
-    A --> B
-    B -->|No, it is categorical| C
-    B -->|Yes| D
-    D -->|any| E
-    D -->|all| F
-    A --> G
-    G -->|Neither| H
-```
+![Flowchart](../resources/ch12-august-2026-missing-values-02.png)
 
 ---
 

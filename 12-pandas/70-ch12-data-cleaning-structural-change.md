@@ -17,7 +17,6 @@ This page uses a deliberately constructed scenario — imagine the Palmer Pengui
 
 ## Research Topic: The Penguin Data Standardization Protocol
 
-*(This is the original research question and project scenario from the printed book, kept exactly as written. A short set of optional follow-up questions has been added after the Concepts section.)*
 
 **Research Question:** *How can one transform a raw, unstructured dataset into a clean, analysis-ready format using Pandas structural manipulation methods?*
 
@@ -89,7 +88,7 @@ The index is the "address" of a row — the label Pandas uses to look it up.
 
 ## Optional Follow-Up Questions
 
-*(Additional questions, not part of the original printed book, for readers who want to explore this topic further.)*
+
 
 1. In the script below, `bill_length_mm` is deliberately converted to text with `.astype(str)`, and later converted back with `.astype(float)`. Try printing a single missing (`NaN`) value from that column *right after* the `.astype(str)` step — what does it actually look like as a string? (See the "Did you know?" note under Step 1.2 below once you've tried it.)
 2. `.rename()` silently does nothing if you give it a column name that doesn't exist in the DataFrame (see Step 2.1 below). Look up the `errors='raise'` parameter for `.rename()` — how would you use it to make Pandas complain loudly instead of staying silent?
@@ -544,22 +543,8 @@ Every row now has a genuinely meaningful label (`ID_0`, `ID_1`, ...) instead of 
 
 ## The Full Process, Visualized
 
-```mermaid
-graph TD
-    A[Load clean penguins dataset]
-    B[Phase 1 - break column names]
-    C[Phase 1 - convert bill_length_mm to text]
-    D[Phase 1 - append 5 duplicate rows]
-    E[Step 2.1 - rename columns back to clean names]
-    F[Step 2.2 - convert types back - float and category]
-    G[Step 2.3 - detect and drop duplicate rows]
-    H[Step 2.4 - create penguin_id and set as index]
-    I[Analysis-ready DataFrame df_final]
 
-    A --> B --> C --> D --> E --> F --> G --> H --> I
-```
-
-*(This diagram uses plain `graph TD` syntax with simple boxes and arrows only — no subgraphs, no styled/labeled edges, no special characters in labels — so it should paste cleanly into draw.io via Extras → Edit Diagram.)*
+![Flowchart](../resources/ch12-august-2026-data-cleaning-01.png)
 
 ---
 

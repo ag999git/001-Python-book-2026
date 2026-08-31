@@ -160,6 +160,8 @@ print("=== ORIGINAL DATA ===")
 print("Original dataset df_raw columns:->", list(df_raw.columns))
 print("Original dataset df_raw shape:->", df_raw.shape)
 ```
+**Output**
+
 ```text
 STEP 0. IMPORT LIBRARIES AND LOAD DATASET
 === ORIGINAL DATA ===
@@ -249,6 +251,8 @@ print("Messy dataset df_messy shape:->", df_messy.shape)
 print("Messy dataset df_messy dtypes:->\n", df_messy.dtypes)
 print("Messy dataset df_messy tail (showing the appended duplicates):->\n", df_messy.tail(7))
 ```
+**Output**
+
 ```text
 === INITIAL MESSY DATA ===
 Messy dataset df_messy shape:-> (349, 7)
@@ -325,6 +329,8 @@ df_messy.rename(columns=rename_map, inplace=True)
 print("\n=== AFTER RENAMING COLUMNS BACK TO ORIGINAL ===")
 print("df_messy columns after renaming:->", list(df_messy.columns))
 ```
+**Output**
+
 ```text
  STEP 2.1: RENAMING COLUMNS ================
 
@@ -370,6 +376,8 @@ df_messy['island'] = df_messy['island'].astype('category')
 print("\n=== AFTER TYPE CONVERSION ===")
 print("df_messy dtypes after conversion:->\n", df_messy.dtypes)
 ```
+**Output**
+
 ```text
  STEP 2.2: CHANGING DATA TYPES ================
 
@@ -438,6 +446,8 @@ df_clean = df_messy.drop_duplicates(keep='first')
 print("\n=== AFTER DROPPING DUPLICATES ===")
 print("df_clean shape after dropping duplicates:->", df_clean.shape)
 ```
+**Output**
+
 ```text
  STEP 2.3: REMOVING DUPLICATES ================
 
@@ -514,6 +524,8 @@ print("\ndf_final index name:->", df_final.index.name)
 # df_reset = df_final.reset_index()
 # print("df_reset head:->", df_reset.head())
 ```
+**Output**
+
 ```text
  STEP 2.4: SETTING AND RESETTING INDEX ================
 

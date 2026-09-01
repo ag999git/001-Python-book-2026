@@ -9,7 +9,7 @@
 
 ---
 
-## 📖 Introduction — What This File Contains and Why It Matters
+##  Introduction — What This File Contains and Why It Matters
 
 Real-world data is rarely "flat." Biological data, for example, is naturally **nested**: individual penguins belong to a *sex*, and those measurements vary across *species*. A flat table cannot show that hierarchy directly — but Pandas can, using a tool called a **MultiIndex** (*an index with multiple levels — think of it like folders inside folders*).
 
@@ -23,7 +23,7 @@ This supplement extends the material in Chapter 12 (Pandas) with:
 
 **Why this matters for Python learners:** `groupby()` → `unstack()` → analysis → `stack()` is one of the most common real-world Pandas workflows. Once you can move data fluidly between shapes, you can answer questions that are awkward in one shape and trivial in the other.
 
-> 💡 **Note on technical terms:** Words in *italics* are briefly explained where they first appear. For deeper study see the official docs: [Group by](https://pandas.pydata.org/docs/user_guide/groupby.html), [Advanced indexing / MultiIndex](https://pandas.pydata.org/docs/user_guide/advanced.html), and [Reshaping](https://pandas.pydata.org/docs/user_guide/reshaping.html).
+>  **Note on technical terms:** Words in *italics* are briefly explained where they first appear. For deeper study see the official docs: [Group by](https://pandas.pydata.org/docs/user_guide/groupby.html), [Advanced indexing / MultiIndex](https://pandas.pydata.org/docs/user_guide/advanced.html), and [Reshaping](https://pandas.pydata.org/docs/user_guide/reshaping.html).
 
 ---
 
@@ -69,17 +69,8 @@ The data scientist's goal is to:
 
 ### The Reshaping Cycle at a Glance
 
-```mermaid
-flowchart TD
-    A["Raw flat table\n(one row per penguin)"] --> B["groupby(['species','sex']).mean()\n→ MultiIndex Series (long)"]
-    B --> C{"What is the task?"}
-    C -->|"Compare / calculate"| D["unstack()\n→ Wide table\n(columns = sex)"]
-    D --> E["Vectorized analysis\nMale - Female → diff_M_F"]
-    E --> F["stack()\n→ Back to MultiIndex (long)\nfor reporting / storage"]
-    C -->|"Store / pipeline"| F
-```
+![Flowchart](../resources/ch12-august-2026-hierarcichal-data-analysis-01.png)
 
-*(Mermaid-compatible with draw.io — paste the code into any mermaid-compatible tool or recreate the boxes there.)*
 
 ---
 
@@ -433,7 +424,7 @@ wide_df.stack(level='wrong')   # ValueError / KeyError: level name not found
   * Missing aggregation
   * Misunderstanding structure
 
-> 💡 **Reading the errors is a skill in itself** A `KeyError: 'wrong'` is Pandas telling you *"no such level/column exists — here is what does exist."* Always read the last line of a traceback first.
+>  **Reading the errors is a skill in itself** A `KeyError: 'wrong'` is Pandas telling you *"no such level/column exists — here is what does exist."* Always read the last line of a traceback first.
 
 ***
 
@@ -681,7 +672,7 @@ A data scientist reshapes data depending on the task:
 """)
 ```
 
-> ⚠️ **Correction from the original:** the original script began with `from matplotlib.pylab import float64`. That import was unused, unnecessary, and importing from `matplotlib.pylab` is not good practice — it has been removed. Only `pandas` and `seaborn` are needed.
+
 
 ### Flowchart showing steps in the script
 
@@ -968,36 +959,6 @@ Not just rows — columns can also be hierarchical.
 
 ---
 
-## ✅ Table of Changes — Original vs Modified
-
-| # | Element | Original file | Modified file | Type of change |
-|---|---------|---------------|---------------|----------------|
-| 1 | Title & heading | Plain title only | Added subtitle line, GitHub source link, and a full **Introduction** section (what the file contains, relevance to PythonChapter 12, links to official docs) | **Added** |
-| 2 | Research Question | Verbatim | **Unchanged** (kept verbatim, as requested) | Preserved |
-| 3 | Follow-up sub-questions | None | Added (a)–(e) after the Research Question | **Added** (permitted) |
-| 4 | Learning Outcomes & Analytical Context | As written | Content unchanged; minor formatting polish only | Preserved |
-| 5 | Mermaid flowchart (Reshaping Cycle) | None in this section | Added flowchart (draw.io-compatible) showing flat → MultiIndex → wide → analysis → long | **Added** |
-| 6 | Step-by-step discussion (Steps 1–8) | Present with (a)–(e) structure | All (a)–(e) items and long explanations **retained**; wording lightly polished; **output fenced blocks added** under each step with explanatory notes (e.g., row-number jump after `dropna()`, `diff_M_F` becoming an index label after `stack()`) | Modified (additions + polish, nothing shortened) |
-| 7 | Step 8 heading | `Common Errors (Conceptual Understanding)\*\*` — stray escaped asterisks | Cleaned to `Common Errors (Conceptual Understanding)` | **Fixed** |
-| 8 | Step 8 error examples | Inline, inconsistent formatting (backtick errors) | Reformatted as proper numbered code blocks; expected error types (`KeyError`, etc.) noted in comments | Modified |
-| 9 | Script | Present | Retained in full; added `# Step n:` hash comments throughout; **removed `from matplotlib.pylab import float64`** (unused, bad practice) with a warning note; kept all `print()` statements and OUTPUT hints | Modified |
-| 10 | Flowchart image | Present | Retained unchanged | Preserved |
-| 11 | Advanced Discussion (15 sections) | Present inside `<details>` | All 15 sections retained; fixed broken formatting in §3 (missing code fence), §5 (spacing in code), §6, §15 ("Dont:→" list rebuilt as proper bullets); added clarifying note on `index.levels` in §6 (unique sorted values; three species present) | Modified (fixes + notes) |
-| 12 | §4 heading | "Comparing Single Index to" (cut off) | Completed: "Comparing Single Index to MultiIndex" | **Fixed** |
-| 13 | Final Flow Summary table | Present | Unchanged | Preserved |
-| 14 | Technical terms | Undefined for beginners | Brief plain-language explanations added at first use (MultiIndex, aggregation, vectorized, NaN, GroupBy object), plus doc links ([groupby](https://pandas.pydata.org/docs/user_guide/groupby.html), [MultiIndex](https://pandas.pydata.org/docs/user_guide/advanced.html), [reshaping](https://pandas.pydata.org/docs/user_guide/reshaping.html)) | **Added** |
-| 15 | Outputs | Only as `# OUTPUT:` comments inside script | Retained in script; **additionally shown as fenced `text` blocks** at each discussion step, using the exact values from your original comments | **Added** |
-| 16 | Change log table | None | This table | **Added** |
-
-**Verification note:** A line-by-line comparison was performed. The Research Question, Learning Outcomes, Analytical
-
-Context, all Step (a)–(e) explanations, both flowcharts, the full script, all 15 Advanced Discussion sections, and the Final Flow Summary were preserved. The only *deletions* were: (1) the unused `matplotlib.pylab` import, and (2) formatting debris (stray asterisks, broken backticks, incomplete headings) — no content was shortened or dropped. All output values shown in the fenced blocks were taken verbatim from the `# OUTPUT:` comments in your original script.
-
-**Two small inconsistencies worth noting from your original (kept but flagged):**
-
-- **§3 output values** (Adelie Male 192.5, Gentoo Female 212.4) are *illustrative* mini-example numbers, slightly different from the real dataset values (192.410959, 212.706897). I retained them since they come from the simplified 5-row example table above them — but you may wish to align them to the real values (Gentoo Female 210.0 is used in the raw example, so 212.4 is inconsistent even internally).
-- **§6 Output Hint levels** in your original read `[['Adelie', 'Gentoo'], ['Male', 'Female']]` — missing **Chinstrap**. I corrected this in the modified version to include all three species and sorted the sexes (`Female`, `Male`), with an explanatory note. If you prefer your original hint kept verbatim, revert that one block.
-
 ---
 
 ## 📋 Suggested Next Steps for Students
@@ -1012,7 +973,6 @@ Context, all Step (a)–(e) explanations, both flowcharts, the full script, all 
 
 ---
 
-*End of file. Concatenate this with nothing else — the complete corrected chapter is above (the earlier truncated response's final rows are superseded by the verification note and flagged items above).*
 
 
 

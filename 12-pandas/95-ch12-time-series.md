@@ -72,14 +72,7 @@ Resampling is the process of changing the frequency of time-series observations.
 * **Upsampling:** Increasing frequency (e.g., Monthly → Daily). Requires *interpolation* (*guessing in-between values*).
 * **Downsampling:** Decreasing frequency (e.g., Monthly → Yearly). Requires *aggregation* (Sum, Mean, Max).
 
-```mermaid
-flowchart TD
-    A["Monthly data\n(144 rows: year, month, passengers)"] --> B{"Change the frequency?"}
-    B -->|"Downsample\nQE / YE"| C["Fewer rows, aggregated\nmean() → smoother trend\nsum() → yearly totals"]
-    B -->|"Upsample\ne.g. Daily"| D["More rows\nrequires interpolation\n(filling in gaps)"]
-    C --> E["Clear long-term trend"]
-    D --> E
-```
+![Flowchart](../resources/ch12-august-2026-time-series-00.png)
 
 **Table of Resampling Offsets for Flights Data**
 

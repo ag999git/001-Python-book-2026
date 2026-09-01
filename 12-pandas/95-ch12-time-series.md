@@ -1296,19 +1296,7 @@ year + month columns  →  map month names to numbers
 
 ---
 
-##  Verification Notes for This Two-Part Version
 
-All errata from the verification report have been in Parts  and 2:
-
--  **Output Hints restored to multi-line format** (Step 2.2: `1949-01-01` / `1949-02-01`; Step 4: `Year → 1949` / `Quarter → 1` / `Month → 1`; Step 3.2: `Columns → passengers only` / `Shape → (144, 1)`)
-- **`month: 'January'`** restored in the Conceptual Deep Dive
-- **Mermaid flowcharts corrected** (node A/B fixed in the Resampling Logic chart)
-- **STEP 4 output block header** reads correctly:STEP 4: EXTRACT TIME COMPONENTS` / ` with extracted components:`
-- **STEP 7 summary** includes item `2. Avoid string parsing when possible`
-- **Chapter Summary table** has proper pipe separators in all rows
-- **Garbled phrase** corrected to *"the raw monthly table hides it among 144 rows"*
-- Research Question, Project Scenario, objectives, Task, all long explanations, and all captured outputs (including the `FutureWarning` text and `: YE-DEC`) preserved intact
-- Combined script retains the full original comment blocks (not shortened), with `QE`/`YE` modernization documented
 
 
 

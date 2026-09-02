@@ -153,22 +153,9 @@ A quick glossary of a few words used above, for anyone new to them:
 pip install openpyxl
 ```
 
-Here is a bird's-eye view (pun intended) of the whole solution before we go through it one step at a time:
+Here is a bird's-eye view of the whole solution before we go through it one step at a time:
 
-```mermaid
-flowchart TD
-    A[Step 1: Load the penguins dataset] --> B[Step 2: Rename species column and preview it]
-    B --> C[Step 3: Check column names and data types]
-    C --> D[Step 4: Count unique species and their frequency]
-    D --> E[Step 5: Generate summary statistics]
-    E --> F[Step 6: Find and remove missing values]
-    F --> G[Step 7: Convert island to a category type]
-    G --> H[Step 8: Group and count penguins by island]
-    H --> I[Step 9: Plot the counts as a bar chart]
-```
-
-*(This diagram is written in Mermaid, a simple text-based diagram language. You can paste the code block above into [mermaid.live](https://mermaid.live) or, in draw.io / diagrams.net, into **Extras → Edit Diagram** to get an editable version of this flowchart.)*
-
+![Flowchart](../resources/ch12-august-2026-exploring-penguin-data-01.png)
 ---
 
 #### Step 1: Load Data and Inspect Shape
@@ -596,24 +583,47 @@ The `category` dtype is designed specifically for columns that have a limited, f
 
 You can reproduce these numbers yourself with `my_df['island'].memory_usage(deep=True)`, before and after the `.astype('category')` conversion in Step 7. (Exact byte counts can vary slightly by pandas version and platform, but the direction and rough scale of the saving will not.)
 
+#### Visualising it: two small flowcharts
+
+The table above gives you the numbers; these two flowcharts show *why* those numbers come out the way they do. Each box is numbered so the explanation underneath can refer back to it directly. Both diagrams show the same 3 example rows (Biscoe, Biscoe, Dream) so you can compare them side by side.
+
+##### Flowchart 1 of 2 — How `object`/`str` storage works
+
 ```mermaid
-flowchart LR
-    subgraph Object[object or str storage]
-        R1[Row 1: Biscoe] --> S1[Full text Biscoe stored]
-        R2[Row 2: Biscoe] --> S2[Full text Biscoe stored again]
-        R3[Row 3: Dream] --> S3[Full text Dream stored]
-    end
-    subgraph Category[category storage]
-        T1[Row 1: Biscoe] --> C1[Code 0]
-        T2[Row 2: Biscoe] --> C2[Code 0]
-        T3[Row 3: Dream] --> C3[Code 1]
-        C1 --> L[Lookup table: 0 equals Biscoe, 1 equals Dream, 2 equals Torgersen]
-        C2 --> L
-        C3 --> L
-    end
+flowchart TD
+    H1[object or str column: 3 example rows]
+    H1 --> B1[Box 1: Row 1 is Biscoe, stored as the full text Biscoe]
+    H1 --> B2[Box 2: Row 2 is Biscoe, stored as the full text Biscoe again]
+    H1 --> B3[Box 3: Row 3 is Dream, stored as the full text Dream]
 ```
 
-*(As with the earlier flowchart, this Mermaid code can be pasted into [mermaid.live](https://mermaid.live) or draw.io's **Extras → Edit Diagram** to view or edit it visually.)*
+* **Box 1** — Row 1's value is "Biscoe". Pandas writes the complete word "Biscoe" into memory for this row.
+* **Box 2** — Row 2's value is also "Biscoe". Pandas writes the complete word "Biscoe" into memory *again*, as if row 1 never happened — nothing is shared or reused between rows.
+* **Box 3** — Row 3's value is "Dream". Pandas writes the complete word "Dream" into memory.
+
+Notice that the text "Biscoe" was written out in full twice. That repeated, uncompressed text is exactly the extra memory cost that `object`/`str` storage doesn't avoid.
+
+##### Flowchart 2 of 2 — How `category` storage works
+
+```mermaid
+flowchart TD
+    H2[category column: 3 example rows]
+    H2 --> C1[Box 1: Row 1 is Biscoe, assigned code 0]
+    H2 --> C2[Box 2: Row 2 is Biscoe, assigned code 0]
+    H2 --> C3[Box 3: Row 3 is Dream, assigned code 1]
+    C1 --> L[Box 4: Lookup table records code 0 is Biscoe, code 1 is Dream, code 2 is Torgersen]
+    C2 --> L
+    C3 --> L
+```
+
+* **Box 1** — Row 1's value is "Biscoe". Instead of storing the text itself, pandas assigns it a short numeric code: `0`.
+* **Box 2** — Row 2's value is also "Biscoe", so it *reuses* the same code, `0`. No new text is written anywhere — just the small number `0` again.
+* **Box 3** — Row 3's value is "Dream", a value pandas hasn't seen yet in this example, so it gets a new code, `1`.
+* **Box 4** — This is the lookup table. Unlike boxes 1–3, it is kept only **once per column**, not once per row. It records what each code means — `0 = Biscoe`, `1 = Dream`, `2 = Torgersen` — and pandas checks it any time it needs to display the real value or compare two rows.
+
+Put side by side, the difference is exactly what makes `category` smaller: Flowchart 1 wrote the word "Biscoe" out in full, twice. Flowchart 2 wrote the number `0` twice and paid for the word "Biscoe" only once, inside the shared lookup table. Multiply that saving across 163 Biscoe rows instead of 2, and you get the ~86% reduction shown in the table above.
+
+*(Both diagrams are written in Mermaid, the same text-based diagram language used earlier on this page. You can paste either code block into [mermaid.live](https://mermaid.live) or, in draw.io / diagrams.net, into **Extras → Edit Diagram**, to view or edit them visually.)*
 
 </details>
 
@@ -846,9 +856,6 @@ The table below records every change made to this page compared to the version s
 | 22 | This Change Log | Not present | Added, as the final section of the page, per the request to document every modification |
 
 *A general style note: throughout Steps 1–9, sentences were left as long as they were in the original where they were already clear — nothing was shortened purely to save space, since this is an online resource with no page-length constraint.*
-
-
-
 
 
 

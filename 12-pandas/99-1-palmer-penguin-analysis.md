@@ -589,13 +589,7 @@ The table above gives you the numbers; these two flowcharts show *why* those num
 
 ##### Flowchart 1 of 2 — How `object`/`str` storage works
 
-```mermaid
-flowchart TD
-    H1[object or str column: 3 example rows]
-    H1 --> B1[Box 1: Row 1 is Biscoe, stored as the full text Biscoe]
-    H1 --> B2[Box 2: Row 2 is Biscoe, stored as the full text Biscoe again]
-    H1 --> B3[Box 3: Row 3 is Dream, stored as the full text Dream]
-```
+![Flowchart](../resources/ch12-august-2026-exploring-penguin-data-02.png)
 
 * **Box 1** — Row 1's value is "Biscoe". Pandas writes the complete word "Biscoe" into memory for this row.
 * **Box 2** — Row 2's value is also "Biscoe". Pandas writes the complete word "Biscoe" into memory *again*, as if row 1 never happened — nothing is shared or reused between rows.
@@ -605,16 +599,7 @@ Notice that the text "Biscoe" was written out in full twice. That repeated, unco
 
 ##### Flowchart 2 of 2 — How `category` storage works
 
-```mermaid
-flowchart TD
-    H2[category column: 3 example rows]
-    H2 --> C1[Box 1: Row 1 is Biscoe, assigned code 0]
-    H2 --> C2[Box 2: Row 2 is Biscoe, assigned code 0]
-    H2 --> C3[Box 3: Row 3 is Dream, assigned code 1]
-    C1 --> L[Box 4: Lookup table records code 0 is Biscoe, code 1 is Dream, code 2 is Torgersen]
-    C2 --> L
-    C3 --> L
-```
+![Flowchart](../resources/ch12-august-2026-exploring-penguin-data-03.png)
 
 * **Box 1** — Row 1's value is "Biscoe". Instead of storing the text itself, pandas assigns it a short numeric code: `0`.
 * **Box 2** — Row 2's value is also "Biscoe", so it *reuses* the same code, `0`. No new text is written anywhere — just the small number `0` again.

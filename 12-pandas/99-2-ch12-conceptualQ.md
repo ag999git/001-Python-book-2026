@@ -635,20 +635,9 @@ What each pillar is about:
 
 The flowchart below lays these four out side by side, with a few representative methods under each, so you can see at a glance which pillar a method you've just learned belongs to.
 
-```mermaid
-flowchart TD
-    Root[The 4 Pillars of DataFrame Operations]
-    Root --> P1[Pillar 1: Inspection and Retrieval]
-    Root --> P2[Pillar 2: Analysis and Summarization]
-    Root --> P3[Pillar 3: Cleaning and Manipulation]
-    Root --> P4[Pillar 4: Type-Specific Operations]
-    P1 --> P1a[head, sample, loc, iloc]
-    P2 --> P2a[describe, groupby, pivot_table]
-    P3 --> P3a[dropna, fillna, rename, set_index]
-    P4 --> P4a[str accessor and dt accessor]
-```
+![Flowchart](../resources/ch12-august-2026-conceptual-question-13.png)
 
-*(This diagram is written in Mermaid. Paste the code block into [mermaid.live](https://mermaid.live) or, in draw.io / diagrams.net, into **Extras → Edit Diagram**, to view or edit it visually.)*
+
 
 Following these four pillars roughly in order — inspect, analyse, clean, then reach for type-specific tools as needed — is a reasonable default workflow for a new dataset, though in practice you'll often loop back to earlier pillars (cleaning frequently follows analysis, once you've spotted a problem in the summary statistics).
 
@@ -775,13 +764,7 @@ Walking through the three stages:
 
 The practical benefit is that you go from one giant average for the whole dataset to a side-by-side comparison across meaningful segments — which is almost always the more useful question ("how does body mass differ *by* island?" rather than just "what's the average body mass overall?").
 
-```mermaid
-flowchart LR
-    A[Split: divide rows into groups by a category] --> B[Apply: run a function on each group separately]
-    B --> C[Combine: gather the per-group results into one summary table]
-```
-
-*(You can paste this Mermaid code into [mermaid.live](https://mermaid.live) or draw.io's **Extras → Edit Diagram** to view or edit it visually.)*
+![Flowchart](../resources/ch12-august-2026-conceptual-question-16.png)
 
 ```python
 import pandas as pd
@@ -1686,13 +1669,7 @@ Working through why each format fits its typical use case:
 2. **Wide format** — the same information, but spread out: one row per shop, with a separate column for each item's amount. This is easier for a person to read at a glance — comparing Pen vs. Pencil sales for Shop1 means looking along one row, rather than scanning down a long list of Long-format rows and mentally filtering.
 3. The two are not competitors so much as complementary views of the same data — pandas' `.stack()` / `.unstack()` (Question 19/54) and `.pivot_table()` (Question 17) are exactly the tools for converting between them as the situation calls for one or the other.
 
-```mermaid
-flowchart LR
-    W[Wide format: one row per Shop, one column per Item] -- stack --> L[Long format: one row per Shop and Item combination]
-    L -- unstack --> W
-```
-
-*(Paste this Mermaid code into [mermaid.live](https://mermaid.live) or draw.io's **Extras → Edit Diagram** to view or edit it visually.)*
+![Flowchart](../resources/ch12-august-2026-conceptual-question-35.png)
 
 *Learn more:* [Reshaping and pivot tables](https://pandas.pydata.org/docs/user_guide/reshaping.html)
 
@@ -2416,26 +2393,6 @@ See Question 19 above for a full runnable example showing both directions on the
 
 *Learn more:* [Reshaping by stacking and unstacking](https://pandas.pydata.org/docs/user_guide/reshaping.html)
 
-## Change Log
-
-Because every one of the 55 question-and-answer entries received the same kind of treatment, the table below groups the changes by *type* rather than listing all 55 individually — with specific, notable items called out on their own rows.
-
-| # | Element | Original | Change |
-|---|---|---|---|
-| 1 | Page title & introduction | None — the file began directly with Question 1, no heading or context | Added a `#` title, a "What this page covers" introduction explaining the page's purpose and relationship to the pandas chapter, and a note about the numbering quirk described below |
-| 2 | Topic map | Not present | Added a table grouping all 54 questions by topic (Foundations, Indexing, Grouping, Reshaping, Cleaning, Accessors, Reading Data, Combining, Dataset Choice), each linking down to its question, so the page can be browsed by topic as well as read top to bottom |
-| 3 | All 55 question headings | Bold, numbered questions (e.g. "**1. What is...**") | **Kept 100% verbatim, unchanged**, as instructed — including capitalisation, phrasing, and punctuation. No question was reworded, shortened, or removed |
-| 4 | All 55 answers | A single, fairly compact paragraph per question | Expanded into a short "In short" summary followed by a numbered, step-by-step explanation, with technical terms explained in plain language and linked to official documentation, per the request for simple language with optional deeper links |
-| 5 | Code examples | Not present anywhere in the original — every answer was prose only | Added a short, runnable Python/pandas example to 45 of the 55 answers: 44 of them carry `# Step N` comments and a **verified, real Output block** — every one of those 44 examples was actually executed, and its exact printed output is what's shown, not a guess at what it would print — plus one further, clearly-labelled illustrative example (Question 24) that depends on live internet access and isn't run on this page (see row 10 below) |
-| 6 | Diagrams | Not present | Added 3 Mermaid flowcharts: the "4 Pillars" framework (Question 13), the Split-Apply-Combine pattern (Question 16), and the Wide vs. Long reshaping relationship (Question 35) — all compatible with draw.io / diagrams.net import |
-| 7 | Duplicate "31." numbering | Two different, unrelated questions are both printed as "**31. ...**" one after the other | Preserved exactly as printed — **not** renumbered — with a short note added at each occurrence flagging that this is "the first" or "the second" question 31, so a reader isn't left wondering whether something was mis-copied |
-| 8 | Question 6's answer (Series from a scalar) | States that providing an `index` is required when creating a Series from a scalar value | The expanded answer keeps this framing but adds a corrective nuance, verified by actually running the code: `pd.Series(5)` with **no** index is valid in current pandas and simply creates a length-one Series — an index only becomes necessary once you want the scalar broadcast across *more than one* position |
-| 9 | Near-duplicate questions (16 & 33, 19 & 54, 20 & 39, 21 & 40, 22 & 45, 23 & 36, 27 & 34) | Each pair asks essentially the same thing in different words, with two separate full-length answers | Both questions in each pair are still answered individually and in full, but the second of each pair now cross-references the first (e.g. "see Question 16 above for the full example") instead of repeating an identical code example, per the instruction to avoid unnecessary repetition while keeping quality and completeness intact |
-| 10 | Question 24 (User-Agent header) | Prose answer only | Kept as prose plus an **illustrative** (not executed) code example, clearly labelled as such, since it depends on live internet access and a specific website's own blocking behaviour rather than something reliably verifiable on this page |
-| 11 | Question 30 (Palmer Penguins vs. Iris) | Prose paragraph | Kept as prose, with a small comparison table added (columns: column types, missing values, grouping opportunities, realism) to make the comparison easier to scan |
-| 12 | This Change Log | Not present | Added, as the final section of the page, per the request to document every modification |
-
-*A general style note: every expanded answer keeps the substance of the original explanation intact — nothing correct was removed or shortened for the sake of brevity — while adding the steps, terminology links, and (where useful) verified code that the original, more compact paragraph didn't include.*
 
 
 

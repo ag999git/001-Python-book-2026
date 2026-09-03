@@ -605,21 +605,7 @@ Sun    21.410000  247.39
 | **Apply** | A calculation runs independently on each group | `.agg()` computes mean(`total_bill`) and sum(`tip`) *per group* |
 | **Combine** | Every group's result is merged back into one table | The 4 per-day results become the 4 rows of `result` |
 
-```mermaid
-flowchart LR
-    A[Original tips DataFrame\nall rows mixed together] -->|"Split by day"| B1[Group: Thur]
-    A -->|"Split by day"| B2[Group: Fri]
-    A -->|"Split by day"| B3[Group: Sat]
-    A -->|"Split by day"| B4[Group: Sun]
-    B1 -->|"Apply: mean bill, sum tip"| C1[Thur summary row]
-    B2 -->|"Apply: mean bill, sum tip"| C2[Fri summary row]
-    B3 -->|"Apply: mean bill, sum tip"| C3[Sat summary row]
-    B4 -->|"Apply: mean bill, sum tip"| C4[Sun summary row]
-    C1 --> D[Combine: one result table\nindexed by day]
-    C2 --> D
-    C3 --> D
-    C4 --> D
-```
+![Flowchart](../resources/ch12-august-2026-scripting-question-08.png)
 
 *Learn more:* [Group by: split-apply-combine (user guide)](https://pandas.pydata.org/docs/user_guide/groupby.html) · [DataFrameGroupBy.agg() reference](https://pandas.pydata.org/docs/reference/api/pandas.core.groupby.DataFrameGroupBy.agg.html)
 
@@ -1228,25 +1214,7 @@ Reshaped Long Format:
 | Function to convert Wide → Long | `.melt()` | — |
 | Function to convert Long → Wide | — | `.pivot_table()` (Question 9) / `.unstack()` (Question 19) |
 
-```mermaid
-flowchart TD
-    subgraph W["Wide format - one row per product"]
-    direction LR
-    W1["Product: A | Jan: 100 | Feb: 150 | Mar: 120"]
-    end
-    subgraph L["Long format - one row per product+month"]
-    direction TB
-    L1["Product: A, Month: Jan, Sales: 100"]
-    L2["Product: A, Month: Feb, Sales: 150"]
-    L3["Product: A, Month: Mar, Sales: 120"]
-    end
-    W -->|".melt()"| L
-    L -->|".pivot_table() / .unstack()"| W
-```
-
-*Learn more:* [DataFrame.melt() reference](https://pandas.pydata.org/docs/reference/api/pandas.melt.html) · [Reshaping by melt (user guide)](https://pandas.pydata.org/docs/user_guide/reshaping.html#reshaping-by-melt)
-
----
+![Flowchart](../resources/ch12-august-2026-scripting-question-16.png)
 
 <a id="q17"></a>
 
@@ -2038,16 +2006,7 @@ Total Sum of all chunks: 1818
 4. The trade-off: any calculation that needs to see the *whole* dataset at once (an overall median, or a global sort by value, for instance) can no longer be done with one simple built-in method call — you instead have to write logic that combines each chunk's own partial result into a running, whole-file answer, exactly as this script's `total_sum` running total does for addition. Some calculations (like a running sum, or a running count) translate naturally into this chunk-by-chunk pattern; others (like an exact median) are genuinely harder to compute this way and may require a different, specialised out-of-core approach.
 5. This is the same underlying idea that lets database systems and big-data tools handle files vastly larger than any one computer's RAM — process a manageable slice, combine its result into a running summary, discard the slice, repeat — and `chunksize` is Pandas' straightforward, built-in way to apply that same pattern to an oversized CSV file.
 
-```mermaid
-flowchart LR
-    A[Large CSV file\nfar bigger than RAM] -->|"chunksize=10"| B[Chunk 1\nrows 1-10]
-    A -->|"chunksize=10"| C[Chunk 2\nrows 11-20]
-    A -->|"chunksize=10"| D[Chunk 3\nrows 21-30]
-    B -->|"sum, discard"| E[Running total]
-    C -->|"sum, add, discard"| E
-    D -->|"sum, add, discard"| E
-    E --> F[Final grand total\nonly ever holds ONE chunk\nplus the running total in memory]
-```
+![Flowchart](../resources/ch12-august-2026-scripting-question-27.png)
 
 *Learn more:* [read_csv() reference (see chunksize)](https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html) · [Scaling to large datasets (user guide)](https://pandas.pydata.org/docs/user_guide/scale.html)
 
@@ -2244,29 +2203,6 @@ Data after skipping metadata rows:
 *Learn more:* [read_csv() reference (see skiprows)](https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html)
 
 **Follow-up question:** What would happen if this same file also had 2 extra footer lines *after* the data (say, a "Report End" note)? `skiprows` only controls the *top* of the file — look up `read_csv()`'s `skipfooter` parameter (used together with `engine='python'`) to see how the equivalent problem at the *bottom* of a file gets handled.
-
-## Change Log
-
-Because every one of the 30 questions received the same kind of treatment, the table below groups the changes by *type* rather than listing all 30 individually — with specific, notable items called out on their own rows.
-
-| # | Element | Original | Change |
-|---|---|---|---|
-| 1 | Page title & introduction | A one-line title and a two-sentence description | Kept the same title, expanded into a fuller "What this page covers" introduction explaining the page's purpose and relevance to the pandas chapter, plus a dedicated "A note on pandas versions" section (see row 8 below) and a topic map |
-| 2 | Topic map | Not present | Added a table grouping all 30 questions by topic (Foundations, Core DataFrame Mechanics, Indexing & Selection, Grouping/Pivoting/Reshaping, Cleaning Missing Data, String & Date/Time Accessors, Combining DataFrames, Data Types & Memory, Reading & Loading Data), each linking down to its question |
-| 3 | All 30 question headings and task descriptions | Bold numbered headings (`## N. ...`) followed by a task paragraph | **Kept 100% verbatim, unchanged**, as instructed — including capitalisation, phrasing, and punctuation — with one exception: Question 29's task description had its currency-symbol character corrupted into a stray line break by what looks like a markdown/LaTeX rendering issue in the original file; that one character has been restored (`'$'`), flagged with an explicit note at that question, and nothing else in the sentence was touched |
-| 4 | "Steps to follow" outline | Not present | Added a short, numbered list before every script, translating the task into a plain-language plan a student can follow *before* reading the code |
-| 5 | All 30 scripts | Runnable Python with some comments already present | Every script was actually re-executed in a real Python/pandas environment to verify it runs without errors; comments were expanded throughout with `# Step N` markers matching the new "Steps to follow" outlines, and a small number of scripts gained one extra confirmation `print()` statement (Questions 11 and 23) to make an existing `assert` check's success visible in the output rather than silent |
-| 6 | Output blocks | Present for 29 of the 30 questions (Question 15 had none) | **Every one of the 29 output blocks was regenerated from a real, verified execution of the final script** — none was hand-typed or assumed. Two of the original output blocks (Questions 8 and 9) contained a stray leaked line of source code above the real output (an apparent copy-paste artifact); this page's verified output blocks are clean. Question 15 still has no Output block, and now explicitly explains why (it depends on live internet access that isn't available in the verification environment) rather than leaving the gap unexplained |
-| 7 | Non-reproducible values | Presented as plain, fixed numbers with no caveat (Questions 1, 4, 27) | Added an explicit note under each of these three questions' Output block, explaining specifically why timing numbers (Q1), `id()` memory addresses (Q4), and randomly-generated test data (Q27) will differ on every run, on any machine — and that this is expected, not an error |
-| 8 | Pandas-version differences | Not addressed (the original output blocks reflect whatever pandas version they were originally generated on) | Added a "A note on pandas versions" section to the introduction explaining three specific, genuine differences discovered while re-verifying every script against pandas 3.0.2: `object` vs. `str` dtype (Questions 2, 11, 25), `datetime64[ns]` vs. `datetime64[us]` (Question 18), and the `DataFrame` class-path string in `.info()` output (Question 25) — each affected question also carries its own short version note pointing back to this explanation |
-| 9 | EXPLANATION sections | A single block of prose per question (one question, Q28, had a formatting typo: `**EXPLANATION` was missing its closing `**`) | Restructured into a short "In short" summary followed by a numbered, step-by-step walkthrough, with technical terms linked to the official pandas documentation — substance was preserved and, where the original explanation already contained a correct, useful insight (for example, Question 28's original note that `N/A` is already a pandas default), that insight was kept and re-expressed rather than discarded |
-| 10 | Diagrams | Not present | Added 3 Mermaid flowcharts, each compatible with draw.io / diagrams.net import: the Split-Apply-Combine pipeline (Question 8), the Wide ↔ Long relationship (Question 16), and the chunked out-of-core processing pattern (Question 27) |
-| 11 | Comparison tables | Not present | Added 4 summary tables where a side-by-side comparison aids understanding: Split-Apply-Combine stages (Question 8), Inner vs. Left Join (Question 12), Wide vs. Long format (Question 16), and plain-text vs. `category` dtype storage (Question 25) |
-| 12 | Follow-up / bonus questions | Not present | Added 5 optional follow-up questions (Questions 1, 6, 12, 14, 30) that extend the original question with a related "what if" a student can try on their own, per the instruction allowing additional sub-questions |
-| 13 | Question 14 (`.dt` accessor) | Script uses `.day_name()` / `.month` directly on a `DatetimeIndex`, while the question and task both specifically ask about the `.dt` *accessor* (which applies to a Series column, not an index) | Kept the original script exactly as given (it correctly demonstrates the same temporal-extraction concept), and added an explanation paragraph plus a follow-up question clarifying the distinction: a `DatetimeIndex` exposes these properties directly, while the `.dt` accessor is the equivalent tool needed once the same values live in an ordinary Series column instead |
-| 14 | This Change Log | Not present | Added, as the final section of the page, per the request to document every modification |
-
-*A general style note: every rewritten explanation keeps the substance of the original intact — nothing correct was removed or shortened for the sake of brevity — while adding the steps, terminology links, verified output, and (where useful) diagrams or tables that the original, more compact version didn't include.*
 
 
 

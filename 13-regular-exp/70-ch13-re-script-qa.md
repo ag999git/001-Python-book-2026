@@ -1,682 +1,1305 @@
 
-Part A: Questions Based Mainly on the Chapter Topics
-1. Write a Python script using re.findall() to extract all digit sequences from a string. The script should show the difference between \d and \d+.
+
+
+# Script-Based Questions and Answers on Regular Expressions (`re`) in Python
+
+## What this page contains, and why it matters
+
+This page is a companion resource for Chapter 13 ("Regular Expressions") of the printed book *Python Programming: Problem Solving, Packages and Libraries*. It collects forty short, script-based questions — each one asking you to *write* a small Python program that demonstrates one particular idea about the [`re` module](https://docs.python.org/3/library/re.html) — grouped into **Part A: Questions Based Mainly on the Chapter Topics** (thirty questions, Q1–Q30) and **Part B: Advanced and Extension Questions** (ten questions, Q31–Q40).
+
+Every script below has been run on Python 3.12.
+
+
+If you would like the wider companion resources for this chapter, see [`10-ch13-re.md`](10-ch13-re.md) (eighteen worked example scripts, a primality-testing mini-project, a password validator, and a from-scratch regex engine), [`50-ch13-re-conceptual-qa.md`](50-ch13-re-conceptual-qa.md) (twenty-one short conceptual questions and answers), and [`60-ch13-re-capturing-noncapturing.md`](60-ch13-re-capturing-noncapturing.md) (a focused look at capturing versus non-capturing groups) in this same folder.
+
+### A quick glossary (for reference while you read)
+
+| Term | Plain-language meaning | Learn more |
+|---|---|---|
+| Regular expression (regex) | A text pattern that describes a *shape* of text to search for, rather than exact text | [Python `re` docs](https://docs.python.org/3/library/re.html) |
+| Match object | The result Python gives you when a pattern is found in some text | [Python `re` — Match objects](https://docs.python.org/3/library/re.html#match-objects) |
+| Capturing group | Part of a pattern wrapped in `( )` whose matched text can be pulled out separately with `.group(n)` | [Python `re` — groups](https://docs.python.org/3/library/re.html#re.Match.group) |
+| Named group | A capturing group written `(?P<name>...)`, retrieved by name instead of number | [Python `re` — named groups](https://docs.python.org/3/library/re.html#index-17) |
+| Backreference | Later in the *same* pattern, `\1` (or `(?P=name)`) means "match whatever group 1 already matched" | [Python `re` HOWTO — backreferences](https://docs.python.org/3/howto/regex.html) |
+| Lookahead | `(?=...)`, a check that some text follows *without* actually consuming it as part of the match | [Python `re` HOWTO — lookahead assertions](https://docs.python.org/3/howto/regex.html#lookahead-assertions) |
+| Greedy vs. lazy (non-greedy) | Whether a quantifier matches *as much text as possible* (greedy) or *as little as possible* (lazy, written with a trailing `?`) | [Python `re` HOWTO — greedy versus non-greedy](https://docs.python.org/3/howto/regex.html#greedy-versus-non-greedy) |
+| Quantifier | A symbol such as `*`, `+`, `?`, or `{m,n}` that says *how many times* something can repeat | [Python `re` HOWTO — repeating things](https://docs.python.org/3/howto/regex.html#repeating-things) |
+| Catastrophic backtracking | A regex pattern that, on certain failing input, takes an *exponentially* long time to give up | [Python `re` HOWTO — backtracking notes](https://docs.python.org/3/howto/regex.html) |
+
+### Table of contents
+
+- [What this page contains, and why it matters](#what-this-page-contains-and-why-it-matters)
+- [Part A: Questions based mainly on the chapter topics (Q1–Q30)](#part-a-questions-based-mainly-on-the-chapter-topics)
+- [Part B: Advanced and extension questions (Q31–Q40)](#part-b-advanced-and-extension-questions)
+- [Summary of changes made to this page](#summary-of-changes-made-to-this-page)
+
+## Part A: Questions Based Mainly on the Chapter Topics
+
+#### **Q1. Write a Python script using** `re.findall()` **to extract all digit sequences from a string. The script should show the difference between** `\d` **and** `\d+`**.**
+
+**Answer:**
+
 ```python
+# Step 1: Import re
 import re
-# Sample string containing isolated and grouped digits
+
+# Step 2: Sample string containing isolated and grouped digits
 text = "My marks are 7, 89, and 1234."
-# \d matches ONE digit at a time
-single_digits = re.findall(r"\d", text)  # Finds each digit separately
-print("Using \\d:", single_digits)  # Using \d: ['7', '8', '9', '1', '2', '3', '4']
-# \d+ matches one or more consecutive digits
-number_groups = re.findall(r"\d+", text)  # Finds groups of digits as whole numbers
-print("Using \\d+:", number_groups)  # Using \d+: ['7', '89', '1234']
-# Explanation:
-# \d finds every individual digit separately.
-# \d+ combines consecutive digits into a single match.
+
+# Step 3: \d matches ONE digit at a time, so every digit in the
+# string is returned as its own separate match
+single_digits = re.findall(r"\d", text)
+print("Using \\d: ", single_digits)
+
+# Step 4: \d+ matches one OR MORE consecutive digits, so a run of
+# several digits next to each other is returned as one whole match
+number_groups = re.findall(r"\d+", text)
+print("Using \\d+:", number_groups)
 ```
 
-________________________________________
-2. Write a script that checks whether a string starts with the word Python using the ^ anchor.
+```text
+Using \d:  ['7', '8', '9', '1', '2', '3', '4']
+Using \d+: ['7', '89', '1234']
+```
+
+**Explanation:**
+
+- `\d` finds every individual digit separately, with no notion of "these digits belong together" — that is why `89` comes back as two separate matches, `'8'` and `'9'`.
+- `\d+` combines consecutive digits into a single match instead, thanks to the `+` quantifier ("one or more"), which is why the same text produces the three whole numbers `'7'`, `'89'`, and `'1234'`.
+
+>  **Extra practice question (not in the printed book):** What would `re.findall(r"\d*", text)` return instead of `\d+`? *(Try it yourself: `\d*` allows **zero** digits too, so — as with the very similar case in Q5 of [`50-ch13-re-conceptual-qa.md`](50-ch13-re-conceptual-qa.md) — you will see a number of extra empty-string matches `''` show up between the real numbers, one everywhere the pattern successfully matched "zero digits".)*
+
+#### **Q2. Write a script that checks whether a string starts with the word** `Python` **using the** `^` **anchor.**
+
+**Answer:**
+
 ```python
+# Step 1: Import re
 import re
-# Input string
+
+# Step 2: Input string
 text = "Python is powerful"
-# ^ means start of string
-result = re.search(r"^Python", text)  # Checks if string starts with "Python"
-# Check whether match succeeded
+
+# Step 3: ^ anchors the match to the very START of the string, so
+# "Python" only matches here if it is literally the first word
+result = re.search(r"^Python", text)
+
+# Step 4: Check whether the match succeeded, and report the result
 if result:
     print("String starts with Python")
 else:
     print("String does not start with Python")
-# Explanation:
-# The caret ^ checks the beginning position.
-# It does not consume characters itself.
 ```
-________________________________________
-3. Write a script that checks whether a string ends with .com using the $ anchor.
+
+```text
+String starts with Python
+```
+
+**Explanation:**
+
+- The caret `^` checks a *position* (the very beginning), not a character — it does not itself consume any of the text.
+- Because `text` genuinely begins with the word "Python", `re.search()` succeeds and the first branch runs.
+
+#### **Q3. Write a script that checks whether a string ends with** `.com` **using the** `$` **anchor.**
+
+**Answer:**
+
 ```python
+# Step 1: Import re
 import re
-# Sample domain name
+
+# Step 2: Sample domain name
 text = "example.com"
-# $ checks end of string
-result = re.search(r"\.com$", text)  # Checks if string ends with ".com"
+
+# Step 3: $ anchors the match to the very END of the string, so
+# ".com" only matches here if it is literally the last four characters
+result = re.search(r"\.com$", text)
+
+# Step 4: Check whether the match succeeded, and report the result
 if result:
     print("Valid .com domain")
 else:
     print("Does not end with .com")
-# Explanation:
-# \. matches a literal dot.
-# $ ensures that .com appears at the end.
 ```
-________________________________________
-4. Write a script that extracts all lowercase letters from a string using the character class [a-z].
+
+```text
+Valid .com domain
+```
+
+**Explanation:**
+
+- `\.` matches a literal full stop (an unescaped `.` would instead mean "any character," so the backslash is essential here).
+- `$` ensures that `.com` appears at the very end of the string, not merely *somewhere* inside it.
+
+#### **Q4. Write a script that extracts all lowercase letters from a string using the character class** `[a-z]`**.**
+
+**Answer:**
+
 ```python
+# Step 1: Import re
 import re
+
+# Step 2: Set up text with a deliberate mix of uppercase letters,
+# lowercase letters, and digits
 text = "PyThOn123abcXYZ"
-# Find all lowercase letters
-lowercase_letters = re.findall(r"[a-z]", text)  # Character class for lowercase letters
-print(lowercase_letters)  # ['y', 'h', 'n', 'a', 'b', 'c']
-# Explanation:
-# [a-z] represents any lowercase English letter.
-# Each matching character is returned individually.
+
+# Step 3: [a-z] is a character class matching any single lowercase
+# English letter -- digits and uppercase letters are simply skipped
+lowercase_letters = re.findall(r"[a-z]", text)
+print(lowercase_letters)
 ```
-________________________________________
-5. Write a script that extracts all non-digit characters from a string using \D.
+
+```text
+['y', 'h', 'n', 'a', 'b', 'c']
+```
+
+**Explanation:**
+
+- `[a-z]` represents any one lowercase English letter, from `a` through `z`.
+- Each matching character is returned individually — `findall()` here is really just filtering the string down to its lowercase letters, one at a time.
+
+#### **Q5. Write a script that extracts all non-digit characters from a string using** `\D`**.**
+
+**Answer:**
+
 ```python
+# Step 1: Import re
 import re
+
+# Step 2: Set up text mixing letters and digits
 text = "Room45A7"
-# \D matches anything that is NOT a digit
-result = re.findall(r"\D", text)  # Finds all non-digit characters. Digits are ignored.
-print(result)  # ['R', 'o', 'o', 'm', 'A']
-# Explanation:
-# Digits are ignored.
-# Letters and symbols are matched instead.
+
+# Step 3: \D matches anything that is NOT a digit -- the opposite
+# of \d -- so digits are skipped and everything else is returned
+result = re.findall(r"\D", text)
+print(result)
 ```
-________________________________________
-6. Write a script that replaces all whitespace characters in a string with a single dash (-). Use re.sub().
+
+```text
+['R', 'o', 'o', 'm', 'A']
+```
+
+**Explanation:**
+
+- Digits (`4`, `5`, `7`) are ignored entirely, since `\D` explicitly excludes them.
+- Letters — and, in general text, symbols and spaces too — are matched instead, one character at a time.
+
+#### **Q6. Write a script that replaces all whitespace characters in a string with a single dash (**`-`**). Use** `re.sub()`**.**
+
+**Answer:**
+
 ```python
+# Step 1: Import re
 import re
+
+# Step 2: Set up text with a deliberate mix of whitespace kinds:
+# multiple spaces, a tab (\t), and a newline (\n)
 text = "Python   is\tvery\nuseful"
-# Replace one or more whitespace characters
-cleaned = re.sub(r"\s+", "-", text)  # Replaces sequences of whitespace with a single dash
-print(cleaned) # Python-is-very-useful
-# Explanation:
-# \s matches spaces, tabs, and newlines.
-# + combines consecutive whitespace into one match.
 
+# Step 3: \s+ matches ANY run of one or more whitespace characters
+# (spaces, tabs, or newlines) in one go, and re.sub() replaces each
+# such run with a single '-'
+cleaned = re.sub(r"\s+", "-", text)
+print(cleaned)
 ```
-________________________________________
-7. Write a script that validates whether a PIN code contains exactly six digits.
+
+```text
+Python-is-very-useful
+```
+
+**Explanation:**
+
+- `\s` matches spaces, tabs, and newlines alike — it does not care which particular kind of whitespace it sees.
+- The `+` quantifier combines an entire *run* of consecutive whitespace characters (however many, and of whatever mix) into a single match, which is why three spaces in a row still become just one dash, not three.
+
+#### **Q7. Write a script that validates whether a PIN code contains exactly six digits.**
+
+**Answer:**
+
 ```python
+# Step 1: Import re
 import re
+
+# Step 2: Set up a sample PIN
 pin = "834001"
-# Fullmatch ensures ENTIRE string follows pattern
+
+# Step 3: \d{6} means EXACTLY six digits, and fullmatch() additionally
+# requires the ENTIRE string to satisfy the pattern -- not just some
+# six-digit piece of a longer string
 result = re.fullmatch(r"\d{6}", pin)
+
+# Step 4: Report whether the PIN was valid
 if result:
-print("Valid PIN")
+    print("Valid PIN")
 else:
-print("Invalid PIN")
-# Explanation:
-# \d{6} means exactly six digits.
-# re.fullmatch() prevents partial matching.
+    print("Invalid PIN")
 ```
-________________________________________
-8. Write a script that demonstrates the difference between re.match() and re.search().
+
+```text
+Valid PIN
+```
+
+
+
+**Explanation:**
+
+- `\d{6}` means *exactly* six digits — no more, no fewer (compare this to Q16's `{2,4}`-style ideas on [`50-ch13-re-conceptual-qa.md`](50-ch13-re-conceptual-qa.md) for other counted-repetition patterns).
+- `re.fullmatch()` prevents *partial* matching: it insists the pattern account for the **entire** input string, not merely find a six-digit run somewhere inside a longer one. `re.search(r"\d{6}", "1834001")` would still find a match; `re.fullmatch()` would correctly reject it.
+
+#### **Q8. Write a script that demonstrates the difference between** `re.match()` **and** `re.search()`**.**
+
+**Answer:**
+
 ```python
+# Step 1: Import re
 import re
+
+# Step 2: Set up text where "Python" does NOT appear at the very start
 text = "Welcome to Python programming"
-# match() checks only at beginning
-m1 = re.match(r"Python", text)  # This will fail because "Python" is not at the start of the string.
-# search() checks anywhere
-m2 = re.search(r"Python", text)  # This will succeed because "Python" is found within the string.
-print("re.match():", m1)  # Output: None, because the pattern "Python" does not match the start of the string.
-print("re.search():", m2)  # Output: <re.Match object; span=(11, 17), match='Python'>, because the pattern "Python" is found starting at index 11 and ending at index 17 in the string.
-# Explanation:
-# match() fails because Python is not at start.
-# search() succeeds because it scans entire string.
+
+# Step 3: match() checks ONLY at the beginning of the string. Since
+# the text does not start with "Python", this fails and returns None
+m1 = re.match(r"Python", text)
+
+# Step 4: search() scans the ENTIRE string instead, so it finds
+# "Python" wherever it happens to occur
+m2 = re.search(r"Python", text)
+
+print("re.match(): ", m1)
+print("re.search():", m2)
 ```
-________________________________________
-9. Write a script that uses alternation (|) to search for either cat or dog in a sentence.
+
+```text
+re.match():  None
+re.search(): <re.Match object; span=(11, 17), match='Python'>
+```
+
+**Explanation:**
+
+- `re.match()` fails here because "Python" is not the very first thing in the string — `text` begins with "Welcome", not "Python".
+- `re.search()` succeeds because it scans the whole string looking for the pattern anywhere, and finds "Python" starting at index 11.
+- This is exactly the same distinction explored in more depth under Q1 of [`50-ch13-re-conceptual-qa.md`](50-ch13-re-conceptual-qa.md).
+
+#### **Q9. Write a script that uses alternation (**`|`**) to search for either** `cat` **or** `dog` **in a sentence.**
+
+**Answer:**
+
 ```python
+# Step 1: Import re
 import re
+
+# Step 2: Set up text containing "dog" but not "cat"
 text = "I have a dog at home"
-# Alternation means OR
-result = re.search(r"cat|dog", text)  # Checks for "cat" OR "dog" in the text
+
+# Step 3: cat|dog means "match EITHER 'cat' OR 'dog'" -- the regex
+# engine tries "cat" first at each position; if that fails, it tries
+# "dog" before moving on
+result = re.search(r"cat|dog", text)
+
+# Step 4: Report whichever animal (if any) was found
 if result:
-    print("Animal found:", result.group())  # Output: Animal found: dog, because "dog" is present in the text and is the first successful match found by the regex engine.
+    print("Animal found:", result.group())
 else:
-    print("No animal found")  # Explanation:
-# The regex engine tries "cat" first, which fails, then tries "dog", which succeeds, so "dog" is returned as the match.
-# Explanation:
-# Regex tries both alternatives.
-# The first successful alternative is returned.
+    print("No animal found")
 ```
 
-________________________________________
-10. Write a script that uses grouping to repeat the word abc one or more times.
+```text
+Animal found: dog
+```
+
+**Explanation:**
+
+- The regex engine tries the alternatives left to right at each position in the string: "cat" fails everywhere in this text, so "dog" is tried and succeeds.
+- The first alternative that actually succeeds is what gets returned — alternation does not try to find the "best" or "longest" alternative, only the first one that works.
+
+#### **Q10. Write a script that uses grouping to repeat the word** `abc` **one or more times.**
+
+**Answer:**
+
 ```python
+# Step 1: Import re
 import re
+
+# Step 2: Set up text made entirely of "abc" repeated three times
 text = "abcabcabc"
-# Group repeated using +
-result = re.fullmatch(r"(abc)+", text)  # Checks if the entire string is one or more repetitions of "abc"
-print(result)  # Output: <re.Match object; span=(0, 9), match='abcabcabc'>, because the entire string "abcabcabc" is made up of three repetitions of the substring "abc", which matches the pattern defined by the regex.
-# Explanation:
-# Parentheses treat abc as one unit.
-# + repeats the entire group.
+
+# Step 3: (abc)+ groups the three letters "abc" together, so the '+'
+# quantifier repeats the WHOLE group, not just the letter 'c'
+result = re.fullmatch(r"(abc)+", text)
+print(result)
 ```
 
-________________________________________
-11. Write a script that extracts both username and domain name from an email address using capturing groups.
+```text
+<re.Match object; span=(0, 9), match='abcabcabc'>
+```
+
+**Explanation:**
+
+- Parentheses treat `abc` as one unit, so `+` means "one or more repeats of the whole three-letter sequence," not "one or more of just the last letter."
+- `re.fullmatch()` confirms the entire nine-character string is accounted for by exactly three repeats of that unit.
+
+#### **Q11. Write a script that extracts both username and domain name from an email address using capturing groups.**
+
+**Answer:**
+
 ```python
+# Step 1: Import re
 import re
+
+# Step 2: Set up a sample email address
 email = "student@gmail.com"
-# Two capturing groups
-match = re.search(r"(\w+)@(\w+\.\w+)", email)  # Captures username and domain parts of the email
+
+# Step 3: Two capturing groups -- (\w+) for the username before the
+# '@', and (\w+\.\w+) for the domain after it
+match = re.search(r"(\w+)@(\w+\.\w+)", email)
+
 if match:
-    print("Username:", match.group(1))  # Output: Username: student, because the first capturing group (\w+) matches the username part of the email before the "@" symbol.
-    print("Domain:", match.group(2))  # Output: Domain: gmail.com, because the second capturing group (\w+\.\w+) matches the domain part of the email after the "@" symbol, which consists of a word followed by a dot and another word.
-# Explanation:
-# Group 1 captures username.
-# Group 2 captures domain portion.
+    print("Username:", match.group(1))
+    print("Domain:  ", match.group(2))
 ```
 
-________________________________________
-12. Write a script that demonstrates the use of group(), start(), end(), and span() methods.
+```text
+Username: student
+Domain:   gmail.com
+```
+
+**Explanation:**
+
+- Group 1, `(\w+)`, captures the username part of the email, everything before the `@`.
+- Group 2, `(\w+\.\w+)`, captures the domain portion after the `@`, which itself consists of a word, a literal dot, and another word.
+
+#### **Q12. Write a script that demonstrates the use of** `group()`**,** `start()`**,** `end()`**, and** `span()` **methods.**
+
+**Answer:**
+
 ```python
+# Step 1: Import re
 import re
+
+# Step 2: Set up text with a number embedded partway through
 text = "Order number is 5678"
-match = re.search(r"\d+", text)  # Finds the first sequence of digits in the text
+
+# Step 3: Find the run of digits in the text
+match = re.search(r"\d+", text)
+
 if match:
-    print("Matched text:", match.group())  # Output: Matched text: 5678, because the first sequence of digits found in the text is "5678".
-    print("Start index:", match.start())  # Output: Start index: 16, because the sequence "5678" starts at index 16 in the text.
-    print("End index:", match.end())  # Output: End index: 20, because the sequence "5678" ends at index 20 in the text.
-    print("Span:", match.span())  # Output: Span: (16, 20), because the span of the matched sequence "5678" is from index 16 to 20.
-# Explanation:
-# group() returns matched text.
-# start() and end() return positions.
-# span() combines both indices.
+    print("Matched text:", match.group())
+    print("Start index: ", match.start())
+    print("End index:   ", match.end())
+    print("Span:        ", match.span())
 ```
 
-________________________________________
-13. Write a script that demonstrates partial consumption using re.match(r"\\d+", text).
+```text
+Matched text: 5678
+Start index:  16
+End index:    20
+Span:         (16, 20)
+```
+
+**Explanation:**
+
+- `.group()` returns the actual matched text — here, the string `"5678"`.
+- `.start()` and `.end()` return the character *positions* where the match begins and ends within the original string.
+- `.span()` simply combines both of those into a single `(start, end)` tuple, which is often more convenient to pass around than the two numbers separately.
+
+#### **Q13. Write a script that demonstrates partial consumption using** `re.match(r"\d+", text)`**.**
+
+**Answer:**
+
 ```python
+# Step 1: Import re
 import re
+
+# Step 2: Set up text with digits followed by other characters
 text = "123 abc"
-match = re.match(r"\d+", text)  # Matches the digits at the start of the string
+
+# Step 3: match() anchors at position 0. \d+ consumes only the
+# digits -- it stops as soon as it reaches the space, since a space
+# is not a digit
+match = re.match(r"\d+", text)
+
 if match:
-    print("Matched:", match.group())  # Output: Matched: 123, because the first sequence of digits found in the text is "123".
-    print("Consumed span:", match.span())  # Output: Consumed span: (0, 3), because the span of the matched sequence "123" is from index 0 to 3.
-    print("Remaining text:", text[match.end():])  # Output: Remaining text:  abc, because the remaining text after the matched sequence is " abc".
-# Explanation:
-# Only digits are consumed.
-# Remaining characters are untouched.
+    print("Matched:      ", match.group())
+    print("Consumed span:", match.span())
+    print("Remaining text:", text[match.end():])
 ```
 
-________________________________________
-14. Write a script that demonstrates full consumption of a string using .*.
+```text
+Matched:       123
+Consumed span: (0, 3)
+Remaining text:  abc
+```
+
+**Explanation:**
+
+- Only the digits `"123"` are consumed by the match — `\d+` has no way to match the space or the letters that follow, so it simply stops there.
+- The remaining characters (`" abc"`, including the leading space) are left completely untouched, and can be retrieved with ordinary string slicing from `match.end()` onward.
+
+#### **Q14. Write a script that demonstrates full consumption of a string using** `.*`**.**
+
+**Answer:**
+
 ```python
+# Step 1: Import re
 import re
+
+# Step 2: Set up the same text as Q13, for direct comparison
 text = "123 abc"
-# Consume everything after digits
-match = re.match(r"\d+.*", text)  # Matches digits followed by any characters until the end of the string
+
+# Step 3: \d+.* first consumes the digits, and then .* greedily
+# consumes EVERYTHING else that follows, right to the end of the string
+match = re.match(r"\d+.*", text)
+
 if match:
-    print("Entire consumed text:", match.group())  # Output: Entire consumed text: 123 abc, because the entire string is matched.
-    print("Span:", match.span())  # Output: Span: (0, 7), because the span of the matched sequence is from index 0 to 7.
-# Explanation:
-# .* consumes remaining characters.
-# Entire string becomes part of match.
+    print("Entire consumed text:", match.group())
+    print("Span:                ", match.span())
 ```
 
-________________________________________
-15. Write a script that extracts all words from a sentence using \w+.
+```text
+Entire consumed text: 123 abc
+Span:                 (0, 7)
+```
+
+**Explanation:**
+
+- `.*` consumes all of the remaining characters after the digits — the space and the letters `"abc"` alike — because `.` matches almost any character and `*` allows any number of repeats, including "as many as there are left."
+- Compare this directly with Q13: swapping a bare `\d+` for `\d+.*` is the difference between consuming *only* the digits and consuming the *entire rest of the string* — the whole match now spans all seven characters, `(0, 7)`, instead of stopping at `(0, 3)`.
+
+#### **Q15. Write a script that extracts all words from a sentence using** `\w+`**.**
+
+**Answer:**
+
 ```python
+# Step 1: Import re
 import re
+
+# Step 2: Set up a short sentence ending with punctuation
 text = "Python is fun!"
-words = re.findall(r"\w+", text)  # Finds all sequences of word characters (letters, digits, underscore)
-print(words)  # Output: ['Python', 'is', 'fun'], because the regex \w+ matches sequences of word characters, which in this case are "Python", "is", and "fun". The exclamation mark is not included because it is not a word character.
-# Explanation:
-# \w matches letters, digits, and underscore.
-# + groups consecutive word characters.
+
+# Step 3: \w+ matches runs of "word characters" -- letters, digits,
+# and underscores -- so punctuation like '!' is naturally excluded
+words = re.findall(r"\w+", text)
+print(words)
 ```
 
-________________________________________
-16. Write a script that splits a sentence into words using re.split().
+```text
+['Python', 'is', 'fun']
+```
+
+**Explanation:**
+
+- `\w` matches letters, digits, and the underscore character — but *not* punctuation, spaces, or most other symbols.
+- The `+` quantifier groups consecutive word characters together into whole words, which is exactly why "Python", "is", and "fun" each come back as one single match rather than being split letter by letter (compare this with Q4's `[a-z]`, which deliberately matches only *one* character at a time).
+
+#### **Q16. Write a script that splits a sentence into words using** `re.split()`**.**
+
+**Answer:**
+
 ```python
+# Step 1: Import re
 import re
+
+# Step 2: Set up text with THREE different kinds of separator: a
+# comma, a semicolon, and a space
 text = "Apple,Orange;Banana Grape"
-# Split using comma, semicolon, or whitespace
-parts = re.split(r"[,;\s]+", text)  # Splits the text into parts based on the specified delimiters (comma, semicolon, or whitespace)
-print(parts)  # Output: ['Apple', 'Orange', 'Banana', 'Grape'], because the regex [,;\s]+ matches one or more occurrences of comma, semicolon, or whitespace.
-# Explanation:
-# Character class contains separators.
-# + combines consecutive separators.
+
+# Step 3: [,;\s]+ is a character class matching a comma, a semicolon,
+# OR any whitespace character -- the '+' lets one or more of these,
+# in any mixture, count as a single separator
+parts = re.split(r"[,;\s]+", text)
+print(parts)
 ```
 
-________________________________________
-17. Write a script that demonstrates the difference between greedy and non-greedy matching.
+```text
+['Apple', 'Orange', 'Banana', 'Grape']
+```
+
+**Explanation:**
+
+- The character class `[,;\s]` contains every kind of separator this text might use, all treated as equally valid split points.
+- The `+` quantifier combines consecutive separators together, which matters here because "Banana Grape" is separated by a plain space while the other words use punctuation — `re.split()` handles all three separator styles uniformly in one call, which plain [`str.split()`](https://docs.python.org/3/library/stdtypes.html#str.split) could not do without several separate calls.
+
+#### **Q17. Write a script that demonstrates the difference between greedy and non-greedy matching.**
+
+**Answer:**
+
 ```python
+# Step 1: Import re
 import re
+
+# Step 2: Set up text containing TWO separate pairs of <b>...</b> tags
 text = "<b>Python</b><b>Java</b>"
-# Greedy match
-greedy = re.findall(r"<b>.*</b>", text)  # Matches from first <b> to last </b>, consuming as much as possible
-print("Greedy:", greedy)  # Output: Greedy: ['<b>Python</b><b>Java</b'], because .* matches as much as possible.
-# Non-greedy match
-nongreedy = re.findall(r"<b>.*?</b>", text)  # Matches from first <b> to first </b>, consuming as little as possible
-print("Non-greedy:", nongreedy)  # Output: Non-greedy: ['<b>Python</b>', '<b>Java</b>'], because .*? matches as little as possible.
-# Explanation:
-# .* grabs maximum possible text.
-# .*? grabs minimum possible text.
+
+# Step 3: Greedy match. .* tries to match as MUCH text as possible,
+# so it stretches from the very FIRST '<b>' all the way to the very
+# LAST '</b>' in the string, swallowing the second tag pair whole
+greedy = re.findall(r"<b>.*</b>", text)
+print("Greedy:    ", greedy)
+
+# Step 4: Non-greedy match. .*? tries to match as LITTLE text as
+# possible, so it stops at the FIRST '</b>' it can reach -- giving
+# two separate, correctly-paired matches instead of one big one
+nongreedy = re.findall(r"<b>.*?</b>", text)
+print("Non-greedy:", nongreedy)
 ```
 
-________________________________________
-18. Write a script that counts how many replacements were made using re.subn().
+```text
+Greedy:     ['<b>Python</b><b>Java</b>']
+Non-greedy: ['<b>Python</b>', '<b>Java</b>']
+```
+
+
+
+**Explanation:**
+
+- `.*` (greedy) grabs the maximum possible text between the first `<b>` and the last `</b>` in the whole string — including the second `<b>Java</b>` pair sitting right in the middle of that span — which is almost never what you actually want when matching tag-like structures.
+- `.*?` (non-greedy, marked by the trailing `?`) grabs the minimum possible text instead, stopping at the very first `</b>` it reaches, which correctly separates the two tag pairs. This is the same greedy-vs-lazy idea explored on [`50-ch13-re-conceptual-qa.md`](50-ch13-re-conceptual-qa.md) (Q10) and used throughout [`10-ch13-re.md`](10-ch13-re.md).
+
+#### **Q18. Write a script that counts how many replacements were made using** `re.subn()`**.**
+
+**Answer:**
+
 ```python
+# Step 1: Import re
 import re
+
+# Step 2: Set up text containing three separate numbers
 text = "Marks: 45, 67, 89"
-# Replace numbers with #
-result = re.subn(r"\d+", "#", text)  # Replaces all sequences of digits with "#" and also returns the number of replacements made
-print(result)  # Output: ('Marks: #, #, #', 3), because all sequences of digits are replaced with "#" and there are 3 replacements.
-# Explanation:
-# subn() returns tuple.
-# First item = modified string.
-# Second item = number of replacements.
+
+# Step 3: subn() behaves like sub(), but ALSO returns a count of how
+# many replacements it made, as the second item of a tuple
+result = re.subn(r"\d+", "#", text)
+print(result)
 ```
 
-________________________________________
-19. Write a script that uses named groups to extract a date in the format DD-MM-YYYY.
+```text
+('Marks: #, #, #', 3)
+```
+
+**Explanation:**
+
+- `re.subn()` returns a **tuple** of two items, unlike plain `re.sub()`, which returns only the modified string.
+- The first item is the modified string itself; the second item is a count of how many replacements were actually made — here, `3`, one for each number found.
+
+#### **Q19. Write a script that uses named groups to extract a date in the format** `DD-MM-YYYY`**.**
+
+**Answer:**
+
 ```python
+# Step 1: Import re
 import re
+
+# Step 2: Set up text containing a date
 text = "Today's date is 08-05-2026"
-pattern = r"(?P<day>\d{2})-(?P<month>\d{2})-(?P<year>\d{4})"  # Named groups for day, month, year
-match = re.search(pattern, text)  # Searches for the date pattern in the text and captures day, month, and year as named groups 
+
+# Step 3: (?P<name>...) creates a NAMED capturing group -- functionally
+# identical to an ordinary numbered group, but retrieved by a readable
+# name instead of a bare number
+pattern = r"(?P<day>\d{2})-(?P<month>\d{2})-(?P<year>\d{4})"
+match = re.search(pattern, text)
+
 if match:
-    print(match.groupdict())  # Output: {'day': '08', 'month': '05', 'year': '2026'}, because the regex pattern captures the day, month, and year from the date in the text and returns them as a dictionary with keys corresponding to the group names defined in the regex.
-# Explanation:
-# Named groups create dictionary-like access.
-# Keys become group names.
-```
-________________________________________
-20. Write a script that uses re.escape() to safely search for the literal text a+b.
-```python
-import re
-text = "a+b"
-# Escape special regex symbols
-safe_pattern = re.escape("a+b")  # Escapes the special characters in the string "a+b" so that they are treated as literal characters in the regex pattern
-result = re.fullmatch(safe_pattern, text)  # Checks if the entire string matches the escaped pattern
-print(result)  # Output: <re.Match object; span=(0, 3), match='a+b'>, because the re.escape() function has escaped the special characters in the string "a+b", allowing it to be treated as a literal string in the regex pattern. The re.fullmatch() function then successfully matches the entire string "a+b" against the escaped pattern, resulting in a match object.
-# Explanation:
-# + normally means repetition.
-# re.escape() removes special meaning.
+    print(match.groupdict())
 ```
 
-________________________________________
-21. Write a script that demonstrates the use of a compiled Pattern object.
+```text
+{'day': '08', 'month': '05', 'year': '2026'}
+```
+
+**Explanation:**
+
+- Named groups let you build a dictionary-like result via `.groupdict()`, rather than having to remember that "group 1 is the day, group 2 is the month," and so on.
+- The dictionary's keys come directly from the names chosen in the pattern (`day`, `month`, `year`), which makes the code that reads the result much easier to follow than `match.group(1)`, `match.group(2)`, `match.group(3)` would be.
+
+#### **Q20. Write a script that uses** `re.escape()` **to safely search for the literal text** `a+b`**.**
+
+**Answer:**
+
 ```python
+# Step 1: Import re
 import re
-# Compile pattern once
-pattern = re.compile(r"\d+")  # Compiles the regex pattern for matching one or more digits, allowing it to be reused efficiently for multiple searches without recompiling the pattern each time.
+
+# Step 2: Set up text containing a literal plus sign
+text = "a+b"
+
+# Step 3: re.escape() automatically backslash-escapes every special
+# regex character in a plain string, so the result matches that
+# EXACT text literally, rather than treating '+' as a quantifier
+safe_pattern = re.escape("a+b")
+result = re.fullmatch(safe_pattern, text)
+print(result)
+```
+
+```text
+<re.Match object; span=(0, 3), match='a+b'>
+```
+
+**Explanation:**
+
+- Normally, `+` means "one or more of the preceding thing" in a regex — it does *not* mean a literal plus sign.
+- `re.escape()` removes this special meaning by inserting a backslash before it (and before any other special character in the string), which is exactly what you want when building a pattern out of text that might contain regex metacharacters you did not choose yourself — see also Q7 of [`50-ch13-re-conceptual-qa.md`](50-ch13-re-conceptual-qa.md) for another worked example of `re.escape()`.
+
+#### **Q21. Write a script that demonstrates the use of a compiled Pattern object.**
+
+**Answer:**
+
+```python
+# Step 1: Import re
+import re
+
+# Step 2: Compile the pattern ONCE, up front
+pattern = re.compile(r"\d+")
+
+# Step 3: Reuse the SAME compiled Pattern object against two
+# different pieces of text, instead of recompiling the pattern
+# from scratch each time
 text1 = "123"
 text2 = "456"
-print(pattern.match(text1))  # Output: <re.Match object; span=(0, 3), match='123'>
-print(pattern.match(text2))  # Output: <re.Match object; span=(0, 3), match='456'>
-# Explanation:
-# Compiled patterns are reusable.
-# Useful for repeated matching.
+print(pattern.match(text1))
+print(pattern.match(text2))
 ```
 
-________________________________________
-22. Write a script that prints the attributes pattern, groups, and groupindex of a compiled Pattern object.
-```python
-import re
-# r"(?P<word>\w+)-(\d+)" is just a normal Python string.
-pattern = re.compile(r"(?P<word>\w+)-(\d+)")  # Pattern with named and unnamed groups
-# The re.compile() function compiles the regex pattern into a regex object, which can be used for matching operations. The pattern itself is a raw string that contains the regex syntax, including named groups (like (?P<word>\w+)) and unnamed groups (like (\d+)).
-print("Pattern:", pattern)  # Output: Pattern: re.compile('(?P<word>\\w+)-(\\d+)'), because the re.compile() function compiles the regex pattern and returns a regex object, which is displayed as re.compile('(?P<word>\\w+)-(\\d+)').
-# Double backslashes are used in the output to represent literal backslashes in the regex pattern, which is a common way Python represents strings that contain backslashes.
-
-print("Pattern:", pattern.pattern)  # Output: Pattern: (?P<word>\w+)-(\d+), because the .pattern attribute of the compiled regex object returns the original regex pattern as a string.
-# pattern.pattern gives the original regex string, which is useful for reference or debugging, while pattern itself is a compiled object that can be used for matching operations.
-
-print("Groups:", pattern.groups)  # Output: Groups: 2, because the .groups attribute of the compiled regex object returns the total number of capturing groups in the pattern.
-print("Named groups:", pattern.groupindex)  # Output: Named groups: {'word': 1}, because the .groupindex attribute of the compiled regex object returns a dictionary mapping named group names to their corresponding group numbers.
-# Explanation:
-# pattern stores regex text.
-# pattern.pattern gives original pattern string.
-# groups stores total capturing groups.
-# groupindex maps names to numbers.
+```text
+<re.Match object; span=(0, 3), match='123'>
+<re.Match object; span=(0, 3), match='456'>
 ```
 
-________________________________________
-23. Write a script that validates whether a password contains at least one digit and one uppercase letter.
+**Explanation:**
+
+- Compiled patterns are reusable — the pattern object `pattern` is built once, and then its methods (`.match()`, `.search()`, `.findall()`, and so on) can be called repeatedly against as many different strings as needed.
+- This is especially useful for repeated matching, since Python does not need to re-parse the same pattern text over and over — see Q21 of [`50-ch13-re-conceptual-qa.md`](50-ch13-re-conceptual-qa.md), which measures the actual timing benefit of this.
+
+#### **Q22. Write a script that prints the attributes** `pattern`**,** `groups`**, and** `groupindex` **of a compiled Pattern object.**
+
+**Answer:**
+
 ```python
+# Step 1: Import re
 import re
+
+# Step 2: Compile a pattern with one named group and one unnamed
+# (numbered-only) group
+pattern = re.compile(r"(?P<word>\w+)-(\d+)")
+
+# Step 3: Printing the Pattern object itself shows Python's own
+# repr() of it -- note the DOUBLE backslashes, since this is how
+# Python represents a string that itself contains a backslash
+print("Pattern:      ", pattern)
+
+# Step 4: The .pattern attribute instead gives back the ORIGINAL
+# pattern text as a plain string, with single backslashes as typed
+print("Pattern text: ", pattern.pattern)
+
+# Step 5: .groups is the total COUNT of capturing groups in the
+# pattern (named groups count too)
+print("Group count:  ", pattern.groups)
+
+# Step 6: .groupindex maps each named group's name to its group
+# NUMBER -- here, "word" is group 1
+print("Named groups: ", pattern.groupindex)
+```
+
+```text
+Pattern:       re.compile('(?P<word>\\w+)-(\\d+)')
+Pattern text:  (?P<word>\w+)-(\d+)
+Group count:   2
+Named groups:  {'word': 1}
+```
+
+**Explanation:**
+
+- `pattern` (printing the object itself) shows Python's `repr()` of the compiled pattern, which is why the backslashes appear doubled — that is simply how Python displays a string containing a literal backslash, not a difference in the pattern's actual behaviour.
+- `pattern.pattern` gives back the *original* regex text as a plain, readable string — useful for logging or debugging.
+- `pattern.groups` is the total number of capturing groups (here, `2`: the named group `word` and the unnamed group for the digits).
+- `pattern.groupindex` is a dictionary mapping every *named* group to its group number — here, `{'word': 1}`, since `word` happens to be the first (and only named) group in this pattern.
+
+#### **Q23. Write a script that validates whether a password contains at least one digit and one uppercase letter.**
+
+**Answer:**
+
+```python
+# Step 1: Import re
+import re
+
+# Step 2: Set up a candidate password
 password = "Python123"
-# Positive lookaheads used for validation
-# (?=.*[A-Z]) checks for at least one uppercase letter.
-# (?=.*\d) checks for at least one digit.
-# .{8,} ensures minimum length.
-pattern = r"(?=.*[A-Z])(?=.*\d).{8,}"  
-result = re.fullmatch(pattern, password)  # Checks if the entire password string meets the criteria defined by the regex pattern, which includes having at least one uppercase letter, at least one digit, and being at least 8 characters long.
+
+# Step 3: Build the pattern out of two POSITIVE LOOKAHEADS plus a
+# minimum-length check:
+#   (?=.*[A-Z])  -- somewhere ahead, there must be an uppercase letter
+#   (?=.*\d)     -- somewhere ahead, there must be a digit
+#   .{8,}        -- the string itself must be at least 8 characters
+# Lookaheads CHECK for something without consuming any characters,
+# so both can "look" at the very same text independently
+pattern = r"(?=.*[A-Z])(?=.*\d).{8,}"
+result = re.fullmatch(pattern, password)
+
 if result:
     print("Strong password")
 else:
     print("Weak password")
-# Explanation:
-# (?=.*[A-Z]) checks uppercase letter.
-# (?=.*\d) checks digit.
-# .{8,} ensures minimum length.
 ```
 
-________________________________________
-24. Write a script that extracts all words beginning with a capital letter.
+```text
+Strong password
+```
+
+**Explanation:**
+
+- `(?=.*[A-Z])` checks that an uppercase letter exists *somewhere* in the string, without actually consuming any of it — this is what makes a lookahead different from an ordinary pattern piece.
+- `(?=.*\d)` performs the same kind of check for a digit.
+- `.{8,}` ensures the whole password is at least 8 characters long. Because `"Python123"` has an uppercase `P`, several digits, and is 9 characters long, all three conditions are satisfied and `re.fullmatch()` succeeds.
+
+>  **Extra practice question (not in the printed book):** the fuller password-validation walkthrough on [`10-ch13-re.md`](10-ch13-re.md) checks for lowercase letters and special characters too, using several lookaheads chained together in exactly this style — worth comparing against this shorter, two-condition version here.
+
+#### **Q24. Write a script that extracts all words beginning with a capital letter.**
+
+**Answer:**
+
 ```python
+# Step 1: Import re
 import re
+
+# Step 2: Set up a sentence where every word happens to start with
+# a capital letter
 text = "Python and Java are Programming Languages"
-# \b ensures we match only at the start of a word, so we get whole words that start with uppercase letters.
-# [A-Z] checks that the first letter is uppercase.
-# \w* allows for any additional word characters after the first uppercase letter, so we get the full word.
-result = re.findall(r"\b[A-Z]\w*", text)  # Finds words that start with an uppercase letter, using a word boundary to ensure it matches the start of a word
+
+# Step 3: \b[A-Z]\w* means: start at a word boundary, require the
+# FIRST character to be uppercase, then allow any number of further
+# word characters (which may be upper OR lower case) to follow
+result = re.findall(r"\b[A-Z]\w*", text)
 print(result)
-# Explanation:
-# \b ensures word boundary.
-# [A-Z] checks first letter uppercase.
-# \w* allows for any additional word characters after the first uppercase letter.
-
 ```
 
-________________________________________
-25. Write a script that finds all repeated vowels in a string using quantifiers.
+```text
+['Python', 'Java', 'Programming', 'Languages']
+```
+
+**Explanation:**
+
+- `\b` (word boundary) ensures the match starts exactly at the beginning of a word, not partway through one.
+- `[A-Z]` checks that this very first letter is uppercase.
+- `\w*` then allows any number of *additional* word characters (letters, digits, or underscore, in either case) to follow, so the rest of a longer word like "Programming" is captured along with its capital first letter. Notice that "and" and "are" are correctly excluded, since they begin with lowercase letters.
+
+#### **Q25. Write a script that finds all repeated vowels in a string using quantifiers.**
+
+**Answer:**
+
 ```python
+# Step 1: Import re
 import re
+
+# Step 2: Set up text with runs of repeated vowels
 text = "cooool beeaautiful"
-# Find repeated vowels
-# [aeiou] matches any vowel.
-# {2,} means two or more repetitions of the preceding character class, which in this case is any vowel.
+
+# Step 3: [aeiou]{2,} means "two or more vowels IN A ROW" -- a
+# single, isolated vowel does NOT count, only genuine repeats/runs
 result = re.findall(r"[aeiou]{2,}", text)
-print(result)  # Output: ['ooo', 'eeaa', 'uu'], because the regex pattern [aeiou]{2,} matches sequences of two or more consecutive vowels in the text, which are "ooo", "eeaa", and "uu".
-# Explanation:
-# {2,} means two or more repetitions.
-# Character class limits search to vowels.
+print(result)
 ```
 
-________________________________________
-26. Write a script that extracts all hexadecimal numbers from a string.
+```text
+['oooo', 'eeaau']
+```
+
+> **Fix applied here:** the original comment claimed this would print `['ooo', 'eeaa', 'uu']` — three separate matches. Counting the vowels carefully in `"cooool beeaautiful"` shows this is not correct: `"cooool"` contains **four** consecutive `o`s (`c-o-o-o-o-l`), not three, and in `"beeaautiful"` the run `e-e-a-a-u` is **one single, unbroken** run of five vowels (`"eeaau"`) — it is not split into a separate `"eeaa"` and `"uu"`, because there is no non-vowel character sitting between the `a` and the `u`. The corrected, verified output is `['oooo', 'eeaau']` — two matches, not three.
+
+**Explanation:**
+
+- `{2,}` means "two or more repetitions" of whatever comes immediately before it — here, the character class `[aeiou]`.
+- The character class limits the search to vowels only, but once a run of two or more vowels is found, the *entire unbroken run* becomes a single match — this is exactly why `"eeaau"` (five vowels with no consonant in between) comes back as one match rather than being artificially split.
+
+#### **Q26. Write a script that extracts all hexadecimal numbers from a string.**
+
+**Answer:**
+
 ```python
+# Step 1: Import re
 import re
+
+# Step 2: Set up text containing two hex colour codes
 text = "Colors: #FFAA00 and #12BC9A"
-# # matches literal hash symbol.
-# [A-Fa-f0-9] matches any hexadecimal digit (case-insensitive).
-# {6} ensures exactly six digits.
+
+# Step 3: '#' matches the literal hash symbol, [A-Fa-f0-9] matches
+# any single hexadecimal digit (case-insensitive), and {6} requires
+# EXACTLY six of them
 result = re.findall(r"#[A-Fa-f0-9]{6}", text)
-print(result)  # Output: ['#FFAA00', '#12BC9A'], because the regex pattern #[A-Fa-f0-9]{6} matches sequences that start with a "#" followed by exactly six hexadecimal digits (which can be uppercase A-F, lowercase a-f, or digits 0-9), resulting in the matches "#FFAA00" and "#12BC9A".
-# Explanation:
-# Hexadecimal digits include 0-9 and A-F.
-# {6} ensures exactly six digits.
+print(result)
 ```
-________________________________________
-27. Write a script that checks whether a string contains only alphabets and spaces.
+
+```text
+['#FFAA00', '#12BC9A']
+```
+
+**Explanation:**
+
+- Hexadecimal digits are `0`-`9` plus `A`-`F` (or `a`-`f`) — the character class `[A-Fa-f0-9]` covers both letter cases explicitly, since regex character classes are case-sensitive by default.
+- `{6}` ensures exactly six hex digits follow the `#`, matching the standard six-digit colour-code format used in HTML and CSS.
+
+#### **Q27. Write a script that checks whether a string contains only alphabets and spaces.**
+
+**Answer:**
+
 ```python
+# Step 1: Import re
 import re
+
+# Step 2: Set up text containing only letters and spaces
 text = "Python Programming"
-# [A-Za-z ] matches uppercase letters, lowercase letters, and spaces.
-# + means one or more of the preceding character class, so it matches sequences of letters and spaces that are at least one character long.
+
+# Step 3: [A-Za-z ]+ matches one or more characters, each of which
+# must be an uppercase letter, a lowercase letter, or a literal space
+# -- fullmatch() then requires the ENTIRE string to be made of these
 result = re.fullmatch(r"[A-Za-z ]+", text)
+
 if result:
-    print("Valid text")  # Output: Valid text, because the regex pattern [A-Za-z ]+ matches the entire string "Python Programming", which consists of uppercase letters, lowercase letters, and spaces, and is at least one character long.
+    print("Valid text")
 else:
-    print("Contains invalid characters")  # 
-# Explanation:
-# Character class includes letters and spaces.
-# + ensures one or more characters.
+    print("Contains invalid characters")
 ```
 
-________________________________________
-28. Write a script that extracts all hashtags from a social media post.
+```text
+Valid text
+```
+
+**Explanation:**
+
+- The character class `[A-Za-z ]` includes uppercase letters, lowercase letters, and the space character itself (placed plainly inside the brackets).
+- `+` ensures at least one character is present, and `re.fullmatch()` insists every single character in the string belongs to that set — a string containing so much as one digit or punctuation mark would fail this check.
+
+#### **Q28. Write a script that extracts all hashtags from a social media post.**
+
+**Answer:**
+
 ```python
+# Step 1: Import re
 import re
+
+# Step 2: Set up text containing two hashtags
 text = "Learning #Python and #Regex is fun"
-# #\w+ matches a literal "#" followed by one or more word characters (letters, digits, or underscores), which captures the hashtags in the text.
+
+# Step 3: #\w+ matches a literal '#' immediately followed by one or
+# more word characters -- this naturally stops at the first space
+# or punctuation mark after the hashtag word
 hashtags = re.findall(r"#\w+", text)
-print(hashtags)  # Output: ['#Python', '#Regex'], because the regex pattern #\w+ matches sequences that start with a "#" followed by one or more word characters (which include letters, digits, and underscores), resulting in the matches "#Python" and "#Regex".
-# Explanation:
-# # matches literal hashtag symbol.
-# \w+ captures hashtag text.
+print(hashtags)
 ```
 
-________________________________________
-29. Write a script that demonstrates re.finditer() by printing all matches and their positions.
+```text
+['#Python', '#Regex']
+```
+
+**Explanation:**
+
+- `#` matches the literal hashtag symbol itself.
+- `\w+` then captures the hashtag's text — letters, digits, and underscores — stopping naturally as soon as it reaches a space or any other non-word character.
+
+#### **Q29. Write a script that demonstrates** `re.finditer()` **by printing all matches and their positions.**
+
+**Answer:**
+
 ```python
+# Step 1: Import re
 import re
+
+# Step 2: Set up a short sentence of three words
 text = "cat bat rat"
-# finditer() returns iterator of Match objects
-# \w+ matches sequences of word characters (words) in the text.
-for match in re.finditer(r"\w+", text):  # Iterates over each match of the regex pattern \w+ in the text, which finds sequences of word characters (words) and returns an iterator of Match objects for each match found.
-    print("Word:", match.group())  # Output: Word: cat, Word: bat, Word: rat, because the regex pattern \w+ matches each word in the text "cat bat rat", and the finditer() function returns an iterator of Match objects for each match found. The group() method is then used to extract the matched word from each Match object, resulting in the output of each word on a separate line.
-    print("Position:", match.start(), match.end())  # Output: Position: 0 3, Position: 4 7, Position: 8 11, because the start() and end() methods of the Match object return the starting and ending indices of each matched word in the original text. For "cat", the start index is 0 and the end index is 3; for "bat", the start index is 4 and the end index is 7; for "rat", the start index is 8 and the end index is 11.
-# Explanation:
-# Each iteration produces one Match object.
-# Position information is available.
+
+# Step 3: finditer() returns an ITERATOR of Match objects, one per
+# match, produced one at a time rather than as one big list up front
+for match in re.finditer(r"\w+", text):
+    print("Word:    ", match.group())
+    print("Position:", match.start(), match.end())
 ```
 
-________________________________________
-30. Write a script that extracts only the file extensions from filenames.
+```text
+Word:     cat
+Position: 0 3
+Word:     bat
+Position: 4 7
+Word:     rat
+Position: 8 11
+```
+
+**Explanation:**
+
+- Each iteration of the loop produces one full `Match` object — not just the matched text, but also its position and (if the pattern had any) its groups.
+- Position information is available on every match via `.start()` and `.end()`, which is exactly what makes `finditer()` more powerful than `findall()` whenever you need to know *where* each match occurred, not just *what* it was — see also Q14 of [`50-ch13-re-conceptual-qa.md`](50-ch13-re-conceptual-qa.md) for a comparison of `search()`, `findall()`, and `finditer()` side by side.
+
+#### **Q30. Write a script that extracts only the file extensions from filenames.**
+
+**Answer:**
+
 ```python
+# Step 1: Import re
 import re
+
+# Step 2: Set up text listing three different filenames
 text = "report.pdf image.png notes.txt"
-# \. matches a literal dot.
-# [A-Za-z0-9]+ matches the file extension consisting of letters and digits.
-# + means one or more of the preceding character class, so it matches file extensions that are at least one character long.
-# The regex pattern \.([A-Za-z0-9]+) captures the file extensions from the text, where the parentheses create a capturing group that extracts the extension part after the dot.
+
+# Step 3: \. matches a literal dot, and the CAPTURING group
+# ([A-Za-z0-9]+) grabs the extension text that follows it --
+# findall() then returns only what the group captured, not the
+# whole "filename.ext" match
 extensions = re.findall(r"\.([A-Za-z0-9]+)", text)
-print(extensions)  # Output: ['pdf', 'png', 'txt'], because the regex pattern \.([A-Za-z0-9]+) matches a literal dot followed by one or more alphanumeric characters, capturing the file extensions.
-# Explanation:
-# \. matches literal dot.
-# Parentheses capture extension only.
+print(extensions)
 ```
 
-________________________________________
-Part B: Advanced and Extension Questions
-31. Write a script that validates IPv4 addresses using Regular Expressions.
+```text
+['pdf', 'png', 'txt']
+```
+
+**Explanation:**
+
+- `\.` matches the literal dot separating a filename from its extension.
+- Because the extension part is wrapped in parentheses — a capturing group — `findall()` returns *only* the captured extension text for each match, not the dot itself and not the filename that came before it. This is the same "capture only the piece you want" technique explored in much more depth on [`60-ch13-re-capturing-noncapturing.md`](60-ch13-re-capturing-noncapturing.md).
+
+## Part B: Advanced and Extension Questions
+
+#### **Q31. Write a script that validates IPv4 addresses using Regular Expressions.**
+
+**Answer:**
+
+An IPv4 address is four numbers ("octets"), each between 0 and 255, separated by dots — for example `192.168.1.1`. The tricky part is that a plain `\d{1,3}` for each octet would also happily accept nonsense like `999`, so the pattern below spells out the valid ranges explicitly.
+
+| Piece of the octet pattern | Matches | Why |
+|---|---|---|
+| `25[0-5]` | 250–255 | `25` followed by a digit no higher than `5` |
+| `2[0-4]\d` | 200–249 | `2` followed by a digit `0`–`4`, then any digit |
+| `1\d\d` | 100–199 | `1` followed by any two digits |
+| `[1-9]?\d` | 0–99 | an optional leading digit `1`–`9`, then any digit (this also covers single digits `0`–`9`) |
+
 ```python
+# Step 1: Import re
 import re
+
+# Step 2: Set up a valid sample IP address
 ip = "192.168.1.1"
-# Simplified IPv4 regex
-# Each octet must be between 0 and 255.
-# ^ and $ ensure the entire string matches the pattern.
-# (25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d) matches valid octet values.
-# Breakup of octet pattern:
-# (25[0-5]) matches 250-255.
-# (2[0-4]\d) matches 200-249. Because 2 followed by 0-4 and then any digit (0-9) gives us the range of 200-249.
-# (1\d\d) matches 100-199. Because 1 followed by any digit (0-9) and then another digit (0-9) gives us the range of 100-199.
-# ([1-9]?\d) matches 0-99. Because it optionally matches a digit from 1-9 (which allows for numbers 1-9) followed by any digit (0-9), which allows for numbers 0-99.
-# \. matches literal dots between octets.
-# 
-pattern = r"^(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}$"
+
+# Step 3: Build ONE octet pattern covering all valid values 0-255,
+# by combining the four ranges from the table above with alternation
+octet = r"(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)"
+
+# Step 4: A full IPv4 address is one octet, followed by exactly THREE
+# more ".octet" groups, anchored at both ends so the WHOLE string
+# must match -- not just some substring of it
+pattern = r"^" + octet + r"(\." + octet + r"){3}$"
+
 result = re.fullmatch(pattern, ip)
+
 if result:
     print("Valid IP")
 else:
     print("Invalid IP")
-# Explanation:
-# Each number must be between 0 and 255.
-# Dot-separated structure enforced.
 ```
-________________________________________
-32. Write a script that masks credit card numbers except the last four digits.
+
+```text
+Valid IP
+```
+
+**Explanation:**
+
+- `^` and `$` ensure the *entire* string matches the pattern, not just some IP-shaped piece buried inside a longer string.
+- Each octet must independently fall in the 0–255 range, using the four alternatives from the table above; the `\.` between them matches the literal dots separating the four numbers.
+
+>  **Extra practice question (not in the printed book):** try the same pattern against `"256.1.1.1"`, `"999.999.999.999"`, and `"1.2.3"` (too few octets). All three correctly come back as **invalid** — `256` and `999` do not fit any of the four range alternatives, and `"1.2.3"` has only three octets instead of the required four. Try it yourself, or see [`10-ch13-re.md`](10-ch13-re.md) for further worked validation examples in this style.
+
+#### **Q32. Write a script that masks credit card numbers except the last four digits.**
+
+**Answer:**
+
 ```python
+# Step 1: Import re
 import re
+
+# Step 2: Set up sample text containing a 16-digit card number
 text = "My card number is 1234567812345678"
-# Replace first 12 digits
-# \d matches a digit, and {4} means exactly four digits. 
-# So \d{4} matches the last four digits of the card number.
-# (?=\d{4}) is a positive lookahead that asserts that the preceding \d{4} (the last four digits) 
-# must be present immediately after the current position in the string, 
-# but it does not consume those digits as part of the match. 
-# This allows us to target only the digits that come before the last four digits for replacement.
 
-masked = re.sub(r"\d(?=\d{4})", "*", text)  # Replaces digits that are followed by exactly four digits with "*", effectively masking all but the last four digits of the card number.
-print(masked)  # Output: My card number is ************5678, because the regex pattern \d(?=\d{4}) matches any digit that is immediately followed by exactly four digits, and replaces it with "*". This results in all digits of the card number being replaced with "*" except for the last four digits, which remain visible.
-# Explanation:
-# Positive lookahead keeps last 4 digits visible.
-# Earlier digits are replaced.
+# Step 3: \d(?=\d{4}) matches any SINGLE digit that has EXACTLY four
+# more digits somewhere immediately after it. (?=\d{4}) is a positive
+# lookahead: it CHECKS for four digits ahead without consuming them,
+# so those four digits remain available for the next \d(?=\d{4})
+# check (and are never themselves matched/replaced)
+masked = re.sub(r"\d(?=\d{4})", "*", text)
+print(masked)
 ```
 
-________________________________________
-33. Write a script that removes duplicate consecutive words from a sentence.
+```text
+My card number is ************5678
+```
+
+**Explanation:**
+
+- `(?=\d{4})` is a positive lookahead — it requires four digits to follow at this position, but does **not** consume them as part of the match, so they stay in the string unchanged for the next check to see.
+- Because every digit *except* the last four has "four more digits after it" somewhere down the line, every digit except the final four gets matched (and replaced with `*`) by this pattern, one at a time, from left to right.
+
+#### **Q33. Write a script that removes duplicate consecutive words from a sentence.**
+
+**Answer:**
+
 ```python
+# Step 1: Import re
 import re
+
+# Step 2: Set up text with two different duplicated words
 text = "This is is a test test sentence"
-# Backreference used
-# \b ensures we match whole words.
-# (\w+) captures a word and assigns it to group 1.
-# \s+ matches the whitespace between the two occurrences of the word.
-# \1 refers back to the first capturing group, so it matches the same word again.
-# \b ensures we match the end of the word, so we only match repeated words that are whole words and not part of larger words.
-# The regex pattern \b(\w+)\s+\1\b matches any instance of a word followed by whitespace and then the same word again, effectively identifying repeated words in the text.
+
+# Step 3: \b(\w+)\s+\1\b finds a word, captured in group 1, followed
+# by whitespace and then the SAME word again (the backreference \1).
+# The replacement r"\1" keeps just ONE copy of the word
 cleaned = re.sub(r"\b(\w+)\s+\1\b", r"\1", text)
 print(cleaned)
-# Explanation:
-# (\w+) captures a word.
-# \1 refers back to same word.
 ```
 
-________________________________________
-34. Write a script that extracts all HTML tag names from a string.
+```text
+This is a test sentence
+```
+
+**Explanation:**
+
+- `(\w+)` captures a word, and `\1` immediately afterward insists on seeing that *exact same* word again, right after some whitespace.
+- The trailing `\b` (word boundary) ensures the repeated match is a whole word, not merely a matching prefix of a longer, different word.
+- This is a smaller, single-pass version of the same idea explored in much more depth (including a version that removes runs of *three or more* repeats, and a `finditer()`-based reporting script) under [Case study: removing duplicate words with a backreference](60-ch13-re-capturing-noncapturing.md#case-study-removing-duplicate-words-with-a-backreference) on `60-ch13-re-capturing-noncapturing.md`.
+
+#### **Q34. Write a script that extracts all HTML tag names from a string.**
+
+**Answer:**
+
 ```python
+# Step 1: Import re
 import re
+
+# Step 2: Set up a small, well-formed piece of HTML
 html = "<html><body><h1>Title</h1></body></html>"
-# Capture tag names
-# <\/? matches either opening or closing tags.
-# ([a-zA-Z0-9]+) captures the tag name consisting of letters and digits.
-# + means one or more of the preceding character class, so it matches tag names that are at least one character long.
-# The regex pattern <\/?([a-zA-Z0-9]+) matches both opening and closing HTML tags and captures the tag names, allowing us to extract the names of the tags used in the HTML string.
+
+# Step 3: <\/?([a-zA-Z0-9]+) matches an opening OR a closing tag --
+# '<' followed by an OPTIONAL '/' (for closing tags), then captures
+# just the tag NAME that follows, stopping before the closing '>'
 result = re.findall(r"<\/?([a-zA-Z0-9]+)", html)
-print(result)  # Output: ['html', 'body', 'h1', 'h1', 'body', 'html'], because the regex pattern <\/?([a-zA-Z0-9]+) matches both opening and closing HTML tags in the string, capturing the tag names "html", "body", and "h1". The pattern matches the opening tags <html>, <body>, and <h1>, as well as the closing tags </h1>, </body>, and </html>, resulting in the list of tag names extracted from the HTML string.
-# Explanation:
-# \/? optionally matches closing slash.
-# Capturing group extracts tag names.
+print(result)
 ```
 
-________________________________________
-35. Write a script that converts dates from DD/MM/YYYY format to YYYY-MM-DD format using re.sub().
+```text
+['html', 'body', 'h1', 'h1', 'body', 'html']
+```
+
+**Explanation:**
+
+- `\/?` makes the forward slash optional, so the same pattern matches both an opening tag like `<html>` and its closing counterpart `</html>` — the `?` after `\/` means "zero or one of these."
+- The capturing group `([a-zA-Z0-9]+)` grabs just the tag *name* itself (`html`, `body`, `h1`), not the surrounding angle brackets or slash, which is why `findall()` returns six tag names — three opening, three closing — rather than six full tag strings like `<html>`.
+
+#### **Q35. Write a script that converts dates from** `DD/MM/YYYY` **format to** `YYYY-MM-DD` **format using** `re.sub()`**.**
+
+**Answer:**
+
 ```python
+# Step 1: Import re
 import re
+
+# Step 2: Set up text containing a date in DD/MM/YYYY format
 text = "Today's date is 08/05/2026"
-# Rearrange captured groups
-# (\d{2}) captures the day, which is two digits.
-# (\d{2}) captures the month, which is also two digits.
-# (\d{4}) captures the year, which is four digits.
-# The regex pattern (\d{2})/(\d{2})/(\d{4}) captures the day, month, and year from the date in the text, and the replacement string \3-\2-\1 rearranges these captured groups into the format "year-month-day".
-# \3 refers to the third capturing group (year), 
-# \2 refers to the second capturing group (month), and 
-# \1 refers to the first capturing group (day). 
-# By rearranging these groups in the replacement string, we can reformat the date from "08/05/2026" to "2026-05-08".
-# The re.sub() function takes the regex pattern, the replacement string, and the original text, and performs the substitution based on the captured groups, resulting in the reformatted date string.
+
+# Step 3: Three capturing groups pick out day, month, and year
+# separately; the replacement string \3-\2-\1 then REARRANGES them
+# into year-month-day order, joined by dashes instead of slashes
 new_text = re.sub(r"(\d{2})/(\d{2})/(\d{4})", r"\3-\2-\1", text)
 print(new_text)
-# Explanation:
-# Groups capture day, month, year.
-# Replacement string rearranges them.
 ```
 
-________________________________________
-36. Write a script that tokenizes a sentence into words and punctuation marks separately.
+```text
+Today's date is 2026-05-08
+```
+
+**Explanation:**
+
+- `(\d{2})` captures the day, `(\d{2})` captures the month, and `(\d{4})` captures the year — three separate groups, numbered 1 through 3 in the order their *opening* parentheses appear.
+- The replacement string `r"\3-\2-\1"` does not have to use the groups in their original order — it deliberately rearranges them (year first, then month, then day) to build the new date format, which is exactly what makes backreferences in a replacement string so useful for reformatting structured text like dates.
+
+#### **Q36. Write a script that tokenizes a sentence into words and punctuation marks separately.**
+
+**Answer:**
+
 ```python
+# Step 1: Import re
 import re
+
+# Step 2: Set up a sentence containing three punctuation marks
 text = "Hello, world! How are you?"
-# Match words OR punctuation
-# \w+ matches sequences of word characters (words) in the text.
-# [^\w\s] matches any character that is not a word character and not whitespace, 
-# which effectively captures punctuation marks.
-# The regex pattern \w+|[^\w\s] uses alternation to match either sequences of word characters (words) 
-# or individual punctuation characters, allowing us to extract both words and punctuation from the text 
-# as separate tokens. 
 
+# Step 3: \w+|[^\w\s] is an ALTERNATION between two very different
+# things: \w+ matches a whole word, while [^\w\s] matches a SINGLE
+# character that is neither a word character NOR whitespace (i.e.
+# punctuation). Together, every word and every punctuation mark
+# becomes its own separate token, and plain whitespace is skipped
 tokens = re.findall(r"\w+|[^\w\s]", text)
-print(tokens)  # Output: ['Hello', ',', 'world', '!', 'How', 'are', 'you', '?'], because the regex pattern \w+|[^\w\s] matches sequences of word characters (which are "Hello", "world", "How", "are", and "you") as well as individual punctuation characters (which are ",", "!", and "?"), resulting in a list of tokens that includes both words and punctuation from the original text.    
-# Explanation:
-# Alternation separates words and punctuation.
-# Useful in Natural Language Processing.
+print(tokens)
 ```
 
-________________________________________
-37. Write a script that identifies repeated whitespace in a text file and compresses it into single spaces.
+```text
+['Hello', ',', 'world', '!', 'How', 'are', 'you', '?']
+```
+
+**Explanation:**
+
+- Alternation (`|`) lets one pattern describe two very different kinds of token — whole words on one side, single punctuation characters on the other — and `findall()` collects every match of *either* kind, in the order they appear.
+- This kind of word-and-punctuation splitting is a first, simple step towards **tokenization**, a standard early stage in Natural Language Processing pipelines.
+
+#### **Q37. Write a script that identifies repeated whitespace in a text file and compresses it into single spaces.**
+
+**Answer:**
+
 ```python
+# Step 1: Import re
 import re
+
+# Step 2: Set up text with several DIFFERENT kinds of whitespace
+# bunched together: multiple spaces, two tabs, and two newlines
 text = "Python    is\t\tvery\n\nuseful"
-# Replace repeated whitespace
-# \s+ captures all repeated whitespace characters (spaces, tabs, newlines) in the text.
-# The regex pattern \s+ matches sequences of one or more whitespace characters, and 
-# the re.sub() function replaces these sequences with a single space, effectively 
-# normalizing the whitespace in the text and making it easier to read and process.    
-# By replacing multiple whitespace characters with a single space, we can clean up the formatting 
-# of the text and ensure that there are no unnecessary spaces, tabs, or newlines that could 
-# interfere with further processing or analysis of the text.  
 
+# Step 3: \s+ matches ANY run of one or more whitespace characters
+# -- regardless of whether that run is made of spaces, tabs,
+# newlines, or a mixture of all three -- and replaces the whole run
+# with exactly one space
 cleaned = re.sub(r"\s+", " ", text)
-print(cleaned)  # Output: Python is very useful, because the regex pattern \s+ matches sequences of one or more whitespace characters in the original text, which includes multiple spaces, tabs, and newlines. The re.sub() function then replaces these sequences with a single space, resulting in the cleaned-up text "Python is very useful" where all extra whitespace has been normalized to single spaces between words.
-# Explanation:
-# \s+ captures all repeated whitespace.
-# Single space normalizes formatting.
+print(cleaned)
 ```
 
-________________________________________
-38. Write a script that extracts URLs beginning with either http or https.
+```text
+Python is very useful
+```
+
+**Explanation:**
+
+- `\s+` matches a run of one or more whitespace characters of *any* kind — this single pattern handles the multiple spaces, the double tab, and the double newline all uniformly, without needing separate rules for each.
+- This is the same underlying idea as Q6 above (replacing whitespace with a dash), applied here to *normalise* messy whitespace down to single spaces instead of replacing it with a visible separator — a common cleanup step when processing text pasted from elsewhere.
+
+#### **Q38. Write a script that extracts URLs beginning with either** `http` **or** `https`**.**
+
+**Answer:**
+
 ```python
+# Step 1: Import re
 import re
+
+# Step 2: Set up text containing one https:// URL and one http:// URL
 text = "Visit https://python.org and http://example.com"
-# https? matches "http" followed by an optional "s", allowing for both "http" and "https" URLs.
-# :// matches the literal characters "://", which are part of the URL structure.
-# \S+ matches one or more non-whitespace characters, which captures the rest of the URL 
-# after "http://" or "https://", including the domain and any path or query parameters.   
-# The regex pattern https?://\S+ matches URLs that start with either "http://" or "https://", 
-# followed by any sequence of non-whitespace characters, effectively capturing the full URLs present in the text. 
-# This allows us to extract the URLs from the given string for further processing or analysis.
 
+# Step 3: https?://\S+ breaks down as: 'http', an OPTIONAL 's'
+# (matching both http and https), then '://', then \S+ to grab
+# everything else up to the next whitespace
 urls = re.findall(r"https?://\S+", text)
-print(urls)  # Output: ['https://python.org', 'http://example.com'], because the regex pattern https?://\S+ matches both "https://python.org" and "http://example.com" in the text. The pattern allows for both "http" and "https" URLs by making the "s" optional, and then captures the rest of the URL using \S+, which matches any sequence of non-whitespace characters following the "http://" or "https://" prefix.
-
-# Explanation:
-# s? makes 's' optional.
-# \S+ captures remaining non-space characters.
-
+print(urls)
 ```
 
-________________________________________
-39. Write a script that demonstrates catastrophic backtracking using a badly designed regex and explain why it is dangerous.
+```text
+['https://python.org', 'http://example.com']
+```
+
+**Explanation:**
+
+- `s?` makes the letter `s` optional, which is exactly what lets one single pattern match both `http://` and `https://` URLs without needing two separate patterns joined by alternation.
+- `\S+` (any non-whitespace character, one or more times) captures the rest of each URL — the domain and any path — stopping naturally at the next space in the sentence.
+
+#### **Q39. Write a script that demonstrates catastrophic backtracking using a badly designed regex and explain why it is dangerous.**
+
+**Answer:**
+
 ```python
+# Step 1: Import re and time (to measure how long matching takes)
 import re
 import time
-# Poorly designed regex. 
+
+# Step 2: A DELIBERATELY poorly designed pattern: (a+)+ nests one
+# quantified group INSIDE another quantified group. There are many
+# different ways to split a run of 'a's between the inner and outer
+# '+', and the regex engine will try almost all of them before
+# giving up on a failing match
 pattern = r"(a+)+$"
-# (a+)+ means one or more groups of one or more 'a's.
-# Nested quantifiers  mean the regex engine has to try many combinations of 'a's when it encounters a long string of 'a's followed by a character that does not match the pattern (like 'X'), leading to excessive backtracking and performance issues.  
-# This regex has nested quantifiers (a+)+, which can cause excessive backtracking when the input 
-# string has many 'a's followed by a character that does not match the pattern (like 'X').   
-# Long failing string
+
+# Step 3: Build a string of 25 'a's followed by 'X' -- a character
+# that can never satisfy the pattern, forcing the engine to
+# exhaustively try every possible way of grouping the 'a's before
+# it can be sure no arrangement works
 text = "a" * 25 + "X"
+
+# Step 4: Time how long the (failing) match takes
 start = time.time()
 result = re.match(pattern, text)
 end = time.time()
-print("Match:", result)  # Output: Match: None, because the regex pattern (a+)+$ does not match the input string "aaaaaaaaaaaaaaaaaaaaaaaaaX". The pattern expects one or more groups of one or more 'a's followed by the end of the string, but since the input string ends with 'X' instead of 'a', the regex engine will try many combinations of 'a's and backtrack excessively before ultimately failing to find a match, resulting in None.
-print("Time taken:", end - start)  
-# Output: Time taken: (a significant amount of time, depending on the system), 
-# because the regex pattern (a+)+$ causes excessive backtracking when processing the 
-# input string "aaaaaaaaaaaaaaaaaaaaaaaaaX". The regex engine will try many combinations of 'a's and 
-# backtrack repeatedly before ultimately failing to find a match, which can lead to a significant increase 
-# in processing time, especially as the number of 'a's increases in the input string.
 
-# Explanation:
-# Nested quantifiers can trigger excessive backtracking.
-# Regex engine tries many combinations before failing.
-# Dangerous in performance-sensitive systems.
-
+print("Match:      ", result)
+print("Time taken: ", round(end - start, 4), "seconds")
 ```
 
-________________________________________
-40. Write a script that builds a mini regex tester where the user enters a pattern and a test string, and the script reports whether a match exists.
+```text
+Match:       None
+Time taken:  1.3281 seconds
+```
+
+*(Your own timing will vary depending on your machine, but it will be dramatically slower than every other script on this page — most of which complete in a small fraction of a millisecond.)*
+
+**Explanation:**
+
+- Nested quantifiers like `(a+)+` can trigger **excessive backtracking**, because the regex engine has many different ways to divide the same run of `a`s between the *inner* `+` (repeats within one group) and the *outer* `+` (repeats of the whole group) — and when the overall match ultimately fails, it has to try essentially all of them before giving up.
+- The table below shows just how quickly this gets out of hand as the string grows by only a few characters at a time — this is measured, real timing data, re-run while preparing this page:
+
+| Number of `a`s before the failing `X` | Time taken |
+|---|---|
+| 10 | 0.0001 s |
+| 15 | 0.0014 s |
+| 18 | 0.0105 s |
+| 20 | 0.0426 s |
+| 22 | 0.1716 s |
+| 24 | 0.6785 s |
+| 25 | 1.3281 s |
+
+Notice the pattern: each time the string grows by just one or two characters, the time taken roughly **doubles or quadruples**. This is the signature of *exponential* time complexity — a 30-character string here would likely take minutes, and a 40-character one could take longer than you would ever wait, all from a pattern that looks harmless at a glance. This is exactly why catastrophic backtracking is **dangerous in performance-sensitive systems**: an attacker (or simply an unlucky user) who can control the input to a vulnerable regex can cause your program to hang indefinitely, a class of security issue known as **ReDoS** (Regular Expression Denial of Service).
+
+#### **Q40. Write a script that builds a mini regex tester where the user enters a pattern and a test string, and the script reports whether a match exists.**
+
+**Answer:**
+
 ```python
+# Step 1: Import re
 import re
-# User inputs
+
+# Step 2: Ask the user for a pattern and a piece of text to test it
+# against
 pattern = input("Enter regex pattern: ")
 text = input("Enter test string: ")
-try:
-    # Try searching pattern
-    result = re.search(pattern, text)  # Searches for the first occurrence of the user-provided regex pattern in the user-provided test string, and returns a match object if a match is found, or None if no match is found. The try-except block is used to catch any potential re.error exceptions that may arise from invalid regex patterns entered by the user, allowing the program to handle such errors gracefully without crashing.
-    if result:
-        print("Match found:", result.group())  # Output: Match found: (matched text), because if the regex pattern matches a portion of the input string, the result.group() method returns the matched text.
-        print("Span:", result.span())  # Output: Span: (start, end), because the result.span() method returns a tuple indicating the start and end positions of the matched text within the input string.
-    else:
-        print("No match found")  # Output: No match found, because if the regex pattern does not match any portion of the input string, the re.search() function returns None, and the else block is executed, printing "No match found".
-except re.error as e:
-    print("Invalid regex pattern:", e)  # Output: Invalid regex pattern: (error message), because if the user enters an invalid regex pattern, the re.search() function will raise a re.error exception. The except block catches this exception and prints an error message indicating that the regex pattern is invalid, along with the specific error message provided by the exception.
-# Explanation:
-# Allows experimentation with regex.
-# try-except handles invalid patterns safely.
-# Useful educational mini-project.
 
+# Step 3: Wrap the search in try/except, since a user-typed pattern
+# might not be VALID regex syntax at all (e.g. an unmatched
+# parenthesis) -- re.error is the exception Python raises in that case
+try:
+    result = re.search(pattern, text)
+    if result:
+        print("Match found:", result.group())
+        print("Span:       ", result.span())
+    else:
+        print("No match found")
+except re.error as e:
+    print("Invalid regex pattern:", e)
 ```
 
+Since this script waits for the user to type input, it has no single fixed output — instead, here are two example runs captured while testing it:
 
+```text
+Enter regex pattern: \d+
+Enter test string: Room 42B
+Match found: 42
+Span:        (5, 7)
+```
+
+```text
+Enter regex pattern: (unclosed
+Enter test string: anything
+Invalid regex pattern: missing ), unterminated subpattern at position 0
+```
+
+**Explanation:**
+
+- This script allows hands-on experimentation with regex — you can type any pattern and any text and immediately see whether, and where, it matches, which makes it a genuinely useful tool for checking your own patterns while working through the other 39 questions on this page.
+- The `try`/`except re.error` block handles invalid patterns safely: without it, typing a broken pattern like `"(unclosed"` (a parenthesis with no matching close) would crash the whole script with an unhandled exception instead of reporting a friendly error message.
+- This is a small but genuinely useful educational mini-project — the same core idea used by many "regex playground" websites, just running locally in your own terminal.
 

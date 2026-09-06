@@ -458,6 +458,19 @@ There are four naming styles on this page, and twelve functions — which is exa
 
 Looking at how each function is actually implemented, a pattern emerges: `snake_case` acts as a kind of **hub**. Six of the twelve functions convert directly between two styles with their own dedicated logic (a regex substitution, a lookahead pattern, or a simple case change), while the four functions converting to or from `UPPER_CASE` and either `camelCase` or `PascalCase` are built by **composing** two of the direct functions together, routing *through* `snake_case` as a common intermediate form, rather than duplicating similar logic a second time.
 
+
+### Snake to Camel case
+
+![Flowchart](../resources/ch-13-august-2026-snake_to-camel.png)
+
+
+### Camel to Snake
+
+![Flowchart](../resources/ch-13-august-2026-camel-to-snake_02.png)
+
+
+
+
 ```mermaid
 flowchart LR
     SNAKE(("snake_case"))

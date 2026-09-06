@@ -12,7 +12,7 @@ Every script below has been run on Python 3.12.
 
 If you would like the wider companion resources for this chapter, see [`10-ch13-re.md`](10-ch13-re.md) (eighteen worked example scripts, a primality-testing mini-project, a password validator, and a from-scratch regex engine), [`50-ch13-re-conceptual-qa.md`](50-ch13-re-conceptual-qa.md) (twenty-one short conceptual questions and answers), and [`60-ch13-re-capturing-noncapturing.md`](60-ch13-re-capturing-noncapturing.md) (a focused look at capturing versus non-capturing groups) in this same folder.
 
-### A quick glossary (for reference while you read)
+### Glossary of terms
 
 | Term | Plain-language meaning | Learn more |
 |---|---|---|
@@ -67,7 +67,7 @@ Using \d+: ['7', '89', '1234']
 - `\d` finds every individual digit separately, with no notion of "these digits belong together" — that is why `89` comes back as two separate matches, `'8'` and `'9'`.
 - `\d+` combines consecutive digits into a single match instead, thanks to the `+` quantifier ("one or more"), which is why the same text produces the three whole numbers `'7'`, `'89'`, and `'1234'`.
 
->  **Extra practice question (not in the printed book):** What would `re.findall(r"\d*", text)` return instead of `\d+`? *(Try it yourself: `\d*` allows **zero** digits too, so — as with the very similar case in Q5 of [`50-ch13-re-conceptual-qa.md`](50-ch13-re-conceptual-qa.md) — you will see a number of extra empty-string matches `''` show up between the real numbers, one everywhere the pattern successfully matched "zero digits".)*
+>  **Extra practice question:** What would `re.findall(r"\d*", text)` return instead of `\d+`? *(Try it yourself: `\d*` allows **zero** digits too, so — as with the very similar case in Q5 of [`50-ch13-re-conceptual-qa.md`](50-ch13-re-conceptual-qa.md) — you will see a number of extra empty-string matches `''` show up between the real numbers, one everywhere the pattern successfully matched "zero digits".)*
 
 #### **Q2. Write a script that checks whether a string starts with the word** `Python` **using the** `^` **anchor.**
 

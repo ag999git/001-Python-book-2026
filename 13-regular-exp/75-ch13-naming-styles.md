@@ -506,10 +506,19 @@ Looking at how each function is actually implemented, a pattern emerges: `snake_
 ![Flowchart](../resources/ch-13-august-2026-upper-case-to-camel-case_09.png)
 
 
+### Camel case to UPPER Case
+
+![Flowchart](../resources/ch-13-august-2026-camel-case-to-UPPER-case_10.png)
 
 
+### UPPER Case to Pascal Case
+
+![Flowchart](../resources/ch-13-august-2026-UPPER-case-to-Pascal-case_11.png)
 
 
+### Pascal Case to UPPER Case
+
+![Flowchart](../resources/ch-13-august-2026-Pascal-case-to-UPPER-case_12.png)
 
 
 

@@ -481,6 +481,41 @@ Looking at how each function is actually implemented, a pattern emerges: `snake_
 
 
 
+### Camel case to Pascal case
+
+![Flowchart](../resources/ch-13-august-2026-camel-to-pascal_05.png)
+
+
+### Pascal to Camel Case
+
+![Flowchart](../resources/ch-13-august-2026-pascal-to-camel_06.png)
+
+
+### UPPER case to Snake case
+
+![Flowchart](../resources/ch-13-august-2026-UPPER-case-to-snake-case_07.png)
+
+
+### Snake case to UPPER Case
+
+![Flowchart](../resources/ch-13-august-2026-snake-case-to-upper-case_08.png)
+
+
+### UPPER case to Camel Case
+
+![Flowchart](../resources/ch-13-august-2026-upper-case-to-camel-case_09.png)
+
+
+
+
+
+
+
+
+
+
+
+
 ```mermaid
 flowchart LR
     SNAKE(("snake_case"))

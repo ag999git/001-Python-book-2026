@@ -525,28 +525,6 @@ Looking at how each function is actually implemented, a pattern emerges: `snake_
 
 
 
-```mermaid
-flowchart LR
-    SNAKE(("snake_case"))
-    CAMEL(("camelCase"))
-    PASCAL(("PascalCase"))
-    UPPER(("UPPER_CASE"))
-
-    SNAKE -->|"1: direct (split + capitalize)"| CAMEL
-    CAMEL -->|"2: direct (regex, 2 steps)"| SNAKE
-    PASCAL -->|"3: direct (regex lookahead)"| SNAKE
-    SNAKE -->|"4: direct (split + capitalize all)"| PASCAL
-    CAMEL -->|"5: direct (first letter only)"| PASCAL
-    PASCAL -->|"6: direct (first letter only)"| CAMEL
-    UPPER -->|"7: direct (.lower)"| SNAKE
-    SNAKE -->|"8: direct (.upper)"| UPPER
-    UPPER -.->|"9: via snake_case (7 then 1)"| CAMEL
-    CAMEL -.->|"10: via snake_case (2 then 8)"| UPPER
-    UPPER -.->|"11: via snake_case (7 then 4)"| PASCAL
-    PASCAL -.->|"12: via snake_case (3 then 8)"| UPPER
-```
-
-*(Solid arrows are the eight directly-implemented conversions; dashed arrows are the four conversions built by composing two solid-arrow functions together, routed through `snake_case`. This diagram uses plain round nodes and labelled arrows, so it should render correctly if pasted into [draw.io](https://app.diagrams.net/)'s Mermaid import as well as on GitHub.)*
 
 ## Combined script: all twelve conversions together
 
@@ -660,23 +638,3 @@ upper to pascal -> UpperCaseExample
 pascal to upper -> PASCAL_CASE_EXAMPLE
 ```
 
-## Summary of changes made to this page
-[Back to Table of Contents](#table-of-contents)
-
-This page is a rewrite of the original `75-ch13-naming-styles.md`, carried out under the same set of instructions used for the other four companion pages for this chapter: improve the writing and explanations; use plain language with technical terms explained or linked; give step-by-step, logically ordered explanations; comment scripts step by step; show verified output for every script; add tables and diagrams where they help; give a combined script after any script that was built up in separate steps; and never shorten a clear, correct explanation just to save space. The original file contained no printed research or assignment questions to preserve verbatim — it was a single, unbroken code block with no surrounding heading, introduction, or explanatory prose at all — so this rewrite's job was to build a complete teaching page *around* that existing, working code, without changing what any of the twelve functions actually do. Every one of the twelve functions was re-run individually, and the combined script was re-run as a whole, on Python 3.12 while preparing this page; all outputs shown here were verified this way.
-
-#### Section-by-section summary
-
-| Section | What was in the original | What changed here |
-|---|---|---|
-| Page opening | A single `###`-level heading ("Naming styles in Python programming") with no introduction, immediately followed by one large code block | **Added:** a new page title, a "What this page contains, and why it matters" introduction explaining the four naming styles and linking this page to the printed book and to the other four companion pages for this chapter, a glossary table, and a table of contents. |
-| The twelve functions | Presented together as one continuous script, each function preceded only by a one-line numbered comment (e.g. `# 1. snake_case to camelCase conversion`) and its own docstring | **Modified:** each of the twelve conversions was given its own numbered subsection with a heading, `# Step` comments added throughout its code, its own fenced verified output block, and a prose explanation underneath describing *why* the code works, not just *what* it does. No function's logic was changed — all twelve were verified to already produce the output originally claimed in their trailing comments. |
-| `camel_to_snake()` and `pascal_to_snake()` | Two separate, differently-implemented functions for superficially similar jobs, with no comparison drawn between them | **Added:** an extra verification line under each — running both functions on the same acronym-containing input, `"XMLFile"` — to make visible, with real output, exactly *why* `camel_to_snake()` needs a second regex substitution that `pascal_to_snake()` does not attempt: `camel_to_snake("XMLFile")` correctly gives `"xml_file"`, while `pascal_to_snake("XMLFile")` gives `"x_m_l_file"`, fragmenting the acronym letter by letter. An extra practice question was added inviting the reader to try fixing `pascal_to_snake()` the same way. |
-| Functions 9–12 (the four composed conversions) | Presented with no comment on the fact that each one calls two other functions defined earlier in the same file | **Added:** a note under each of these four functions explaining that it depends on two specific, named functions defined earlier on the page, and that running it in isolation (copying just that one code block) will raise a `NameError` unless those dependencies are pasted in above it first, or the combined script is used instead. |
-| No equivalent section in the original | — | **Added:** a "How the twelve functions fit together" section explaining that twelve is exactly the number of ordered pairs among four naming styles, and a Mermaid flowchart showing all twelve conversions as a directed graph, with solid arrows for the eight directly-implemented conversions and dashed arrows for the four that are composed by routing through `snake_case` as a hub. |
-| End of the original script | No combined summary; the file simply ended after the twelfth function's demonstration `print()` | **Added:** an explicit "Combined script" section, per point 10 of the request that produced this rewrite, reproducing the original's own idea of running all twelve functions and their twelve demonstration prints together in one script, now with `# Step` numbering and its own verified output block. |
-| This section | Did not exist | **Added:** new, per point 13 of the request that produced this rewrite. |
-
-#### Corrections — genuine errors found and fixed (each verified by running the code)
-
-None. Every one of the twelve functions in the original file ran successfully exactly as printed, and every claimed output (shown as a trailing `#` comment after each demonstration `print()` call) was verified to be genuinely correct, including the `camel_to_snake("XMLFile")` example already promised in that function's own docstring. This page's changes are therefore all **additions** — headings, explanations, step comments, a diagram, and cross-references — rather than corrections to any factual error, unlike the other companion pages for this chapter, each of which required at least one genuine fix.

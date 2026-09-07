@@ -475,6 +475,11 @@ Looking at how each function is actually implemented, a pattern emerges: `snake_
 ![Flowchart](../resources/ch-13-august-2026-pascal-to-snake_03.png)
 
 
+### Snake to Pascal case
+
+![Flowchart](../resources/ch-13-august-2026-snake-to-pascal_04.png)
+
+
 
 ```mermaid
 flowchart LR

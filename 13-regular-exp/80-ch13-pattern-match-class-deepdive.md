@@ -414,37 +414,16 @@ As Question 5's follow-up experiment showed directly, the *specific* choice of `
 
 ---
 
-## Summary of changes made to this page
 
-[Back to Table of Contents](#table-of-contents)
 
-This page is a rewrite of the original `80-ch13-pattern-match-class-deepdive.md`, carried out under the same instructions used for the other companion pages in this chapter: improve the writing and explanations; use plain language with technical terms explained or linked; give step-by-step, verifiable answers; add step comments and real, verified output to every script; add tables and a diagram where they help visualize the idea; and never shorten a long, correct explanation purely to save space. The four numbered "Questions for the Student" are the printed book's own research questions and have been preserved completely unchanged; two optional follow-up questions were added afterward, clearly separated from the originals. Every code example, and every specific claim made about Python's own source code (including the exact two lines of the "hack", the `__all__` list, the module reorganization between Python 3.10 and 3.11, and the historical `_sre.SRE_Pattern` naming), was independently verified while preparing this page, by running real Python 3.10, 3.11, and 3.12 interpreters and by fetching the actual CPython source at both the pinned commit this exercise links to and the current `main` branch.
 
-#### Section-by-section summary
 
-| Section | What was in the original | What changed here |
-|---|---|---|
-| Page opening | A `###`-level heading with a difficulty disclaimer, and a short bulleted list of what the exercise teaches, with no separate introduction | **Added:** a proper page-level heading, an expanded "What this page contains, and why it matters" introduction explaining the point of the exercise even for a reader who decides to stop after the introduction, a glossary table of every technical term used on the page, and a table of contents. The original difficulty disclaimer was kept, reworded slightly to explain what a beginner should do instead of just being told to skip it. |
-| Introduction & Context, The Challenge | Present as short bulleted paragraphs | **Kept** in full, with the bullet points turned into connected prose for easier reading, and nothing removed. |
-| Step 1: The Namespace Mystery | A code block with numbered comments (`# 1.`, `# 2.`, `# 3.`) and claimed output written as trailing `#` comments | **Modified:** the code was given proper `# Step 1`, `# Step 2`, ... comments, and the claimed output was pulled out into its own fenced, independently-verified `text` block underneath the code, run on Python 3.12. |
-| Step 2: GitHub Research | Instructions on where to look in the source file | **Added:** a short note on why the page links a fixed commit rather than the constantly moving `main` branch, since this is itself a useful research habit. |
-| Step 3: Analyze the Hack | The two hack lines, with a link to a pinned commit | **Added:** a verified note explaining that the exact module name (`_compiler` vs. the older `sre_compile`) depends on whether the reader is using Python 3.11+ or Python 3.10 and earlier (confirmed directly on both), and a second note that CPython's current, still-changing `main` branch has since moved from `.match('')` to `.prefixmatch('')` on the `Match` line -- a live example of exactly the "branches keep moving" point made in the Step 2 note. |
-| Questions for the Student | Four numbered research questions | **Preserved verbatim, unchanged.** Two new follow-up questions (5 and 6) were added afterward in a clearly separated block, inviting the student to test whether the choice of pattern text matters, and to think about what this exercise reveals about class definition versus class visibility. |
-| The "Cheat Sheet" | The hack explained in prose, plus an "Internal / Public" table naming the private C class as `_sre.SRE_Pattern` / `_sre.SRE_Match` | **Kept** the explanation and the table exactly as given, since it correctly describes the historical mechanism, and **added** a verified nuance directly underneath: on every currently supported Python version (3.10 through 3.12, checked directly), the underlying C type already reports itself as `re.Pattern` / `re.Match`, not `_sre.SRE_Pattern` / `_sre.SRE_Match`, because of a change (bpo-30397) that shipped in Python 3.7. This does not change the lesson the cheat sheet teaches, but it is a genuine, checkable detail worth knowing. |
-| Additional learning points | Prose explanation of why the code looks strange, and why an empty string is used | **Kept** in full, and **added** a new draw.io-compatible Mermaid flowchart showing the whole hack as a six-step pipeline, from "class cannot be imported" through to "re.Pattern behaves like a normal class". |
-| Let us discuss the given code line by line | Prose walking through four conceptual steps, without running any code | **Modified:** each of the four steps now has its own small, runnable code snippet, and every one of the four "results" the original states (for example, `Pattern == <class '_sre.SRE_Pattern'>`) was checked against a real interpreter; the actual verified result on current Python is shown as `<class 're.Pattern'>`, consistent with the nuance added under the Cheat Sheet section above. |
-| No equivalent section in the original | -- | **Added:** a full combined verification script bringing every experiment on this page (the hack itself, the `isinstance()` checks, the non-trivial-pattern follow-up, and the direct `re.Pattern()` constructor-call experiment answering Question 4) into one script, with its own verified output block, following the same "combined script after step-by-step scripts" pattern used throughout this chapter. |
-| Why is this called a hack / Why doesn't Python expose these normally / Why the re module needs these types / Why empty strings are used | Present as short bulleted sections | **Kept** in full; lightly expanded with concrete, verified detail (for example, the exact error message produced by calling `re.Pattern()`, and confirmation that a non-empty pattern would have worked just as well). |
-| Key Takeaways, One-Sentence Summary | Present as given | **Kept, unchanged.** |
-| This section | Did not exist | **Added**, per the standard instructions used for every page in this chapter. |
 
-#### Corrections -- genuine errors found and fixed (each independently verified)
 
-| Original claim | Verified finding | What was done |
-|---|---|---|
-| The "Internal / Public" table names the private C class as `_sre.SRE_Pattern` and `_sre.SRE_Match` | Checked directly on Python 3.10, 3.11, and 3.12: the underlying C type's own displayed name and `__module__` are already `re.Pattern` / `re.Match`, not `_sre.SRE_Pattern` / `_sre.SRE_Match`. This renaming shipped in Python 3.7 as part of [bpo-30397](https://github.com/python/cpython/pull/1646/files), which the original page's cheat sheet does not mention | This is not treated as an error to silently fix, since it correctly describes the historical mechanism and the exercise's own verified Step 1 output already shows `<class 're.Pattern'>` rather than the older name. Instead, a clearly marked "verified nuance" note was added directly under the table, explaining the Python 3.7 change with a cited source, so the reader sees both the historical picture and the current one |
-| The two hack lines use `_compiler.compile(...)` | Confirmed this only applies from Python 3.11 onward, when `re` became a package; on Python 3.10 (checked directly), the equivalent module is the separately-importable `sre_compile`, and the two lines read `Pattern = type(sre_compile.compile('', 0))` | Added as a verified note under Step 3, rather than a correction, since the original page's claim is accurate for the CPython `main` branch it links to; the note simply adds the version context a student would need if their own installed Python does not match |
-| No other factual errors were found | Every remaining code example, claimed output, and description of `__all__`, `isinstance()`, type annotations, and the reason for using an empty string was independently run or checked and found to be accurate as stated | No changes needed beyond the additions described above |
+
+
+
+
 
 
 

@@ -414,28 +414,7 @@ The second easy-to-miss case in the same list is `"Ab1@xy "` (with a trailing sp
 
 ## How the whole check flows
 
-```mermaid
-flowchart TD
-    A(("Start: a candidate password string"))
-    B{"Does it contain at least<br/>one lowercase letter"}
-    C{"Does it contain at least<br/>one uppercase letter"}
-    D{"Does it contain at least<br/>one digit"}
-    E{"Does it contain at least<br/>one special character<br/>from the allowed set"}
-    F{"Is every character in the<br/>allowed set, AND is the total<br/>length between 6 and 12"}
-    G(("BAD: reject the password"))
-    H(("GOOD: accept the password"))
-    A --> B
-    B -- no --> G
-    B -- yes --> C
-    C -- no --> G
-    C -- yes --> D
-    D -- no --> G
-    D -- yes --> E
-    E -- no --> G
-    E -- yes --> F
-    F -- no --> G
-    F -- yes --> H
-```
+![Flowchart](../resources/ch-13-august-2026-exercise-password-with-regex.png)
 
 ## Follow-up questions
 

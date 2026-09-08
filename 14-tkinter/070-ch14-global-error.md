@@ -204,14 +204,7 @@ That last row is the whole subject of this page: `sys.excepthook` is not an alte
 
 By default, Python follows this sequence:
 
-```mermaid
-flowchart TD
-    A[An error occurs] --> B[Python searches for a matching try-except]
-    B --> C[No handler is found anywhere]
-    C --> D[Python calls sys.excepthook]
-    D --> E[The default hook prints a traceback to stderr]
-    E --> F[The program stops with exit status 1]
-```
+![Flowchart](../resources/ch14-tkinter-September-2026-uncaught-exceptions-001.png)
 
 Notice the fourth box, which the short version of this story usually leaves out. Printing the traceback is not something Python does directly — it is done *by* `sys.excepthook`, which is simply the function Python happens to have installed there by default. That is exactly why replacing it changes what happens.
 
@@ -257,11 +250,7 @@ Python provides a built-in mechanism called `sys.excepthook`. It controls:
 
 By default:
 
-```mermaid
-flowchart LR
-    A[Uncaught error] --> B[Traceback shown]
-    B --> C[Program crashes]
-```
+![Flowchart](../resources/ch14-tkinter-September-2026-uncaught-exceptions-002.png)
 
 However, programmers can replace Python’s default behaviour:
 
@@ -345,20 +334,11 @@ Hence: **global exception handling**.
 
 Local handling:
 
-```mermaid
-flowchart LR
-    A1[Error occurs] --> B1[A try-except surrounds this code]
-    B1 --> C1[Handled right here]
-```
+![Flowchart}(../resources/ch14-tkinter-September-2026-uncaught-exceptions-003.png)
 
 Global handling:
 
-```mermaid
-flowchart LR
-    A2[Error occurs] --> B2[No try-except is found anywhere]
-    B2 --> C2[sys.excepthook is called]
-    C2 --> D2[Your global handler runs]
-```
+![Flowchart](../resources/ch14-tkinter-September-2026-uncaught-exceptions-004.png)
 
 **They are partners, not rivals.** It is tempting to conclude that a global handler makes `try-except` unnecessary. It does not, and it is worth understanding why. A `try-except` block knows exactly what went wrong and exactly where, so it can recover intelligently — ask the user to retype a number, fall back to a default setting, retry a download. A global handler knows only that *something* failed *somewhere*, so all it can sensibly do is record the problem and apologise. Use `try-except` wherever you can foresee a failure, and treat the global handler as the safety net for everything you could not foresee.
 

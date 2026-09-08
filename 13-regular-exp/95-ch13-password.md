@@ -424,34 +424,4 @@ These are new; nothing in the original problem statement or solution required an
 2. The current pattern's character class is `[A-Za-z0-9!@#$%^&*]`. What would you need to add to this pattern to also allow underscores (`_`) as a valid character, without accidentally allowing anything else? Test your answer against a password containing an underscore.
 3. Every lookahead in this pattern uses `.*`, which allows the required character to appear *anywhere*. What would change about the pattern's behaviour if you replaced `.*` with `.{0,3}` in just the lowercase-letter lookahead (limiting it to only look within the first four characters)? Try it on a password where the first lowercase letter appears later than that, and observe what happens.
 
-## Summary of changes made to this page
-
-[Back to Table of Contents](#table-of-contents)
-
-This page is a rewrite of the original `95-ch13-password.md`, carried out under the same instructions used for the other companion pages in this chapter: improve the writing and explanations; use plain language with technical terms explained or linked; give step-by-step, verifiable answers; add step comments and real, verified output to scripts; add tables and a diagram where they help visualize the idea; and never shorten a long, correct explanation purely to save space. The original problem statement is preserved with its wording completely unchanged. Every code example on this page, including the original solution's own regex pattern and its full claimed output table, was independently run and verified while preparing this page (using Python 3.12); every result matched exactly.
-
-#### Section-by-section summary
-
-| Section | What was in the original | What changed here |
-|---|---|---|
-| Page opening | A `##`-level heading, immediately followed by the problem statement, with no separate introduction | **Added:** a proper page title, a "What this page contains, and why it matters" introduction, a glossary of technical terms, and a table of contents. |
-| Problem statement | A bulleted list of the five password rules | **Preserved verbatim, unchanged**, aside from placing it under its own clearly labelled section heading. |
-| The solution script | One complete script, building the pattern all at once and testing it against the full list of fifteen passwords | **Modified and expanded:** the same pattern, same logic, broken into three teaching stages (length and character set alone, each lookahead tested in isolation, then the complete pattern), each with its own small script and its own independently verified output, followed by a combined script bringing every stage back together as one block. The final verdict-printing loop was also changed to print each password's `repr()` and length alongside the GOOD/BAD verdict, to make the trailing-space test case visible rather than hidden by column padding (see "A test case worth a second look"). |
-| Detailed explanation of the RegEx Pattern (anchors, lookaheads, character set and quantifier) | Present with a requirements table | **Kept in full**, with one verified clarification added underneath the character-set-and-quantifier explanation, precisely describing lookaheads as zero-width assertions (confirmed with `re.match(...).span()`), to sharpen the "returns to the start of the string" description already given. |
-| Why is it structured this way? | Present as given | **Kept in full**, with one added sentence connecting it to the zero-width clarification above. |
-| Detailed Breakdown of a "BAD" Match | A seven-step walkthrough of why `"Ab1xyz"` fails | **Kept, unchanged.** |
-| No equivalent section in the original | -- | **Added:** a matching "Detailed breakdown of a GOOD match" section walking through `"Good1@Pwd"` step by step, with its own small verification script, so the reader sees both a full failure and a full success explained the same way. |
-| No equivalent section in the original | -- | **Added:** "A test case worth a second look," directly addressing the original script's own uncertain inline comment on `"Ab1@xy!"` (`# Too long (7 but extra special allowed? no length OK — keep for discussion)`), confirming with a table that this password genuinely satisfies every stated rule, explaining why it was likely placed under the "Invalid" heading anyway, and separately pointing out the visually-identical `"Ab1@xy"` / `"Ab1@xy "` output rows caused by column padding. |
-| No equivalent section in the original | -- | **Added:** a draw.io-compatible Mermaid flowchart showing the five checks as a sequential decision process. |
-| No equivalent section in the original | -- | **Added:** three follow-up questions extending the exercise (an exactly-one-special-character stricter pattern, adding underscore as an allowed character, and limiting where a lookahead is allowed to search). |
-| This section | Did not exist | **Added**, per the standard instructions used for every page in this chapter. |
-
-#### Corrections -- genuine errors found and fixed (each independently verified)
-
-| Original claim | Verified finding | What was done |
-|---|---|---|
-| No errors were found in the regex pattern, the script's logic, or its claimed output table | Every one of the fifteen listed test passwords was independently re-run against the exact original pattern, and every `GOOD`/`BAD` result matched the original's own claimed output precisely | No corrections were needed to the pattern or the script's logic |
-| The inline comment on `"Ab1@xy!"` reads "Too long (7 but extra special allowed? no length OK — keep for discussion)" | This comment's own uncertainty is resolved by checking the password against the Problem Statement's actual rules: it is not too long (7 is within the 6-12 range), it satisfies every stated requirement, and the code's own `GOOD` verdict for it was already correct | Rather than silently editing the comment, a full "A test case worth a second look" section was added, explaining precisely why this test case is correctly labelled `GOOD` despite living in the "Invalid passwords" part of the list, and using it as a teaching example about verifying uncertain comments by running the code |
-
-
 

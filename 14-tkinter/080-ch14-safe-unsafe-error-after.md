@@ -313,7 +313,7 @@ def task():
 
 The error is caught locally, and the program behaves safely.
 
-![Flowchart](..C:\One-Drive-2025\OneDrive\Python-book-new-2026-NOIDA\014-New-chapter-tkinter-material-and-chapter\ch14-tkinter-September-2026-safe-unsafe-callbacks-002.png)
+![Flowchart](../resources/ch14-tkinter-September-2026-safe-unsafe-callbacks-002.png)
 
 
 **Which should you use?** Both, for different things. This is the point that is easy to miss. A safe callback is better wherever you can *predict* a failure, because a local `try-except` knows exactly what went wrong and can respond intelligently — retry, use a default, ask the user for a different value. A global handler knows only that something, somewhere, failed; all it can sensibly do is record the problem and apologise. So write `try-except` around code you know might fail, and keep the global handler as the safety net for the failures you never saw coming.

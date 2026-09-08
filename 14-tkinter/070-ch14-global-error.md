@@ -466,17 +466,7 @@ A wider test confirms where each hook applies:
 
 The same sequence in text form, showing what happens from the moment the button is clicked:
 
-```mermaid
-flowchart TD
-    A[User clicks Trigger NameError] --> B[trigger_error runs and writes to the log panel]
-    B --> C[The line print undefined_variable raises a NameError]
-    C --> D[There is no try-except so Tkinter catches it]
-    D --> E[report_callback_exception calls handle_uncaught]
-    E --> F[Write two lines into the log panel]
-    F --> G[Save the full traceback into error_log.txt]
-    G --> H[Show a friendly popup to the user]
-    H --> I[The window stays open and remains usable]
-```
+![Flowchart](../resources/ch14-tkinter-September-2026-uncaught-exceptions-006.png)
 
 [Back to Table of Contents](#table-of-contents)
 
@@ -829,53 +819,7 @@ In short, overriding the hook changes an error from something that either kills 
 | A stream of identical popups appears | The error happens repeatedly, for example inside a repeating `after()` job. | Cancel the repeating job inside the handler, or count errors and stop after a few. |
 | Errors inside a thread are still not caught | `sys.excepthook` does not cover threads. | Use `threading.excepthook`, added in Python 3.8. |
 
-```mermaid
-flowchart TD
-    S[My global error handler is not working] --> Q1{Did the error come from a button click or an after job}
-    Q1 -->|Yes| F1[Assign the handler to root.report_callback_exception as well]
-    Q1 -->|No| Q2{Does the handler accept exactly three arguments}
-    Q2 -->|No| F2[Give it exc_type exc_value and exc_traceback]
-    Q2 -->|Yes| Q3{Is error_log.txt empty}
-    Q3 -->|Yes| F3[The handler never ran - check both hooks are installed]
-    Q3 -->|No| Q4{Is the traceback missing from the file}
-    Q4 -->|Yes| F4[Pass exc_info to logging.error]
-    Q4 -->|No| F5[Check the error was not raised inside a thread]
-```
-
-[Back to Table of Contents](#table-of-contents)
-
-----------
-
-## Summary of Changes Made to This Page
-
-The table below documents every change made while revising this page, for transparency. **The printed research question — the whole block from "Research / Project Question" through Part A, Part B, Part C and the Expected Learning Outcome — has been reproduced word for word, and verified line by line against the original file.** Its wording, its lists, its code samples and its punctuation are unchanged, and no typographical errors were found in it that needed correcting. All new material has been added in clearly separate, clearly labelled sections.
-
-| Element | Original | Change made |
-| --- | --- | --- |
-| Overall structure | An untitled page starting directly with the research question, followed by a "Model Theory Solution" and a script, with no answer to Part C. | Added a page title, a clickable table of contents, an "About This Page" introduction, a "Key Terms" glossary, answers labelled A1 to A5 matching the five Part A questions, a new section on the Tkinter complication, answers labelled B1 to B7 for the script, a full answer to Part C, a common-errors section, and this change-log table. |
-| Table of contents | None. | Added at the top, with `###` subtopics nested as a sub-list under their `##` topics, and every entry linked to its heading. A "Back to Table of Contents" link was added at the end of each topic and subtopic. |
-| Printed research question | Present. | Reproduced word for word, verified line by line. Heading levels are unchanged, since the question already sat at the levels needed for the table of contents. |
-| Follow-up questions | None. | Added five optional follow-up questions (F1 to F5), clearly marked as additional online material and not part of the printed book. |
-| **Model script: it did not work** | The script installed `sys.excepthook = handle_uncaught` and then raised a `NameError` from a button click. Running it confirmed that the handler never ran: no popup appeared, the log panel stopped after "Triggering NameError", `error_log.txt` was created but stayed **0 bytes**, and the only output was `Exception in Tkinter callback` plus a traceback in the terminal. Requirements 3, 7 and 8 of Part B were therefore not met. | **Corrected.** The same function is now also assigned to `root.report_callback_exception`, which is the hook Tkinter actually uses for callback errors. The `sys.excepthook` line required by the question is kept as well, so both routes lead to the same handler. Verified by running the corrected script: the popup now appears, the log panel completes all five lines, and `error_log.txt` is written with the timestamped error and the full traceback instead of staying empty. |
-| Explanation of the above | Not mentioned anywhere; the page assumed `sys.excepthook` was sufficient. | Added a new section, "The Tkinter Complication", containing a reduced side-by-side test program, its real captured output showing the handler running in one case and not the other, a table of which hook applies to which kind of error, and a flowchart. |
-| Answer to Part C | **Missing entirely.** Part C asks what would happen if `sys.excepthook` were not overridden, but the model answer ended after Part A and the script. | Added a full answer, covering both cases separately: a top-level error, where the default hook prints a traceback and exits with status 1; and a callback error, where Tkinter's own default prints to `stderr` and the user sees nothing at all. Includes a comparison table of default behaviour against a custom handler. |
-| A1, uncaught exceptions | Gave a definition, a list of error names, and an example. | All original content kept. Added a four-stage table tracing how Python searches for a handler up the chain of callers, and the point that `sys.excepthook` is not an alternative to `try-except` but what happens after every `try-except` has been given its chance. |
-| A2, how Python responds | Gave a three-line arrow sequence and an example. | Original content kept. Added the step the original omitted: printing the traceback is done *by* `sys.excepthook`, which is why replacing it works. Added the facts that the traceback goes to `stderr` and that the program exits with status 1. |
-| A2 example output | The traceback example had run together onto one line: `Traceback (most recent call last):...ZeroDivisionError:division by zero`. | Replaced with a correctly formatted traceback in a `text` block, showing the real multi-line layout a student would actually see. |
-| A3, `sys.excepthook` | Described its purpose and listed what a custom handler can do. | All original content kept. Added the required three-argument signature with a table explaining `exc_type`, `exc_value` and `exc_traceback`, a warning about the `TypeError` produced by the wrong number of arguments, and the limitations regarding threads and Tkinter callbacks. |
-| A4, local versus global | Gave a five-row comparison table and two examples. | All five original rows kept, with three further rows added. Added a closing paragraph explaining that the two are partners rather than alternatives, since a local handler can recover intelligently while a global one can only record and apologise. |
-| A5, friendly popups | Three short lines. | Original content kept and expanded into a six-row table of distinct reasons, including the point that a traceback sent to `stderr` may never be seen at all by someone who launched the program from an icon, and that tracebacks can expose file paths and private details. |
-| Pseudo-code in `python` fences | Five blocks of arrow diagrams and sample text were placed inside ```python fences although they were not Python code: the "Error occurs" sequence, the "uncaught error" sequence, the "LOCAL"/"GLOBAL" visual difference blocks, the error-name list, and the popup wording example. | The error-name list and the popup example were moved to ` ```text ` fences, matching their actual content. The three arrow sequences were replaced with Mermaid flowcharts. |
-| Spacing errors in code samples | `sys.excepthook =handle_uncaught` (twice), `try-except`block, `Error:Something went wrong.`, `LOCAL:Error`, `GLOBAL:Error`, and `tracebacks technical error details` all ran words together without spaces. | All corrected to normal spacing, and the run-together phrase "tracebacks technical error details" was separated into the two ideas it was meant to express. |
-| Flowchart image | `![Flowchart handling global exceptions](/resources/ch14-tkinter-exceptions.png)` shown with no surrounding explanation. | The original image link was kept unchanged, and a Mermaid flowchart of the same execution sequence was added beneath it, so the flow is visible even if the image resource is unavailable to a reader. |
-| Script comments | Numbered `# 1.` to `# 9.`, with several very long comment lines running past the width of the code. | Renumbered to the `# Step N:` format, with sub-steps such as `# Step 5a:` inside functions. Long trailing comments were moved onto their own lines above the code they describe. |
-| Script: `logging.error(error_msg)` | Recorded only the one-line summary, so the log file lost the traceback. | Changed to `logging.error(error_msg, exc_info=(exc_type, exc_value, exc_traceback))`, so the file receives the complete stack trace while the popup still shows only the short message. |
-| Script: minor style points | `sys.excepthook = (handle_uncaught)` used unnecessary brackets, and `error_msg = (f"{exc_type.__name__}: " f"{exc_value}")` used implicit string concatenation across two f-strings for no reason. | Simplified to `sys.excepthook = handle_uncaught` and a single f-string. |
-| Script: output | No `print()` statements at all, and no sample output anywhere on the page. | Added teaching `print()` statements at every step, and made `write_log()` echo to the terminal as well as the window. Added a new "Expected Output" section showing genuine captured output for start-up and for the button click, the popup text, the final contents of the log panel, and the real contents of `error_log.txt`. |
-| Script: presentation | A single code block. | Split into explained sections B1 to B5, followed by the complete combined script in B6, so it can be read either way. |
-| Troubleshooting guidance | None. | Added an eight-row table mapping each symptom to its cause and fix, including the empty-log-file symptom produced by the original script, plus a decision flowchart of the same checklist. |
-| Diagrams | None. | Added six Mermaid diagrams: Python's default response, the default hook sequence, the local-versus-global comparison, the routing of exceptions in Tkinter, the script's execution sequence, and the troubleshooting flowchart. All use plain flowchart syntax with no brackets or quotation marks inside node labels, so they can be imported into draw.io. |
-| Emojis | None used. | None used (unchanged). |
+![Flowchart](../resources/ch14-tkinter-September-2026-uncaught-exceptions-007.png)
 
 [Back to Table of Contents](#table-of-contents)
 

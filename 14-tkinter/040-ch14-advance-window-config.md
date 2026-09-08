@@ -303,15 +303,9 @@ Each entry below follows the same pattern: a plain-language explanation first, f
 
 The four states controlled by `state()` (plus the special "withdrawn" state controlled by `withdraw()`/`deiconify()`) form a small cycle. The diagram below shows how a window moves between them. It uses plain flowchart syntax so that it can also be opened and edited inside diagramming tools such as draw.io.
 
-```mermaid
-flowchart LR
-    A[Normal - a regular visible window] -->|state iconic| B[Iconic - minimized to the taskbar]
-    B -->|state normal, or deiconify| A
-    A -->|state zoomed| C[Zoomed - maximized to fill the screen]
-    C -->|state normal| A
-    A -->|withdraw| D[Withdrawn - fully hidden, not even in the taskbar]
-    D -->|deiconify| A
-```
+
+![Flowchart](../resources/ch14-tkinter-September-2026-window-configuration-lifecycle-management.png)
+
 
 Reading this diagram: a window starts out **Normal**. Calling `state("iconic")` sends it to **Iconic** (minimized); calling `deiconify()` or `state("normal")` brings it back. Calling `state("zoomed")` sends it to **Zoomed** (maximized); calling `state("normal")` restores it. Calling `withdraw()` sends it to **Withdrawn**, the most complete form of hiding — the window disappears from the taskbar entirely — and only `deiconify()` can bring it back.
 
@@ -685,16 +679,7 @@ Each button created above calls one of the methods below when clicked. These met
 
 The `open_auxiliary()` method above is a good example of `withdraw()` and `deiconify()` working as a pair. The flowchart below traces that sequence of events from the moment the user clicks the button to the moment the main window reappears.
 
-```mermaid
-flowchart TD
-    S[Main window is open] --> T[User clicks Open Aux Window button]
-    T --> U[Main window calls withdraw - it disappears]
-    U --> V[A Toplevel auxiliary window is created and centered]
-    V --> W[User closes the auxiliary window]
-    W --> X[on_aux_close runs]
-    X --> Y[Auxiliary window is destroyed]
-    Y --> Z[Main window calls deiconify - it reappears]
-```
+![Flowchart](../resources/ch14-tkinter-September-2026-window-configuration-lifecycle-management-02.png)
 
 ### 3.7 Starting the Application
 
@@ -1079,24 +1064,5 @@ Your own output will not be identical line for line — the exact screen size, t
 The example script above intentionally uses the classic `tk.Label` and `tk.Button` widgets (as in the printed chapter) rather than the newer, more modern-looking `ttk.Label` and `ttk.Button` widgets, so that the window-management techniques on this page stay the clear focus, without mixing in a separate styling topic. If you would like your own windows to also pick up your operating system's native visual theme, you can generally swap `tk.Button(...)` for `ttk.Button(...)` (after `from tkinter import ttk`) without changing any of the window-configuration code discussed above — the two topics are independent of each other.
 
 ---
-
-## Summary of Changes Made to This Page
-
-The table below documents every change made while revising this page, for transparency. Nothing in the printed book's material or in any research question wording was altered — this page contained no research questions to begin with, only reference material and a script.
-
-| Element | Original | Change made |
-| --- | --- | --- |
-| Overall structure | Title, two short paragraphs, one very wide 10-column table, and one code block. | Added an "About This Page" introduction, a "Key Terms" glossary table, a quick-reference summary table, a mermaid lifecycle diagram, a mermaid sequence diagram for the auxiliary-window flow, a step-by-step script walkthrough with sample outputs, a short note on `tk` vs `ttk`, and this change-log table. |
-| Title | `# Advanced Window Configuration & Lifecycle Management in Tkinter` | Kept the same title, with "&" spelled out as "and" for readability; wording otherwise unchanged. |
-| Introductory paragraphs (Section "Architectural Overview" intro) | Two paragraphs describing the Window Manager concept and the "structural requests" idea, in dense technical language. | Retained all original content and meaning; added plain-language framing, a link to further reading on Window Managers, and moved the "why this matters" material into the new "About This Page" section instead of leaving it implicit. |
-| "Comprehensive Window Configuration Matrix" | One 10-column, 14-row table (Method, Syntax, Purpose, Parameters, Default, Mechanic, Use Case, Return Value, Pitfalls, Cross-Platform Note) that required horizontal scrolling to read. | Content fully preserved — every cell of the original table is represented — but reorganized into (a) a new one-line-per-method quick-reference table for orientation, and (b) one clearly headed subsection per method with a plain-language explanation plus a compact two-column details table, for readability. |
-| Technical jargon (Window Manager, Z-order, Tcl interpreter, compositor, decoration flags, and similar terms) | Used without definition, assuming reader familiarity. | Added a "Key Terms Used On This Page" glossary with plain-language definitions and external reference links; cross-referenced from the relevant sections. |
-| Diagrams | None. | Added two mermaid flowcharts: one showing the window lifecycle states (`normal`/`iconic`/`zoomed`/`withdrawn`), and one tracing the `withdraw()`/`deiconify()` sequence used by `open_auxiliary()`. Both use plain flowchart syntax for compatibility with draw.io's mermaid import. |
-| Script comments | Already contained numbered comments inside `__init__` (for example, "1. BASE INITIALIZATION") but no equivalent step-by-step comments in `center_window()`, `create_widgets()`, or the event-handler methods, and no comments at all around the `if __name__ == "__main__":` block. | Standardized every numbered comment to the format `# Step N: <description>` and extended step comments to every method in the class, including `center_window()`, `create_widgets()`, all five event handlers, and the `__main__` block. Code logic and behavior were not altered. |
-| Print statements / visible output | None — the original script produced no console output at all. | Added teaching-only `print()` statements after each major step and inside every event handler, plus a new "Sample Console Output" section showing representative output in a fenced text block. These prints do not change the application's visible GUI behavior. |
-| Script presentation | Single combined code block only. | Added individual code blocks for each logical section (imports/class skeleton, constructor, `center_window()`, `create_widgets()`, event handlers, the `__main__` block), each with its own explanation, followed by one final combined script block containing the complete, runnable program — matching the individually explained versions. |
-| Styling note (`tk` vs `ttk`) | Not present. | Added a short closing section noting that the script deliberately uses classic `tk` widgets rather than `ttk`, and how a reader could switch to `ttk` independently of the window-management concepts taught here. |
-| Emojis | None used. | None used (unchanged). |
-
 
 

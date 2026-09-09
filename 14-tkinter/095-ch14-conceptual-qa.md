@@ -292,6 +292,13 @@ The error names the problem precisely: this container already has children manag
 
 What you **can** do — and should — is use different managers in *different* containers:
 
+
+![Flowchart](../resources/ch14-tkinter-September-2026-conceptual-QA-004.png)
+
+
+
+
+
 ```mermaid
 flowchart TD
     A[root window] --> B[frame_one placed with pack]

@@ -270,13 +270,7 @@ That last sentence is the key to the whole mechanism, and it is worth following 
 
 Miss any one of the three and nothing happens: a `StringVar` with no `textvariable` is never updated, and an Entry with no trace is never watched.
 
-```mermaid
-flowchart LR
-    A[User presses a key] --> B[Entry writes the new text into input_var]
-    B --> C[trace_add notices the write]
-    C --> D[validate runs automatically]
-    D --> E[The status label is updated]
-```
+![Flowchart](../resources/ch14-tkinter-September-2026-professional-error-handling-003.png)
 
 **Two details that surprise beginners:**
 
@@ -408,16 +402,7 @@ One function, two entry points. Whichever route an error takes, it arrives at th
 | At the top level of the script, before or after `mainloop()` | `sys.excepthook` |
 | Inside a separate thread | `threading.excepthook` |
 
-```mermaid
-flowchart TD
-    A[An exception is raised in a Tkinter program] --> B{Was it raised inside a callback such as a button click}
-    B -->|Yes| C[Tkinter catches it before anything else can]
-    C --> D[root.report_callback_exception is called]
-    B -->|No| E[The exception travels up the call chain]
-    E --> F[sys.excepthook is called]
-    D --> G[Point BOTH names at one handler to cover every case]
-    F --> G
-```
+![Flowchart](../resources/ch14-tkinter-September-2026-professional-error-handling-004.png)
 
 Note the fourth row of the table above. The validation function attached with `trace_add()` is also a callback, so if a bug ever crept into `validate()`, the same rule would apply to it.
 
@@ -882,23 +867,13 @@ The flowchart shows the steps in execution of the given script:
 
 The same two journeys through the program in text form — typing into the box, and clicking the button:
 
-```mermaid
-flowchart TD
-    T1[User presses a key in the Entry box] --> T2[The text is written into input_var]
-    T2 --> T3[trace_add notices the change and runs validate]
-    T3 --> T4{Is the box empty}
-    T4 -->|Yes| T5[Status shows Waiting]
-    T4 -->|No| T6{Can the text be turned into a whole number}
-    T6 -->|Yes| T7[Status shows Valid input and the activity is logged]
-    T6 -->|No| T8[Status shows Numbers only and the activity is logged]
 
-    B1[User clicks Trigger Error] --> B2[trigger_error logs the click]
-    B2 --> B3[The line print unknown_variable raises a NameError]
-    B3 --> B4[No try-except here so Tkinter catches it]
-    B4 --> B5[report_callback_exception calls handle_error]
-    B5 --> B6[The error and its traceback are written to app_log.txt]
-    B6 --> B7[A friendly popup is shown and the window stays open]
-```
+![Flowchart](../resources/ch14-tkinter-September-2026-professional-error-handling-005.png)
+
+
+![Flowchart](../resources/ch14-tkinter-September-2026-professional-error-handling-006.png)
+
+
 
 [Back to Table of Contents](#table-of-contents)
 
@@ -919,59 +894,9 @@ flowchart TD
 | The log fills with one entry per keystroke | This is expected: `trace_add("write", ...)` fires on every change. | Log only the outcome rather than every keystroke, or record keystrokes at DEBUG level and set the file to INFO. |
 | An error inside `validate()` itself goes unnoticed | A trace callback is a Tkinter callback too, so the same routing applies. | The same `report_callback_exception` fix covers it. |
 
-```mermaid
-flowchart TD
-    S[Something is not working] --> Q1{Is it the error button that does nothing}
-    Q1 -->|Yes| F1[Install the handler on root.report_callback_exception too]
-    Q1 -->|No| Q2{Does typing fail to trigger validation}
-    Q2 -->|Yes| F2[Check textvariable on the Entry and trace_add on the variable]
-    Q2 -->|No| Q3{Is there a TypeError about arguments}
-    Q3 -->|Yes| F3[Write def validate with star args]
-    Q3 -->|No| Q4{Is the log file empty or missing timestamps}
-    Q4 -->|Yes| F4[Call basicConfig once near the top and set a format]
-    Q4 -->|No| F5[Check the log level and whether exc_info was passed]
-```
+![Flowchart](../resources/ch14-tkinter-September-2026-professional-error-handling-007.png)
 
 [Back to Table of Contents](#table-of-contents)
 
 ----------
-
-## Summary of Changes Made to This Page
-
-The table below documents every change made while revising this page, for transparency. **The printed research question has been reproduced word for word, with three deliberate exceptions: a typographical error has been corrected, one requirement in Part B has been amended, and the list of tools in the preamble has been completed. All three are listed individually in the table below.** Apart from those changes, the wording, lists and punctuation of the question are unchanged. All new material has been added in clearly separate, clearly labelled sections.
-
-| Element | Original | Change made |
-| --- | --- | --- |
-| Overall structure | An untitled page containing the research question, a theory solution, a large accidentally duplicated block, and a script, with no worked output. | Added a page title, a clickable table of contents, an "About This Page" introduction, a "Key Terms" glossary, answers labelled A1 to A5 matching the five Part A questions, a new section on the Tkinter hook problem, answers labelled B1 to B7 for the script, a common-errors section, and this change-log table. |
-| Table of contents | None. | Added at the top, with `###` subtopics nested as a sub-list under their `##` topics, and every entry linked to its heading. A "Back to Table of Contents" link was added at the end of each topic and subtopic. |
-| **Duplicated block** | Lines 157 to 277 of the original contained a second, degraded copy of the entire research question and theory solution, pasted in by accident. Its formatting had been stripped: block quotes had become plain lines, code spans had lost their backticks, and list markers had disappeared. It ended with a line of text copied from an editor's status bar: `Markdown 3076 bytes 461 words 163 lines Ln 157, Col 24HTML 2272 characters 393 words 85 paragraphs`. | **The duplicate block and the editor status-bar line were removed.** Before removing it, it was checked for anything the properly formatted version did not already contain. It held one unique item — a three-row table comparing `print()` with `logging` — which has been preserved and expanded in the answer to question 1, so nothing was lost. |
-| `loggingsys.excepthooktrace_add()` | The three tool names had run together into a single unreadable code span in the question preamble. | **Corrected in the question text** to the three separate names it was always meant to be: `logging`, `sys.excepthook` and `trace_add()`. |
-| Printed research question | Present. | Reproduced word for word, verified line by line against the original file, apart from the correction above. Heading levels were adjusted: `# Research / Project Question` became `##`, and its inner `##` and `###` headings each moved down one level, so that the whole question sits as one topic in the table of contents. |
-| **Part B requirement 5** | The requirement read: Uses `sys.excepthook` for global exception handling. As printed, it cannot be met together with requirements 6 and 7, because an error raised by a button click never reaches `sys.excepthook`. Following the question literally therefore produces a program that shows no popup and records no error. | **Amended in the question text** to read `sys.excepthook` together with Tkinter’s `report_callback_exception`, so that the task the question sets is achievable. The original wording is otherwise untouched. |
-| Tool list in the question preamble | Named `logging`, `sys.excepthook` and `trace_add()` as the tools supporting the three listed abilities, one of which is handling unexpected failures safely. In a Tkinter program that list is incomplete. | **Amended in the question text** to include `report_callback_exception` alongside the other three. |
-| Related pages | No links to the other pages on this topic. | Added a "Related Pages in This Series" table linking this page to the two companion pages on the same theme, so the three can be read as one sequence. |
-| The "which hook is used" table | Not present. | Added a table listing which of the two hooks Python actually uses for each kind of error, including the row noting that a `trace_add()` variable callback is handled the same way as a button click. |
-| Follow-up questions | None. | Added five optional follow-up questions (F1 to F5), clearly marked as additional online material and not part of the printed book. |
-| **Model script: the Trigger Error button did not work** | The script installed `sys.excepthook = handle_error` and relied on it to catch the `NameError` raised by the button. Running it confirmed the handler never ran: no popup appeared, the log panel stopped after "Trigger Error clicked", `app_log.txt` contained the INFO line about the click but no ERROR entry at all, and the only output was `Exception in Tkinter callback` plus a traceback in the terminal. Requirement 7 of Part B was therefore not met. | **Corrected.** The same handler is now also assigned to `root.report_callback_exception`, the hook Tkinter actually uses for callback errors. The `sys.excepthook` line required by the question is kept as well. Verified: the popup now appears, the panel reports the error, and the log file receives a timestamped ERROR entry with the full traceback. |
-| Explanation of the above | Not mentioned; the page assumed `sys.excepthook` was sufficient. | Added a new section, "The Tkinter Trap", with a table of what Part B asks for against what actually happens, the one-line fix, a table of which hook applies to which kind of error, and a flowchart. It also notes that a `trace_add()` callback is subject to the same rule. |
-| A1, `logging` versus `print()` | Gave a definition, a one-line example, and the observation that logs remain saved. The `print()` versus `logging` comparison table existed only inside the duplicated block. | Original content kept. The comparison table was rescued from the duplicate, kept in full, and extended from three rows to seven. Added a worked `basicConfig()` example with `# Step` comments, a sample of the resulting file lines, and an explanation of log levels. |
-| A2, `sys.excepthook` | Gave a definition and two arrow sequences. | Original content and both sequences kept, with the arrow diagrams redrawn as Mermaid flowcharts. Added the required three-argument signature with a table explaining each argument, a warning about the resulting error if the signature is wrong, and a pointer to the Tkinter limitation. |
-| A3, `trace_add()` | Three sentences and one example. | Original content kept. Added a three-step table showing the chain that must be connected (`StringVar`, `textvariable`, `trace_add`), a Mermaid flowchart of a keystroke's journey, an explanation of the `"write"` mode, and the verified output showing the three arguments Tkinter passes, which explains why `*args` is needed. |
-| A4, live validation | A definition and two short examples. | Original content kept, including both examples. Added measured evidence that typing `abc` runs the validation three times with values `a`, `ab`, `abc`; a five-row comparison of Submit-time against live validation; and the design point that "not finished yet" should be treated differently from "wrong". |
-| A5, why professional apps log errors | Listed three causes and three benefits. | All original content kept. Added a four-row table contrasting who reads a popup with who reads a log entry and what each needs, plus four further reasons, including that scheduled or background failures have no user to see them. |
-| Script comments | Numbered `# 1.` to `# 14.`, with `# 3. CREATE LOG PANEL` containing the typo "mini consolel", and one comment reading `# Meaning: Whenever variable changes,run validate()` with a missing space. | Renumbered to the `# Step N:` format with sub-steps such as `# Step 5a:`. The typo and the missing space were corrected, and several very long trailing comments were moved onto their own lines above the code they describe. |
-| Script: `logging.basicConfig()` | Called without a `format`, so entries appeared as `INFO:root:message` with no timestamp. | Added `format="%(asctime)s - %(levelname)s - %(message)s"`, so every entry records when it happened and how serious it is. |
-| Script: errors recorded twice, at the wrong level | `write_log()` recorded everything with `logging.info()`, so when `handle_error` called it the error text was written to the file as INFO; `handle_error` then called `logging.error()` separately, producing a second, duplicate entry. | `write_log()` now takes a `level` argument, so activity is recorded as INFO and errors as ERROR, each exactly once. An optional `exc` argument attaches the full traceback to the error entry. |
-| Script: no traceback in the log | `logging.error(error_msg)` recorded only the one-line summary. | The traceback is now passed through with `exc_info`, so the file keeps the complete stack trace while the popup still shows only the short message. |
-| Script: minor style points | `error_msg = (f"{exc_type.__name__}: "f"{exc_value}")` concatenated two f-strings with no space between them; the log message used a Unicode arrow character that renders inconsistently across editors and fonts; `number = int(text)` assigned a value that was then never used. | Simplified to a single f-string; the arrow was replaced with plain wording; and the converted number is now included in the log message, so the conversion result is actually used. |
-| Script: empty input | Handled correctly, showing `Waiting...`. | Kept unchanged, and the reasoning behind it is now explained in section A4 as an example of distinguishing "not finished yet" from "wrong". |
-| Script: output | The script printed messages to the terminal but the page showed no output at all. | Added teaching `print()` statements at every step. Added a new "Expected Output" section with genuine captured output for start-up, for typing a valid number, for typing letters, for clicking the button, and for the full contents of `app_log.txt`, with three observations drawing the sections together. |
-| Script: presentation | A single code block. | Split into explained sections B1 to B5, followed by the complete combined script in B6, so it can be read either way. |
-| Flowchart image | `![Flowchart](/resources/ch14-tkinter-professional-error-handling.png)` with a one-line caption. | The original image link and caption were kept unchanged, and a Mermaid flowchart tracing both journeys through the program was added beneath it, so the flow is visible even if the image resource is unavailable to a reader. |
-| Troubleshooting guidance | None. | Added a ten-row table mapping each symptom to its cause and fix, including the silent-button symptom produced by the original script and the `TypeError` caused by omitting `*args`, plus a decision flowchart of the same checklist. |
-| Diagrams | None. | Added six Mermaid diagrams: Python's default error route, the custom route, the keystroke journey, the routing of exceptions in Tkinter, the two journeys through the script, and the troubleshooting flowchart. All use plain flowchart syntax with no brackets or quotation marks inside node labels, so they can be imported into draw.io. |
-| Emojis | None used. | None used (unchanged). |
-
-[Back to Table of Contents](#table-of-contents)
-
 

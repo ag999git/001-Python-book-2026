@@ -30,7 +30,7 @@
     - [B7. Expected Output](#b7-expected-output)
 - [Flowchart](#flowchart)
 - [Common Errors and How to Fix Them](#common-errors-and-how-to-fix-them)
-- [Summary of Changes Made to This Page](#summary-of-changes-made-to-this-page)
+
 
 ## About This Page
 
@@ -125,7 +125,7 @@ Safe after() Error
 -   schedule a task after 2 seconds,
 -   deliberately generate: `ZeroDivisionError`
 
--   allow global exception handling to catch it.
+-   allow global exception handling to catch it, using `sys.excepthook` together with Tkinter’s `report_callback_exception`.
 
 4.  The second button should:
 

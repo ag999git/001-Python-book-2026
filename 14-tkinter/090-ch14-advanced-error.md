@@ -1,8 +1,5 @@
 
 
-Welcome file
-Welcome file
-
 # Research / Project Question
 
 ## Professional Error Handling in Tkinter

@@ -770,21 +770,7 @@ The flowchart shows the steps in the execution of the above script:
 
 The same two journeys in text form, side by side:
 
-```mermaid
-flowchart TD
-    U1[User clicks Unsafe after Error] --> U2[start_unsafe writes to the log and calls after 2000]
-    U2 --> U3[Two seconds pass while the window stays usable]
-    U3 --> U4[unsafe_task runs and divides by zero]
-    U4 --> U5[No try-except here so the error escapes]
-    U5 --> U6[Tkinter routes it to report_callback_exception]
-    U6 --> U7[handle_uncaught logs the error and shows an error popup]
-
-    S1[User clicks Safe after Error] --> S2[start_safe writes to the log and calls after 2000]
-    S2 --> S3[Two seconds pass while the window stays usable]
-    S3 --> S4[safe_task runs and divides by zero]
-    S4 --> S5[The try-except catches it immediately]
-    S5 --> S6[A warning popup is shown and nothing is logged]
-```
+![Flowchart](../resources/ch14-tkinter-September-2026-safe-unsafe-callbacks-004.png)
 
 [Back to Table of Contents](#table-of-contents)
 
@@ -805,59 +791,9 @@ flowchart TD
 | The safe button also writes to the log file | The `except` block re-raised the error, or the exception type did not match. | Check that the `except` clause names the error actually being raised. |
 | Several popups appear at once | The button was clicked repeatedly, scheduling several jobs. | Store the job id from `after()` and call `after_cancel()` before scheduling a new one. |
 
-```mermaid
-flowchart TD
-    S[My delayed error handling is not working] --> Q1{Did the error come from an after job or a button click}
-    Q1 -->|Yes| F1[Install the handler on root.report_callback_exception too]
-    Q1 -->|No| Q2{Did the task run instantly instead of waiting}
-    Q2 -->|Yes| F2[Pass the function name without brackets]
-    Q2 -->|No| Q3{Did the window freeze during the wait}
-    Q3 -->|Yes| F3[Replace time.sleep with after]
-    Q3 -->|No| Q4{Is error_log.txt empty}
-    Q4 -->|Yes| F4[The handler never ran - check both hooks are installed]
-    Q4 -->|No| F5[Check the except clause names the error actually raised]
-```
+![Flowchart](../resources/ch14-tkinter-September-2026-safe-unsafe-callbacks-005.png)
 
 [Back to Table of Contents](#table-of-contents)
-
-----------
-
-## Summary of Changes Made to This Page
-
-The table below documents every change made while revising this page, for transparency. **The printed research question — the whole block from "Research / Project Question" through Part A and Part B — has been reproduced word for word, with one deliberate exception: a single typographical error in the printed text has been corrected, and it is listed individually in the table below.** Apart from that correction, its wording, its lists, its code samples and its punctuation are unchanged. All new material has been added in clearly separate, clearly labelled sections.
-
-| Element | Original | Change made |
-| --- | --- | --- |
-| Overall structure | An untitled page starting directly with the research question, followed by a "Model Theory Solution" and a script, with no worked output and no explanation of how the two buttons differ in practice. | Added a page title, a clickable table of contents, an "About This Page" introduction, a "Key Terms" glossary, answers labelled A1 to A6 matching the six Part A questions, a new section on the Tkinter hook problem, answers labelled B1 to B7 for the script, a common-errors section, and this change-log table. |
-| Table of contents | None. | Added at the top, with `###` subtopics nested as a sub-list under their `##` topics, and every entry linked to its heading. A "Back to Table of Contents" link was added at the end of each topic and subtopic. |
-| Printed research question | Present. | Reproduced word for word, verified line by line against the original file, apart from the correction listed in the next row. Heading levels were adjusted: `# Research / Project Question` became `##`, and its inner `##` and `###` headings each moved down one level, so that the whole question sits as one topic in the table of contents. No other wording was altered. |
-| Broken code span in the question preamble | The sentence ended `programmers must understand the difference between:` followed by an opening backtick at the end of the line, with `unsafe callback` beginning on the next line. The code span was split across a line break, so it rendered awkwardly. | **Corrected in the question text** so the phrase reads as one line, with `unsafe callback` and `safe callback` each in their own code span as clearly intended. A stray whitespace-only line inside the Part A question 5 list was also removed; no visible text was affected. |
-| Follow-up questions | None. | Added five optional follow-up questions (F1 to F5), clearly marked as additional online material and not part of the printed book. |
-| **Model script: the unsafe button did not work** | The script installed `sys.excepthook = handle_uncaught` and relied on it to catch the `ZeroDivisionError` raised inside an `after()` callback. Running it confirmed that the handler never ran: no popup appeared, the log panel stopped after "Unsafe task running...", `error_log.txt` stayed **completely empty**, and the only output was `Exception in Tkinter callback` plus a traceback in the terminal. The script's own comments described in detail a sequence of events that does not occur. Requirement 3 of Part B was therefore not met. | **Corrected.** The same handler is now also assigned to `root.report_callback_exception`, which is the hook Tkinter actually uses for `after()` errors. The `sys.excepthook` line is kept as well, so both routes lead to one handler. Verified: the unsafe button now activates the global hook, shows the popup, and writes a full entry to `error_log.txt`, while the safe button still writes nothing to the file. |
-| Explanation of the above | Not mentioned anywhere; the page assumed `sys.excepthook` was sufficient. | Added a new section, "The Tkinter Trap", with a table of what Part B asks for against what actually happens without the fix, the one-line correction, a table of which hook applies to which kind of error, and a flowchart. |
-| A1, `after()` | Gave the syntax and one example. | Original content kept. Added an explanation of its real purpose (waiting without stopping everything else), a table breaking down each part of the call, the millisecond warning, and the returned job identifier used by `after_cancel()`. |
-| A2, callback functions | Gave a definition and one example. | Original content kept. Added an everyday analogy, and the very common `task` versus `task()` mistake with an explanation of its confusing symptom. |
-| A3, delayed execution | Gave a definition and one example. | Original content kept. Added an explanation of what the program is doing during the wait, a list of real uses, and a Mermaid flowchart of the sequence. |
-| A4, what happens if a delayed callback fails | Gave a short example and the observation that the error happens later, making debugging harder. | Original content kept in full. Added the reason it is harder: a `try-except` placed around the `after()` call catches nothing, because that block has already finished by the time the callback runs. Included a worked counter-example, a table of the only two places protection can live, and three further consequences of the delay. |
-| A5, unsafe versus safe | A four-row comparison table and two examples. | All four original rows kept, with five further rows added. The unsafe example, which was written as `def task():    x = 10 / 0` on a single line inside a fence with no language tag, was reformatted as proper indented Python. Added a Mermaid flowchart and a closing paragraph explaining that the two approaches are partners rather than alternatives. |
-| A6, why `time.sleep()` is avoided | Two lines stating that `sleep()` freezes the GUI and `after()` does not. | Original statement kept. Added the reason (the event loop is part of the program that `sleep()` stops), a measured demonstration showing two `after()` jobs booked for 0.5s and 1.0s both actually running at 2.00s because `sleep(2)` blocked them, and a seven-row comparison table. |
-| Script comments | Numbered `# 1.` to `# 10.`. Several comments were also misplaced relative to the code they described: in `handle_uncaught()` the comment about saving to the file sat above the `write_log()` call rather than above `logging.error()`, and the comment about updating the log panel sat above `messagebox.showerror()`. One comment, `# Save errors to file named`, was left unfinished. | Renumbered to the `# Step N:` format with sub-steps such as `# Step 5a:`. Every comment was moved to sit directly above the code it describes, and the unfinished comment was completed. |
-| Script: very long trailing comments | Two comments ran to several hundred characters on a single line, extending far past the width of the code, including one attached to `root.after(2000, safe_task)`. | Rewritten as short comments placed above the relevant lines, so the code remains readable without horizontal scrolling. |
-| Script: `logging.basicConfig()` | Called without a `format`, so log entries had no timestamp. | Added `format="%(asctime)s - %(levelname)s - %(message)s"`, so each entry records when it happened. |
-| Script: `logging.error(error_msg)` | Recorded only the one-line summary, so the log file lost the traceback. | Changed to `logging.error(error_msg, exc_info=(exc_type, exc_value, exc_traceback))`, so the file receives the complete stack trace. |
-| Script: minor style points | `sys.excepthook = (handle_uncaught)` used unnecessary brackets; `error_msg = (f"{exc_type.__name__}: "f"{exc_value}")` concatenated two f-strings with no space between them; `print(error_msg)  # ` ended with an empty comment. | Simplified to `sys.excepthook = handle_uncaught` and a single f-string. The stray empty comment was removed, and the separate `print()` is no longer needed because `write_log()` now prints to the terminal as well. |
-| Script: an arrow symbol in output text | The log message built in `write_log()` and one of the section comments used a Unicode arrow character, which can render inconsistently across editors, terminals and fonts. | Replaced with a plain hyphen in the log message, and the comment was rewritten in words. |
-| Script: output | No `print()` statements at all, and no sample output anywhere on the page. | Added teaching `print()` statements at every step, and made `write_log()` echo to the terminal as well as the window. Added a new "Expected Output" section with genuine captured output for start-up, for each button, for the final log panel, and for the contents of `error_log.txt`, plus a table comparing what each button produced. |
-| Script: evidence of the difference | The page asserted that the safe callback does not reach the global handler, but showed nothing to demonstrate it. | The captured `error_log.txt` now shows exactly one entry after both buttons have been clicked, which is direct proof that only the unsafe error escaped. This is called out explicitly as the clearest evidence of the lesson. |
-| Script: unreachable line | Not present. | Added a deliberate line after the division in `unsafe_task()`, with a comment explaining that it never runs, to demonstrate that the rest of a function is abandoned once an exception is raised. |
-| Flowchart image | `![Unsafe vs Safe after Callback](/resources/ch14-tkinter-safe-unsafe-after.png)` with a one-line caption. | The original image link and caption were kept unchanged, and a Mermaid flowchart tracing both journeys side by side was added beneath it, so the flow is visible even if the image resource is unavailable to a reader. |
-| Troubleshooting guidance | None. | Added a ten-row table mapping each symptom to its cause and fix, including the empty-log-file symptom produced by the original script and the ineffective `try-except` around `after()`, plus a decision flowchart of the same checklist. |
-| Diagrams | None. | Added five Mermaid diagrams: delayed execution, the safe-versus-unsafe decision, the routing of exceptions in Tkinter, the two button journeys, and the troubleshooting flowchart. All use plain flowchart syntax with no brackets or quotation marks inside node labels, so they can be imported into draw.io. |
-| Emojis | None used. | None used (unchanged). |
-
-[Back to Table of Contents](#table-of-contents)
-
-
 
 
 

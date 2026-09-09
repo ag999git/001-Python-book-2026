@@ -352,13 +352,9 @@ Tkinter is not a drawing library. It is a stack of layers, each handing work to 
 | 3 | The Tcl/Tk engine | An embedded Tcl interpreter receives those commands. The Tk toolkit holds the definitions of how each widget behaves and looks, and tracks its state. |
 | 4 | The operating system | Tk asks the OS for windows and drawing surfaces through its native interfaces. The OS performs the final rendering. |
 
-```mermaid
-flowchart TD
-    A[Your Python code creates a Button] --> B[Tkinter translates it into a Tcl command]
-    B --> C[The Tcl interpreter passes it to the Tk toolkit]
-    C --> D[Tk asks the operating system to draw a window]
-    D --> E[The OS renders the actual pixels on screen]
-```
+![Flowchart](../resources/ch14-tkinter-September-2026-conceptual-QA-005.png)
+
+
 
 **On the appearance question**, one clarification is worth making. The difference is not really macOS against Windows — it is which widget family you used.
 
@@ -660,6 +656,9 @@ root.report_callback_exception = handle_error
 
 Why this matters so much in a GUI is that the default behaviour for a callback error is close to the worst possible one for a user. The program does not crash — Tkinter prints a traceback to the console and carries on — so the user clicks a button, absolutely nothing happens, no message appears, and the only explanation is in a terminal they are probably not looking at. A global handler converts that silence into a clear message.
 
+![Flowchart](../resources/ch14-tkinter-September-2026-conceptual-QA-006.png)
+
+
 ```mermaid
 flowchart TD
     A[An exception is raised somewhere in your program] --> B{Was it raised inside a Tkinter callback}
@@ -895,14 +894,7 @@ Putting every widget straight onto the root window produces a flat layout with n
 
 The recommended pattern is to build a small hierarchy of containers first, then place the actual controls inside them:
 
-```mermaid
-flowchart TD
-    A[root window] --> B[header frame - title and status]
-    A --> C[body frame - the data entry fields]
-    A --> D[footer frame - the action buttons]
-    C --> E[labels and entry boxes arranged with grid]
-    D --> F[buttons arranged with pack]
-```
+![Flowchart](../resources/ch14-tkinter-September-2026-conceptual-QA-007.png)
 
 ```python
 # Step 1: Create the zones and place them in the window.
@@ -1199,39 +1191,6 @@ The widths in CHECK 8 depend on your screen and font, and the pixel numbers will
 [Back to Table of Contents](#table-of-contents)
 
 ---
-
-## Summary of Changes Made to This Page
-
-The table below documents every change made while revising this page, for transparency. **The thirty questions have been reproduced word for word, with three deliberate exceptions: question 17 named a method that its own answer never discussed, and questions 5 and 23 each contained a mis-placed backtick that made them render incorrectly. All three are listed individually below.** All other question wording, punctuation and code samples are unchanged.
-
-| Element | Original | Change made |
-| --- | --- | --- |
-| Overall structure | An untitled list of thirty questions and answers separated by horizontal rules, with no heading, introduction, contents or navigation. | Added a page title, a clickable table of contents, an "About This Page" introduction, a "How to Use These Questions" guide with a topic-finder table, a "Key Terms" glossary, three grouped sections of ten questions, a combined self-check script with its real output, and this change-log table. |
-| Table of contents | None. | Added at the top, with each question nested as a `###` entry under a `##` band of ten, and every entry linked to its heading. A "Back to Table of Contents" link was added after each question and each section. |
-| Question wording | Thirty questions. | Reproduced word for word apart from the amendment in the next row. |
-| **Question 17** | Asked "What does `trace_add()` return, and how do you cancel a scheduled delayed task?" — but the answer that followed was entirely about `after()` and `after_cancel()` and never mentioned `trace_add()` at all, so question and answer did not match. | **Amended in the question text** to ask what `after()` returns, matching the answer it introduces. Nothing was lost: the answer now also states what `trace_add()` returns, and that it is cancelled with `trace_remove()` rather than `after_cancel()`. |
-| **Question 5** | The backticks were mis-paired, so the question read as a single code span covering `command=, bind("<Button-1>")` — a comma and two different mechanisms inside one span. | **Corrected in the question text** so that `command=` and `bind("<Button-1>")` are two separate code spans, as clearly intended. No words were changed. |
-| **Question 23** | Contained `` `ttk `widgets `` — the closing backtick fell after the space, so it rendered as a code span containing "ttk " followed by plain text. | **Corrected in the question text** to `` `ttk` widgets ``. No words were changed. |
-| **Answer 6, mixing geometry managers** | Stated that mixing `.pack()` and `.grid()` in one parent makes "Tkinter enter an infinite calculation loop", "causing the window to lock up and become unresponsive". | **Corrected.** Verified by running it: a `TclError` is raised immediately, in about three thousandths of a second, reading `cannot use geometry manager grid inside .!frame which already has slaves managed by pack`. There is no loop and no freeze. The Golden Rule itself was kept, with the real error message, the timing, and an explanation of what happens depending on where the mistake occurs. |
-| **Answer 19 and answer 30, `sys.excepthook`** | Both stated that `sys.excepthook` "catches all uncaught exceptions", implying it would catch an error raised by a button click. | **Corrected.** Verified: with both handlers installed and an error raised from a button click, only `root.report_callback_exception` ran. Tkinter intercepts callback errors before they can reach `sys.excepthook`. Both answers now explain that the two must be installed together, and that `report_callback_exception` has to be set on the root window because setting it on a `Toplevel` has no effect. |
-| **Answer 20, read-only widgets** | Stated that calling `.delete()`, `.insert()` or `.set()` on a read-only widget means "Python will raise an error". | **Corrected.** Verified: no exception is raised in any of the tested cases. A read-only `Entry` or `Spinbox` silently ignores the edit, and `ttk.Combobox.set()` works normally on a read-only combobox. The Unlock-Edit-Lock pattern was kept, with the reason restated: the danger is a silent no-op rather than an error, and a table of the tested cases was added. |
-| **Answer 3, the trace mode string** | Gave the third argument passed to a trace callback as `"w"` for write. | **Corrected** to `'write'`. Verified: the callback receives `('PY_VAR1', '', 'write')`. The single-letter form belongs to the older, deprecated `trace()` method. |
-| **Answer 3, the missing-parameter error** | Stated that a zero-parameter callback means "Python will crash with a `TypeError`". | **Corrected.** The `TypeError` is raised, but Tkinter catches it and the program keeps running, so the real symptom is a validation function that silently never works with an explanation only in the console. Also added that `trace_add()` returns a handle usable with `trace_remove()`. |
-| **Answer 11, `Text.get()` with no arguments** | Called it "a syntax error". | **Corrected** to a `TypeError` raised at run time; the code is valid Python. The real message is quoted, along with the note that `Text.get("1.0", "end")` returns a trailing newline that was never typed, and how to avoid it with `"end-1c"`. |
-| **Answer 26, calling `mainloop()` twice** | Said the second call "is unreachable—it would cause an error", which is self-contradictory. | **Corrected.** Verified: once the window is destroyed the first call returns, the second call then runs and returns immediately, and no error is raised. A second `mainloop()` is pointless rather than harmful; the genuine mistake is expecting code after it to run while the window is open. |
-| **Answers 1 and 23, ttk styling** | Stated that ttk widgets "reject direct color and styling parameters" as a blanket rule, and that changing a `ttk.Label`'s foreground requires defining a custom style. | **Corrected and made more precise.** Verified: the `tk` shorthands `fg`, `bg` and `bd` are always rejected, but the full option `foreground=` is accepted by `ttk.Label` and `ttk.Entry`, at creation or through `.config()`, with no custom style needed. It is rejected by `ttk.Button` and `ttk.Checkbutton`, which do need a named style. A table of the tested cases was added. |
-| **Answer 14, `.after()` and events** | Stated that `.after()` "does NOT process events during the wait", which reads as though the interface stops responding during the delay. | **Corrected.** The event loop continues running normally throughout the delay; it is `.after()` itself that does not block. The distinction that matters was kept and sharpened: `.update()` delivers pending user events, while `.update_idletasks()` deliberately does not, which was confirmed by test. |
-| **Answer 8, native appearance** | Attributed the difference in appearance to the operating system, contrasting a `ttk.Button` on macOS with a `tk.Button` on Windows. | Clarified that the difference is which widget family is used, not which operating system: classic `tk` widgets look dated on every platform, while `ttk` widgets adopt the native appearance wherever they run. The four-layer table was kept and a diagram added. |
-| **Answer 12, terminology** | Described keeping a reference as "reference counting". | Kept the advice and tightened the wording: reference counting is the mechanism by which Python frees the object, and the fix is to keep a reference so the count never reaches zero. Added the explanation that the widget stores only the image's registered name, which is why Python cannot see the connection. |
-| Dangling references to "the document" | Answer 4 began "This is the 'INCORRECT PARADIGM' described in the document", referring to material not present on this page. | The answer was made self-contained. The same phrase appears inside the wording of questions 23, 26 and 28, which has been left exactly as printed. |
-| Broken formatting in answer 5 | The code spans were mis-paired, so the text read `command=my_func (no parentheses!). bind("<Button-1>")` with the closing backtick in the wrong place, and later showed `bind("<>")` and `bind("<<>>")` with the event names missing. | Reformatted with correct code spans and the full event names restored. A comparison table of the three mechanisms was added, along with the note that `command=` takes the function without brackets. |
-| Grammar in answer 27 | Read "Combobox (from ttk) is a dropdown shows one item at a time". | Corrected to a complete sentence, and the comparison expanded into a table. |
-| Worked demonstrations | None. The answers described behaviour without showing it. | Added short runnable examples with `# Step` comments to twenty-one of the answers, each followed by its real captured output, plus one combined self-check script at the end that performs eleven of the checks in a single run. All output shown was produced by actually running the code. |
-| Tables | Only prose. | Added comparison tables to answers 1, 4, 5, 8, 11, 13, 14, 16, 18, 20, 21, 22, 23, 24, 27, 29 and 30, plus a topic-finder table in the introduction. |
-| Diagrams | None. | Added five Mermaid flowcharts: the `text=` versus `textvariable=` binding, the geometry-manager rule, the four-layer architecture, where an exception travels in Tkinter, and the recommended container hierarchy. All use plain flowchart syntax with no brackets or quotation marks inside node labels, so they can be imported into draw.io. |
-| Emojis | None used. | None used (unchanged). |
-
-[Back to Table of Contents](#table-of-contents)
 
 
 

@@ -218,21 +218,13 @@ It controls what Python does when an uncaught exception happens.
 
 Normally the sequence of execution is as follows:
 
-```mermaid
-flowchart TD
-    A[Error] --> B[Traceback shown]
-    B --> C[Program crashes]
-```
+![Flowchart](../resources/ch14-tkinter-September-2026-professional-error-handling-001.png)
 
 But `sys.excepthook = handle_error` changes the route.
 
 Now the sequence is as follows:
 
-```mermaid
-flowchart TD
-    A[Error] --> B[Custom function runs]
-    B --> C[Popup and log entry]
-```
+![Flowchart](../resources/ch14-tkinter-September-2026-professional-error-handling-002.png)
 
 This improves application safety.
 

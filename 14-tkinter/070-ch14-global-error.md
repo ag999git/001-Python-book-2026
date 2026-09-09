@@ -1,6 +1,4 @@
 
-
-
 # Handling Uncaught Exceptions in Tkinter with `sys.excepthook` — Worked Answer
 
 ## Table of Contents
@@ -34,7 +32,6 @@
     - [B7. Expected Output](#b7-expected-output)
 - [Answer to Part C — Reflection](#answer-to-part-c--reflection)
 - [Common Errors and How to Fix Them](#common-errors-and-how-to-fix-them)
-- [Summary of Changes Made to This Page](#summary-of-changes-made-to-this-page)
 
 ## About This Page
 
@@ -117,7 +114,7 @@ Write a Tkinter program that:
 3.  Uses: `logging` to save errors to a file named: `error_log.txt`
 
 4.  Defines a custom function to handle uncaught exceptions.
-5.  Overrides Python’s default exception route using: `sys.excepthook`
+5.  Overrides Python’s default exception route using: `sys.excepthook` together with Tkinter’s `report_callback_exception`
 6.  Adds a button with label: `Trigger NameError`
 7.  Intentionally creates an uncaught exception when the button is clicked.
 8.  Displays a friendly popup message instead of crashing.
@@ -334,7 +331,7 @@ Hence: **global exception handling**.
 
 Local handling:
 
-![Flowchart}(../resources/ch14-tkinter-September-2026-uncaught-exceptions-003.png)
+![Flowchart](../resources/ch14-tkinter-September-2026-uncaught-exceptions-003.png)
 
 Global handling:
 

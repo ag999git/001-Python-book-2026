@@ -143,15 +143,8 @@ When you write `lbl = tk.Label(root, textvariable=self.text_var)`, you create a 
 
 The key rule is: **`text=` is a static assignment; `textvariable=` is a live binding.**
 
-```mermaid
-flowchart TD
-    A[You call var.set with a new value] --> B{How was the label created}
-    B -->|text equals var| C[The label kept a copy of the old text]
-    C --> D[It still shows PY_VAR0 and never changes]
-    B -->|textvariable equals var| E[The label is subscribed to the variable]
-    E --> F[Tkinter pushes the new value to the label]
-    F --> G[The label repaints straight away]
-```
+![Flowchart](../resources/ch14-tkinter-September-2026-conceptual-QA-001.png)
+
 
 A short demonstration, with its real output:
 

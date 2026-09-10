@@ -2023,7 +2023,9 @@ if __name__ == "__main__":
 
 No console output. Dragging the slider to the right grows the blue rectangle smoothly, larger in every direction at once; dragging it left shrinks the rectangle the same way. The "Size: 50" label above the canvas updates in step with the slider's numeric value.
 
-![Flowchart](..C:\One-Drive-2025\OneDrive\Python-book-new-2026-NOIDA\014-New-chapter-tkinter-material-and-chapter\ch14-tkinter-September-2026-Scripting-QA-004.png)
+![Flowchart](../resources/ch14-tkinter-September-2026-Scripting-QA-004.png)
+
+
 
 [Back to Table of Contents](#table-of-contents)
 

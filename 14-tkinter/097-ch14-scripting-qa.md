@@ -96,7 +96,7 @@ A handful of words show up again and again in the explanations below. Rather tha
 
 ## Topic 1: Building a Tkinter App with an OOP Class Structure
 
-**Original textbook question:**
+
 
 > **1. Create a basic Tkinter application using an OOP class structure that initializes the main window, sets a custom title and geometry, and includes a button that prints a message to the console when clicked.**
 
@@ -204,16 +204,7 @@ Button clicked! Application logic executed.
 
 (Two lines shown above because the button was clicked twice — one line appears per click, for as long as the window stays open.)
 
-```mermaid
-flowchart TD
-    A[Python script starts] --> B[BasicOOPApp is created]
-    B --> C[super__init__ builds the OS window]
-    C --> D[title and geometry are set]
-    D --> E[Button widget is placed]
-    E --> F[mainloop starts and waits]
-    F -->|User clicks button| G[on_click callback runs]
-    G --> F
-```
+![Flowchart](../resources/ch14-tkinter-September-2026-Scripting-QA-001.png)
 
 [Back to Table of Contents](#table-of-contents)
 
@@ -392,16 +383,7 @@ if __name__ == "__main__":
 
 There is no console output — the feedback appears as the status Label changing colour and text as you type. Typing "abc" shows "Status: Too Short!" in red; continuing to "abcdef" or beyond switches it instantly to "Status: Strong Password" in green, with no button click involved.
 
-```mermaid
-flowchart TD
-    A[User types a character] --> B[Entry updates password_var]
-    B --> C[Tcl fires the write trace]
-    C --> D[validate_password runs]
-    D --> E{Length check}
-    E -->|0 characters| F[Status: Waiting - gray]
-    E -->|Less than 6| G[Status: Too Short - red]
-    E -->|6 or more| H[Status: Strong Password - green]
-```
+![Flowchart](../resources/ch14-tkinter-September-2026-Scripting-QA-002.png)
 
 [Back to Table of Contents](#table-of-contents)
 
@@ -1057,16 +1039,7 @@ if __name__ == "__main__":
 
 No console output — this is a purely visual script. Clicking and dragging from one corner to another draws a blue-outlined rectangle that grows and shrinks smoothly as you move the mouse, and stays fixed in place the moment you let go.
 
-```mermaid
-flowchart TD
-    A[Mouse button pressed - Button-1] --> B[on_mouse_down stores start_x and start_y]
-    B --> C[Mouse dragged - B1-Motion fires repeatedly]
-    C --> D[on_mouse_drag deletes old rectangle]
-    D --> E[on_mouse_drag draws new rectangle to current mouse position]
-    E --> C
-    C --> F[Mouse button released - ButtonRelease-1]
-    F --> G[on_mouse_up sets current_rect to None]
-```
+![Flowchart](../resources/ch14-tkinter-September-2026-Scripting-QA-003.png)
 
 [Back to Table of Contents](#table-of-contents)
 
@@ -2050,14 +2023,7 @@ if __name__ == "__main__":
 
 No console output. Dragging the slider to the right grows the blue rectangle smoothly, larger in every direction at once; dragging it left shrinks the rectangle the same way. The "Size: 50" label above the canvas updates in step with the slider's numeric value.
 
-```mermaid
-flowchart TD
-    A[User drags the Scale slider] --> B[size_var - an IntVar - is updated]
-    B --> C[Tcl fires the write trace]
-    C --> D[update_rectangle runs]
-    D --> E[New x1,y1,x2,y2 corners calculated around a fixed centre]
-    E --> F[canvas.coords moves the existing rectangle]
-```
+![Flowchart](..C:\One-Drive-2025\OneDrive\Python-book-new-2026-NOIDA\014-New-chapter-tkinter-material-and-chapter\ch14-tkinter-September-2026-Scripting-QA-004.png)
 
 [Back to Table of Contents](#table-of-contents)
 
@@ -2188,41 +2154,14 @@ Version 1.0
 
 Choosing File > Exit closes the application entirely.
 
-```mermaid
-flowchart TD
-    A[Menu Bar] --> B[File]
-    A --> C[Help]
-    B --> D[New]
-    B --> E[Open]
-    B --> F[Separator line]
-    B --> G[Exit]
-    C --> H[About]
-```
+![Flowchart](../resources/ch14-tkinter-September-2026-Scripting-QA-005.png)
 
 [Back to Table of Contents](#table-of-contents)
 
-## Summary of Changes From the Original
 
-This table was produced by a line-by-line comparison against the original file, plus an automated check (parsing every script with Python's `ast` module, before and after, with docstrings stripped out of the comparison) confirming that no script's actual logic was altered — every edit inside the twenty code blocks is a comment, a docstring, or formatting.
 
-| # | Element | Original file | What changed |
-| --- | --- | --- | --- |
-| 1 | Title and introduction | Started directly with `# Scripting Question/ Answers (TKinter)` and no introductory text | Added a descriptive title, an "Introduction" section explaining what the page contains and how it relates to the printed book and to Python/Tkinter in general |
-| 2 | Table of contents | Not present | Added, with nested links to every `##` and `###` heading in the document |
-| 3 | Key terms glossary | Not present | Added a "Key Terms Used Throughout This Chapter" section with a table of ten recurring terms, plain-language meanings, and links to the official Python documentation |
-| 4 | Section headings | Each of the 20 items was a bold line (`**1. Question text**`), not a heading | Each item is now a `## Topic N: <descriptive title>` heading, with `### Step-by-Step Walkthrough` and `### Complete Script and Output` as nested subheadings |
-| 5 | The 20 research questions | Bold text, e.g. `**1. Create a basic Tkinter application...**` | Preserved character-for-character (verified by automated comparison) inside a blockquote directly under each topic's heading |
-| 6 | "Back to Table of Contents" links | Not present | Added after every topic and after the key terms glossary |
-| 7 | Explanatory paragraphs | One paragraph per item, written in a technical, somewhat formal register (e.g., "This script explores the 'Reactive Data Model' of Tkinter") | Rewritten in plainer, more conversational language; expanded in most topics into two to three paragraphs; technical terms explained inline or pointed to the glossary; no explanation was shortened, only reworded |
-| 8 | Step-by-step walkthrough | Not present as a separate section (steps existed only as inline numbered comments inside the script) | Added a "Step-by-Step Walkthrough" subsection for every topic: each numbered step shows a short code excerpt plus one to three sentences of plain-language explanation a student can follow in order |
-| 9 | Script comments | Already used numbered comments in most scripts (e.g., `# 1. Initialize the base class`) | Restyled consistently as `# Step N: ...` across all 20 scripts, matching the step-by-step walkthrough above each script |
-| 10 | In-script docstrings | Several methods carried multi-line triple-quoted docstrings repeating the explanation (e.g., `on_click`, `validate_password`, `track_mouse`) | Condensed to a short `# Step N:` comment where the same explanation now appears in full in the Step-by-Step Walkthrough directly above the script, to avoid repeating the same explanation three times in one topic; class-level docstrings listing "Concepts Covered" were kept, with only capitalization normalized |
-| 11 | Complete script | One script block per item (already "complete") | Kept as one complete, runnable block per topic (labelled "Complete Script and Output"), placed after the step-by-step breakdown so a student can see the whole program in one place |
-| 12 | Sample output / expected behaviour | Not present | Added a short description of what happens when each script runs; for the six scripts that produce real console or dialog-box text (Topics 1, 3 implicitly via the status label, 6, 20), the literal printed or dialog text is shown in a fenced ` ```text ` block; for the purely visual scripts, the on-screen behaviour is described in plain language instead of inventing fake console output |
-| 13 | Diagrams | Not present | Added Mermaid flowcharts, written to use only basic flowchart syntax for draw.io compatibility, for Topics 1, 3, 10, 19, and 20, where a visual of the event flow or menu structure adds real clarity |
-| 14 | Comparison table | Not present | Added a small comparison table for Topic 15 (Core `tk` vs. Themed `ttk` widgets) |
-| 15 | Follow-up / sub-questions | Not present | None added — the twenty original questions were judged self-contained and clear as written, so no additional follow-up questions were introduced |
-| 16 | Overall length | Concise, print-oriented answers | Substantially longer, as intended for an online-only resource: every topic now carries a fuller explanation, a step-by-step walkthrough, and an output/behaviour description in addition to the original script |
+
+
 
 
 

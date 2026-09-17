@@ -1107,7 +1107,7 @@ Step 8: Figure saved as data_types_visualization_matrix.png
 
 ### The Resulting Plot of Script 1
 
-![Four plots](/resources/ch15-4-plots.png)
+![Four plots](../resources/ch15-4-plots.png)
 
 [Back to the Table of Contents](#table-of-contents)
 

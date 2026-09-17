@@ -1611,7 +1611,7 @@ Step 7: Plot saved as penguins_boxplot_distribution.png
 
 ### The Resulting Plot of Script 2
 
-![Box plot](/resources/ch15-box-plot.png)
+![Box plot](../resources/ch15-box-plot.png)
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1998,7 +1998,7 @@ Step 6: Plot saved as total_bill_histogram.png
 
 ### The Resulting Plot of Script 3
 
-![Histogram](/resources/ch15-histogram.png)
+![Histogram](../resources/ch15-histogram.png)
 
 [Back to the Table of Contents](#table-of-contents)
 

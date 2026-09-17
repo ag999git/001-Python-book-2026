@@ -1264,39 +1264,6 @@ Step 2: Average value = 5.5
 
 ---
 
-## Table of Changes Made to the Original File
-
-| No. | Section or element | In the original file | Type of change | What was done |
-| --- | --- | --- | --- | --- |
-| 1 | Page title | "Stem Plots" | Modified | Renamed "Stem Plots in Matplotlib: Showing Individual Values Clearly" |
-| 2 | Introduction to the page | Not present | Added | Opening paragraphs describing the contents and the link to Python and the Matplotlib chapter; note explaining that a Matplotlib stem plot is not a stem-and-leaf display |
-| 3 | Table of Contents | Not present | Added | Nested list of links to all level 1 to 3 headings |
-| 4 | "Back to the Table of Contents" links | Not present | Added | Link placed at the end of every section and sub-section |
-| 5 | Introduction section | "data values are discrete" listed as a reason to use stem plots | Corrected | Reworded: the observations are taken at distinct positions, while the measured values can be any number |
-| 6 | Common applications | Four terms without explanation | Added | Short explanation and link for signal processing, sampled data and time series; note on the MATLAB origin of `stem()` with a link to the Matplotlib documentation |
-| 7 | Parts of a stem plot | Not present | Added | Text diagram of stems, markers and baseline; table of parts with the option and default style for each; explanation of the color cycle |
-| 8 | Extra blank lines and horizontal rules | Several empty lines and horizontal rules between sections | Deleted | Removed |
-| 9 | Stem Plot vs Line Plot table | Five rows | Added | Two rows (distance from a baseline, negative values); explanation of continuous data and discrete samples |
-| 10 | Common Parameters table | Four rows; `stem(x,y)` listed as if it were a parameter | Modified | `stem(x, y)` row marked as the basic call; rows added for `bottom`, `orientation` and `label`; table explaining format-string color letters, line styles and marker symbols, with a link |
-| 11 | Simplified Signatures | Two code blocks with headings only | Added | Explanation of "signature", the state-based (pyplot) style and the OOP style, a comparison table and a link to Matplotlib's interfaces guide |
-| 12 | Script heading | "## Script" | Modified | Renamed "Script 1: A Basic Stem Plot"; introduction and numbered Mermaid flowchart added |
-| 13 | Script 1 code | One block; plotting code without step numbers or output | Modified | Split into seven steps with "# Step" comments; `print()` statements added for the data and for the parts returned by `ax.stem()`; comments explaining the format strings; step outputs, complete script and full output given. The plotting commands are unchanged, so the existing image still matches |
-| 14 | Stray heading | "# FIGURE" (level-1 heading with no content) after the first image | Deleted | Removed |
-| 15 | Output image heading | "Output plot (From above script)" | Modified | Replaced by "Output of Script 1" with the printed output above the unchanged image |
-| 16 | What This Script Demonstrates | Four bullets | Added | Five-step guide to reading the plot; explanation of StemContainer; three follow-up questions with answers |
-| 17 | When Should We Use Stem Plots? | Example "stock price samples" | Modified | Changed to "daily changes in a stock price", which suits a baseline at zero; table of situations where a stem plot is a poor choice and a numbered Mermaid decision flowchart added |
-| 18 | Histogram vs Stem Plot vs Line Plot table | Five rows | Added | Two rows (what the horizontal axis and the height show); explanation of the difference between a count and a value; definitions of frequency and distribution |
-| 19 | Key Idea diagram | Arrow diagram placed in a `python` code block | Modified | Placed in a `text` block; table added showing what each plot draws; meaning of "magnitude" added |
-| 20 | Scatter Plot vs Stem Plot vs Line Plot | Introduction and "Comparison Script" heading | Modified | Original text kept; identified as Script 2; explanation of `plt.subplots(3, 1)` and a numbered Mermaid flowchart added |
-| 21 | Comparison script code | One block, no output | Modified | Split into eight steps with step comments; `print()` statements for number of observations, highest and lowest values and number of plot areas; complete script and full output given. The plotting commands are unchanged, so the existing image still matches |
-| 22 | What to Observe table | Three columns | Added | Column describing what is seen in this example |
-| 23 | Visual Interpretation | Diagram placed in a `python` code block | Modified | Placed in a `text` block; wording unchanged |
-| 24 | Follow-up questions on the comparison script | Not present | Added | Two questions with answers (values suggested by a line between samples; `sharex=True`) |
-| 25 | Script 3: Stem Plot of a Sampled Signal | Not present | Added | New script with steps, outputs, complete script, new image and explanation, showing positive and negative stems and a sampled sine wave |
-| 26 | Script 4: Changing the Baseline and the Direction | Not present | Added | New script with steps, outputs, complete script, new image and explanation, showing `bottom` and `orientation="horizontal"` |
-| 27 | Summary and Glossary | Not present | Added | Summary of key points and a glossary of technical terms with links |
-| 28 | Images | Two images: `ch15-matplotlib-stem1.png`, `ch15-matplotlib-scatter-stem-line.png` | Kept and added | Both original images kept unchanged; two new images added: `ch15-matplotlib-stem-signal.png`, `ch15-matplotlib-stem-options.png` |
-| 29 | All outputs | No printed output shown | Added | Every output on the page was produced by running the scripts (Matplotlib 3.10, NumPy 2) |
 
 
 

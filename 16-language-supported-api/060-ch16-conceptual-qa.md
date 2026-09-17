@@ -2459,7 +2459,9 @@ Each time the list becomes ten times larger, the linear search time also becomes
 
 The picture below shows the four shapes side by side. Each panel has its own vertical scale, because `O(n²)` is so much larger than the others that it would squash them flat on a shared scale.
 
-![Growth curves for O(log n), O(n), O(n log n) and O(n squared)](resources/060-ch16-complexity-growth.png)
+
+
+![Growth curve](../resources/060-ch16-complexity-growth.png)
 
 The script that draws this picture is below. It plots the number of steps predicted by each formula, not real timings, so it gives the same picture every time. It needs the third-party [matplotlib](https://matplotlib.org/) library (`pip install matplotlib`).
 

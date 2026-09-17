@@ -429,7 +429,7 @@ Coordinate points (x, y):
 (3, 25)
 ```
 
-![Coordinate example](/resources/ch15-coordinate-example.png)
+![Coordinate example](../resources/ch15-coordinate-example.png)
 
 **Common Plot Types for Coordinate Data**
 
@@ -656,7 +656,7 @@ Shape (rows, columns): (3, 3)
 Temperature in Ranchi in Mar = 22
 ```
 
-![Temperature Grid](/resources/ch15-temperature-grid.png)
+![Temperature Grid](../resources/ch15-temperature-grid.png)
 
 Mumbai's row is the brightest because it is the warmest city. Ranchi in January is the darkest cell because it holds the lowest value (15).
 
@@ -785,7 +785,7 @@ plt.show()
 Points to be joined: [(1, 10), (2, 20), (3, 15), (4, 30)]
 ```
 
-![Simple line graph](/resources/ch15-plot-example.png)
+![Simple line graph](../resources/ch15-plot-example.png)
 
 **Typical Uses**
 
@@ -850,7 +850,7 @@ plt.show()
 (height, weight) pairs: [(150, 45), (155, 50), (160, 52), (165, 60)]
 ```
 
-![Height vs weight scatter plot](/resources/ch15-scatter-example.png)
+![Height vs weight scatter plot](../resources/ch15-scatter-example.png)
 
 The points rise from left to right, so taller people in this small sample tend to weigh more.
 
@@ -923,7 +923,7 @@ After reshape, shape  = (5, 5)
  [20 21 22 23 24]]
 ```
 
-![Numbers 0 to 24 shown as colors](/resources/ch15-imshow-example.png)
+![Numbers 0 to 24 shown as colors](../resources/ch15-imshow-example.png)
 
 The top-left cell (0) is the darkest and the bottom-right cell (24) is the brightest, because the values increase from left to right and from top to bottom.
 
@@ -1000,7 +1000,7 @@ Shape of Z: (50, 50)
 Smallest Z: -0.997  Largest Z: 0.997
 ```
 
-![Contour plot](/resources/ch15-contour-example.png)
+![Contour plot](../resources/ch15-contour-example.png)
 
 Each closed loop surrounds a "hill" (positive values) or a "valley" (negative values). The number written on each line is the value of Z all along that line.
 
@@ -1058,7 +1058,7 @@ Reshaped data:
  [3 4]]
 ```
 
-![Reshaped 2 by 2 matrix shown with imshow](/resources/ch15-imshow-error-fixed.png)
+![Reshaped 2 by 2 matrix shown with imshow](../resources/ch15-imshow-error-fixed.png)
 
 `[1, 2, 3, 4]` has shape `(4,)`, which means only one dimension. `imshow()` needs at least two dimensions (rows and columns), so it raises a `TypeError`. Reshaping the list into 2 rows and 2 columns solves the problem.
 
@@ -2283,7 +2283,7 @@ Busiest month : Jul with 364 passengers
 Quietest month: Feb with 233 passengers
 ```
 
-![Passenger trend in 1955](/resources/ch15-passenger-line-plot.png)
+![Passenger trend in 1955](../resources/ch15-passenger-line-plot.png)
 
 **Explanation**
 
@@ -2336,7 +2336,7 @@ plt.show()
 Number of points plotted: 12
 ```
 
-![Passenger distribution](/resources/ch15-passenger-distribution.png)
+![Passenger distribution](../resources/ch15-passenger-distribution.png)
 
 **Complete script for Task 4**
 
@@ -2585,7 +2585,7 @@ plt.yticks(ticks=range(len(selected_years)), labels=selected_years)
 plt.show()
 ```
 
-![Passenger Data using imshow()](/resources/ch15-passenger-imshow.png)
+![Passenger Data using imshow()](../resources/ch15-passenger-imshow.png)
 
 `plt.xticks()` and `plt.yticks()` place labels at chosen positions on the axes. See [matplotlib.pyplot.xticks](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.xticks.html).
 
@@ -2630,7 +2630,7 @@ plt.show()
 Contour levels: [150.0, 200.0, 250.0, 300.0, 350.0, 400.0, 450.0, 500.0, 550.0]
 ```
 
-![contourf()](/resources/ch15-contourf.png)
+![contourf()](../resources/ch15-contourf.png)
 
 Matplotlib chose band boundaries of 150, 200, 250, ... 550, so each color on the color bar covers a range of 50 passengers.
 
@@ -2983,9 +2983,9 @@ Task 4: Passenger counts in 1955
 All tasks completed.
 ```
 
-![Combined coordinate plots](/resources/ch15-combined-coordinate-plots.png)
+![Combined coordinate plots](../resources/ch15-combined-coordinate-plots.png)
 
-![Combined matrix plots](/resources/ch15-combined-matrix-plots.png)
+![Combined matrix plots](../resources/ch15-combined-matrix-plots.png)
 
 In the second figure, `rotation=90` turns the month names on their side so that they do not overlap in the narrower plot areas.
 

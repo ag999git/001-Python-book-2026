@@ -148,7 +148,7 @@ Average mark: 75.2
 Best test   : 5 with 90 marks
 ```
 
-![Line plot of marks in five tests](/resources/ch15-sq-q1-first-line-plot.png)
+![Line plot of marks in five tests](../resources/ch15-sq-q1-first-line-plot.png)
 
 **How the script works, step by step:**
 
@@ -259,7 +259,7 @@ X-values generated: [0, 1, 2, 3, 4, 5]
 Coordinate pairs  : [(0, 120), (1, 135), (2, 150), (3, 170), (4, 165), (5, 190)]
 ```
 
-![Line plot drawn from y-values only](/resources/ch15-sq-q2-y-only.png)
+![Line plot drawn from y-values only](../resources/ch15-sq-q2-y-only.png)
 
 **How the script works, step by step:**
 
@@ -396,7 +396,7 @@ Bob      average = 72.6, improvement = 25 marks
 Charlie  average = 78.4, improvement = 18 marks
 ```
 
-![Marks of three students on one graph](/resources/ch15-sq-q3-three-students.png)
+![Marks of three students on one graph](../resources/ch15-sq-q3-three-students.png)
 
 **How the script works, step by step:**
 
@@ -566,9 +566,9 @@ PART B - NumPy arrays
 Same values in both versions? True
 ```
 
-![Plot made from Python lists](/resources/ch15-sq-q4-lists.png)
+![Plot made from Python lists](../resources/ch15-sq-q4-lists.png)
 
-![Plot made from NumPy arrays](/resources/ch15-sq-q4-numpy.png)
+![Plot made from NumPy arrays](../resources/ch15-sq-q4-numpy.png)
 
 **How the script works, step by step:**
 
@@ -749,7 +749,7 @@ Array  plotted x = [0.0, 1.0, 2.0, 3.0, 4.0], y = [10, 15, 20, 25, 30]
 Series plotted x = [0, 1, 2, 3, 4], y = [10, 15, 20, 25, 30]
 ```
 
-![The same data plotted from a list, a NumPy array and a pandas Series](/resources/ch15-sq-q5-list-numpy-pandas.png)
+![The same data plotted from a list, a NumPy array and a pandas Series](../resources/ch15-sq-q5-list-numpy-pandas.png)
 
 **How the script works, step by step:**
 
@@ -905,7 +905,7 @@ markeredgecolor: black
 alpha          : 0.8
 ```
 
-![Customized dashed line with red markers](/resources/ch15-sq-q6-line-appearance.png)
+![Customized dashed line with red markers](../resources/ch15-sq-q6-line-appearance.png)
 
 **How the script works, step by step:**
 
@@ -1033,7 +1033,7 @@ Y-axis label : Marks Obtained
 Legend items : ['Alice', 'Bob', 'Charlie']
 ```
 
-![Graph with title, axis labels and legend](/resources/ch15-sq-q7-chart-elements.png)
+![Graph with title, axis labels and legend](../resources/ch15-sq-q7-chart-elements.png)
 
 **How the script works, step by step:**
 
@@ -1146,7 +1146,7 @@ New x-limits      : (0.5, 10.5)
 New y-limits      : (30.0, 40.0)
 ```
 
-![Daily temperature with custom axis limits](/resources/ch15-sq-q8-axis-limits.png)
+![Daily temperature with custom axis limits](../resources/ch15-sq-q8-axis-limits.png)
 
 **How the script works, step by step:**
 
@@ -1306,7 +1306,7 @@ May: profit is 16.7% of sales
 Jun: profit is 17.3% of sales
 ```
 
-![Sales bars with a profit line on a second axis](/resources/ch15-sq-q9-bar-and-line.png)
+![Sales bars with a profit line on a second axis](../resources/ch15-sq-q9-bar-and-line.png)
 
 **How the script works, step by step:**
 
@@ -1481,7 +1481,7 @@ Lines drawn on ax: 3
 Title of ax      : Student Performance Comparison
 ```
 
-![Multi-line chart made with the object-oriented approach](/resources/ch15-sq-q10-object-oriented.png)
+![Multi-line chart made with the object-oriented approach](../resources/ch15-sq-q10-object-oriented.png)
 
 **How the script works, step by step:**
 
@@ -1635,7 +1635,7 @@ Total books issued: 1700
   Management   390 books  (22.9% of total)
 ```
 
-![Bar chart of books issued with data labels](/resources/ch15-sq-q11-bar-chart.png)
+![Bar chart of books issued with data labels](../resources/ch15-sq-q11-bar-chart.png)
 
 **How the script works, step by step:**
 
@@ -1765,7 +1765,7 @@ Largest expense: Rent
 Explode values : (0.1, 0, 0, 0, 0)
 ```
 
-![Pie chart of family expenses with the largest slice pulled out](/resources/ch15-sq-q12-pie-chart.png)
+![Pie chart of family expenses with the largest slice pulled out](../resources/ch15-sq-q12-pie-chart.png)
 
 **How the script works, step by step:**
 
@@ -1932,7 +1932,7 @@ Total counted: 100
 Narrow bins (5 marks wide): tallest bin holds 24 students
 ```
 
-![Histograms of marks with bins of 10 and bins of 5](/resources/ch15-sq-q13-histogram-bins.png)
+![Histograms of marks with bins of 10 and bins of 5](../resources/ch15-sq-q13-histogram-bins.png)
 
 **How the script works, step by step:**
 
@@ -2095,7 +2095,7 @@ Outlier: 2 hours, 85 marks (+43 marks from the trend line)
 Outlier: 9 hours, 45 marks (-44 marks from the trend line)
 ```
 
-![Scatter plot of study hours and marks with a trend line and outliers](/resources/ch15-sq-q14-scatter.png)
+![Scatter plot of study hours and marks with a trend line and outliers](../resources/ch15-sq-q14-scatter.png)
 
 **How the script works, step by step:**
 
@@ -2268,7 +2268,7 @@ Outliers: []
 Mean = 44133  (higher than the median, so the data leans to the right)
 ```
 
-![Box plot and violin plot of salaries](/resources/ch15-sq-q15-box-vs-violin.png)
+![Box plot and violin plot of salaries](../resources/ch15-sq-q15-box-vs-violin.png)
 
 **How the script works, step by step:**
 
@@ -2443,7 +2443,7 @@ Average per subject: {'Math': 80.8, 'Physics': 83.4, 'Chemistry': 81.6, 'English
 Highest mark: 96 by S4 in English
 ```
 
-![Heat map of student marks](/resources/ch15-sq-q16-heat-map.png)
+![Heat map of student marks](../resources/ch15-sq-q16-heat-map.png)
 
 **How the script works, step by step:**
 
@@ -2617,7 +2617,7 @@ Contour line levels : [-0.5, 0.0, 0.5]
 Filled band edges   : [-1.0, -0.75, -0.5, -0.25, 0.0, 0.25, 0.5, 0.75, 1.0]
 ```
 
-![Contour and filled contour plots of sin(x squared plus y squared)](/resources/ch15-sq-q17-contour.png)
+![Contour and filled contour plots of sin(x squared plus y squared)](../resources/ch15-sq-q17-contour.png)
 
 **How the script works, step by step:**
 
@@ -2783,7 +2783,7 @@ Highest sales: 210 in May
 Lowest sales : 100 in Mar
 ```
 
-![Monthly sales with highest and lowest points annotated](/resources/ch15-sq-q18-annotations.png)
+![Monthly sales with highest and lowest points annotated](../resources/ch15-sq-q18-annotations.png)
 
 **How the script works, step by step:**
 
@@ -2931,9 +2931,9 @@ dark_background background color: [0.0, 0.0, 0.0]
 Default background color again   : [1.0, 1.0, 1.0]
 ```
 
-![Sales trend in the ggplot style](/resources/ch15-sq-q19-ggplot.png)
+![Sales trend in the ggplot style](../resources/ch15-sq-q19-ggplot.png)
 
-![Sales trend in the dark_background style](/resources/ch15-sq-q19-dark-background.png)
+![Sales trend in the dark_background style](../resources/ch15-sq-q19-dark-background.png)
 
 **How the script works, step by step:**
 
@@ -3109,7 +3109,7 @@ revenue_chart.svg  exists: True, has content: True
 Files saved successfully.
 ```
 
-![Revenue growth chart](/resources/ch15-sq-q20-saved-chart.png)
+![Revenue growth chart](../resources/ch15-sq-q20-saved-chart.png)
 
 **How the script works, step by step:**
 
@@ -3186,42 +3186,4 @@ plt.savefig(os.path.join("charts", "revenue_chart.png"), dpi=300)
 [Back to the Table of Contents](#table-of-contents)
 
 ---
-
-## Table of Changes Made to the Original File
-
-| No. | Section or element | In the original file | Type of change | What was done |
-| --- | --- | --- | --- | --- |
-| 1 | Page title and introduction | No title or introduction | Added | Level-1 title; introduction on the contents and their link to Python and the Matplotlib chapter; how to use the page; software versions; a numbered flowchart of the basic plotting pattern |
-| 2 | Table of Contents | Not present | Added | Nested list of links to all parts, all 20 questions and both comparative tables |
-| 3 | "Back to the Table of Contents" links | Not present | Added | Link placed at the end of every part and every question |
-| 4 | Question layout | Questions written as plain numbered lines separated by horizontal rules | Modified | Grouped under seven part headings; each question made a level-3 heading; horizontal rules removed; question wording unchanged |
-| 5 | Question wording | 20 questions | Kept | No question was found to be wrong, so all question text was kept as printed |
-| 6 | Answers | Scripts only, with no printed output, no pictures and little explanation outside the code | Added | For every question: a short introduction with links, the printed output, a picture of the graph, a step-by-step explanation of the script and a follow-up question with a hidden answer |
-| 7 | All scripts | No `print()` statements (except one line in Question 20) | Added | `print()` statements added so the numbers behind each graph can be checked; original comments and step numbering kept |
-| 8 | Questions 1, 3, 7, 8, 10 and 20 | x-axis ticks chosen automatically (for example 1.5, 2.5 or 2020.5) | Modified | Ticks set to the actual test numbers, days or years |
-| 9 | Question 2 script | x-values described only in a comment | Added | Generated x-values read back from the line and printed to confirm the comment |
-| 10 | Question 4 script | Comparison given only as comments | Added | Printed demonstration of `* 2` on a list and on an array, and a check that both hold the same values; comparison table added to the answer |
-| 11 | Question 5 script | No axis labels; subplots did not share the x-axis | Modified | Axis labels and `sharex=True` added; printed check that all three lines have the same points; note that a pandas Series uses its index as x-values; comparison table added |
-| 12 | Question 5 Mermaid flowchart | Showed "Labels" and "Legend" steps that the script does not have; no step numbers; quoted labels | Corrected | Rewritten with numbered steps matching the script (title, axis labels, grid; no legend) |
-| 13 | Question 6 script | Settings not checked | Added | Applied settings read back and printed; table of all keyword arguments added |
-| 14 | Question 7 explanation | Roles of chart elements given only in code comments | Added | Table of chart elements and their roles; elements read back and printed |
-| 15 | Question 8 script | `plt.xlim(1, 10)` cut the markers on Day 1 and Day 10 in half | Corrected | Changed to `plt.xlim(0.5, 10.5)`; automatic and new limits printed; table of limit experiments and their effects added |
-| 16 | Question 9 script | Sales (120 to 260) and profit (15 to 45) drawn on one y-axis labelled "Value", which squashed the profit line near the bottom; grid drawn over the bars | Corrected | Profit moved to a second y-axis made with `twinx()`, starting at zero; both y-axes labelled; one combined legend; grid placed behind the bars; profit margins printed; numbered flowchart added |
-| 17 | Question 10 | OOP structure shown only as a comment diagram | Added | Table matching state-based functions to object-oriented methods; object types and line count printed |
-| 18 | Question 11 script | Grid drawn over the bars; tallest label close to the top edge | Modified | Grid moved behind the bars; extra space added above the bars; totals and percentages printed; note on `bar_label()`; numbered flowchart of the labelling loop added |
-| 19 | Question 12 script | Largest slice chosen by typing its position by hand | Modified | Largest expense found with `max()` and `index()`, and the `explode` tuple built from it; percentages printed; `autopct` explained |
-| 20 | Question 13 script and comments | One histogram only; no check for marks outside the bins; "Larger bins: less detail but smoother graph" | Modified | A second histogram with 5-mark bins added for comparison; check for values outside the bin edges; counts per bin printed; note on which bin receives a value on an edge; table on the effect of bin width |
-| 21 | Question 14 data | All ten points lie almost exactly on a straight line, so there were no outliers to identify | Corrected | Two unusual students added; trend line fitted with `np.polyfit()`; correlation printed with and without them; outliers found by distance from the trend line and drawn in red; caution about cause and effect added |
-| 22 | Question 15 script and comments | Violin plot drawn without median or quartile lines; comment said the box plot shows "Minimum" and "Maximum" | Corrected | `showmedians=True` and `quantiles=[0.25, 0.75]` added; whisker ends explained with the 1.5 × IQR rule; quartiles, outlier limits and mean printed; x tick labels added; comparison table added |
-| 23 | Comparative Table: Distribution Visualizations | Histogram "Shows Distribution Shape: Partially"; violin "Shows Median: Usually", "Shows Quartiles: Yes", "Shows Outliers: Sometimes" | Corrected | Histogram shape changed to "Yes"; violin median and quartiles changed to "Only when switched on"; violin outliers changed to "No; they appear only as thin tails"; row added for more than one peak |
-| 24 | Question 16 script | Values not shown in the cells | Modified | Marks written inside each cell; student and subject averages and the highest mark printed; reading of the heat map added |
-| 25 | Question 17 script | No axis labels; default nine contour levels with labels crowded in the outer rings; unequal scaling | Modified | Axis labels and equal aspect added; contour lines limited to three levels; Z shape, range and levels printed; explanation of why the contours are rings; comparison table and numbered flowchart added |
-| 26 | Question 18 script | Label text placed 25 data units above both points, which put the "Highest Sales" label above the top of the plot | Corrected | Labels placed with `textcoords="offset points"` (below the highest point, above the lowest); values shown in the labels; a `plt.text()` example added as the question mentions text annotations |
-| 27 | Question 19 script | `plt.style.use()` changed the style for the rest of the session, so later figures stayed dark; no axis labels | Corrected | `plt.style.context()` used so each style applies to one figure only; axis labels added; background colors printed to confirm; comparison table added |
-| 28 | Question 20 script | Printed "Files saved successfully." without checking the files | Corrected | Each file checked with `os.path.exists()` and `os.path.getsize()`, and the success message printed only if all files exist; save loop and formats table added |
-| 29 | Comparative Table – Matrix and Scientific Visualizations | Column heading "Data Type" | Modified | Heading changed to "Works with"; function names formatted as code |
-| 30 | Glossary | Not present | Added | Glossary of technical terms with links |
-| 31 | Images | No images | Added | 22 new image files, one for each graph: `ch15-sq-q1-first-line-plot.png`, `ch15-sq-q2-y-only.png`, `ch15-sq-q3-three-students.png`, `ch15-sq-q4-lists.png`, `ch15-sq-q4-numpy.png`, `ch15-sq-q5-list-numpy-pandas.png`, `ch15-sq-q6-line-appearance.png`, `ch15-sq-q7-chart-elements.png`, `ch15-sq-q8-axis-limits.png`, `ch15-sq-q9-bar-and-line.png`, `ch15-sq-q10-object-oriented.png`, `ch15-sq-q11-bar-chart.png`, `ch15-sq-q12-pie-chart.png`, `ch15-sq-q13-histogram-bins.png`, `ch15-sq-q14-scatter.png`, `ch15-sq-q15-box-vs-violin.png`, `ch15-sq-q16-heat-map.png`, `ch15-sq-q17-contour.png`, `ch15-sq-q18-annotations.png`, `ch15-sq-q19-ggplot.png`, `ch15-sq-q19-dark-background.png`, `ch15-sq-q20-saved-chart.png` |
-
-
 

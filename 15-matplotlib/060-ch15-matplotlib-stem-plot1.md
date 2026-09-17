@@ -380,7 +380,7 @@ Step 4: Parts returned by ax.stem()
   baseline  : Line2D
 ```
 
-![Stem Plot](/resources/ch15-matplotlib-stem1.png)
+![Stem Plot](../resources/ch15-matplotlib-stem1.png)
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -760,7 +760,7 @@ Lowest value : 2 at sample 1
 Step 3: Number of plotting areas created: 3
 ```
 
-![Plot from above script](/resources/ch15-matplotlib-scatter-stem-line.png)
+![Plot from above script](../resources/ch15-matplotlib-scatter-stem-line.png)
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1050,7 +1050,7 @@ Step 7: Stems pointing up  : 7
         Stems of (almost) zero height: 2
 ```
 
-![Stem plot of a sampled signal](/resources/ch15-matplotlib-stem-signal.png)
+![Stem plot of a sampled signal](../resources/ch15-matplotlib-stem-signal.png)
 
 **What to notice:**
 
@@ -1217,7 +1217,7 @@ Step 2: Average value = 5.5
   Sample 6: value 6 is 0.5 above the average
 ```
 
-![Stem plot options](/resources/ch15-matplotlib-stem-options.png)
+![Stem plot options](../resources/ch15-matplotlib-stem-options.png)
 
 **What to notice:**
 

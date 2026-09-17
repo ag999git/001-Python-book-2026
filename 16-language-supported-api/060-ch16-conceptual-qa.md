@@ -43,7 +43,7 @@ Why does this matter? A program that works on 100 items can become painfully slo
   - [Q18. namedtuple in Depth](#q18-namedtuple-in-depth)
   - [Q19. Timing Code with time.perf_counter()](#q19-timing-code-with-timeperf_counter)
   - [Q20. The API and the Standard Library](#q20-the-api-and-the-standard-library)
-- [Table of Changes](#table-of-changes)
+
 
 ---
 

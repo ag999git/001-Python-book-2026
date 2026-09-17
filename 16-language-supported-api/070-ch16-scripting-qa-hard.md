@@ -3465,7 +3465,7 @@ Graph saved as 070-ch16-big-o-timing.png
 
 The graph from the same run:
 
-![Timing growth for linear search, binary search and bubble sort](resources/070-ch16-big-o-timing.png)
+![Timing growth for linear search, binary search and bubble sort](../resources/070-ch16-big-o-timing.png)
 
 [Back to the Table of Contents](#table-of-contents)
 

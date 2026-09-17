@@ -103,7 +103,7 @@ The readings, 10 per row:
 50-59: [51.4 48.8 59.8 42.  44.2 43.2 53.1 45.1 49.3 44.9]
 ```
 
-![Line plot of 200 readings with a sharp dip and a gap](/resources/ch15-qa2-q1-anomalies.png)
+![Line plot of 200 readings with a sharp dip and a gap](../resources/ch15-qa2-q1-anomalies.png)
 
 **Finding the problems, step by step:**
 
@@ -199,7 +199,7 @@ Interval -> line plot        : [-2, 1, 4, 3, 6, 8, 5]
 Ratio    -> scatter / bubbles: {'A': 2.4, 'B': 7.5, 'C': 4.2, 'D': 1.1}
 ```
 
-![Four panels showing a suitable plot for each data type](/resources/ch15-qa2-q2-data-types.png)
+![Four panels showing a suitable plot for each data type](../resources/ch15-qa2-q2-data-types.png)
 
 **What to notice:** the city bars could be rearranged without losing meaning. The rating bars are kept in the order Poor, Fair, Good, Excellent even though "Good" is the longest. The temperature line crosses zero, which is allowed for interval data. The bubble for shop B is the largest because its revenue is the largest; this works only because revenue has a true zero.
 
@@ -270,9 +270,9 @@ Left title : Object-oriented: squares
 Right title: Object-oriented: cubes
 ```
 
-![Plot made with the state-based interface](/resources/ch15-qa2-q3-state-based.png)
+![Plot made with the state-based interface](../resources/ch15-qa2-q3-state-based.png)
 
-![Two plots made with the object-oriented interface](/resources/ch15-qa2-q3-object-oriented.png)
+![Two plots made with the object-oriented interface](../resources/ch15-qa2-q3-object-oriented.png)
 
 **Follow-up question:** In the object-oriented part of the script, what would happen if you wrote `plt.title("Cubes")` instead of `ax_right.set_title(...)`?
 
@@ -358,7 +358,7 @@ Lines in Axes 1        : ['Line2D']
 Bars in Axes 2         : 3 Rectangle objects
 ```
 
-![One figure containing two axes](/resources/ch15-qa2-q4-figure-axes.png)
+![One figure containing two axes](../resources/ch15-qa2-q4-figure-axes.png)
 
 **Follow-up question:** Which object would you use to save the whole chart to a file: the Figure or an Axes?
 
@@ -466,7 +466,7 @@ x-values generated: [0.0, 1.0, 2.0, 3.0, 4.0]
 range(len(y))     : [0, 1, 2, 3, 4]
 ```
 
-![Line plot with x-values created automatically](/resources/ch15-qa2-q6-y-only.png)
+![Line plot with x-values created automatically](../resources/ch15-qa2-q6-y-only.png)
 
 The generated x-values are stored as decimal numbers (0.0, 1.0, ...), but they match `range(len(y))` exactly.
 
@@ -608,7 +608,7 @@ print("Interactive mode is on?", plt.isinteractive())
 Interactive mode is on? False
 ```
 
-![Simple plot shown by plt.show()](/resources/ch15-qa2-q8-show.png)
+![Simple plot shown by plt.show()](../resources/ch15-qa2-q8-show.png)
 
 When you run this script, line 1 is printed at once, the window opens, and line 2 is printed only after you close the window. The last line shows that interactive mode is off, which is the normal state for a script.
 
@@ -676,7 +676,7 @@ plt.show()
 Keyword version -> color: #FF5733 linewidth: 3.0 marker face: white
 ```
 
-![Lines styled with format strings and with keyword arguments](/resources/ch15-qa2-q9-format-strings.png)
+![Lines styled with format strings and with keyword arguments](../resources/ch15-qa2-q9-format-strings.png)
 
 | Setting | Format string | Keyword argument |
 | --- | --- | --- |
@@ -780,7 +780,7 @@ Bin 2 [19.67, 27.33): [22, 24, 25] -> 3 values
 Bin 3 [27.33, 35.00]: [28, 29, 31, 35] -> 4 values
 ```
 
-![Histogram of 10 values in 3 bins](/resources/ch15-qa2-q10-histogram-bins.png)
+![Histogram of 10 values in 3 bins](../resources/ch15-qa2-q10-histogram-bins.png)
 
 **Checking the result by hand:**
 
@@ -862,7 +862,7 @@ Actual minimum = 34.3, actual maximum = 96.3
 Scores between 60 and 70: 2 of 200
 ```
 
-![Box plot and violin plot of the same two-peaked data](/resources/ch15-qa2-q11-box-vs-violin.png)
+![Box plot and violin plot of the same two-peaked data](../resources/ch15-qa2-q11-box-vs-violin.png)
 
 **Reading the result, step by step:**
 
@@ -929,7 +929,7 @@ Lines drawn in total: 3
 Legend text  : ['Revenue', 'Costs']
 ```
 
-![Plot with a legend showing only the labelled lines](/resources/ch15-qa2-q12-legend.png)
+![Plot with a legend showing only the labelled lines](../resources/ch15-qa2-q12-legend.png)
 
 ```mermaid
 flowchart TD
@@ -1225,7 +1225,7 @@ Step 12: Legend entries: ['Temperature', 'Humidity']
 Step 17: Figure closed. Open figures: []
 ```
 
-![Temperature and humidity on two y-axes](/resources/ch15-qa2-q13-twinx.png)
+![Temperature and humidity on two y-axes](../resources/ch15-qa2-q13-twinx.png)
 
 **What the printed output shows:**
 
@@ -1334,7 +1334,7 @@ Color for 10 (lowest) : (0.27, 0.0, 0.33) (dark purple)
 Color for 50 (highest): (0.99, 0.91, 0.14) (bright yellow)
 ```
 
-![Small matrix drawn as colored squares](/resources/ch15-qa2-q14-imshow.png)
+![Small matrix drawn as colored squares](../resources/ch15-qa2-q14-imshow.png)
 
 **Following one value through the steps:** the value 30 lies halfway between the smallest value (10) and the largest (50), so it is normalized to 0.5. The middle of the viridis colormap is a teal green, which is the color of the cell holding 30.
 
@@ -1410,9 +1410,9 @@ After tight_layout() : PlaceHolderLayoutEngine
 Constrained figure uses: ConstrainedLayoutEngine
 ```
 
-![Figure arranged with tight_layout](/resources/ch15-qa2-q15-tight-layout.png)
+![Figure arranged with tight_layout](../resources/ch15-qa2-q15-tight-layout.png)
 
-![Figure arranged with constrained layout](/resources/ch15-qa2-q15-constrained-layout.png)
+![Figure arranged with constrained layout](../resources/ch15-qa2-q15-constrained-layout.png)
 
 **Reading the output:** before `tight_layout()` the figure has no layout engine (`NoneType`). After the call it holds only a placeholder, which shows that the adjustment happened once and is not running any more. The constrained figure keeps a real `ConstrainedLayoutEngine`, which works each time the figure is drawn. For this fairly simple figure both pictures look similar; the difference grows as figures become more crowded or are changed after the layout step.
 
@@ -1502,7 +1502,7 @@ IndexError: index 3 is out of bounds for axis 0 with size 2
 ax[1, 1] is ax.flat[3]? True
 ```
 
-![Two by two grid of subplots with titles](/resources/ch15-qa2-q16-subplot-grid.png)
+![Two by two grid of subplots with titles](../resources/ch15-qa2-q16-subplot-grid.png)
 
 **Why `ax[3]` fails:** in a 2-D array, a single number selects a **row**. There are only rows 0 and 1, so asking for row 3 raises `IndexError: index 3 is out of bounds for axis 0 with size 2`. To count the panels one after another as 0, 1, 2, 3, use `ax.flat[3]` or `ax.flatten()[3]`. The output confirms that `ax.flat[3]` is the same panel as `ax[1, 1]`.
 
@@ -1588,9 +1588,9 @@ Inside the with-block, background     : [0.9, 0.9, 0.9]
 After the with-block, background      : [1.0, 1.0, 1.0]
 ```
 
-![Plot created before the style change](/resources/ch15-qa2-q17-default-style.png)
+![Plot created before the style change](../resources/ch15-qa2-q17-default-style.png)
 
-![Plot created after the ggplot style was applied](/resources/ch15-qa2-q17-ggplot-style.png)
+![Plot created after the ggplot style was applied](../resources/ch15-qa2-q17-ggplot-style.png)
 
 **Reading the output:**
 
@@ -1682,7 +1682,7 @@ Axes-text still at   : top-left corner of the axes
 Annotation text keeps its offset from the point (4, 40)
 ```
 
-![Plot with text labels and an annotation arrow](/resources/ch15-qa2-q18-text-annotate.png)
+![Plot with text labels and an annotation arrow](../resources/ch15-qa2-q18-text-annotate.png)
 
 **What to notice:** the green text sits at the data position (2, 36). The purple text stays in the top-left corner of the axes. The arrow points at the peak value (4, 40), and the label "Festival sale" sits 40 points to the right of and 30 points below it. If the y-limits were changed again, the green text and the arrow's target would move with the data, the purple text would stay in its corner, and the annotation text would keep the same offset from its target.
 
@@ -2055,7 +2055,7 @@ Sidebar  rows [1, 2]  columns [0]
 Main     rows [1, 2]  columns [1, 2]
 ```
 
-![Dashboard layout made with subplot2grid](/resources/ch15-qa2-q20-subplot2grid.png)
+![Dashboard layout made with subplot2grid](../resources/ch15-qa2-q20-subplot2grid.png)
 
 The printed rows and columns match the table above. For example, the Main panel uses rows 1 and 2 and columns 1 and 2. A `figsize` of 10 × 7 inches was added at the start so that the three panels have enough room.
 
@@ -2133,39 +2133,3 @@ Step 3 - Leave the banner unchanged. The panels still fill all nine cells withou
 
 ---
 
-## Table of Changes Made to the Original File
-
-| No. | Section or element | In the original file | Type of change | What was done |
-| --- | --- | --- | --- | --- |
-| 1 | Page title and introduction | No title or introduction | Added | Level-1 title, introduction on the contents and their link to Python and the Matplotlib chapter, how to use the page, and the software versions used |
-| 2 | Table of Contents | Not present | Added | Nested list of links to all parts and all 20 questions |
-| 3 | "Back to the Table of Contents" links | Not present | Added | Link placed at the end of every part and every question |
-| 4 | Question layout | Questions written as bold lines in one continuous list | Modified | Grouped under six part headings; each question made a level-3 heading; question numbers and wording unchanged |
-| 5 | Question wording | 20 questions | Kept | No question was found to be wrong, so all question text was kept as printed |
-| 6 | Answer 1 | Terms such as "pre-attentive" and "serial processing" not explained; "positive integers" example only described | Modified | Terms explained with a link; "anomaly" defined; script with printed table, graph and step-by-step reading added |
-| 7 | Answer 2 | Nominal data "bar chart with distinct categorical bins" ("bins" belongs to histograms); ratio data called suitable for pie charts without conditions; ordinal data limited to "ordered horizontal bars or custom index alignments" | Corrected | Nominal: one separate bar per category. Ratio: pie charts only for non-negative parts of a meaningful whole; true zero explained as the reason for bubble sizing. Ordinal: bars in natural order, vertical or horizontal. Why pie charts fail for interval data explained. Comparison table, script and graph added |
-| 8 | Answer 3 | "Hidden global engine", "dialect", "cross-contamination" | Modified | Explained in plain words; definition of API with link; comparison table, script, two graphs and follow-up question added |
-| 9 | Answer 4 Mermaid diagram | Node labels with colons and "&", no step numbers | Modified | Rewritten with numbered nodes in draw.io-friendly form; Axes vs Axis spelling explained; hierarchy table, script and graph added |
-| 10 | Answer 5 | Error message quoted in shortened form | Modified | Full error message given; steps Matplotlib follows listed; script confirming that nothing is drawn added |
-| 11 | Answer 6 | Explanation only | Added | Script comparing the generated x-values with `range(len(y))`, graph and follow-up question |
-| 12 | Answer 7 | Said that with pandas "you must extract the underlying values or pass the Series object to keep the internal matrix calculations efficient"; table heading "Attribute Matrix"; NumPy described as "hardware-accelerated"; pandas said to extract index columns "for axis labels" | Corrected | Passing a Series or DataFrame column directly is fine; heading changed to "Feature"; NumPy described as running in compiled code; clarified that the Series index is used for x-values and that only pandas' own `.plot()` adds axis labels automatically; script comparing memory use and stored data types added |
-| 13 | Answer 8 | Stated that `plt.show()` always pauses; backend named "Qt5Agg"; "takes control of your operating system's main thread" | Corrected | Explained as the program's main thread running the backend's event loop; modern name "QtAgg" used; table of cases where `plt.show()` does not pause (Jupyter, interactive mode, `block=False`); script and graph added |
-| 14 | Answer 9 | Called format strings "a compact 3-character code"; implied they are outdated | Corrected | Format strings have up to three parts but not always three characters (for example `'bs--'`); noted that they are not deprecated and can be combined with keyword arguments; comparison table, script and graph added |
-| 15 | Answer 10 script comments | Bin intervals written as "[12 to 19.67], (19.67 to 27.33], (27.33 to 35]" with counts "3, 4, 3"; unused `import numpy as np` | Corrected | Correct counts 3, 3, 4 and correct interval rules (left edge included, right edge excluded except for the last bin); unused import removed; comments rewritten in steps; code added to list the values in each bin |
-| 16 | Answer 10 output heading and block | "The Ougput is"; output in a `python` block | Corrected | Spelling corrected; output placed in a `text` block with the extra bin listing |
-| 17 | Answer 10 explanation | "Sorting" not explained | Added | Numbered flowchart, meaning of "sorting" in this context, hand check of the bins and follow-up question |
-| 18 | Answer 11 | Box plot described by "minimum" and "maximum" while also showing outliers beyond the whiskers; violin plot said to show the same summary metrics; LaTeX-style `$Q1$` | Corrected | Whisker ends explained with the 1.5 × IQR rule; noted that Matplotlib violin plots show median and quartiles only when switched on and do not mark outliers; plain Q1, Q2, Q3; comparison table, script and graph added |
-| 19 | Answer 12 | Explanation only | Added | Note on underscore labels and `get_legend_handles_labels()`; script, graph, numbered flowchart and follow-up question |
-| 20 | Answer 13 script | `plt.title()` called after `twinx()` (attaches to the second axes); labels given to both lines but no legend drawn; x ticks at half days; LaTeX-style `$X$` and `$Y$` in the answer | Corrected | `ax1.set_title()` used; combined legend built from both axes; whole-day ticks set; print statements added after key steps; comments kept but tidied; caution about crossing lines on dual axes added |
-| 21 | Answer 14 diagram | Broken block starting with "Code snippet" inside a plain code block, so it did not render | Corrected | Replaced with a working, numbered Mermaid flowchart; normalization and colormap steps explained; script showing normalized values and colors, graph and follow-up question added |
-| 22 | Answer 15 | Said `tight_layout()` shifts subplots "after they have been drawn" and "can sometimes break user-defined dimensions"; constrained layout described as adjusting "as layout elements are added" | Corrected | `tight_layout()` explained as a one-time adjustment when called; constrained layout explained as recalculating at every draw; comparison table, script printing the layout engine, two graphs and follow-up question added |
-| 23 | Answer 16 script | Titles overlapped (no layout setting); error line only in comments | Modified | `layout="constrained"` added; simple lines drawn in each panel; error shown safely with `try`/`except`; `ax.flat` shown; table of return types for different grid shapes and follow-up question added |
-| 24 | Answer 17 | Said a global theme change "can silently overwrite your local settings" | Corrected | A style change affects only figures created afterwards and never undoes local overrides on existing axes; the real danger explained as timing and inconsistent results; `plt.style.context()` introduced; script, two graphs and follow-up question added |
-| 25 | Answer 18 | Said `ax.annotate()` places text "at a stable layout position (xytext=(x_offsets, y_offsets))" | Corrected | By default `xytext` is also in data coordinates; a fixed offset needs `textcoords="offset points"`; axes coordinates with `transform=ax.transAxes` added; comparison table, script and graph added |
-| 26 | Answer 19 script | Loop of 1000 plots saving 1000 files in the current folder | Modified | Number of plots set by a variable (50 by default, with a note on using 1000); files saved in a `batch_plots` folder; demonstration of figures piling up without `plt.close()`; progress prints; table of close commands, numbered flowchart and follow-up question added |
-| 27 | Answer 20 text | Example layouts written as plain lines without bullets | Corrected | Written as a bulleted list; GridSpec and newer alternatives mentioned with links |
-| 28 | Answer 20 script | Default figure size; no printed output | Modified | `figsize=(10, 7)` added; step printing the rows and columns used by each panel added; tables showing how the panels fill the grid and follow-up question added |
-| 29 | Output blocks | Printed output placed in a `python` block | Modified | Placed in `text` blocks |
-| 30 | Follow-up questions | Not present | Added | One follow-up question with a hidden answer for each question |
-| 31 | Quick Revision Table and Glossary | Not present | Added | One-line summary for each question and a glossary of technical terms with links |
-| 32 | Images | No images | Added | 20 new image files, one for each graph drawn: `ch15-qa2-q1-anomalies.png`, `ch15-qa2-q2-data-types.png`, `ch15-qa2-q3-state-based.png`, `ch15-qa2-q3-object-oriented.png`, `ch15-qa2-q4-figure-axes.png`, `ch15-qa2-q6-y-only.png`, `ch15-qa2-q8-show.png`, `ch15-qa2-q9-format-strings.png`, `ch15-qa2-q10-histogram-bins.png`, `ch15-qa2-q11-box-vs-violin.png`, `ch15-qa2-q12-legend.png`, `ch15-qa2-q13-twinx.png`, `ch15-qa2-q14-imshow.png`, `ch15-qa2-q15-tight-layout.png`, `ch15-qa2-q15-constrained-layout.png`, `ch15-qa2-q16-subplot-grid.png`, `ch15-qa2-q17-default-style.png`, `ch15-qa2-q17-ggplot-style.png`, `ch15-qa2-q18-text-annotate.png`, `ch15-qa2-q20-subplot2grid.png` |

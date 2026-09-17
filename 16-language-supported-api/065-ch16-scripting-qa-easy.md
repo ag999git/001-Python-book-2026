@@ -258,7 +258,7 @@ Graph saved as 065-ch16-linear-search-timing.png
 
 The graph from one run of this script:
 
-![Linear search time grows in step with n](resources/065-ch16-linear-search-timing.png)
+![Linear search time grows in step with n](../resources/065-ch16-linear-search-timing.png)
 
 The points lie close to a straight line. Doubling the number of items roughly doubles the time.
 

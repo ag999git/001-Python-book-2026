@@ -360,7 +360,7 @@ plt.show()
 3D: ax.scatter(x, y, z) -> Axes3D
 ```
 
-![The same spiral drawn with 2D and 3D plot and scatter](/resources/ch15-matplotlib-3d-2d-vs-3d.png)
+![The same spiral drawn with 2D and 3D plot and scatter](../resources/ch15-matplotlib-3d-2d-vs-3d.png)
 
 The printed output confirms that the 3D plotting areas are `Axes3D` objects, while the 2D ones are ordinary `Axes`. In the 3D scatter plot, points further from the viewer look paler. This **depth shading** is switched on by default and helps the eye judge distance; it can be turned off with `depthshade=False`.
 
@@ -480,7 +480,7 @@ plot_trisurf input shapes: (200,) (200,) (200,) (1D, not grids)
 voxels array shape: (6, 6, 6) - filled cells: 81
 ```
 
-![contour3D, plot_trisurf and voxels examples](/resources/ch15-matplotlib-3d-special-methods.png)
+![contour3D, plot_trisurf and voxels examples](../resources/ch15-matplotlib-3d-special-methods.png)
 
 **What to notice:**
 
@@ -1041,7 +1041,7 @@ View elev=60, azim= 45: data unchanged, highest Z still 18
 View elev= 5, azim=120: data unchanged, highest Z still 18
 ```
 
-![The same surface seen from four viewing angles](/resources/ch15-matplotlib-3d-view-angles.png)
+![The same surface seen from four viewing angles](../resources/ch15-matplotlib-3d-view-angles.png)
 
 **What to notice:** the highest z-value is 18 in every view, so the data is identical. With `elev=60` the camera looks down steeply and the bowl looks shallow. With `elev=5` the camera is almost level with the base and the bowl's curved sides are clearest. Changing `azim` swaps which corner faces the viewer.
 
@@ -1120,7 +1120,7 @@ coolwarm lowest z -> RGB (0.23, 0.3, 0.75)   highest z -> RGB (0.71, 0.02, 0.15)
 spring   lowest z -> RGB (1.0, 0.0, 1.0)   highest z -> RGB (1.0, 1.0, 0.0)
 ```
 
-![The same surface drawn with five colormaps](/resources/ch15-matplotlib-3d-colormaps.png)
+![The same surface drawn with five colormaps](../resources/ch15-matplotlib-3d-colormaps.png)
 
 The printed RGB values (the amounts of red, green and blue, each from 0 to 1) confirm the start and end colors in the table. For example, `coolwarm` starts at mostly blue (0.23, 0.3, 0.75) and ends at mostly red (0.71, 0.02, 0.15).
 
@@ -1281,7 +1281,7 @@ Number of turns: 10
 
 ### Output Plot of Script 1
 
-![Helix](/resources/ch15-matplotlib-3d-helix.png)
+![Helix](../resources/ch15-matplotlib-3d-helix.png)
 
 **Reading the output:**
 
@@ -1397,7 +1397,7 @@ Points to be plotted:
 
 ### Output Plot of Script 2
 
-![3D Scatter plot](/resources/ch15-matplotlib-3D-scatter.png)
+![3D Scatter plot](../resources/ch15-matplotlib-3D-scatter.png)
 
 Points further from the viewer are drawn paler. This depth shading is on by default and can be switched off with `depthshade=False`.
 
@@ -1533,7 +1533,7 @@ Lowest z = 0.007, highest z = 18.0
 
 ### Output Plot of Script 3
 
-![3D Surface Plot](/resources/ch15-matplotlib-3d-surface.png)
+![3D Surface Plot](../resources/ch15-matplotlib-3d-surface.png)
 
 **Reading the output:**
 
@@ -1709,7 +1709,7 @@ Right view: elev = 25  azim = 45
 
 ### Output Plot of Script 4
 
-![Wireframe](/resources/ch15-matplotlib-3D-wireframe.png)
+![Wireframe](../resources/ch15-matplotlib-3D-wireframe.png)
 
 **Reading the output:**
 
@@ -1782,51 +1782,4 @@ Only every fifth row and column is drawn, so there are 10 lines in each directio
 [Back to the Table of Contents](#table-of-contents)
 
 ---
-
-## Table of Changes Made to the Original File
-
-| No. | Section or element | In the original file | Type of change | What was done |
-| --- | --- | --- | --- | --- |
-| 1 | Page title and introduction | Title "Introduction to 3D Plotting"; no introduction | Modified and added | Title changed to "Introduction to 3D Plotting in Matplotlib"; introduction on the contents and their link to Python and the chapter; note on required libraries and rotating 3D graphs |
-| 2 | Table of Contents | Not present | Added | Nested list of links to all level 2, 3 and 4 headings |
-| 3 | "Back to the Table of Contents" links | Not present | Added | Link placed at the end of every section and sub-section |
-| 4 | Heading levels | "Relationship Between 2D and 3D Plotting" at level 3 under the title; each script split between two level-3 headings; several level-4 headings under scripts | Modified | Main sections placed at level 2 with level-3 sub-headings, so the Table of Contents nests correctly |
-| 5 | Duplicate headings | "Learning Point" (three times), "Simplified Signature" (twice), "Example" (twice), "Output Plot" and "What this script demonstrates" (four times each) | Modified | Each heading made unique so that every link works |
-| 6 | Relationship Between 2D and 3D Plotting | Plot names shown inside one code span (`pie charts, box plots and violin plots`) | Modified | Written as plain text; mplot3d toolkit and "API" explained with links; numbered Mermaid flowchart of the three categories added |
-| 7 | Common 2D-Only Plots table | Listed `stem()` as 2D-only | Corrected | `stem()` moved to the table of methods that work in both 2D and 3D, because Matplotlib's 3D axes has its own `stem()`; note added that there are no true 3D versions of pie, box, violin and histogram plots |
-| 8 | Box plot explanation | "These concepts are inherently one-dimensional" | Modified | Explained in simple words as values along a single scale |
-| 9 | Code blocks | Many plain-text snippets, rules and diagrams in blocks with no language or marked `python` (for example `X.shape = (50,50)`, `500 × 500`, learning points with arrows) | Modified | Python code marked `python`; plain text, rules and diagrams marked `text` |
-| 10 | Common Methods Available in Both 2D and 3D | Only `plot()` and `scatter()` | Added | Rows for `stem()`, `bar()`, `contour()`/`contourf()` and `text()`, with a link to the full list |
-| 11 | Additional Setup Required for 3D | Explanation of `projection="3d"` only | Added | `subplot_kw` and "projection" explained; alternative `fig.add_subplot(projection="3d")` shown |
-| 12 | 2D vs 3D side-by-side script | Not present | Added | Script, output, new image and explanation of depth shading |
-| 13 | Comparison Table (2D vs 3D) | Four rows | Added | Rows for axis label methods and rotating with the mouse |
-| 14 | Common 3D-Specific Methods | Table only; input for `voxels()` given as "3D arrays" | Added | Voxel and trisurf explained; input types clarified; script, output and new image showing `contour3D()`, `plot_trisurf()` and `voxels()` added |
-| 15 | Why Surface and Wireframe Plots Need Mesh Grids | x, y and z shown as separate one-word code blocks | Modified | Rewritten as sentences; link to the meshgrid section added |
-| 16 | Surface Plot Workflow and "How Surface Plots Use meshgrid()" flowcharts | No step numbers | Modified | Steps numbered in both flowcharts |
-| 17 | Surface Plot vs Wireframe Plot table | Five rows | Added | Row on seeing through to the back of the shape |
-| 18 | Points to Watch Out For, item 1 | Said Matplotlib "will raise an error" without a 3D axes | Corrected | 3D-only methods raise `AttributeError`, but `plot(x, y, z)` on 2D axes raises no error and quietly draws two 2D lines |
-| 19 | Points to Watch Out For, item 3 | Said passing 1D arrays "usually fails" | Corrected | States that it fails and gives the actual error message |
-| 20 | Common Beginner Errors | Four rows; error messages not shown | Modified | Actual error messages added; row for `plot(x, y, z)` on 2D axes added; script that produces and catches each error, with its output, added |
-| 21 | Understanding np.meshgrid(), function shown | LaTeX `$x^2 + y^2$` written as "the function" without z | Corrected | Written as `z = x² + y²` in a text block, which displays reliably on GitHub |
-| 22 | meshgrid Example | Code block with no language; output typed by hand with "X" and "Y" labels | Modified | Script run with extra steps listing the coordinate pairs and comparing indexing; real output shown; step-by-step reading added |
-| 23 | Visual Interpretation table | Showed a third row for y = 30, although the example used only y = [10, 20] | Corrected | Table reduced to the two rows produced by the example |
-| 24 | Coordinates vs Matrix Indexing | Example "(1,2) ⟷ (2,10)" with no zero-based explanation | Corrected | Shown as `X[0, 1]` and `Y[0, 1]` giving (2, 10), with a note that Python counts from 0 |
-| 25 | Typical Workflow explanation | Four bullets | Added | Explanation of `np.linspace()` and of calculating Z for all points at once |
-| 26 | Viewing Angle | `elev` and `azim` described briefly; no defaults | Added | Clearer meanings, default values (30 and -60), link, and a script with new image showing four viewing angles |
-| 27 | Colormaps | Introduced as a "boring" plot; viridis "Blue → Green → Yellow"; plasma "Purple → Orange"; inferno "Dark → Bright" | Corrected | Wording made neutral; colors corrected to viridis "Dark purple → blue → green → yellow", plasma "Dark blue → purple → orange → yellow", inferno "Black → purple → red → pale yellow"; "Good for" column; script printing the start and end colors and new image added |
-| 28 | Surface vs Wireframe Comparison (section 3) | Two lines in a `python` block | Modified | Placed in a `text` block; short explanation and link to Script 4 added |
-| 29 | Why Not Everything Should Be 3D | One quoted sentence | Added | List of problems 3D can cause and when 2D is better |
-| 30 | Color Bar example comment | "In virdis" | Corrected | Spelling corrected to "viridis"; note on why the surface is stored in a variable |
-| 31 | Script 1 (Helix) comments | Said "The z coordinate is simply the parameter t", but the code uses `np.linspace(0, 10, 1000)`; said 20π creates "multiple turns" | Corrected | Comment now matches the code (z rises evenly from 0 to 10); number of turns (10) explained and printed; step comments added |
-| 32 | Script 1 print statements | Placed after `plt.show()` with a comment about "the cone matrix" | Corrected | Prints moved before `plt.show()` so they appear without closing the window; comment corrected |
-| 33 | Script 1 "What this script demonstrates" table | Copied from the scatter script (`scatter(x,y,z)`, `s=80`) | Corrected | Replaced with a table describing the helix script (`linspace`, `cos`, `sin`, `plot(x, y, z)`) |
-| 34 | Script 1 output heading and block | Output in a `python` block | Modified | Output placed in a `text` block with a step-by-step reading; flowchart and follow-up question added |
-| 35 | Script 2 (Scatter) | No printed output | Added | Step comments and a print of each point's coordinates; note on depth shading; follow-up question |
-| 36 | Script 3 (Surface) | Shape prints placed after `plt.show()`; comment "At the center (0, 0), z is 0" | Modified | Prints moved before `plt.show()`; grid size and z range printed, with an explanation of why the lowest value is 0.007 rather than 0; "paraboloid" introduced; flowchart steps numbered; follow-up question |
-| 37 | Script 4 (Wireframe) comments | Called Z = X² + Y² "a cone-shaped surface"; described `elev` as "the elevation angle in the z plane" and `azim` as "the azimuth angle in the x,y plane" | Corrected | Described as a bowl-shaped surface (paraboloid); `elev` and `azim` explained as the camera's height angle and rotation around the z-axis; prints of grid size, wireframe lines and view angles added; follow-up question |
-| 38 | Summary and Glossary | Not present | Added | Summary of key points and a glossary of technical terms with links |
-| 39 | Images | Four images: `ch15-matplotlib-3d-helix.png`, `ch15-matplotlib-3D-scatter.png`, `ch15-matplotlib-3d-surface.png`, `ch15-matplotlib-3D-wireframe.png` | Kept and added | The four original images kept unchanged (the plotting commands in Scripts 1 to 4 were not changed); four new images added: `ch15-matplotlib-3d-2d-vs-3d.png`, `ch15-matplotlib-3d-special-methods.png`, `ch15-matplotlib-3d-view-angles.png`, `ch15-matplotlib-3d-colormaps.png` |
-
-
-
 

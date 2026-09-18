@@ -21,6 +21,20 @@ Knowing both styles matters because you will see both in real Python projects. O
         - [Key Terms Used in This Project](020-ch20-unittest-disadvantage-rigid-oop-style.md#key-terms-used-in-this-project)
     - [Solution: Architectural Restrictions of OOP xUnit Testing vs. Pytest Fixtures](020-ch20-unittest-disadvantage-rigid-oop-style.md#solution-architectural-restrictions-of-oop-xunit-testing-vs-pytest-fixtures)
         - [The BankAccount Class Used in the Examples](020-ch20-unittest-disadvantage-rigid-oop-style.md#the-bankaccount-class-used-in-the-examples)
+    - [Running the Scripts on Your Computer](020-ch20-unittest-disadvantage-rigid-oop-style.md#running-the-scripts-on-your-computer)
+        - [Step 1: Check That Python Is Installed](020-ch20-unittest-disadvantage-rigid-oop-style.md#step-1-check-that-python-is-installed)
+        - [Step 2: Install VS Code and the Python Extension](020-ch20-unittest-disadvantage-rigid-oop-style.md#step-2-install-vs-code-and-the-python-extension)
+        - [Step 3: Create a Folder for the Scripts](020-ch20-unittest-disadvantage-rigid-oop-style.md#step-3-create-a-folder-for-the-scripts)
+        - [Step 4: Download the Six Files](020-ch20-unittest-disadvantage-rigid-oop-style.md#step-4-download-the-six-files)
+        - [Step 5: Open the Folder in VS Code](020-ch20-unittest-disadvantage-rigid-oop-style.md#step-5-open-the-folder-in-vs-code)
+        - [Step 6: Open the Terminal in VS Code](020-ch20-unittest-disadvantage-rigid-oop-style.md#step-6-open-the-terminal-in-vs-code)
+        - [Step 7: Check Whether pytest Is Installed](020-ch20-unittest-disadvantage-rigid-oop-style.md#step-7-check-whether-pytest-is-installed)
+        - [Step 8: Install pytest](020-ch20-unittest-disadvantage-rigid-oop-style.md#step-8-install-pytest)
+        - [Step 9: Run the Scripts](020-ch20-unittest-disadvantage-rigid-oop-style.md#step-9-run-the-scripts)
+        - [Step 10: Compare Your Output with This Page](020-ch20-unittest-disadvantage-rigid-oop-style.md#step-10-compare-your-output-with-this-page)
+        - [Step 11: Experiment by Making a Test Fail](020-ch20-unittest-disadvantage-rigid-oop-style.md#step-11-experiment-by-making-a-test-fail)
+        - [Optional: Using the Testing Panel in VS Code](020-ch20-unittest-disadvantage-rigid-oop-style.md#optional-using-the-testing-panel-in-vs-code)
+        - [Troubleshooting Common Problems](020-ch20-unittest-disadvantage-rigid-oop-style.md#troubleshooting-common-problems)
     - [The Problem: The Rigid OOP Class Blueprint](020-ch20-unittest-disadvantage-rigid-oop-style.md#the-problem-the-rigid-oop-class-blueprint)
         - [A Complete xUnit-Style Test Class](020-ch20-unittest-disadvantage-rigid-oop-style.md#a-complete-xunit-style-test-class)
         - [How the xUnit Setup Runs](020-ch20-unittest-disadvantage-rigid-oop-style.md#how-the-xunit-setup-runs)
@@ -102,7 +116,7 @@ In the chapter, testing styles are presented as a series of phases. Two of them 
 
 ### The BankAccount Class Used in the Examples
 
-All the scripts on this page are available in the [pytest-demo folder](https://github.com/ag999git/001-Python-book-2026/tree/main/20-unittest/pytest-demo). Save all six files in one folder on your computer and run them with `pytest -v -s`.
+All the scripts on this page are available in the [pytest-demo folder](https://github.com/ag999git/001-Python-book-2026/tree/main/20-unittest/pytest-demo). Save all six files in one folder on your computer and run them with `pytest -v -s`. Step-by-step instructions for downloading the files, installing pytest and running the scripts in VS Code are given in [Running the Scripts on Your Computer](020-ch20-unittest-disadvantage-rigid-oop-style.md#running-the-scripts-on-your-computer).
 
 | File | What It Contains |
 | --- | --- |
@@ -158,6 +172,278 @@ def format_currency(amount):
 ```
 
 The class has one new idea compared with a basic bank account: a `status`. A frozen account refuses both deposits and withdrawals. We need this to test the "VIP vs. Frozen" example from the assignment. The helper function `format_currency()` does not use an account at all. We need it to test the "All-or-Nothing" example.
+
+[Back to the Table of Contents](020-ch20-unittest-disadvantage-rigid-oop-style.md#table-of-contents)
+
+## Running the Scripts on Your Computer
+
+Reading the scripts is useful, but you will learn much more by running them yourself and watching the output appear. This section explains, step by step, how to download the six scripts, install pytest and run the scripts in **Visual Studio Code (VS Code)**, a free code editor that many Python programmers use.
+
+The steps are written for Windows. Where macOS or Linux is different, this is noted.
+
+The whole process looks like this:
+
+```mermaid
+flowchart TD
+    A["1. Check that Python is installed"] --> B["2. Install VS Code and its Python extension"]
+    B --> C["3. Create a folder for the scripts"]
+    C --> D["4. Download the six files into the folder"]
+    D --> E["5. Open the folder in VS Code"]
+    E --> F["6. Open the terminal in VS Code"]
+    F --> G{"7. Is pytest installed?"}
+    G -- No --> H["8. Install pytest"]
+    G -- Yes --> I["9. Run the scripts with pytest"]
+    H --> I
+    I --> J["10. Compare the output with this page"]
+    J --> K["11. Change a value and run again"]
+```
+
+[Back to the Table of Contents](020-ch20-unittest-disadvantage-rigid-oop-style.md#table-of-contents)
+
+### Step 1: Check That Python Is Installed
+
+Open **Command Prompt** (press the Windows key, type `cmd` and press Enter) and type:
+
+```bash
+python --version
+```
+
+You should see something like this (your version number may be different):
+
+```text
+Python 3.12.4
+```
+
+Any version from Python 3.9 onwards is fine for these scripts.
+
+- If you see an error such as `'python' is not recognized`, Python is not installed or Windows cannot find it. Download it from [python.org](https://www.python.org/downloads/). During installation, **tick the box "Add python.exe to PATH"** on the first screen. This lets Windows find Python from any folder.
+- On macOS and Linux, type `python3 --version` instead. In all the commands below, use `python3` wherever this page says `python`.
+
+[Back to the Table of Contents](020-ch20-unittest-disadvantage-rigid-oop-style.md#table-of-contents)
+
+### Step 2: Install VS Code and the Python Extension
+
+1. Download and install VS Code from [code.visualstudio.com](https://code.visualstudio.com/).
+2. Open VS Code and click the **Extensions** icon on the left side bar (it looks like four small squares), or press `Ctrl+Shift+X`.
+3. Search for **Python** and install the extension published by **Microsoft**.
+
+An **extension** is an add-on that gives VS Code extra features. The Python extension lets VS Code understand Python code and find your Python installation. You can read more in the guide [Getting Started with Python in VS Code](https://code.visualstudio.com/docs/python/python-tutorial).
+
+[Back to the Table of Contents](020-ch20-unittest-disadvantage-rigid-oop-style.md#table-of-contents)
+
+### Step 3: Create a Folder for the Scripts
+
+Create a new, empty folder, for example:
+
+```text
+C:\Users\<your name>\Documents\pytest-demo
+```
+
+All six files must go into this **same folder**. Every test file contains the line `from bank_account import ...`, and Python looks for `bank_account.py` in the folder where the tests are run. If the files are in different folders, the tests will not run.
+
+[Back to the Table of Contents](020-ch20-unittest-disadvantage-rigid-oop-style.md#table-of-contents)
+
+### Step 4: Download the Six Files
+
+The six files are listed in the table in [The BankAccount Class Used in the Examples](020-ch20-unittest-disadvantage-rigid-oop-style.md#the-bankaccount-class-used-in-the-examples). For each file:
+
+1. Click the file name in the table. The file opens on GitHub.
+2. Near the top right of the code, click the **Download raw file** button (a small downward arrow icon).
+3. Save the file into your `pytest-demo` folder. Keep the file name exactly as it is.
+
+If the download button does not work for you, use this method instead:
+
+1. On the GitHub page of the file, click the **Copy raw file** button (the icon that looks like two overlapping squares).
+2. In VS Code, create a new file with the same name in your folder (see Step 5), paste the code and save it with `Ctrl+S`.
+
+When you have finished, your folder should contain exactly these six files:
+
+```text
+pytest-demo
+    bank_account.py
+    test_bank_factory.py
+    test_bank_fixtures.py
+    test_bank_xunit.py
+    test_bank_xunit_variations.py
+    test_fresh_instance.py
+```
+
+**Watch out for a hidden `.txt` ending.** Some browsers save a file as `bank_account.py.txt`. Windows hides the ending, so the file looks correct but pytest will not find it. To check, open File Explorer, click **View**, and turn on **File name extensions** (in Windows 11: **View > Show > File name extensions**). If any file ends in `.txt`, rename it and remove the `.txt`.
+
+[Back to the Table of Contents](020-ch20-unittest-disadvantage-rigid-oop-style.md#table-of-contents)
+
+### Step 5: Open the Folder in VS Code
+
+1. In VS Code, click **File > Open Folder...**.
+2. Select your `pytest-demo` folder and click **Select Folder**.
+3. If VS Code asks **"Do you trust the authors of the files in this folder?"**, click **Yes, I trust the authors**.
+
+The six files now appear in the **Explorer** panel on the left. Click any file to read its code.
+
+It is important to open the **folder**, not just a single file. This way the terminal in the next step starts inside the correct folder.
+
+[Back to the Table of Contents](020-ch20-unittest-disadvantage-rigid-oop-style.md#table-of-contents)
+
+### Step 6: Open the Terminal in VS Code
+
+Click **Terminal > New Terminal**, or press ``Ctrl+` `` (the backtick key, usually just below `Esc`).
+
+A terminal panel opens at the bottom of the window. The line where you type (called the **prompt**) should end with your folder name, for example:
+
+```text
+PS C:\Users\<your name>\Documents\pytest-demo>
+```
+
+The `PS` at the start means the terminal is PowerShell, which is the default in VS Code on Windows. All the commands on this page work the same way in PowerShell and in Command Prompt.
+
+If the prompt shows a different folder, go back to Step 5 and open the correct folder.
+
+[Back to the Table of Contents](020-ch20-unittest-disadvantage-rigid-oop-style.md#table-of-contents)
+
+### Step 7: Check Whether pytest Is Installed
+
+In the VS Code terminal, type:
+
+```bash
+python -m pytest --version
+```
+
+If pytest is installed, you will see its version number, for example:
+
+```text
+pytest 9.0.3
+```
+
+Any recent version of pytest will run these scripts. If you see this line, skip Step 8 and go to Step 9.
+
+If pytest is not installed, you will see an error like this:
+
+```text
+No module named pytest
+```
+
+Why `python -m pytest` and not just `pytest`? The `-m` option tells Python to run pytest as a module (a module is simply a Python file or package that can be imported). This makes sure pytest runs with the same Python that VS Code is using, and it avoids the error `'pytest' is not recognized` that can appear when Windows cannot find the plain `pytest` command. Apart from this, `python -m pytest` and `pytest` do the same job, and all the flags such as `-v` and `-s` work the same way.
+
+[Back to the Table of Contents](020-ch20-unittest-disadvantage-rigid-oop-style.md#table-of-contents)
+
+### Step 8: Install pytest
+
+In the VS Code terminal, type:
+
+```bash
+python -m pip install pytest
+```
+
+`pip` is Python's tool for installing extra packages from the internet. You will see several lines of download messages. The last line should begin with:
+
+```text
+Successfully installed ... pytest-...
+```
+
+Now repeat Step 7 to confirm that pytest shows a version number. You can read more in the pytest [Get Started](https://docs.pytest.org/en/stable/getting-started.html) guide.
+
+[Back to the Table of Contents](020-ch20-unittest-disadvantage-rigid-oop-style.md#table-of-contents)
+
+### Step 9: Run the Scripts
+
+Run the test files one at a time, in the same order as they appear on this page. Type each command in the VS Code terminal and press Enter:
+
+```bash
+python -m pytest -v -s test_bank_xunit.py
+python -m pytest -v -s test_bank_xunit_variations.py
+python -m pytest -v -s test_fresh_instance.py
+python -m pytest -v -s test_bank_fixtures.py
+python -m pytest -v -s test_bank_factory.py
+```
+
+Remember what the two flags do:
+
+| Flag | What It Does |
+| --- | --- |
+| `-v` | Shows the name and result of every test |
+| `-s` | Shows the output of the `print()` statements, so you can see when setup and teardown run |
+
+You can also run all five test files together:
+
+```bash
+python -m pytest -v -s
+```
+
+When no file name is given, pytest finds every file in the folder whose name starts with `test_`. The last line of the output should be:
+
+```text
+============================== 15 passed in 0.05s ==============================
+```
+
+The time will be different on your computer.
+
+Note that `bank_account.py` is never run on its own. It is not a test file. The test files use it through their `import` lines. Also, do not run a test file with `python test_bank_fixtures.py`. Nothing will appear, because the file only defines test functions and does not call them. Pytest is what finds and calls them.
+
+[Back to the Table of Contents](020-ch20-unittest-disadvantage-rigid-oop-style.md#table-of-contents)
+
+### Step 10: Compare Your Output with This Page
+
+Put your output next to the output shown on this page. The first few lines (the platform, Python version, folder path and plugins) will be different, and that is normal. The lines that show the tests, the `[setup]` and `[teardown]` messages and the final result should match exactly.
+
+As you run each file, look for the lesson it teaches:
+
+| File | What to Look For in the Output | The Lesson |
+| --- | --- | --- |
+| `test_bank_xunit.py` | A `[setup] Creating account` line appears before `test_format_currency`, a test that never uses the account | A `setup_method` runs for every test in the class, needed or not (the "All-or-Nothing" problem) |
+| `test_bank_xunit_variations.py` | Each `[setup]` line shows a different owner, balance and status, chosen by an `if/elif` check on the test name | One `setup_method` must handle every variation (the "One-Size-Fits-All" problem) |
+| `test_fresh_instance.py` | `test_second can see 'note'? False` | Pytest creates a new class instance for every test, so `self` data is not shared |
+| `test_bank_fixtures.py` | Each test gets only the fixture it names; `test_format_currency` has no `[setup]` or `[teardown]` lines at all | Fixtures run only when a test asks for them (dependency injection) |
+| `test_bank_factory.py` | Each `[factory]` line shows the exact account that the test asked for | A factory fixture lets each test build its own starting data |
+
+[Back to the Table of Contents](020-ch20-unittest-disadvantage-rigid-oop-style.md#table-of-contents)
+
+### Step 11: Experiment by Making a Test Fail
+
+The best way to understand a test is to break it on purpose and see what happens.
+
+1. Open `test_bank_fixtures.py` in VS Code.
+2. In `test_regular_deposit`, change the last line from `assert regular_account.get_balance() == 150` to `assert regular_account.get_balance() == 160`.
+3. Save the file with `Ctrl+S`.
+4. Run it again:
+
+```bash
+python -m pytest -v -s test_bank_fixtures.py
+```
+
+5. Look at the output. `test_regular_deposit` is now marked `FAILED`, and the report shows `assert 150 == 160`. The other three tests still pass, because each test got its own fresh account from its own fixture.
+6. Notice that the `[teardown] regular_account finished` line still appears. The code after `yield` runs even when the test fails.
+7. Change `160` back to `150`, save, and run again to see all tests pass.
+
+You can try other experiments too. For example, in `test_bank_xunit_variations.py`, rename `test_vip_account` to `test_vip_withdrawal` and run it. The test fails with `ValueError: Insufficient funds`, because the `if` check in `setup_method` no longer matches the name and the test gets the regular ₹100 account. This is the weakness described in the "One-Size-Fits-All" section.
+
+[Back to the Table of Contents](020-ch20-unittest-disadvantage-rigid-oop-style.md#table-of-contents)
+
+### Optional: Using the Testing Panel in VS Code
+
+VS Code can also run tests by clicking instead of typing:
+
+1. Click the **Testing** icon on the left side bar (it looks like a laboratory flask).
+2. Click **Configure Python Tests**, choose **pytest**, and then choose **. Root directory** (the current folder).
+3. VS Code lists all 15 tests. Click the run button (a small triangle) next to any test, file or the whole folder.
+4. A green tick means the test passed. A red cross means it failed.
+
+The Testing panel is handy, but it does not show the `print()` output in the same way. For this page, the terminal commands in Step 9 are the better choice, because they let you see exactly when setup and teardown run. More details are in the VS Code guide [Python testing in Visual Studio Code](https://code.visualstudio.com/docs/python/testing).
+
+[Back to the Table of Contents](020-ch20-unittest-disadvantage-rigid-oop-style.md#table-of-contents)
+
+### Troubleshooting Common Problems
+
+| Problem or Error Message | Likely Cause | How to Fix It |
+| --- | --- | --- |
+| `'python' is not recognized` | Python is not installed, or it was installed without "Add python.exe to PATH" | Reinstall Python from python.org and tick "Add python.exe to PATH". On Windows you can also try `py` instead of `python`, for example `py -m pytest -v -s` |
+| `No module named pytest` | pytest is not installed for this Python | Run `python -m pip install pytest` (Step 8) |
+| `'pytest' is not recognized` | The plain `pytest` command is not on the PATH | Use `python -m pytest` instead of `pytest` |
+| `ModuleNotFoundError: No module named 'bank_account'` | `bank_account.py` is missing, is in another folder, or has the wrong name | Check that `bank_account.py` is in the same folder as the test files and that the terminal is open in that folder (Step 6) |
+| `collected 0 items` or `no tests ran` | The terminal is in the wrong folder, or the files were saved with a `.txt` ending | Check the folder in the prompt (Step 6) and turn on file name extensions (Step 4) |
+| `file or directory not found: test_bank_xunit.py` | The file name is spelled differently, or the file is in another folder | Compare the name letter by letter with the table of files. Names are case-sensitive on macOS and Linux |
+| Nothing happens when running `python test_bank_fixtures.py` | Test files must be run by pytest, not by Python directly | Use `python -m pytest -v -s test_bank_fixtures.py` |
+| The `print()` messages do not appear | The `-s` flag was left out | Add `-s` to the command |
+| The first lines of the output look different from this page | Different computer, Python version or folder | This is normal. Compare only the test lines and the final result |
 
 [Back to the Table of Contents](020-ch20-unittest-disadvantage-rigid-oop-style.md#table-of-contents)
 

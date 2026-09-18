@@ -1,6 +1,5 @@
 
 
-
 # Breaking Free from Rigid Test Classes: xUnit Setup Methods vs. Pytest Fixtures
 
 Most tests need some starting data before they can run. A banking test, for example, needs a bank account to deposit money into. Preparing this data is called **setup**, and cleaning up after the test is called **teardown**. How a testing tool handles setup and teardown has a big effect on how easy the tests are to write, read and change.

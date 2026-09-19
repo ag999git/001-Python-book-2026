@@ -362,6 +362,8 @@ If your user name contains spaces or non-English letters, the installer may warn
 
 ### 2.7 Step 7: Advanced Installation Options and the PATH Checkbox
 
+![Add-Anaconda-to-PATH-or-not](../resources/ch01-003-adding-to-PATH-anaconda-installation.png)
+
 **This is the most important screen.** You will see a few checkboxes. The two that matter are:
 
 **1. Add Anaconda3 to my PATH environment variable** - *not recommended, leave it unticked*

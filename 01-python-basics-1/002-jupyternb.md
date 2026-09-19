@@ -646,7 +646,10 @@ Hello Jupyter!
 
 If it prints the message, your setup is working perfectly. The screenshot below shows a small test notebook with a Markdown cell, the `print()` cell above, and a cell that calculates `a + 20`.
 
-![A small test notebook in Jupyter Notebook 7](https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-001-jupyter-notebook-editor.png)
+
+
+
+![A small test notebook in Jupyter Notebook 7](../resources/ch-001-jupyter-notebook-editor.png)
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -750,7 +753,10 @@ URL: `http://localhost:8888/tree`
 
 This is the first page Jupyter opens. It works like a simple file manager for the folder where you started Jupyter.
 
-![The Tree View of Jupyter Notebook 7](https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-001-jupyter-tree-view.png)
+
+
+![The Tree View of Jupyter Notebook 7](../resources/ch-001-jupyter-tree-view.png)
+
 
 Here you can:
 
@@ -807,7 +813,9 @@ Everything shown here comes from the folder that is being served (the folder in 
 
 The screenshot below shows Screen 1 with the **New** button clicked. It is from here that you create things. In most cases you want a new Jupyter notebook, so you click **Python 3 (ipykernel)**. But you may choose other options as you need.
 
-![The New menu in the Tree View](https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-001-jupyter-new-menu.png)
+
+
+![The New menu in the Tree View](../resources/ch-001-jupyter-new-menu.png)
 
 The options (these may vary from one machine to another):
 
@@ -821,7 +829,9 @@ The options (these may vary from one machine to another):
 
 If you have more kernels installed, each one appears at the top of the list. The screenshot below was taken on the author's computer, in the classic Notebook 6. The menu looks a little different there (**Text File** and **Folder** instead of **New File** and **New Folder**, and no **Console**), but it shows several extra kernels:
 
-![The New menu in the classic Notebook 6, with extra kernels installed](https://raw.githubusercontent.com/ag999git/python-book-2026/main/all-book-images/UI-Screen1-Jupyter-NB.jpg)
+
+
+![The New menu in the classic Notebook 6, with extra kernels installed](../resources/ch-01-001-UI-Screen1-Jupyter-NB.jpg)
 
 Two of these extra kernels are worth explaining:
 
@@ -853,7 +863,11 @@ This is very powerful and is often used for managing environments.
 
 Click **Running** to see everything that is active right now:
 
-![The Running tab in the Tree View](https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-001-jupyter-running-tab.png)
+
+
+![The Running tab in the Tree View](../resources/ch-001-jupyter-running-tab.png)
+
+
 
 * **Kernels** - the notebooks whose kernels are running, grouped by kernel type.
 * **Terminals** - any terminals you have opened.
@@ -871,7 +885,10 @@ URL example: `http://localhost:8888/notebooks/MyNotebook.ipynb`
 
 This is the interactive coding screen, where you write Python code in cells, run it, and see the output.
 
-![The Notebook Editor in Jupyter Notebook 7](https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-001-jupyter-notebook-editor.png)
+
+
+![The Notebook Editor in Jupyter Notebook 7](../resources/ch-001-jupyter-notebook-editor.png)
+
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -897,7 +914,11 @@ The menu bar is the row of words at the top: **File, Edit, View, Run, Kernel, Se
 
 Only the most useful options are listed. Keyboard shortcuts are shown in brackets where they exist.
 
-![The File menu in Jupyter Notebook 7](https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-001-jupyter-file-menu.png)
+
+
+![The File menu in Jupyter Notebook 7](../resources/ch-001-jupyter-file-menu.png)
+
+
 
 **1. File Menu**
 
@@ -1019,7 +1040,10 @@ The classic notebook has slightly different menus. This table shows where to fin
 
 The toolbar is the row of small icons just below the menu bar. In the screenshot below each item has a number. The numbers match the table after it.
 
-![The Jupyter Notebook 7 toolbar with numbered items](https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-001-jupyter-toolbar-numbered.png)
+
+
+![The Jupyter Notebook 7 toolbar with numbered items](../resources/ch-001-jupyter-toolbar-numbered.png)
+
 
 | No. | Icon / item | What it does | Shortcut |
 | --- | ----------- | ------------ | -------- |
@@ -1041,7 +1065,10 @@ When a cell is selected, a small **cell toolbar** also appears at its top right 
 
 If you are using the classic Notebook 6, your toolbar looks like the one below. The numbers in this picture are its own and do not match the table above. Notice the **Move Cell Up** and **Move Cell Down** buttons (6 and 7), and a keyboard icon at the far right that opens the list of shortcuts.
 
-![The classic Notebook 6 toolbar, with each button explained](https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-001-Jupyter-notebook-menu-bar.jpg)
+
+
+![The classic Notebook 6 toolbar, with each button explained](../resources/ch-001-Jupyter-notebook-menu-bar.jpg)
+
 
 For a full list of shortcuts, use **Help > Show Keyboard Shortcuts** (Ctrl + Shift + H). In Notebook 7 you can also press **Ctrl + Shift + C** to open the **command palette**, a searchable list of every command.
 
@@ -1325,6 +1352,10 @@ This section describes, in more detail, the journey that was summarised in [Sect
 ### 11.1 The Flowchart
 
 ![Flowchart: how code travels from the browser to the kernel and back](https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-001-jupyter-browser-to-kernel-flow.png)
+
+![Flowchart: how code travels from the browser to the kernel and back](../resources/ch-001-jupyter-browser-to-kernel-flow.png)
+
+
 
 <details>
 <summary>Mermaid source of this flowchart (can be pasted into draw.io)</summary>
@@ -2065,49 +2096,4 @@ These tools help you find slow code, memory problems and other performance bottl
 [Back to the Table of Contents](#table-of-contents)
 
 ---
-
-## Table of Changes
-
-| No. | Section / Element | In the Original File | What Was Changed (Added / Deleted / Modified) |
-| --- | ----------------- | -------------------- | --------------------------------------------- |
-| 1 | Page heading and introduction | No page title or introduction; the page started with a table of contents | Added the title "Chapter 1: Installing and Using Jupyter Notebook with Anaconda", an introduction explaining what the page covers and why it matters for the chapter, and a note that the page describes Jupyter Notebook 7 |
-| 2 | Table of Contents | 11 flat links. Most anchors were wrong (each pointed to the next section number, for example "1.1 PART 1" linked to `#12-...`), one had a capital letter and one had an extra `)` | Replaced by a nested Table of Contents generated from the headings, down to the 8.x.x sub-sections. The twelve Step headings in Section 11.2 are left out to avoid clutter. All links were checked, and headings were written so that anchors are the same on GitHub and MkDocs |
-| 3 | Heading structure | Mixed levels (`###` for main parts, `####`, `#####`, `######`), several numbered headings written as plain text (1.1.2, 1.1.6, 1.2.6, 1.3.3, 1.4.2, 1.9.1), and "Tips" sub-points written as `###` headings under a `####` heading | All sections now use `##`, `###` and `####` in the correct order and are renumbered 1 to 12. The plain-text headings became real headings. Tips became a numbered bold list. Old anchors therefore changed |
-| 4 | Back links | "Back to the Table of Contents" at only a few places, sometimes at the start of a section | Now at the end of every section and sub-section |
-| 5 | Section 1 (client-server model) | Content under "1 Anaconda / 1.1 Introduction" | Kept all points. Added simple explanations and links for client, server, WebSockets, IPython and ZeroMQ; added a numbered Mermaid diagram; added that each notebook has its own kernel and that Jupyter supports other languages. "Executes Python code" as a server job was corrected: the server starts kernels, and the kernel runs the code |
-| 6 | Repetition | The browser-server-kernel flow was described four times (1.1.2, 1.1.5, 1.7.6 and Section 3); the Tree View, menu bar and toolbar were each described twice (1.8 and 1.9) | Kept one full description of each (Sections 1.4, 8 and 11) and replaced the repeats with short cross-references. The two Tree View descriptions and the two Notebook Editor descriptions were merged into Section 8 |
-| 7 | Installing Anaconda: download | Filename `Anaconda3-2024.XX-...`; fixed link to `Anaconda3-2024.06-1-Windows-x86_64.exe`; size "about 800 MB" | Updated to the current release `Anaconda3-2026.07-1-Windows-x86_64.exe` (about 1 GB), added the archive page link so students can always find the newest file, and a note that the download page may ask for registration |
-| 8 | Installing Anaconda: steps | Steps 1 to 8 | Now Steps 1 to 9 (the licence screen got its own step). Added a numbered Mermaid flowchart of the whole installation, an explanation of PATH, advice for user names with spaces, and a note on Anaconda's licence terms. The "Register as default Python" option is noted as possibly unticked by default. Install folder shown as `anaconda3` (lowercase, as in current versions). Emoji tick marks removed |
-| 9 | Launching Jupyter | Two methods | Kept both. Added the messages shown in the Anaconda Prompt, a warning not to close that window, how to start in another folder, and a new sub-section on closing Jupyter properly |
-| 10 | Installing without Anaconda | Four short steps; Step 4 command not formatted as code | Added expected output, help for "python is not recognized" (the `py` launcher), `python -m ensurepip`, and `python -m notebook`. Formatted all commands as code |
-| 11 | Virtual environment | Create, activate (Windows only), install, launch; tip on `.venv` | Kept all, reworded the `.venv` tip for accuracy. Added activation for PowerShell and macOS/Linux, the PowerShell script error fix, a new step to register the environment as a kernel with `ipykernel` (which explains the `.venv` entry in the New menu), and `deactivate` |
-| 12 | Verifying the installation | "Click New > Python 3 (ipykernel)" | Added the Notebook 7 variant, the expected output, and a new screenshot |
-| 13 | Local server address | Sections on http, localhost, port, /tree | Kept all. Added a table of routes, a new section on the security token, and a plain-language explanation of "protocol", "port" and "loopback address" |
-| 14 | Menu bar tables | Described the classic Notebook 6 menus (File, Edit, View, Insert, Cell, Kernel, Widgets, Help), which current Anaconda no longer installs | Rewritten to match the actual Notebook 7 menus (File, Edit, View, Run, Kernel, Settings, Help), with shortcuts. Added a table showing where each classic Notebook 6 option is now found |
-| 15 | Toolbar | 13 items with emoji icons, including Move Up/Down and a Keyboard Shortcuts button that are not on the Notebook 7 toolbar | Rewritten as a table of the 13 actual Notebook 7 toolbar items, matched to a new numbered screenshot. Explained the cell toolbar (where move up/down now are) and the command palette. Kept the original annotated classic toolbar image as a second picture for readers who still have Notebook 6. The plain toolbar strip image was not used, since the annotated one shows the same toolbar. Emojis removed |
-| 16 | Tree View details | Header, toolbar, file list, right-click menu, breadcrumb, Running, Search, Footer | Updated to Notebook 7: Files and Running tabs, Filter, New, Upload, Refresh, and selection buttons (Open, Download, Rename, Duplicate, Move to Trash). The footer/server-info item was removed because Notebook 7 has no footer |
-| 17 | New menu | Options `.venv`, `Java`, `Python 3 (ipykernel)`, `Text File`, `Folder`, `Terminal` | Updated to the Notebook 7 names (New File, New Folder, Console added) in a table; the `.venv` and `Java` explanations were kept, together with the original annotated screenshot of the classic New menu. Corrected: the default kernel uses the Python that runs Jupyter (not necessarily a system-wide Python); the terminal on Windows is PowerShell, not a Linux terminal |
-| 18 | Notebook editor details | Kernel status, cells (with a run button on each cell), command/edit mode (green/blue border), shortcuts including H, output, sidebar, status, checkpoints | Updated to Notebook 7: no per-cell run button, blue bar for command mode, Ctrl + Shift + H for shortcuts. Added the `[*]` busy marker, execution numbers, Raw cells, a shortcut table, and the most common beginner mistake. Checkpoints explained more fully |
-| 19 | Screenshots | Two toolbar images in `resources` (JPG); two images linked from another repository (`ag999git/python-book-2026/.../all-book-images/`), which was private at the time, so they did not display; all image links used `github.com/.../blob/...`, which does not render as an image | Added seven new PNG images for Jupyter Notebook 7 in the `resources` folder: tree view, New menu, Running tab, notebook editor, File menu, numbered toolbar, and the browser-to-kernel flowchart. Two original images were kept as pictures of the classic Notebook 6 (the annotated New menu and the annotated toolbar). All image links now use `raw.githubusercontent.com` addresses so that they display |
-| 20 | FAQ | Five questions with one-word or one-line answers | Questions kept unchanged. Answers expanded. The answer to "Is Anaconda free?" now reflects the current licence terms; the answer to "Can I uninstall Anaconda and keep Python?" was corrected (the Python inside Anaconda is removed with it). Added two new questions (9.6 and 9.7) |
-| 21 | Magic commands | Two tables; cell magic examples were run together (for example `%%timex = ...`, `%%bashecho "Hello"\nls`); the `%%time` example was split, with the code in a separate block | Examples fixed using line breaks. The `%%latex` example now uses `$$...$$` so that it renders. Added: the rule that a cell magic must be the first line, `%reset -f` explained, `%store -r`, `%pip` versus `!pip`, `%%bash` needing Bash on Windows, and that `%matplotlib inline` is now the default. Added a hands-on section with real outputs |
-| 22 | Advanced flowchart | Image from the unreachable repository; steps labelled A to L, with one heading numbered "10." instead of a letter | The original image had steps E to H in the reverse order (the arrows ran H, G, F, E, while the text ran E, F, G, H) and some leftover editing marks around box C. Replaced with a new flowchart in the same three-row layout, with numbered steps in the correct order, plus its Mermaid source for draw.io. Steps renamed Step 1 to Step 12 (and 13 for the loop back) |
-| 23 | Kernel start command | `python.exe -m ipykernel` | Corrected to `python -m ipykernel_launcher -f <connection file>`, as in the real `kernel.json` |
-| 24 | Where Jupyter stores kernels | macOS given the same path as Linux; kernel folder said to contain "the executable path" as a separate item | macOS path corrected to `~/Library/Jupyter/kernels/`. Explained that the path is inside `kernel.json`. Added `jupyter kernelspec list` and a sample `kernel.json` |
-| 25 | Placeholders | Empty "1.10 Extra" heading, empty "Relationship between the 2 screens" heading, and "3.3 SSS", "3.4 CCC", "3.5 qqq" | Deleted |
-| 26 | Profiling: examples | Used `my_function()` without defining it; no outputs | Added a set-up cell defining `slow_squares`, `fast_squares` and `my_function`. Every profiling command was run and its real output is shown, with an explanation of how to read it, and a combined list of all cells |
-| 27 | Profiling: memory_profiler | Suggested `%mprun -f my_function my_function()` directly in a notebook | Corrected: `%mprun` only works on functions saved in a `.py` file. Added the error message and a `%%writefile` workaround, plus `%memit` |
-| 28 | Profiling: SnakeViz | Profiled a separate `.py` script with `!python -m cProfile` and then `!snakeviz` | Replaced with `%load_ext snakeviz` and `%snakeviz`, which work directly in a notebook. Kept the save-to-file method using `%prun -D`, with a note that `!snakeviz` keeps the cell busy |
-| 29 | Profiling: Pyinstrument | Used `prof.display()`, which does not exist in Pyinstrument | Corrected to `prof.print()` and mentioned the `%%pyinstrument` magic |
-| 30 | Profiling: Scalene | `%%scalene` said to need a "notebook extension"; described as CPU, memory and GPU profiling | Corrected to `%load_ext scalene`, added `%scrun`, and noted that inside Jupyter Scalene measures only CPU and GPU; memory profiling needs the command-line version |
-| 31 | Profiling: tips and reference | Tips a to f; quick reference table | Kept all. Added tip 7 (measure first), a numbered Mermaid chart for choosing a tool, and more rows in the quick reference table |
-| 32 | Install commands in profiling | `pip install ...` in bash blocks | Changed to `%pip install ...`, so the package goes into the kernel's own environment |
-| 33 | Emojis | Emoji icons and tick marks in several places | Removed throughout |
-
-
-
-
-
-
-
 

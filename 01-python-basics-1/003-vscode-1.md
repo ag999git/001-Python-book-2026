@@ -216,7 +216,14 @@ The installer asks where to put the Start menu shortcut. Leave it as **Visual St
 
 #### Step 5: Additional Tasks (Very Important)
 
-You will see a screen called **Select Additional Tasks** with several checkboxes. Tick these:
+You will see a screen called **Select Additional Tasks** with several checkboxes. 
+
+![Screen-additional-tasks](../resources/ch-001-vs-code-installer-first-screen.png)
+
+
+
+
+Tick these:
 
 | Checkbox | What it does | Tick it? |
 | -------- | ------------ | -------- |

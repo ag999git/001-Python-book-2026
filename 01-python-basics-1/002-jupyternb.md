@@ -336,6 +336,7 @@ A note about the licence: Anaconda is free for individual learners, students and
 
 ### 2.5 Step 5: Choose the Installation Type
 
+
 ![Screenshot-Just-me-or-all](../resources/ch01-002-just-me-all-users-anaconda-installation.png)
 
 Choose:

@@ -1,1660 +1,2113 @@
-### Table of contents
 
-- [1.1 PART 1: Installing Anaconda (which includes Jupyter Notebook)](#12-part-1-installing-anaconda-which-includes-Jupyter-Notebook)
-- [1.2 PART 2: Launching Jupyter Notebook (After Installation)](#13-part-2-launching-jupyter-notebook-after-installation))
-- [1.3 PART 3: OPTIONAL — Installing Jupyter Notebook Without Anaconda](#14-part-3-optional-installing-jupyter-notebook-without-anaconda)
-- [1.4 PART 4: Setting Up a Virtual Environment for Jupyter](#15-part-4-setting-up-a-virtual-environment-for-jupyter)
-- [1.5 PART 5: Verifying Everything Works](#16-part-5-verifying-everything-works)
-- [1.6 Some more details of the local server when you launch Jupyter](#17-some-more-details-of-the-local-server-when-you-launch-jupyter)
-- [1.7 You can think of Jupyter Notebook as having two main screens:](#18-you-can-think-of-jupyter-notebook-as-having-two-main-screens)
-- [1.8 UI](#19-ui)
-- [2 Some additional information](#2-some-additional-information)
-- [3 Advanced concepts](#3-advanced-concepts)
-- [Advanced:- Profiling Jupyter Notebooks (For Beginners)](#profiling-jupyter-notebooks-for-beginners)
 
- 
 
-### 1 Anaconda 
 
-#### 1.1 Introduction
-
-##### 1.1.1  The Client–Server Model of Jupyter Notebook
-
-Even though Anaconda and Jupyter Notebook run on your local computer, they still follow a client–server architecture internally.
-
-That means:
-
-•  Server = Python backend running on your computer
-
-•  Client = Your web browser (Chrome/Edge/Firefox)
-
-So you are still using your computer as:- Both the client AND the server
-
-###### 1. Server: Jupyter Notebook Server
-
-When you run:
-
-`jupyter notebook`
-
-or click “Launch” in Anaconda Navigator:
-
-→ A small Python program called the Jupyter Notebook Server starts running in the background.
-
-This server:
-
-  -  Runs on your machine
-
-  -  Manages files and notebooks
-
-  -  Executes Python code
-
-  -  Provides web pages for the interface
-
-  -  Communicates with the browser using WebSockets
-
-The server usually runs at:
-
-`http://localhost:8888`
-
-localhost means:
-
-  - Your own computer is acting as a server.
-
-###### 2. Client: Your Web Browser
-
-The Jupyter interface you see is just a website that your local server provides.
-
-The browser:
-
-  - Displays notebooks
-
-  - Sends your code to the server
-
-  - Receives output (text, images, errors)
-
-  - Updates the notebook content
-
-So the browser acts as a client UI.
-
-1.1.2 Behind-the-Scenes: How Code Execution Works
-
-•  Step-by-step internal process: 
-
-  1.  You type Python code in a cell in your browser.
-
-  2.  Browser sends the cell code to the Jupyter server.
-
-  3.  The server sends the code to a kernel (usually IPython).
-
-  4.  The kernel executes the code.
-
-  5.  The result (text/plots/errors) is sent back to the server.
-
-  6.  The server sends the result to your browser.
-
-  7.  Browser displays the output in the notebook.
-
-This process happens in milliseconds.
-
-##### 1.1.3 What Is the Kernel (Internally)?
-
-A kernel is a separate background process that executes code.
-
-For Python notebooks, it is the IPython kernel:
-
-•  Runs your Python code
-
-•  Maintains variable state
-
-•  Stores memory
-
-•  Handles errors
-
-•  Generates outputs
-
-Even if the browser is closed, the kernel may keep running until stopped.
-
-##### 1.1.4 Client–Server Role of Anaconda
-
-Anaconda itself is not a client–server app, but:
-
-It launches applications that use the model
-
-It manages environments and packages that these apps need
-
-  -  Internally, Anaconda Navigator:
-
-  -  Runs as a local desktop GUI application
-
-  -  Acts as a launcher for tools
-
-  -  Starts Jupyter Notebook server when asked
-
-  -  Manages Python environments
-
-Think of it like a control panel, not a server.
-
-##### 1.1.5 How Everything Fits Together
-
-✔ When you start Jupyter from Anaconda:
-
-1.  Anaconda starts the Jupyter Notebook Server
-
-2.  The server listens on a port on your machine
-
-    - Example: `localhost:8888`
-
-3.  Your browser opens the interface
-
-4.  The browser sends code → server → kernel
-
-5.  Kernel executes code and returns results
-
-6.  Browser displays the output
-
-1.1.6 Why use a client–server model locally?
-
-Even though everything is on your computer, this model gives benefits:
-
-  -  Benefit 1: Browser-based interface:- You don’t need a separate desktop app.
-
-  -  Benefit 2: Remote execution:- Same model works on remote servers (e.g., Google Colab, JupyterHub, cloud).
-
-  -  Benefit 3: Allows multiple clients:- Multiple browser tabs can talk to the same kernel.
-
-  -  Benefit 4: Language independence:- Kernel can be Python, R, Julia, etc., while browser stays the same.
-
-[Back to the Table of Contents](#table-of-contents)
-#### 1.2 PART 1: Installing Anaconda (which includes Jupyter Notebook)
-
-[Back to the Table of Contents](#table-of-contents)
-
-Anaconda is the easiest and recommended way for beginners to use Python and Jupyter Notebook.
-
-##### 1.2.1 STEP 1 — Go to the Anaconda Website
-
-  1.  Open your web browser (Chrome, Edge, Firefox).
-  2.  Go to: `https://www.anaconda.com/download`
-
-##### 1.2.2 STEP 2 — Download the Windows Installer
-
-  1.  Scroll to “Download Anaconda Distribution”.
-
-  2.  Choose:
-
-   - Operating System: Windows
-
-   - Python Version: Choose `Python 3.x` (default is fine)
-  3.  Click Download 64-bit Installer.
-
-A file called something like:
-
-`Anaconda3-2024.XX-Windows-x86_64.exe`
-
-will start downloading.
-
-
-
-> [!IMPORTANT]
-> You should download Anaconda — not Miniconda by mistake. (Unless you specifically want to)
-> The miniconda installer looks something like:- `Miniconda3-latest-Windows-x86_64.exe`.
-> Dont install it because it is the minimal installer (no Jupyter, no packages, very small).
-> The Anaconda website is confusing because it advertises Miniconda first.
-> If you are unable to locate the link for Anaconda, you may use:- https://repo.anaconda.com/archive/Anaconda3-2024.06-1-Windows-x86_64.exe.
-> This is the full Anaconda Distribution, NOT Miniconda.
-
-The Anaconda distribution contains:-
-✔ Contains Jupyter Notebook
-✔ Contains JupyterLab
-✔ Contains Spyder
-✔ Contains NumPy, Pandas, Matplotlib, etc.
-✔ Big installer (~800 MB)
-
-##### 1.2.3 STEP 3 — Run the Installer
-
-###### 1.  Locate the downloaded .exe file (usually in Downloads).
-
-###### 2.  Double-click it to start the installation.
-
-##### 1.2.4 STEP 4 — Initial Installer Screens
-
-Click Next → Accept the license → Next.
-
-##### 1.2.5 STEP 5 — Installation Type
-
-Choose:
-
-  -  Just Me (recommended. Unless you know how admin installation works.)
-
-  -  Click Next.
-
-1.2.6 STEP 6 — Choose Install Location
-
-Leave it default:
-
-`C:\Users\<yourname>\Anaconda3`
-
-  -  Click Next.
-
-**IMPORTANT STEP: PATH Checkbox**
-
-You will see two checkboxes:
-
-✔ Add Anaconda to my PATH environment variable (NOT recommended—leave unchecked)
-
-> [!NOTE]
-> Why is adding Anaconda to PATH not recommended?
-> When you add Anaconda to the PATH, you are telling Windows: “Use Anaconda’s Python everywhere in the system.”
-> It Overrides Your System Python.
-> Many computers already have:-
-> (a) Python installed by Windows Store.
-> (b) Python installed by Microsoft tools.
-> (c) Python installed manually.
-> (d) Python used by other programs.
-> If Anaconda is placed in PATH:-
-> (1) It becomes the default Python for your entire system.
-> (2) Other programs that expect the system Python may break.
-> (3) It becomes confusing which Python you are running
-
-✔ However if you do not have any previous version of Python installed on your system, then you may **Add Anaconda to my PATH environment variable**
-
-✔ Register Anaconda as my default Python → Check this one
-
-Click Install.
-
-##### 1.2.7 STEP 7 — Wait for Installation
-
-This may take 5–10 minutes.
-
-##### 1.2.8 STEP 8 — Finish
-
-Click `Next → Next → Finish`.
-
-You're done installing Anaconda!
-
-#### 1.3 PART 2: Launching Jupyter Notebook (After Installation)
-
-There are two easy methods.
-
-##### 1.3.1 METHOD 1: Use Start Menu
-
-1.  Press `Start`.
-
-2.  Search `Anaconda Navigator`.
-
-3.  Open it.
-
-4.  On the home screen, click `Launch` under Jupyter Notebook.
-
-✔ This opens Jupyter Notebook in your browser.
-
-##### 1.3.2 METHOD 2: Use Anaconda Prompt
-
-1.  Open Start → search Anaconda Prompt → open it.
-
-2.  Type:
-
-`jupyter notebook`
-
-Press Enter.
-
-✔ Jupyter Notebook will open in your browser.
-
-1.3.3 You Now Have Jupyter Notebook Installed!
-
-#### 1.4 PART 3: OPTIONAL Installing Jupyter Notebook Without Anaconda
-
-If you already have Python installed, you can install Jupyter with pip.
-
-##### 1.4.1 STEP 1 — Check Python Installation
-
-Open Command Prompt:-
-
-`python --version`
-
-If Python is installed, continue.
-
-1.4.2 STEP 2 — Install pip (if not already installed)
-
-Usually pip comes with Python. Check:
-
-`pip --version`
-
-##### 1.4.3 STEP 3 — Install Jupyter Notebook
-
-Run:
-
-`pip install notebook`
-
-##### 1.4.4 STEP 4 — Launch Notebook
-
-jupyter notebook
-
-#### 1.5 PART 4: Setting Up a Virtual Environment for Jupyter
-
-(Optional but recommended)
-
-##### 1.5.1 STEP 1 — Create Environment
-
-`python -m venv myenv`
-
-Note:- In above `myenv` is the name of your virtual environment.
-
-> [!TIP]
-> You can name your virtual environment anything you like.
-> However by convention, many a times it is named `.venv` . This is because in many operating systems (Like Linux and macOS) files and folders starting with a dot are conventionally hidden from default directory listings.
-> This is done to protect important system or configuration files.
-> However on Windows, a specific "hidden" attribute must be set.
-
-##### 1.5.2 STEP 2 — Activate Environment
-
-Windows:
-
-`myenv\Scripts\activate`
-
-##### 1.5.3 STEP 3 — Install Jupyter Inside This Environment
-
-`pip install notebook`
-
-##### 1.5.4 STEP 4 — Launch Jupyter
-
-`jupyter notebook`
-
-#### 1.6 PART 5: Verifying Everything Works
+# Chapter 1: Installing and Using Jupyter Notebook with Anaconda
+
+**About this page**
+
+This page goes with Chapter 1 of the book, *Python Basics*. In the printed chapter you learn how to write and run your first Python programs. To do that you need a place to write code. For beginners, one of the friendliest places is **Jupyter Notebook**, and the easiest way to get it on Windows is to install **Anaconda**.
+
+Here is what you will find on this page:
+
+* **How Jupyter works** - the simple client-server idea behind it: your browser, a small local server, and a "kernel" that runs your Python code.
+* **Installing Anaconda** on Windows, step by step, including which boxes to tick and which to leave alone.
+* **Launching Jupyter Notebook**, and how to close it properly.
+* **Installing Jupyter without Anaconda**, and using a **virtual environment** (an isolated space for one project's packages).
+* **The Jupyter interface** - the home page (Tree View) and the notebook editor, with screenshots and a guide to every menu and toolbar button.
+* **Frequently asked questions** from beginners.
+* **Magic commands** - handy shortcuts such as `%time` and `%pwd` that work only inside Jupyter.
+* **Advanced topics** - what happens behind the scenes when you run a cell, where Jupyter keeps its kernels, and how to find the slow parts of your code (profiling).
+
+Why does this matter? Almost everything in this book can be tried out in a notebook. You can run a few lines, see the result straight away, change something and run it again. This quick "try and see" loop is one of the best ways to learn Python. Jupyter notebooks are also widely used in data science, teaching and research, so the skills on this page will stay useful long after this chapter. The same notebooks also run in [Google Colab](https://colab.research.google.com/), which is used throughout this book's online labs.
+
+A note on versions: the screenshots and menu names on this page are from **Jupyter Notebook 7**, which is what current versions of Anaconda install. If you have an older installation (Notebook 6, often called the "classic" notebook), some menus look different. Where this matters, the difference is explained.
+
+## Table of Contents
+
+* [1. How Jupyter Notebook Works: The Client-Server Model](#1-how-jupyter-notebook-works-the-client-server-model)
+  * [1.1 The Server: Jupyter Notebook Server](#11-the-server-jupyter-notebook-server)
+  * [1.2 The Client: Your Web Browser](#12-the-client-your-web-browser)
+  * [1.3 The Kernel](#13-the-kernel)
+  * [1.4 What Happens When You Run a Cell](#14-what-happens-when-you-run-a-cell)
+  * [1.5 Where Anaconda Fits In](#15-where-anaconda-fits-in)
+  * [1.6 Why Use a Client-Server Model on One Computer](#16-why-use-a-client-server-model-on-one-computer)
+* [2. Part 1: Installing Anaconda on Windows](#2-part-1-installing-anaconda-on-windows)
+  * [2.1 Step 1: Go to the Anaconda Website](#21-step-1-go-to-the-anaconda-website)
+  * [2.2 Step 2: Download the Windows Installer](#22-step-2-download-the-windows-installer)
+  * [2.3 Step 3: Run the Installer](#23-step-3-run-the-installer)
+  * [2.4 Step 4: The First Installer Screens](#24-step-4-the-first-installer-screens)
+  * [2.5 Step 5: Choose the Installation Type](#25-step-5-choose-the-installation-type)
+  * [2.6 Step 6: Choose the Install Location](#26-step-6-choose-the-install-location)
+  * [2.7 Step 7: Advanced Installation Options and the PATH Checkbox](#27-step-7-advanced-installation-options-and-the-path-checkbox)
+  * [2.8 Step 8: Wait for the Installation](#28-step-8-wait-for-the-installation)
+  * [2.9 Step 9: Finish](#29-step-9-finish)
+* [3. Part 2: Launching Jupyter Notebook](#3-part-2-launching-jupyter-notebook)
+  * [3.1 Method 1: Use Anaconda Navigator](#31-method-1-use-anaconda-navigator)
+  * [3.2 Method 2: Use the Anaconda Prompt](#32-method-2-use-the-anaconda-prompt)
+  * [3.3 Closing Jupyter Notebook Properly](#33-closing-jupyter-notebook-properly)
+* [4. Part 3: Installing Jupyter Notebook Without Anaconda (Optional)](#4-part-3-installing-jupyter-notebook-without-anaconda-optional)
+  * [4.1 Step 1: Check the Python Installation](#41-step-1-check-the-python-installation)
+  * [4.2 Step 2: Check That pip Is Installed](#42-step-2-check-that-pip-is-installed)
+  * [4.3 Step 3: Install Jupyter Notebook](#43-step-3-install-jupyter-notebook)
+  * [4.4 Step 4: Launch Jupyter Notebook](#44-step-4-launch-jupyter-notebook)
+* [5. Part 4: Setting Up a Virtual Environment for Jupyter](#5-part-4-setting-up-a-virtual-environment-for-jupyter)
+  * [5.1 Step 1: Create the Environment](#51-step-1-create-the-environment)
+  * [5.2 Step 2: Activate the Environment](#52-step-2-activate-the-environment)
+  * [5.3 Step 3: Install Jupyter Inside This Environment](#53-step-3-install-jupyter-inside-this-environment)
+  * [5.4 Step 4: Launch Jupyter](#54-step-4-launch-jupyter)
+  * [5.5 Step 5: Make the Environment Available as a Kernel](#55-step-5-make-the-environment-available-as-a-kernel)
+  * [5.6 Step 6: Leave the Environment](#56-step-6-leave-the-environment)
+* [6. Part 5: Verifying Everything Works](#6-part-5-verifying-everything-works)
+* [7. Understanding the Local Server Address](#7-understanding-the-local-server-address)
+  * [7.1 The http Part](#71-the-http-part)
+  * [7.2 The localhost Part](#72-the-localhost-part)
+  * [7.3 The Port Number 8888](#73-the-port-number-8888)
+  * [7.4 The tree Part](#74-the-tree-part)
+  * [7.5 The Token](#75-the-token)
+  * [7.6 Putting It All Together](#76-putting-it-all-together)
+* [8. The Jupyter Notebook User Interface](#8-the-jupyter-notebook-user-interface)
+  * [8.1 Screen 1: The Tree View](#81-screen-1-the-tree-view)
+    * [8.1.1 Parts of the Tree View](#811-parts-of-the-tree-view)
+    * [8.1.2 The New Menu](#812-the-new-menu)
+    * [8.1.3 The Running Tab](#813-the-running-tab)
+  * [8.2 Screen 2: The Notebook Editor](#82-screen-2-the-notebook-editor)
+    * [8.2.1 Parts of the Notebook Editor](#821-parts-of-the-notebook-editor)
+    * [8.2.2 The Menu Bar](#822-the-menu-bar)
+    * [8.2.3 The Notebook Toolbar](#823-the-notebook-toolbar)
+    * [8.2.4 Kernel Status](#824-kernel-status)
+    * [8.2.5 Cells](#825-cells)
+    * [8.2.6 Command Mode and Edit Mode](#826-command-mode-and-edit-mode)
+    * [8.2.7 The Output Area](#827-the-output-area)
+    * [8.2.8 Saving, Autosave and Checkpoints](#828-saving-autosave-and-checkpoints)
+  * [8.3 How the Two Screens Are Related](#83-how-the-two-screens-are-related)
+* [9. Frequently Asked Beginner Questions](#9-frequently-asked-beginner-questions)
+  * [9.1 Do I need Anaconda to run Jupyter Notebook?](#91-do-i-need-anaconda-to-run-jupyter-notebook)
+  * [9.2 Will Jupyter run offline?](#92-will-jupyter-run-offline)
+  * [9.3 Is Anaconda free?](#93-is-anaconda-free)
+  * [9.4 Does Jupyter Notebook save files?](#94-does-jupyter-notebook-save-files)
+  * [9.5 Can I uninstall Anaconda and keep Python?](#95-can-i-uninstall-anaconda-and-keep-python)
+  * [9.6 What happens to my variables if I close the browser tab?](#96-what-happens-to-my-variables-if-i-close-the-browser-tab)
+  * [9.7 Why do I get NameError when my code looks correct?](#97-why-do-i-get-nameerror-when-my-code-looks-correct)
+* [10. Magic Commands](#10-magic-commands)
+  * [10.1 What Are Magic Commands](#101-what-are-magic-commands)
+  * [10.2 Line Magics](#102-line-magics)
+  * [10.3 Cell Magics](#103-cell-magics)
+  * [10.4 Trying Magic Commands Yourself](#104-trying-magic-commands-yourself)
+* [11. Advanced: How a Cell Travels from Browser to Kernel](#11-advanced-how-a-cell-travels-from-browser-to-kernel)
+  * [11.1 The Flowchart](#111-the-flowchart)
+  * [11.2 Step-by-Step Explanation](#112-step-by-step-explanation)
+  * [11.3 Where Jupyter Stores Kernels](#113-where-jupyter-stores-kernels)
+* [12. Advanced: Profiling Code in Jupyter Notebook](#12-advanced-profiling-code-in-jupyter-notebook)
+  * [12.1 Setting Up an Example Function](#121-setting-up-an-example-function)
+  * [12.2 Timing One Line with time and timeit](#122-timing-one-line-with-time-and-timeit)
+  * [12.3 Timing a Whole Cell](#123-timing-a-whole-cell)
+  * [12.4 The Built-In Profiler prun](#124-the-built-in-profiler-prun)
+  * [12.5 Profiling a Whole Cell with prun](#125-profiling-a-whole-cell-with-prun)
+  * [12.6 Line-by-Line Timing with line_profiler](#126-line-by-line-timing-with-line_profiler)
+  * [12.7 Memory Profiling with memory_profiler](#127-memory-profiling-with-memory_profiler)
+  * [12.8 Visual Profiling with SnakeViz](#128-visual-profiling-with-snakeviz)
+  * [12.9 Pyinstrument](#129-pyinstrument)
+  * [12.10 Scalene](#1210-scalene)
+  * [12.11 Tips for Profiling Notebooks Effectively](#1211-tips-for-profiling-notebooks-effectively)
+  * [12.12 Quick Reference Table](#1212-quick-reference-table)
+  * [12.13 Summary](#1213-summary)
+
+## 1. How Jupyter Notebook Works: The Client-Server Model
+
+Even though Anaconda and Jupyter Notebook run on your own computer, Jupyter works in the same way as a website. It follows a **client-server** design. A *server* is a program that waits for requests and answers them. A *client* is the program that sends the requests and shows you the answers. You can read more about the idea on [Wikipedia's client-server page](https://en.wikipedia.org/wiki/Client%E2%80%93server_model).
 
 In Jupyter:
 
-1.  Click New → Python 3 (ipykernel).
+* **Server** = a Python program (the Jupyter Server) running in the background on your computer
+* **Client** = your web browser (Chrome, Edge, Firefox)
 
-2.  In the first cell, type:
-
-`print("Hello Jupyter!")`
-
-3.  Press `Shift + Enter`.
-
-If it prints the message, your setup is perfect.
-
-#### 1.7 Some more details of the local server when you launch Jupyter
+So your computer plays **both roles at once**: it is the client and the server.
 
 [Back to the Table of Contents](#table-of-contents)
 
-When you start Jupyter Notebook, it automatically launches a local web server on your computer.
+### 1.1 The Server: Jupyter Notebook Server
 
-The link you see —
+When you run:
 
-`http://localhost:8888/tree`
+```text
+jupyter notebook
+```
 
-— is the address (URL) of that local server.
+or click **Launch** in Anaconda Navigator, a small Python program called the **Jupyter Notebook Server** starts running in the background.
 
-Here’s what each part means, in simple terms:
+This server:
 
-##### 1.7.1 `http://`
+* runs on your own machine
+* manages your files and notebooks (opening, saving, renaming)
+* starts and stops kernels, which actually run your Python code
+* sends the web pages that make up the Jupyter interface
+* talks to the browser using HTTP and [WebSockets](https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API) (a way for a browser and a server to keep a connection open and send messages both ways)
 
-This means you are using the HTTP protocol, the same protocol used for regular websites.
+The server usually runs at:
 
-##### 1.7.2 `localhost`
+```text
+http://localhost:8888
+```
 
-This means:
+Here `localhost` means "this computer". Your own computer is acting as the server. This address is explained in detail in [Section 7](#7-understanding-the-local-server-address).
 
-•  The server is running on your own computer, not on the internet.
+[Back to the Table of Contents](#table-of-contents)
 
-•  `localhost` always refers to your own machine.
+### 1.2 The Client: Your Web Browser
 
-•  It is the hostname for IP address `127.0.0.1` (loopback address).
+The Jupyter screen you see is just a web page that your local server provides.
 
-So opening localhost is like telling your browser:
+The browser:
 
-"Connect to a server running on my own computer."
+* displays your notebooks
+* sends the code in a cell to the server when you run it
+* receives the output (text, images, errors)
+* updates the notebook on screen
 
-##### 1.7.3 `:8888 (Port Number)`
+So the browser is the **client**, the part you look at and click on.
 
-Computers can run many servers at the same time, each identified by a port.
+[Back to the Table of Contents](#table-of-contents)
+
+### 1.3 The Kernel
+
+A **kernel** is a separate program running in the background that actually executes your code. For Python notebooks the kernel is called **IPython** (short for Interactive Python, see [ipython.org](https://ipython.org/)). You will often see it listed as `Python 3 (ipykernel)`.
+
+The kernel:
+
+* runs your Python code
+* remembers your variables between cells (this memory is called the kernel's *state*)
+* holds everything in memory while the notebook is open
+* catches and reports errors
+* produces the output that you see under each cell
+
+Two points often surprise beginners:
+
+* Each open notebook has its **own** kernel, so variables in one notebook are not visible in another.
+* Closing the browser tab does **not** stop the kernel. It keeps running (and using memory) until you shut it down. [Section 8.1.3](#813-the-running-tab) shows how.
+
+Jupyter is not limited to Python. There are kernels for R, Julia, Java and many other languages. The browser part stays the same; only the kernel changes.
+
+[Back to the Table of Contents](#table-of-contents)
+
+### 1.4 What Happens When You Run a Cell
+
+Here is the step-by-step process inside Jupyter:
+
+1. You type Python code in a cell in your browser.
+2. The browser sends the code to the Jupyter server.
+3. The server passes the code to the kernel (usually IPython).
+4. The kernel executes the code.
+5. The result (text, plots or errors) is sent back to the server.
+6. The server sends the result to your browser.
+7. The browser displays the output under the cell.
+
+All of this normally happens in a fraction of a second.
+
+```mermaid
+flowchart LR
+    A["1. Browser - the client"] -->|"2. Sends cell code"| B["3. Jupyter Server"]
+    B -->|"4. Passes code on"| C["5. Kernel - IPython runs the code"]
+    C -->|"6. Sends result back"| B
+    B -->|"7. Forwards result"| A
+```
+
+For the curious: the browser and the server talk over HTTP and WebSockets, while the server and the kernel talk using a messaging library called [ZeroMQ](https://zeromq.org/). You do not need to know these details to use Jupyter. A more detailed, twelve-step version of this flow is given in [Section 11](#11-advanced-how-a-cell-travels-from-browser-to-kernel).
+
+[Back to the Table of Contents](#table-of-contents)
+
+### 1.5 Where Anaconda Fits In
+
+[Anaconda](https://www.anaconda.com/) itself is not a client-server application. It is a **distribution**, which means a bundle: Python, Jupyter, hundreds of popular packages, and some tools to manage them, all installed together.
+
+It has two jobs here:
+
+* it launches applications, such as Jupyter Notebook, that use the client-server model
+* it manages the environments and packages that these applications need
+
+**Anaconda Navigator**, the program you open from the Start menu:
+
+* runs as an ordinary desktop program on your computer
+* acts as a launcher for tools such as Jupyter Notebook, JupyterLab and Spyder
+* starts the Jupyter Notebook server when you click **Launch**
+* manages Python environments
+
+Think of Navigator as a **control panel**, not as a server.
+
+When you start Jupyter from Anaconda, the steps from [Section 1.4](#14-what-happens-when-you-run-a-cell) simply get two extra steps in front:
+
+1. Anaconda starts the Jupyter Notebook server.
+2. The server starts listening on a port on your machine, for example `localhost:8888`.
+3. Your browser opens the Jupyter interface, and from here on the cycle in Section 1.4 takes over.
+
+[Back to the Table of Contents](#table-of-contents)
+
+### 1.6 Why Use a Client-Server Model on One Computer
+
+Even though everything is on your computer, this design has real benefits:
+
+* **Benefit 1: A browser-based interface.** You do not need a separate desktop program for editing notebooks. Any modern browser will do.
+* **Benefit 2: Remote execution.** The same design works when the server is on another machine, for example [Google Colab](https://colab.research.google.com/), [JupyterHub](https://jupyter.org/hub) at a university, or a cloud server. Your browser does not care where the server is.
+* **Benefit 3: More than one window.** You can open the same notebook server in several browser tabs, and even open a console that talks to the same kernel as your notebook.
+* **Benefit 4: Language independence.** The kernel can be Python, R, Julia and so on, while the browser part stays the same.
+
+[Back to the Table of Contents](#table-of-contents)
+
+## 2. Part 1: Installing Anaconda on Windows
+
+Anaconda is the easiest and most common way for beginners to get Python and Jupyter Notebook on Windows. One installer gives you everything. The whole process takes about 15 to 20 minutes, most of which is waiting.
+
+The flowchart below gives the whole process at a glance. Each step is explained after it.
+
+```mermaid
+flowchart TD
+    S1["1. Open anaconda.com/download"] --> S2["2. Download the Anaconda Distribution installer, not Miniconda"]
+    S2 --> S3["3. Double-click the downloaded .exe file"]
+    S3 --> S4["4. Click Next and then I Agree"]
+    S4 --> S5["5. Choose Just Me"]
+    S5 --> S6["6. Keep the default install folder"]
+    S6 --> S7{"7. Is another Python already installed on this computer?"}
+    S7 -->|Yes or not sure| S8["8. Leave Add to PATH unticked"]
+    S7 -->|No| S9["9. Add to PATH is optional"]
+    S8 --> S10["10. Tick Register Anaconda as my default Python and click Install"]
+    S9 --> S10
+    S10 --> S11["11. Wait for the installation"]
+    S11 --> S12["12. Click Next, Next, Finish"]
+    S12 --> S13["13. Open Anaconda Navigator"]
+```
+
+[Back to the Table of Contents](#table-of-contents)
+
+### 2.1 Step 1: Go to the Anaconda Website
+
+1. Open your web browser (Chrome, Edge, Firefox).
+2. Go to: [https://www.anaconda.com/download](https://www.anaconda.com/download)
+
+The page may ask you to register with your email address before showing the download links. You can register (it is free), or use the direct download link given in the next step.
+
+[Back to the Table of Contents](#table-of-contents)
+
+### 2.2 Step 2: Download the Windows Installer
+
+1. Look for **Anaconda Distribution** (not Miniconda).
+2. Choose the **Windows 64-Bit Graphical Installer**. The Python version that comes with it is fine; you do not need to pick one.
+3. Click to download.
+
+A file with a name like this will start downloading:
+
+```text
+Anaconda3-2026.07-1-Windows-x86_64.exe
+```
+
+The numbers in the middle (year and month of the release) will change over time. The installer is large, about 1 GB, so it may take a while on a slow connection.
+
+> [!IMPORTANT]
+> Make sure you download **Anaconda**, not **Miniconda** by mistake (unless you specifically want Miniconda).
+> The Miniconda installer has a name like `Miniconda3-latest-Windows-x86_64.exe`.
+> Miniconda is the minimal installer: it is small and comes with no Jupyter and almost no packages.
+> The Anaconda website can be confusing because it shows Miniconda prominently.
+> If you cannot find the link for Anaconda, all versions are listed at [https://repo.anaconda.com/archive/](https://repo.anaconda.com/archive/). Pick the newest file ending in `-Windows-x86_64.exe`. At the time of writing that is [Anaconda3-2026.07-1-Windows-x86_64.exe](https://repo.anaconda.com/archive/Anaconda3-2026.07-1-Windows-x86_64.exe).
+> This is the full Anaconda Distribution, NOT Miniconda.
+
+The Anaconda Distribution includes:
+
+* Jupyter Notebook
+* JupyterLab (a more advanced version of the Jupyter interface)
+* Spyder (a Python code editor)
+* Popular packages such as NumPy, Pandas and Matplotlib, which you will meet in later chapters
+* A big installer (about 1 GB to download, several GB once installed)
+
+[Back to the Table of Contents](#table-of-contents)
+
+### 2.3 Step 3: Run the Installer
+
+1. Locate the downloaded `.exe` file (usually in your **Downloads** folder).
+2. Double-click it to start the installation. If Windows asks "Do you want to allow this app to make changes?", click **Yes**.
+
+[Back to the Table of Contents](#table-of-contents)
+
+### 2.4 Step 4: The First Installer Screens
+
+Click **Next**, read the licence and click **I Agree**.
+
+A note about the licence: Anaconda is free for individual learners, students and teachers. Large organisations (200 or more employees) need a paid licence for commercial use. The full details are in Anaconda's [Terms of Service](https://www.anaconda.com/legal/terms/terms-of-service).
+
+[Back to the Table of Contents](#table-of-contents)
+
+### 2.5 Step 5: Choose the Installation Type
+
+Choose:
+
+* **Just Me (Recommended)** - unless you know how an administrator installation for all users works.
+* Click **Next**.
+
+[Back to the Table of Contents](#table-of-contents)
+
+### 2.6 Step 6: Choose the Install Location
+
+Leave it as the default, which will look like:
+
+```text
+C:\Users\<yourname>\anaconda3
+```
+
+Here `<yourname>` is your Windows user name. Click **Next**.
+
+If your user name contains spaces or non-English letters, the installer may warn you. In that case choose a simple folder such as `C:\anaconda3`, because paths with spaces or special characters can cause problems for some packages.
+
+[Back to the Table of Contents](#table-of-contents)
+
+### 2.7 Step 7: Advanced Installation Options and the PATH Checkbox
+
+**This is the most important screen.** You will see a few checkboxes. The two that matter are:
+
+**1. Add Anaconda3 to my PATH environment variable** - *not recommended, leave it unticked*
+
+First, what is PATH? **PATH** is a list of folders that Windows searches when you type a command such as `python`. Whichever folder comes first in the list "wins". (For a longer explanation, see [What is the PATH environment variable](https://en.wikipedia.org/wiki/PATH_(variable)).)
+
+> [!NOTE]
+> **Why is adding Anaconda to PATH not recommended?**
+> When you add Anaconda to the PATH, you are telling Windows: "Use Anaconda's Python everywhere on this computer."
+> It overrides any other Python you have. Many computers already have:
+> (a) Python installed from the Microsoft Store,
+> (b) Python installed by Microsoft or other tools,
+> (c) Python installed manually from python.org,
+> (d) Python used quietly by other programs.
+> If Anaconda is placed in PATH:
+> (1) it becomes the default Python for your entire system,
+> (2) other programs that expect a different Python may stop working,
+> (3) it becomes confusing to know which Python you are actually running.
+
+However, if you do **not** have any other version of Python on your computer, you may tick **Add Anaconda3 to my PATH environment variable**. Even if you leave it unticked, you can always use Python through the **Anaconda Prompt**, which sets everything up correctly for you.
+
+**2. Register Anaconda3 as my default Python** - *tick this one*
+
+This lets other programs, such as VS Code, find Anaconda's Python easily. It may be unticked by default, so check it.
+
+The other boxes (such as creating Start menu shortcuts) can be left as they are. Click **Install**.
+
+[Back to the Table of Contents](#table-of-contents)
+
+### 2.8 Step 8: Wait for the Installation
+
+This may take 5 to 15 minutes, depending on your computer. Do not close the window, even if the progress bar seems stuck for a while.
+
+[Back to the Table of Contents](#table-of-contents)
+
+### 2.9 Step 9: Finish
+
+Click **Next**, then **Next** again, then **Finish**.
+
+You're done installing Anaconda!
+
+[Back to the Table of Contents](#table-of-contents)
+
+## 3. Part 2: Launching Jupyter Notebook
+
+There are two easy ways to start Jupyter Notebook.
+
+[Back to the Table of Contents](#table-of-contents)
+
+### 3.1 Method 1: Use Anaconda Navigator
+
+1. Press the Windows **Start** button.
+2. Search for **Anaconda Navigator**.
+3. Open it. (The first start can take a minute.)
+4. On the Home screen, find the **Jupyter Notebook** tile and click **Launch**.
+
+Jupyter Notebook opens in your web browser.
+
+[Back to the Table of Contents](#table-of-contents)
+
+### 3.2 Method 2: Use the Anaconda Prompt
+
+1. Click **Start**, search for **Anaconda Prompt**, and open it. You should see something like `(base) C:\Users\yourname>`. The word `(base)` means Anaconda's main environment is active.
+2. Type the following command and press **Enter**:
+
+```text
+jupyter notebook
+```
+
+Jupyter Notebook opens in your browser. The Anaconda Prompt window shows some messages, similar to these (your date, time and token will be different):
+
+```text
+[I 2026-09-19 10:15:02.123 ServerApp] Jupyter Server 2.x.x is running at:
+[I 2026-09-19 10:15:02.123 ServerApp] http://localhost:8888/tree?token=3f9c1a...
+[I 2026-09-19 10:15:02.123 ServerApp]     http://127.0.0.1:8888/tree?token=3f9c1a...
+[I 2026-09-19 10:15:02.124 ServerApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
+```
+
+**Do not close this window** while you are working. This window *is* the Jupyter server. If you close it, the server stops and your notebook can no longer run code.
+
+Jupyter starts in the folder that the prompt is in, and you can only see files inside that folder. To work in another folder, move to it first, for example:
+
+```text
+cd C:\Users\yourname\Documents\python-practice
+jupyter notebook
+```
+
+You now have Jupyter Notebook installed and running!
+
+[Back to the Table of Contents](#table-of-contents)
+
+### 3.3 Closing Jupyter Notebook Properly
+
+When you have finished:
+
+1. Save your notebook (**Ctrl + S**).
+2. In the notebook, choose **File > Close and Shut Down Notebook**. This stops the notebook's kernel.
+3. To stop the whole server, either choose **File > Shut Down** in the Jupyter window, or go to the Anaconda Prompt window and press **Ctrl + C** (press it twice to skip the confirmation).
+
+Just closing the browser tab does not stop anything; the server and kernels keep running in the background.
+
+[Back to the Table of Contents](#table-of-contents)
+
+## 4. Part 3: Installing Jupyter Notebook Without Anaconda (Optional)
+
+If you already have Python installed (for example from [python.org](https://www.python.org/downloads/)) and do not want Anaconda, you can install Jupyter with **pip**, Python's package installer.
+
+[Back to the Table of Contents](#table-of-contents)
+
+### 4.1 Step 1: Check the Python Installation
+
+Open the **Command Prompt** (Start, then search for `cmd`) and type:
+
+```text
+python --version
+```
+
+If Python is installed, you will see something like:
+
+```text
+Python 3.12.4
+```
+
+If you see an error such as `'python' is not recognized as an internal or external command`, Python is either not installed or not on the PATH. On Windows, try `py --version` instead. The `py` launcher comes with Python from python.org and works even when `python` does not. If you use `py`, write `py -m pip` in place of `pip` in the steps below.
+
+[Back to the Table of Contents](#table-of-contents)
+
+### 4.2 Step 2: Check That pip Is Installed
+
+pip usually comes with Python. Check it with:
+
+```text
+pip --version
+```
+
+You should see a line starting with `pip` and a version number. If pip is missing, run `python -m ensurepip --upgrade`.
+
+[Back to the Table of Contents](#table-of-contents)
+
+### 4.3 Step 3: Install Jupyter Notebook
+
+Run:
+
+```text
+pip install notebook
+```
+
+pip downloads Jupyter Notebook and everything it needs. This needs an internet connection and takes a minute or two.
+
+[Back to the Table of Contents](#table-of-contents)
+
+### 4.4 Step 4: Launch Jupyter Notebook
+
+```text
+jupyter notebook
+```
+
+Jupyter opens in your browser, just as in [Section 3.2](#32-method-2-use-the-anaconda-prompt). If Windows says `jupyter` is not recognized, use `python -m notebook` instead.
+
+[Back to the Table of Contents](#table-of-contents)
+
+## 5. Part 4: Setting Up a Virtual Environment for Jupyter
+
+This part is optional, but it is a good habit.
+
+A **virtual environment** is a separate, private folder of Python packages for one project. Packages you install inside it do not affect your other projects, and your other projects cannot break it. You can read more in the official [venv documentation](https://docs.python.org/3/library/venv.html).
+
+The steps below use Python's built-in `venv` tool, from the Command Prompt. (Anaconda users can do the same with `conda create`, see the [conda documentation](https://docs.conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html).)
+
+[Back to the Table of Contents](#table-of-contents)
+
+### 5.1 Step 1: Create the Environment
+
+First move to your project folder, then run:
+
+```text
+python -m venv myenv
+```
+
+Note: in the above command, `myenv` is the name of your virtual environment. Python creates a folder with this name, containing a private copy of Python and pip.
+
+> [!TIP]
+> You can name your virtual environment anything you like.
+> However, by convention it is very often named `.venv`. This is because on Linux and macOS, files and folders whose names start with a dot are hidden from normal directory listings.
+> This keeps the folder out of the way, in the same way that important system and settings files are hidden.
+> On Windows, a leading dot does not hide a folder; a separate "hidden" attribute has to be set for that. The name `.venv` is still commonly used on Windows, simply because it is the usual convention, and tools such as VS Code look for it.
+
+[Back to the Table of Contents](#table-of-contents)
+
+### 5.2 Step 2: Activate the Environment
+
+Activating tells your command window to use the Python and pip inside `myenv`.
+
+Windows (Command Prompt):
+
+```text
+myenv\Scripts\activate
+```
+
+Windows (PowerShell):
+
+```text
+myenv\Scripts\Activate.ps1
+```
+
+macOS and Linux:
+
+```text
+source myenv/bin/activate
+```
+
+After activation, the name of the environment appears at the start of the prompt, for example:
+
+```text
+(myenv) C:\Users\yourname\python-practice>
+```
+
+If PowerShell says that running scripts is disabled, either use the Command Prompt instead, or run `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` once and try again.
+
+[Back to the Table of Contents](#table-of-contents)
+
+### 5.3 Step 3: Install Jupyter Inside This Environment
+
+```text
+pip install notebook
+```
+
+This installs Jupyter only inside `myenv`.
+
+[Back to the Table of Contents](#table-of-contents)
+
+### 5.4 Step 4: Launch Jupyter
+
+```text
+jupyter notebook
+```
+
+Notebooks you create now run with the Python and packages inside `myenv`.
+
+[Back to the Table of Contents](#table-of-contents)
+
+### 5.5 Step 5: Make the Environment Available as a Kernel
+
+Sometimes you already have Jupyter installed elsewhere (for example in Anaconda) and simply want your environment to appear as a choice in the **New** menu. To do that, with the environment activated, run:
+
+```text
+pip install ipykernel
+python -m ipykernel install --user --name myenv --display-name "Python (myenv)"
+```
+
+The next time you start Jupyter, **Python (myenv)** appears in the list of kernels. This is how entries like `.venv` in the **New** menu (see [Section 8.1.2](#812-the-new-menu)) come about.
+
+[Back to the Table of Contents](#table-of-contents)
+
+### 5.6 Step 6: Leave the Environment
+
+When you have finished, type:
+
+```text
+deactivate
+```
+
+The `(myenv)` label disappears from the prompt, and you are back to your normal Python.
+
+[Back to the Table of Contents](#table-of-contents)
+
+## 6. Part 5: Verifying Everything Works
+
+In Jupyter:
+
+1. On the home page, click **New** and then **Python 3 (ipykernel)**. (In some versions you click **New > Notebook** and then choose **Python 3 (ipykernel)** from a small pop-up window.) A new notebook opens in a new browser tab.
+2. In the first cell, type:
+
+```python
+print("Hello Jupyter!")
+```
+
+3. Press **Shift + Enter**.
+
+You should see:
+
+```text
+Hello Jupyter!
+```
+
+If it prints the message, your setup is working perfectly. The screenshot below shows a small test notebook with a Markdown cell, the `print()` cell above, and a cell that calculates `a + 20`.
+
+![A small test notebook in Jupyter Notebook 7](https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-001-jupyter-notebook-editor.png)
+
+[Back to the Table of Contents](#table-of-contents)
+
+## 7. Understanding the Local Server Address
+
+When you start Jupyter Notebook, it automatically launches a local web server on your computer. The address you see in the browser, such as
+
+```text
+http://localhost:8888/tree
+```
+
+is the address (URL) of that local server. Here is what each part means, in simple terms.
+
+[Back to the Table of Contents](#table-of-contents)
+
+### 7.1 The http Part
+
+`http://` means your browser is using **HTTP**, the same protocol (set of rules for communication) that ordinary websites use.
+
+[Back to the Table of Contents](#table-of-contents)
+
+### 7.2 The localhost Part
+
+`localhost` means:
+
+* The server is running on your **own computer**, not on the internet.
+* `localhost` always refers to your own machine.
+* It is the name for the special IP address `127.0.0.1`, called the **loopback address**. Messages sent to it never leave your computer. (More on [localhost](https://en.wikipedia.org/wiki/Localhost).)
+
+So opening `localhost` is like telling your browser: "Connect to a server running on my own computer."
+
+[Back to the Table of Contents](#table-of-contents)
+
+### 7.3 The Port Number 8888
+
+A computer can run many servers at the same time. Each one listens on its own numbered "door" called a **port**.
 
 Port `8888` means:
 
-  -  Jupyter Notebook server is listening for connections on port 8888.
+* The Jupyter server is listening for connections on port 8888.
+* If another program is already using 8888 (for example, a second Jupyter server), Jupyter picks the next free port: 8889, 8890, and so on.
 
-  -  If another service is already using 8888, Jupyter uses 8889, 8890, etc.
+So `localhost:8888` means: "Connect to the server on my computer at port 8888."
 
-So:
+[Back to the Table of Contents](#table-of-contents)
 
-`localhost:8888`
+### 7.4 The tree Part
 
-means:
+`/tree` is the **route**, the part of the address that tells the server which page you want. `/tree` shows the file browser, which is called the **Tree View** because it shows your folders and files as a tree: folders inside folders, which you can move up and down through. From here you can open, rename, delete, or create notebooks.
 
-“Connect to the server on my computer at port 8888.”
+When you open other things, the route changes. For example:
 
-##### 1.7.4 `/tree`
+| Address ends with | What it shows |
+| ----------------- | ------------- |
+| `/tree` | The file browser (Tree View), the Jupyter home page |
+| `/notebooks/MyNotebook.ipynb` | The notebook editor with `MyNotebook.ipynb` open |
+| `/edit/somefile.py` | A plain text editor with `somefile.py` open |
+| `/terminals/1` | Terminal number 1, a command line inside the browser |
 
-This is the route or endpoint that displays the file browser view.
+[Back to the Table of Contents](#table-of-contents)
 
-This view is called the Tree View because:
+### 7.5 The Token
 
-  -  Your files are shown like a branching folder tree. The Jupyter interface you see (list of folders/files) is called the Tree View.
+The first time Jupyter opens, the address often ends with something like `?token=3f9c1a...`. The **token** is a long random password. It makes sure that only you, and not other programs or other users of the computer, can use your notebook server. Jupyter adds it to the address automatically, so normally you never need to type it. If a browser page asks for a token, copy it from the messages in the Anaconda Prompt window.
 
-  -  You can navigate up and down directories
+[Back to the Table of Contents](#table-of-contents)
 
-  -  You can open, delete, rename, or create new notebooks
-
-So /tree loads:
-
-The main home screen where you pick notebooks to open.
-
-If you open a notebook, URL changes, for example:
-
-  -  `/notebooks/MyNotebook.ipynb`
-
-  -  `/edit/somefile.py`
-
-  -  `/terminals/1`
-
-  -  `tree` = File Browser View
-
-It refers to the directory tree — the list of folders and files on your computer, displayed in a hierarchical (tree-like) structure.
-
-##### 1.7.5 Putting it all together
+### 7.6 Putting It All Together
 
 `http://localhost:8888/tree` means:
 
-“Open the Jupyter Notebook server that is running on my own computer (localhost), using port 8888, and display the tree (file browser) interface.”
+"Open the Jupyter Notebook server that is running on my own computer (`localhost`), on port `8888`, and show me the Tree View (file browser)."
 
-This is why everything runs locally — no internet needed.
-
-##### 1.7.6 How the flow works
-
-1.  You start Jupyter Notebook.
-
-2.  It starts a Python-based server on your computer.
-
-3.  That server listens on localhost:8888.
-
-4.  Your browser opens the Jupyter UI at /tree.
-
-5.  You interact with notebooks via your browser.
-
-6.  The browser communicates with the Jupyter server.
-
-7.  The server communicates with the Python kernel.
-
-#### 1.8 You can think of Jupyter Notebook as having two main screens:
+This is why Jupyter works without an internet connection: the browser and the server are both on your computer. The full journey of your code from the browser to the kernel and back is described in [Section 1.4](#14-what-happens-when-you-run-a-cell).
 
 [Back to the Table of Contents](#table-of-contents)
 
-##### 1.8.1 Screen 1: The Tree View (Home Page)
+## 8. The Jupyter Notebook User Interface
 
-URL: http://localhost:8888/tree
+You can think of Jupyter Notebook as having **two main screens**:
 
-This is the first screen you see when Jupyter starts.
+1. **Screen 1: the Tree View** (home page), where you pick or create notebooks.
+2. **Screen 2: the Notebook Editor**, where you write and run code.
 
-It functions like a file manager.
+```mermaid
+flowchart TD
+    A["1. Start Jupyter"] --> B["2. Tree View - the file browser"]
+    B -->|"3. Open or create a notebook"| C["4. Notebook Editor - where you write code"]
+    C -->|"5. Go back to pick another file"| B
+```
+
+Screen 1 is the **launcher**; Screen 2 is the **work screen**. You always begin at Screen 1, unless you start Jupyter with a notebook name, for example `jupyter notebook MyNotebook.ipynb`.
+
+The user interface (UI) may vary slightly from one computer to another, depending on the Jupyter version and on any extra extensions installed. All screenshots below are from Jupyter Notebook 7.
+
+[Back to the Table of Contents](#table-of-contents)
+
+### 8.1 Screen 1: The Tree View
+
+URL: `http://localhost:8888/tree`
+
+This is the first page Jupyter opens. It works like a simple file manager for the folder where you started Jupyter.
+
+![The Tree View of Jupyter Notebook 7](https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-001-jupyter-tree-view.png)
 
 Here you can:
 
-  -  Browse your folders
-
-  -  See files and subfolders
-
-  -  Create new notebooks
-
-  -  Open existing notebooks
-
-  -  Upload files
-
-  -  Open terminals
-
-It’s similar to a “home page” or “dashboard.”
-
-##### 1.8.2 Screen 2: The Notebook Editor (When a notebook opens)
-
-URL example:
-
-http://localhost:8888/notebooks/myfile.ipynb
-
-This is the actual interactive coding environment where you write Python code in cells.
-
-Screen shot of the UI of Screen 2 is given below (Note that the UI elements may vary from one system to anothet depending upon the installation/ version)
-
-
-
-
-In this screen, you get:
-
-  -  Menu bar
-
-  -  Code cells
-
-  -  Markdown cells
-
-  -  Output area
-
-  -  Kernel controls
-
-This is where you run code.
-
-  
-
-  
-#### Menu Bar
-Details of each button on the Menu bar are given below.
-Also given are the various options for each button on the menu bar, in form of a table.
-  - The first column of each table gives the options one gets when he clicks on that menu button. 
-  - The second column of each table shows the function/ role of each option.
-
-**1 File Menu**
-
-Used for creating, saving, downloading, and managing notebooks.
-
-**Important options**
-
-| Option | What it Does |
-| --- | --- |
-| New Notebook | Creates a new .ipynb file with a selected kernel (Python 3 etc.). |
-| Open… | Opens files/folders from the Jupyter file browser. |
-| Make a Copy | Creates a duplicate of the current notebook. Useful for backups. |
-| Save / Save and Checkpoint | Saves your notebook manually (Jupyter also auto-saves). Checkpoints let you restore old versions. |
-| Rename | Renames your notebook file. |
-| Download as | Download notebook in various formats (HTML, PDF, Python script, Markdown). |
-| Close and Halt | Shut down the notebook kernel and close the file. |
-
-  
-
-  
-
-  
-
-**2 Edit Menu**
-
-Used for editing cells (cut/copy/paste) and managing cell content.
-
-**Important options**
-
-| Option | What it Does |
-| --- | --- |
-| Cut / Copy / Paste Cells | Manage entire cells, not lines of text. |
-| Delete Cells | Removes the selected cell. |
-| Undo Delete Cell | Restore deleted cells. |
-| Split Cell / Merge Cells | Break a cell into two or join multiple into one. |
-| Find and Replace | Search and replace text inside the notebook. |
-
-  
-
-**3 View Menu**
-
-Controls visibility of interface elements.
-
-**Important options**
-
-| Option | What it Does |
-| --- | --- |
-| Toggle Toolbar | Shows/hides the row of icons under the menu bar. |
-| Toggle Header | Shows/hides the top title bar. |
-| Cell Toolbar | Enables special toolbars such as "Tags", "Slideshow", "Edit Metadata". |
-
-  
-
-**4 Insert Menu**
-
-Used to add new cells.
-
-| Option | What it Does |
-| --- | --- |
-| Insert Cell Above | Adds a new cell on top of the selected one. |
-| Insert Cell Below | Adds a new cell below the selected one. |
-
- 
-
-**5 Cell Menu**
-
-Used to run and manage code/Markdown cells.
-
-**Important options**
-
-| Option | What it Does |
-| --- | --- |
-| Run Cells | Executes selected cell. |
-| Run Cells and Select Below | Runs current cell and moves cursor down. |
-| Run All / Run All Above / Run All Below | Executes multiple cells at once. |
-| Cell Type → Code / Markdown / Raw | Change the type of cell. |
-| Current Outputs → Clear | Deletes cell outputs. |
-| All Output → Clear | Clears outputs for entire notebook. |
-
-  
-
-**6 Kernel Menu**
-
-  
-
-Controls Python execution backend.
-
-**Important options**
-
-| Option | What it Does |
-| --- | --- |
-| Interrupt | Stops code that is currently running (like Ctrl+C). |
-| Restart | Restarts Python kernel → all variables cleared. |
-| Restart & Run All | Restarts kernel and runs all cells from the beginning. |
-| Change Kernel | Switch Python environments (e.g., Python 3.10 → Python 3.12). |
-
-  
-
-**7 Widget Menu (if ipywidgets is installed)**
-
-Used to manage interactive widgets.
-
-**Important options**
-
-| Option | What it Does |
-| --- | --- |
-| Save Notebook Widget State | Save the current state of widgets (like sliders, dropdowns). |
-| Clear Notebook Widget State | Clear previous widget state. |
-
- 
-
-  
-
-**8 Help Menu**
-
-Provides documentation, shortcuts, and references.
-
-**Important options**
-
-| Option | What it Does |
-| --- | --- |
-| User Interface Tour | Shows a guided tour of the UI. |
-| Keyboard Shortcuts | Displays all Jupyter shortcuts (very useful). |
-| Markdown | Opens Markdown syntax guide. |
-| Python Reference | Links to Python documentation. |
-
-
-
-
-#### Jupyter Notebook Toolbar 
-
-(Buttons/ Icons below the Menu Bar)
-
-
-
-
-
-
-![Screenshot of Jupyter Notebook Toolbar](https://github.com/ag999git/001-Python-book-2026/blob/main/resources/ch-001-Jupyter-notebook-menu-bar.jpg)
-
-
-##### The above screen shot shows the Jupyter Notebook Toolbar as placed on the UI
-
-![Screenshot of Jupyter Notebook](https://github.com/ag999git/001-Python-book-2026/blob/main/resources/ch-001-Jupyter-notebook-tool-bar-and-others.jpg)
-
-##### The above screen shot shows the various tools on the Jupyter Notebook Toolbar
-
-##### Each of these individual tools on the Jupyter Notebook Toolbar are discussed below:-
-
-1 Save (💾 icon)
-
-**What it does:** Saves the notebook (.ipynb file).  
-**Shortcut:** Ctrl + S  
-This ensures your latest code, outputs, and text are stored.
-
-2 Add New Cell (➕ icon)
-
-**What it does:** Inserts a **new empty cell below** the current cell.  
-Useful when adding more code or notes.
-
-3 Cut Cell (✂️ icon)
-
-**What it does:** Removes the selected cell and stores it in clipboard.  
-You can paste it later.
-
-4 Copy Cell (📄📄 icon)
-
-**What it does:** Copies the selected cell to clipboard.
-
-5 Paste Cell (📄 icon)
-
-**What it does:** Pastes a previously cut/copied cell **below** the current cell.
-
-6 Move Cell Up (⬆️ icon)
-
-**What it does:** Moves the selected cell **one position up**.
-
-7 Move Cell Down (⬇️ icon)
-
-**What it does:** Moves the selected cell **one position down**.
-
-8 Run Cell (▶️ Run)
-
-**What it does:**
-
-*   Executes the current cell
-*   Shows output directly below it
-*   Moves to the next cell
-
-**Shortcut:** Shift + Enter
-
-9 Stop Execution (■ icon)
-
-**What it does:**  
-Interrupts/Stops the current running cell.  
-Useful if your code is stuck in an **infinite loop**.
-
-10 Restart Kernel (🔄 icon)
-
-**What it does:**  
-Restarts the Python kernel → clears memory (all variables reset).  
-Notebook stays open, but all outputs become stale.
-
-11 Restart & Run All (⏩ icon)
-
-**What it does:**
-
-1.  Restarts kernel
-2.  Runs **every cell in order from top to bottom**
-
-Useful for making sure your notebook runs cleanly from scratch.
-
-12 Cell Type Dropdown (Code / Markdown / Raw)
-
-Shows the type of the current cell.  
-You can switch it to:
-
-*   **Code** → Python code
-*   **Markdown** → Text, headings, notes
-*   **Raw** → Unprocessed text
-
-13 Keyboard Shortcuts (⌨️ icon)
-
-Opens a list of **all shortcuts** in Jupyter Notebook.  
-Very helpful for speeding up work.
-
-
-
-
-#### Relationship between the 2 screens of the Jupyter Notebook UI
-
-
-
-
-
-
-##### 1.8.3 Relationship Between the Two Screens
-
-•  The tree view is like a launcher.
-
-•  The notebook editor is the actual work screen.
-
-You always begin at Screen 1, unless you directly launch a notebook from the command line.
-
-##### 1.8.4 Simplified Visual Explanation
-
-```python
-Start Jupyter
-↓
-Tree View (file browser)
-↓ (open a file)
-Notebook Editor (where you code)
-```
-
-#### 1.9 UI
+* browse your folders
+* see files and subfolders
+* create new notebooks, files and folders
+* open existing notebooks
+* upload files from elsewhere on your computer
+* open terminals
+* see and stop running notebooks
+
+It is similar to a "home page" or "dashboard".
 
 [Back to the Table of Contents](#table-of-contents)
 
-1.9.1 Screen 1 — Tree View (the Jupyter home / file browser)
+#### 8.1.1 Parts of the Tree View
 
-URL example: http://localhost:8888/tree
+**1. Header and menu bar**
 
-This is the first page Jupyter opens. It behaves like a simple file manager for the folder where you launched Jupyter.
+* The Jupyter logo at the top left. Clicking it brings you back to this page.
+* A small menu bar with **File**, **View**, **Settings** and **Help**. (In the classic Notebook 6 there is no menu bar on this page.)
 
-Given below is the screen shot of Screen 1 with the “New” button clicked. It is from here that you select the various options to get the next screen. In most cases, you want to start a new Jupyter notebook, for which you may click the “Python 3 (ipykernel)”. But you may click other options as per your need.
+**2. The Files and Running tabs**
 
-##### 1.9.2 UI of screen 1
+* **Files** shows your folders and files. This is the tab you use most.
+* **Running** shows notebooks, terminals and kernels that are currently running. See [Section 8.1.3](#813-the-running-tab).
 
-![UI of 1st screen when you run Jupyter Server](https://github.com/ag999git/python-book-2026/blob/main/all-book-images/UI-Screen1-Jupyter-NB.jpg)
+**3. Toolbar (top right of the file list)**
 
+* **Filter** (funnel icon) - type part of a name to show only matching files.
+* **New** - a menu to create a new notebook, terminal, console, file or folder. See [Section 8.1.2](#812-the-new-menu).
+* **Upload** - copy files from your computer into the current folder.
+* **Refresh** (circular arrow) - re-read the folder. This is useful when files were added from outside Jupyter.
 
-The sreen shot shows the options available when one clicks the `New` Button. (The options may vary from one machine to another)
-1. `.venv` is a virtual environment
-2. `Java` is another kernel (of Java) installed
-3. `Python 3 (ipykernel)` is the default system Python Kernel.
-4. `Text File` creates a new blank `.txt` file.
-5. `Folder` creates a new folder in the current directory.
-6. `Terminal` opens a command-line terminal in your browser.
+Tip: **New > Python 3 (ipykernel)** is the quickest way to create a `.ipynb` notebook that is ready to run.
 
-`.venv`
+**4. Breadcrumb (current path)**
 
-  -  This is a virtual environment you created inside your project folder named .venv.
+* The folder icon followed by a path, such as `/` or `/data`, shows which folder you are viewing.
+* Click a folder name in the path to go back up.
 
-  -  Jupyter detects it and shows it as a kernel.
+**5. File and folder list (the "tree")**
 
-  -  If you select it, notebook cells will run using the Python interpreter inside .venv.
+* Shows all files and folders in the current folder.
+* Each row shows the **name**, the **last modified** time and the **file size**.
+* Click a folder to go into it. Click a notebook to open it in the editor (Screen 2).
+* Tick the checkbox next to one or more items to see buttons for **Open**, **Download**, **Rename**, **Duplicate** and **Move to Trash** (delete). You can also right-click an item to get a menu with similar options.
 
-Useful when you want isolated packages for one project.
+Everything shown here comes from the folder that is being served (the folder in which Jupyter was started). You cannot go above that folder from the Tree View.
 
-`Java`
+[Back to the Table of Contents](#table-of-contents)
 
-  -  This means you have a Java kernel installed (e.g., via IJava).
+#### 8.1.2 The New Menu
 
-  -  You can write and run Java code inside a notebook.
+The screenshot below shows Screen 1 with the **New** button clicked. It is from here that you create things. In most cases you want a new Jupyter notebook, so you click **Python 3 (ipykernel)**. But you may choose other options as you need.
 
-Example cell:
+![The New menu in the Tree View](https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-001-jupyter-new-menu.png)
+
+The options (these may vary from one machine to another):
+
+| Option | What it does |
+| ------ | ------------ |
+| `Python 3 (ipykernel)` | Creates a new notebook that uses the default Python kernel. This is the most common choice. |
+| `Terminal` | Opens a command-line terminal inside your browser. On Windows this is usually PowerShell; on macOS and Linux it is a normal shell. |
+| `Console` | Opens an interactive Python console, where you type one command at a time and see the result, a bit like the Python shell (IDLE). |
+| `New File` | Creates a new blank text file (`untitled.txt`) and opens it in a simple text editor in the browser. Useful for notes, settings files or documentation. |
+| `New Folder` | Creates a new folder in the current directory. It helps you organise project files. |
+
+If you have more kernels installed, each one appears at the top of the list. The screenshot below was taken on the author's computer, in the classic Notebook 6. The menu looks a little different there (**Text File** and **Folder** instead of **New File** and **New Folder**, and no **Console**), but it shows several extra kernels:
+
+![The New menu in the classic Notebook 6, with extra kernels installed](https://raw.githubusercontent.com/ag999git/python-book-2026/main/all-book-images/UI-Screen1-Jupyter-NB.jpg)
+
+Two of these extra kernels are worth explaining:
+
+* **`.venv`** - a virtual environment named `.venv`, created in a project folder and registered as a kernel (see [Section 5.5](#55-step-5-make-the-environment-available-as-a-kernel)). If you choose it, the notebook's cells run with the Python and packages inside `.venv`. This is useful when you want isolated packages for one project.
+* **`Java`** - a Java kernel (for example [IJava](https://github.com/SpencerPark/IJava)). With it you can write and run Java code in a notebook, for example:
+
 ```java
 System.out.println("Hello from Java!");
 ```
-`Python 3 (ipykernel)`
 
-  -  This is the default Python kernel that comes bundled with Jupyter.
+A few words about the default `Python 3 (ipykernel)` kernel:
 
-  -  It uses your system-wide Python installation (not inside a venv).
+* It is the default Python kernel that comes with Jupyter.
+* It uses the **same Python that is running Jupyter**. If you started Jupyter from Anaconda, that is Anaconda's Python (the `base` environment); if you installed Jupyter with pip, it is that Python.
+* It is the most common option for general use.
 
-  -  This is the most common option for general use.
+About the **Terminal**: it lets you run commands without leaving the browser, for example:
 
-`Text File`
+* `pip install` to install packages
+* `git` commands
+* activating virtual environments
+* running Python scripts, such as `python myscript.py`
 
-  -  Creates a new blank .txt file.
+This is very powerful and is often used for managing environments.
 
-  -  Opens a simple text editor in the browser.
-
-  -  Useful for notes, config files, or documentation.
-
-`Folder`
-
-  -  Creates a new folder in the current directory.
-
-  -  Helps you organize project files.
-
-`Terminal`
-
--  Opens a Linux-like command-line terminal in your browser.
-
--  Lets you run:
-
-  -  pip install
-
-  -  git commands
-
-  -  virtual environment activation
-
-  -  python scripts
-
-  -  bash commands
-
-This is very powerful and often used for managing environments.
-
-##### 1.9.3 Parts of various toolbars/ panels in the UI
-
-###### 1 Header / Top Bar
-
-  -  Title — shows “Files” or the notebook server name.
-
-  -  Logo / Brand — small Jupyter logo and sometimes server info.
-
-  -  Useful for: Orienting you; no actions here typically.
-
-###### 2 Toolbar (near top of page)
-
-Common buttons you’ll see:
-
--  New → menu to create:
-
-  -  New Python 3 notebook (or other kernels)
-
-  -  New text file
-
-  -  New folder
-
-  -  New terminal (opens a shell tab)
-
-- Upload → upload files from your computer into the current folder
-
--  Refresh → re-scan the directory (useful when files were added externally)
-
--  Control / Shutdown (may appear in other views)
-
-Tip: Use New → Notebook to quickly create a .ipynb ready to run.
-
-###### 3 File / Folder list (the “tree”)
-
--  Shows all files and folders in the current directory.
-
--  Each row usually shows:
-
-  -  Filename (click to open)
-
-  -  Last modified time
-
-  -  File size (sometimes)
-
--  Right-click / three-dot menu on a file offers:
-
-  -  Open, Rename, Duplicate, Download, Delete, Move, Edit, View
-
-  -  For notebooks you may also see “Shutdown” (stops its kernel)
-
-Tip: Clicking a folder enters it; clicking a notebook opens the editor (screen 2).
-
-###### 4 Breadcrumb / Current path
-
-•  Shows which folder you are viewing.
-
-•  Click parents to go up one level.
-
-###### 5 Running / Sessions (sometimes a tab or menu)
-
-•  Running or Active sessions shows kernels/notebooks currently active.
-
-•  From here you can shut down notebooks (stop their kernels) to free resources.
-
-Why important: Closing a browser tab does not automatically stop the kernel — use this to shutdown.
-
-###### 6 Search / Filter (if available)
-
-•  Lets you find filenames in the current directory.
-
-###### 7 Footer / Server info
-
-•  May display the URL, token, or server messages.
-
-•  Shows the directory that is being served (where files are stored).
-
-##### 1.9.4 Screen 2 — Notebook Editor (the interactive coding screen)
-
-URL example: http://localhost:8888/notebooks/myfile.ipynb
-
-This is where you write and run code and see outputs.
-
-###### 1 Browser URL & Notebook Name
-
-•  The web page title usually contains the notebook name (myfile.ipynb).
-
-•  Click the notebook name at top to rename it.
-
-###### 2 Menu Bar (top row)
-
-Typical menus (Already discussed earlier):
-
-•  `File` — New, Open, Make a copy, Rename, Save and Checkpoint, Download as (HTML, .py, .ipynb), Close and Halt
-
-•  `Edit` — Cut/Copy/Paste cells, Find & Replace
-
-•  `View` — Toggle toolbar/menu/line numbers
-
-•  `Insert` — Insert cell above/below
-
-•  `Cell` — Run Cells, Run All, Cell Type (Code / Markdown)
-
-•  `Kernel` — Interrupt / Restart / Reconnect / Change kernel
-
-•  `Help` — Keyboard shortcuts, docs, kernel info
-
-Tip: File → Save and Checkpoint creates a backup checkpoint. Browser autosaves periodically.
-
-###### 3 Notebook Toolbar (icons under menu)
-Already discussed earlier
-
-Common buttons (left→right):
-
-•  `Save` (floppy icon)
-
-• ` Add cell, Cut/Copy/Paste cell, Move cell up/down`
-
-•  `Run cell (▶) and Run all`
-
-•  I`nterrupt kernel (stop), Restart kernel (⟳)`
-
-###### 4 Kernel Status (top right)
-
-•  Shows whether the kernel is Idle, Busy, or Disconnected.
-
-•  Often a small circle: filled = busy, empty = idle.
-
-•  Important actions:
-
-  -  Interrupt — stop a running cell (like Ctrl+C)
-
-  - Restart — clear memory and restart Python kernel
-
-Tip: If state is “Busy” and your code is stuck, click Interrupt or Restart.
-
-###### 5 Cells — the basic building blocks
-
-•  Two main cell types:
-
-  - Code cells — contain executable Python code
-
-  - Markdown cells — for formatted text, headings, lists, images
-
-•  Each cell has its own run button (▶ on the left) and an execution number like In [1].
-
-•  Outputs (below a code cell) show printed text, tables, plots, or errors.
-
-•  Cell toolbar and actions:
-
-•  Add new cell (above / below)
-
-•  Change cell type (Code / Markdown)
-
-•  Delete cell
-
-•  Move cell up/down
-
-###### 6 Command Mode vs Edit Mode (keyboard behavior)
-
-•  Edit mode (green border): typing inside a cell (press Enter to go into it).
-
-•  Command mode (blue border): notebook-level commands (press Esc to enter).
-
-•  Useful shortcuts:
-
-  - Esc → Command mode
-
-  -  Enter → Edit mode
-
-  - A (in Command) → Insert cell above
-
-  - B (in Command) → Insert cell below
-
-  - M → change to Markdown
-
-  - Y → change to Code
-
-  - D, D (press D twice) → delete cell
-
-  - Shift+Enter → run cell and advance
-
-  - Ctrl+Enter → run cell, do not advance
-
-  - Alt+Enter → run cell and insert new cell below
-
-  - H → show all keyboard shortcuts
-
-###### 7 Output Area
-
-•  Renders results: text prints, images/plots (matplotlib), HTML, DataFrames, etc.
-
-•  Rich outputs are supported (interactive widgets, JavaScript).
-
-Tip: If many outputs make notebook slow, Clear Output from Cell menu.
-
-###### 8 Sidebar / Additional Panels (depends on interface)
-
-•  File browser can reappear (JupyterLab has persistent sidebars; classic notebook may not).
-
-•  Variable inspector / extensions may add panels (if installed).
-
-###### 9 Status / Messages (bottom or header)
-
-•  Kernel connection errors, long-running warnings, or autosave messages appear here.
-
-###### 10 Checkpoints and Saving
-
-•  Jupyter autosaves, but you can make a manual Checkpoint (File → Save and Checkpoint).
-
-•  You can Download as .ipynb (or export to HTML/PDF).
-
-#### 1.10 Extra
 [Back to the Table of Contents](#table-of-contents)
 
-#### 1.11 FAQ Frequently Asked Beginner Questions
+#### 8.1.3 The Running Tab
+
+Click **Running** to see everything that is active right now:
+
+![The Running tab in the Tree View](https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-001-jupyter-running-tab.png)
+
+* **Kernels** - the notebooks whose kernels are running, grouped by kernel type.
+* **Terminals** - any terminals you have opened.
+* Other sections (such as Language Servers) may appear, depending on what is installed.
+
+Click the shut-down button next to an item, or **Shut Down All**, to stop it and free memory.
+
+**Why this matters:** closing a browser tab does **not** stop the kernel. If you open many notebooks and never shut them down, they keep using memory. Use this tab to tidy up.
+
 [Back to the Table of Contents](#table-of-contents)
 
-##### 1.11.1 Do I need Anaconda to run Jupyter Notebook?
+### 8.2 Screen 2: The Notebook Editor
 
-No, but it makes life easier.
+URL example: `http://localhost:8888/notebooks/MyNotebook.ipynb`
 
-##### 1.11.2 Will Jupyter run offline?
+This is the interactive coding screen, where you write Python code in cells, run it, and see the output.
 
-Yes.
+![The Notebook Editor in Jupyter Notebook 7](https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-001-jupyter-notebook-editor.png)
 
-##### 1.11.3 Is Anaconda free?
+[Back to the Table of Contents](#table-of-contents)
 
-Yes, 100% free for personal and educational use.
+#### 8.2.1 Parts of the Notebook Editor
 
-##### 1.11.4 Does Jupyter Notebook save files?
+From top to bottom, the screen has:
 
-Yes. Files are saved as .ipynb.
+1. **Title bar** - the Jupyter logo, the notebook's name (`MyNotebook`) and the time of the last checkpoint (save). Click the name to rename the notebook. The browser tab also shows the notebook's name.
+2. **Menu bar** - File, Edit, View, Run, Kernel, Settings, Help. See [Section 8.2.2](#822-the-menu-bar).
+3. **Toolbar** - icons for common actions such as Save, Run and Restart. See [Section 8.2.3](#823-the-notebook-toolbar).
+4. **Kernel name and status** - at the right end of the toolbar. See [Section 8.2.4](#824-kernel-status).
+5. **Cells** - the boxes where you write code or text. See [Section 8.2.5](#825-cells).
+6. **Output area** - under each code cell. See [Section 8.2.7](#827-the-output-area).
 
-##### 1.11.5 Can I uninstall Anaconda and keep Python?
+[Back to the Table of Contents](#table-of-contents)
 
-Yes — both are separate.
+#### 8.2.2 The Menu Bar
 
+The menu bar is the row of words at the top: **File, Edit, View, Run, Kernel, Settings, Help**. Each menu is described below, in the form of a table.
 
+* The first column of each table gives an option that you see when you click that menu.
+* The second column gives what that option does.
 
-### 2 Some additional information
+Only the most useful options are listed. Keyboard shortcuts are shown in brackets where they exist.
 
-#### 2.1 Magic commands
+![The File menu in Jupyter Notebook 7](https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-001-jupyter-file-menu.png)
 
-Magic commands in Jupyter Notebook are special commands that start with % or %% and are not part of standard Python, but are added by IPython to make your workflow easier.
+**1. File Menu**
 
-They help you manage the notebook, run system commands, measure performance, load files, debug, profile code, and more — all without leaving Jupyter.
+Used for creating, saving, downloading and closing notebooks.
 
-Magic commands are like shortcuts or superpowers inside Jupyter.
+| Option | What it does |
+| ------ | ------------ |
+| New | Creates a new notebook, text file, console or terminal. |
+| Open... | Opens the file browser so that you can pick a file. |
+| Save Notebook (Ctrl + S) | Saves your notebook and creates a checkpoint (Jupyter also autosaves regularly). |
+| Save Notebook As... (Ctrl + Shift + S) | Saves a copy under a new name. |
+| Rename... | Renames your notebook file. |
+| Duplicate | Creates a copy of the current notebook. Useful for backups. |
+| Revert Notebook to Checkpoint... | Goes back to the last checkpoint (last manual save). See [Section 8.2.8](#828-saving-autosave-and-checkpoints). |
+| Download | Downloads the notebook as a `.ipynb` file to your computer. |
+| Save and Export Notebook As | Exports the notebook in another format, for example HTML, PDF, Markdown, LaTeX, or an Executable Script (a `.py` file). HTML always works; PDF needs extra software (LaTeX, or a browser engine for "Webpdf"). |
+| Trust Notebook | Allows the notebook's saved HTML and JavaScript outputs to run. Only trust notebooks from people you trust. |
+| Close and Shut Down Notebook... (Ctrl + Shift + Q) | Stops the notebook's kernel and closes the tab. |
+| Shut Down | Stops the whole Jupyter server. |
 
-They help you perform tasks such as:
+**2. Edit Menu**
 
-✔ Checking your directory
+Used for editing cells (cut, copy, paste, delete) and finding text.
 
-✔ Timing your code
+| Option | What it does |
+| ------ | ------------ |
+| Undo / Redo (Ctrl + Z / Ctrl + Y) | Undo or redo typing inside a cell. |
+| Undo Cell Operation (Z) | Brings back a cell you deleted, cut or moved. |
+| Cut Cell / Copy Cell / Paste Cell Below (X / C / V) | Work on entire cells, not on lines of text. |
+| Delete Cell (D, D) | Removes the selected cell. (Press D twice.) |
+| Move Cell Up / Move Cell Down | Changes the order of cells. |
+| Split Cell (Ctrl + Shift + -) | Breaks a cell into two at the cursor. |
+| Merge Cell Above / Merge Cell Below | Joins cells into one. |
+| Clear Cell Output / Clear Outputs of All Cells | Removes the output shown under cells (the code stays). |
+| Find... / Find and Replace... (Ctrl + F / Ctrl + H) | Searches for text in the notebook, and replaces it if you wish. |
 
-✔ Loading external scripts
+**3. View Menu**
 
-✔ Running OS commands
+Controls what is shown on the screen.
 
-✔ Controlling the Jupyter environment
+| Option | What it does |
+| ------ | ------------ |
+| Show Header | Shows or hides the title bar at the top. |
+| Toggle Zen Mode | Hides everything except the cells, for distraction-free work. |
+| Table of Contents | Shows a side panel listing the headings in your Markdown cells. |
+| Show Line Numbers (Shift + L) | Shows line numbers inside code cells. Very helpful when reading error messages. |
+| Collapse / Expand All Code, All Outputs | Hides or shows code or outputs, to make long notebooks easier to scroll. |
+| Open in JupyterLab | Opens the same notebook in JupyterLab, the more advanced interface. |
 
-✔ Displaying plots
+**4. Run Menu**
 
-✔ Debugging
+Used to run cells and to change the type of a cell. (In the classic Notebook 6 these options were in the **Cell** menu.)
 
-✔ Saving variables across notebooks
+| Option | What it does |
+| ------ | ------------ |
+| Run Selected Cell (Shift + Enter) | Runs the cell and moves to the next one. |
+| Run Selected Cell and Insert Below (Alt + Enter) | Runs the cell and adds a new empty cell below it. |
+| Run Selected Cell and Do not Advance (Ctrl + Enter) | Runs the cell and stays on it. |
+| Run All Above Selected Cell / Run Selected Cell and All Below | Runs a group of cells at once. |
+| Run All Cells | Runs every cell from top to bottom. |
+| Restart Kernel and Run All Cells... | Starts afresh and runs everything in order. |
+| Cell Type | Changes the cell to Code (Y), Markdown (M) or Raw (R). |
 
-They come in two types.
+**5. Kernel Menu**
 
-##### 2.1.1 Line Magics (start with %)
+Controls the kernel, the program that runs your code.
 
-These run on a single line.
+| Option | What it does |
+| ------ | ------------ |
+| Interrupt Kernel (I, I) | Stops the code that is running right now (like Ctrl + C in a terminal). Variables are kept. |
+| Restart Kernel... (0, 0) | Restarts the kernel. All variables are cleared. |
+| Restart Kernel and Clear Outputs of All Cells... | Restarts and removes all outputs, giving a clean notebook. |
+| Restart Kernel and Run All Cells... | Restarts the kernel and runs all cells from the beginning. |
+| Reconnect to Kernel | Reconnects if the connection to the kernel was lost. |
+| Shut Down Kernel | Stops the kernel for this notebook. |
+| Change Kernel... | Switches to another kernel, for example another Python environment such as `.venv`, or another Python version. |
 
-Example:-
+**6. Settings Menu**
 
-`%pwd  # print working directory`
+| Option | What it does |
+| ------ | ------------ |
+| Theme | Switches between light and dark themes. |
+| Autosave Documents | Turns autosave on or off (it is on by default). |
+| Increase / Decrease Text Editor Font Size | Makes code larger or smaller. |
+| Auto Close Brackets | Automatically types the closing bracket when you type an opening one. |
 
-`%ls  # list files`
+**7. Help Menu**
 
-##### 2.1.2 Common Line magic commands in tabular form
+Provides documentation, shortcuts and references.
 
-  
-  
+| Option | What it does |
+| ------ | ------------ |
+| Show Keyboard Shortcuts... (Ctrl + Shift + H) | Displays all Jupyter shortcuts (very useful). |
+| Markdown Reference | Opens a guide to Markdown, the formatting language used in text cells. |
+| Python Reference | Links to the official Python documentation. |
+| IPython Reference, NumPy Reference, pandas Reference and so on | Links to the documentation of popular libraries. |
+| About Jupyter Notebook | Shows the version of Jupyter Notebook you are using. |
 
-  
+**If you are using the classic Notebook 6**
 
-| Name | Format | What It Does | Simple Example |
-| --- | --- | --- | --- |
-| %pwd | %pwd | Shows current working directory | %pwd |
-| %ls | %ls | Lists files in the current directory | %ls |
-| %cd | %cd foldername | Changes directory | %cd data |
-| %who | %who | Lists defined variables in workspace | %who |
-| %whos | %whos | Shows variables with details (type, size, etc.) | %whos |
-| %reset | %reset | Clears all variables from workspace | %reset -f |
-| %run | %run script.py | Runs a Python script inside the notebook | %run myfile.py |
-| %time | %time statement | Measures execution time of a single statement | %time x = sum(range(100000)) |
-| %timeit | %timeit statement | Runs the statement multiple times to give accurate timing | %timeit x = sum(range(100000)) |
-| %matplotlib inline | %matplotlib inline | Displays plots inside notebook | %matplotlib inline |
-| %store | %store varname | Saves a variable for use in another notebook/session | %store x |
-| %history | %history | Shows command history | %history |
-| %pip | %pip install package | Installs Python packages directly from notebook | %pip install numpy |
-| %conda | %conda install package | Installs packages using conda from notebook | %conda install pandas |
+The classic notebook has slightly different menus. This table shows where to find the old options in Notebook 7:
 
-##### 2.1.3 Cell Magics (start with %%)
+| Classic Notebook 6 | Jupyter Notebook 7 |
+| ------------------ | ------------------ |
+| File > Make a Copy | File > Duplicate |
+| File > Save and Checkpoint | File > Save Notebook |
+| File > Download as | File > Save and Export Notebook As |
+| File > Close and Halt | File > Close and Shut Down Notebook |
+| View > Toggle Header / Toggle Toolbar | View > Show Header |
+| View > Cell Toolbar (Tags, Slideshow, Edit Metadata) | View > Right Sidebar (the Property Inspector), and Edit > Edit Notebook Metadata |
+| Insert > Insert Cell Above / Below | Toolbar **+** button, keys **A** / **B**, or the small buttons on the selected cell |
+| Cell menu (Run Cells, Run All, Cell Type, Clear Outputs) | Run menu, and Edit > Clear Outputs |
+| Widgets menu | No separate menu. Interactive widgets still work if the `ipywidgets` package is installed. |
+| Help > User Interface Tour | Not available |
 
-These apply to the whole cell.
+[Back to the Table of Contents](#table-of-contents)
 
-Example:
+#### 8.2.3 The Notebook Toolbar
 
-`%%time`
+The toolbar is the row of small icons just below the menu bar. In the screenshot below each item has a number. The numbers match the table after it.
 
- entire cell is timed
+![The Jupyter Notebook 7 toolbar with numbered items](https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-001-jupyter-toolbar-numbered.png)
+
+| No. | Icon / item | What it does | Shortcut |
+| --- | ----------- | ------------ | -------- |
+| 1 | Save (floppy disk) | Saves the notebook (`.ipynb` file) and creates a checkpoint. Your latest code, outputs and text are stored. | Ctrl + S |
+| 2 | Insert cell (plus sign) | Inserts a **new empty cell below** the current cell. Useful when adding more code or notes. | B (in command mode) |
+| 3 | Cut (scissors) | Removes the selected cell and keeps it on the clipboard, so that you can paste it later. | X |
+| 4 | Copy (two sheets) | Copies the selected cell to the clipboard. | C |
+| 5 | Paste (clipboard) | Pastes a cut or copied cell **below** the current cell. | V |
+| 6 | Run (triangle) | Runs the current cell, shows the output directly below it, and moves to the next cell. | Shift + Enter |
+| 7 | Interrupt (square) | Stops the cell that is running. Useful if your code is stuck, for example in an **infinite loop** (a loop that never ends). | I, I |
+| 8 | Restart (circular arrow) | Restarts the kernel. Memory is cleared and all variables are lost. The notebook stays open, but the outputs you see are now out of date. | 0, 0 |
+| 9 | Restart and run all (double triangle) | Restarts the kernel, then runs **every cell in order from top to bottom**. Useful for checking that your notebook works cleanly from scratch. | none |
+| 10 | Cell type drop-down | Shows the type of the current cell and lets you change it: **Code** (Python code), **Markdown** (text, headings, notes) or **Raw** (plain text that is not processed). | Y, M, R |
+| 11 | JupyterLab | Opens this notebook in JupyterLab. | none |
+| 12 | Debugger (bug icon) | Turns on the visual debugger, which lets you pause code and inspect variables. | none |
+| 13 | Kernel name and status circle | Shows which kernel the notebook uses. Click the name to change the kernel. The circle shows whether the kernel is busy. See the next section. | none |
+
+When a cell is selected, a small **cell toolbar** also appears at its top right (you can see it in the editor screenshot above). Its buttons, from left to right, are: **duplicate cell**, **move cell up**, **move cell down**, **insert cell above**, **insert cell below**, and **delete cell**. In the classic notebook, "move up" and "move down" were on the main toolbar instead.
+
+If you are using the classic Notebook 6, your toolbar looks like the one below. The numbers in this picture are its own and do not match the table above. Notice the **Move Cell Up** and **Move Cell Down** buttons (6 and 7), and a keyboard icon at the far right that opens the list of shortcuts.
+
+![The classic Notebook 6 toolbar, with each button explained](https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-001-Jupyter-notebook-menu-bar.jpg)
+
+For a full list of shortcuts, use **Help > Show Keyboard Shortcuts** (Ctrl + Shift + H). In Notebook 7 you can also press **Ctrl + Shift + C** to open the **command palette**, a searchable list of every command.
+
+[Back to the Table of Contents](#table-of-contents)
+
+#### 8.2.4 Kernel Status
+
+At the right end of the toolbar you see the kernel name, for example **Python 3 (ipykernel)**, and a small circle:
+
+* **Empty circle** - the kernel is **idle** and ready.
+* **Filled circle** - the kernel is **busy** running code.
+* The word **Disconnected** or **No Kernel** - the kernel has stopped or cannot be reached.
+
+While a cell is running, its number on the left shows `[*]`. When it finishes, the star is replaced by a number such as `[3]`.
+
+Tip: if the kernel stays **busy** and your code seems stuck, click **Interrupt** (toolbar item 7). If that does not help, click **Restart** (item 8).
+
+[Back to the Table of Contents](#table-of-contents)
+
+#### 8.2.5 Cells
+
+Cells are the basic building blocks of a notebook. There are two main types:
+
+* **Code cells** contain Python code that you can run.
+* **Markdown cells** contain formatted text: headings, lists, bold text, links, images and maths. (See the [Markdown guide](https://www.markdownguide.org/basic-syntax/).) Running a Markdown cell turns it into formatted text; double-click it to edit it again.
+
+A third type, **Raw**, holds text that Jupyter leaves exactly as it is. Beginners rarely need it.
+
+Each code cell has an **execution number** on its left, such as `[1]`, `[2]`. This tells you the order in which cells were run, which is not always the order they appear on the page. If the numbers are out of order, restarting and running all cells is a good way to check that the notebook still works from top to bottom.
+
+The output of a code cell appears directly below it: printed text, tables, plots or error messages.
+
+[Back to the Table of Contents](#table-of-contents)
+
+#### 8.2.6 Command Mode and Edit Mode
+
+Jupyter has two keyboard "modes". Knowing them makes the shortcuts much easier to use.
+
+* **Edit mode** - you are typing *inside* a cell. You see a blinking cursor. Press **Enter** (or click inside a cell) to enter edit mode.
+* **Command mode** - you are working with *whole cells*: adding, deleting, moving, changing type. There is no cursor in the cell; the selected cell is marked with a blue bar on its left. Press **Esc** to enter command mode.
+
+(In the classic notebook, edit mode showed a **green** border around the cell and command mode a **blue** one.)
+
+Useful shortcuts:
+
+| Shortcut | Mode | What it does |
+| -------- | ---- | ------------ |
+| Esc | Edit | Go to command mode |
+| Enter | Command | Go to edit mode |
+| A | Command | Insert a cell **above** |
+| B | Command | Insert a cell **below** |
+| M | Command | Change the cell to Markdown |
+| Y | Command | Change the cell to Code |
+| D, D (press D twice) | Command | Delete the cell |
+| Z | Command | Undo the last cell operation (for example, bring back a deleted cell) |
+| Shift + Enter | Both | Run the cell and move to the next one |
+| Ctrl + Enter | Both | Run the cell and stay on it |
+| Alt + Enter | Both | Run the cell and insert a new cell below |
+| Ctrl + Shift + H | Command | Show all keyboard shortcuts |
+
+The most common beginner mistake is pressing **A**, **B** or **D** while in edit mode. That just types the letter into your cell. Press **Esc** first.
+
+[Back to the Table of Contents](#table-of-contents)
+
+#### 8.2.7 The Output Area
+
+* Shows the results of your code: printed text, images and plots (for example from Matplotlib), HTML, tables (such as Pandas DataFrames), and error messages.
+* Rich outputs are supported, including interactive widgets and JavaScript.
+* If a cell ends with an expression such as `a + 20`, Jupyter shows its value automatically, next to the cell's number (for example `[2]: 30`). You do not need `print()` for the last line of a cell.
+
+Tip: if a notebook has many large outputs and becomes slow, use **Edit > Clear Outputs of All Cells**.
+
+The editor can also show extra panels, such as the **Table of Contents** or the **Debugger** (from the View menu). JupyterLab has more permanent side panels, and extensions can add more, such as a variable inspector.
+
+[Back to the Table of Contents](#table-of-contents)
+
+#### 8.2.8 Saving, Autosave and Checkpoints
+
+* Jupyter **autosaves** your notebook every couple of minutes. You can switch this off or on in **Settings > Autosave Documents**.
+* When you save manually (**Ctrl + S** or **File > Save Notebook**), Jupyter also creates a **checkpoint**, a saved snapshot of the notebook. The title bar shows "Last Checkpoint: ...". Checkpoints are stored in a hidden folder called `.ipynb_checkpoints`.
+* **File > Revert Notebook to Checkpoint** takes you back to that snapshot. This is handy if you make a mess and want to go back to your last good version.
+* You can download the notebook with **File > Download**, or export it to HTML, PDF or a `.py` script with **File > Save and Export Notebook As**.
+* Messages such as "Saving completed", or warnings about a lost kernel connection, appear briefly at the bottom right of the screen.
+
+[Back to the Table of Contents](#table-of-contents)
+
+### 8.3 How the Two Screens Are Related
+
+* The **Tree View** is the launcher: you find, create and manage files there.
+* The **Notebook Editor** is the work screen: you write and run code there.
+* Each notebook you open gets its own browser tab, and its own kernel.
+* The **Running** tab of the Tree View shows all the kernels that are still active, so you can shut down the ones you no longer need.
+
+[Back to the Table of Contents](#table-of-contents)
+
+## 9. Frequently Asked Beginner Questions
+
+### 9.1 Do I need Anaconda to run Jupyter Notebook?
+
+No, but it makes life easier. Anaconda installs Python, Jupyter and many useful packages in one go. Without Anaconda, you can install Python from python.org and then Jupyter with `pip install notebook` (see [Section 4](#4-part-3-installing-jupyter-notebook-without-anaconda-optional)). You can also use [Google Colab](https://colab.research.google.com/), which runs notebooks in your browser with nothing to install, although it needs an internet connection and a Google account.
+
+[Back to the Table of Contents](#table-of-contents)
+
+### 9.2 Will Jupyter run offline?
+
+Yes. Once it is installed, Jupyter runs entirely on your own computer (`localhost`), so no internet connection is needed. You only need the internet to install new packages or to open online help pages.
+
+[Back to the Table of Contents](#table-of-contents)
+
+### 9.3 Is Anaconda free?
+
+Yes, for personal and educational use. Individual learners, students and teachers can use it free of charge. Large organisations (200 or more employees) need a paid licence for commercial use. See Anaconda's [Terms of Service](https://www.anaconda.com/legal/terms/terms-of-service) for the details.
+
+[Back to the Table of Contents](#table-of-contents)
+
+### 9.4 Does Jupyter Notebook save files?
+
+Yes. Notebooks are saved as `.ipynb` files (short for "IPython Notebook") in the folder where you created them. Jupyter also autosaves every few minutes. An `.ipynb` file stores your code, your text, and the outputs. You can open it again later in Jupyter, VS Code or Google Colab.
+
+[Back to the Table of Contents](#table-of-contents)
+
+### 9.5 Can I uninstall Anaconda and keep Python?
+
+Yes, if you installed Python separately. A Python that you installed on its own (for example from python.org or the Microsoft Store) is independent of Anaconda, so uninstalling Anaconda does not touch it. However, the Python that came *inside* Anaconda, together with all its packages and environments, is removed along with Anaconda. Your own notebook files (`.ipynb`) are not deleted.
+
+[Back to the Table of Contents](#table-of-contents)
+
+### 9.6 What happens to my variables if I close the browser tab?
+
+Nothing, at first. The kernel keeps running in the background, so your variables are still in memory. If you open the notebook again, you can carry on. But when the kernel is restarted or shut down, or the server is stopped, all variables are lost. Your code and saved outputs remain in the `.ipynb` file; you just have to run the cells again.
+
+[Back to the Table of Contents](#table-of-contents)
+
+### 9.7 Why do I get NameError when my code looks correct?
+
+Usually because a cell that creates a variable has not been run yet in this session, for example after a restart. Remember that the kernel only knows about cells that you have actually run. Use **Run > Run All Cells** to run everything in order.
+
+[Back to the Table of Contents](#table-of-contents)
+
+## 10. Magic Commands
+
+### 10.1 What Are Magic Commands
+
+**Magic commands** are special commands that start with `%` or `%%`. They are **not** part of standard Python. They are added by IPython (the kernel behind Jupyter) to make your work easier, which is why they work in Jupyter and Google Colab but not in an ordinary `.py` script. The full list is in the [IPython documentation on magic commands](https://ipython.readthedocs.io/en/stable/interactive/magics.html).
+
+Think of magic commands as **shortcuts** or **superpowers** inside Jupyter. They help you:
+
+* check which folder you are in
+* time your code
+* load and run external scripts
+* run operating-system commands
+* control the Jupyter environment
+* display plots
+* debug and profile code (find slow parts)
+* save variables for use in other notebooks
+
+There are two types.
+
+[Back to the Table of Contents](#table-of-contents)
+
+### 10.2 Line Magics
+
+A **line magic** starts with **one** `%` and works on **a single line**. For example:
 
 ```python
+%pwd    # print working directory (the folder Jupyter is working in)
+%ls     # list the files in that folder
+```
 
+Table: Common line magic commands
+
+| Name | Format | What it does | Simple example |
+| ---- | ------ | ------------ | -------------- |
+| `%pwd` | `%pwd` | Shows the current working directory (folder) | `%pwd` |
+| `%ls` | `%ls` | Lists the files in the current directory | `%ls` |
+| `%cd` | `%cd foldername` | Changes the current directory | `%cd data` |
+| `%who` | `%who` | Lists the variables you have created | `%who` |
+| `%whos` | `%whos` | Lists variables with details (type, value) | `%whos` |
+| `%reset` | `%reset` | Deletes all your variables. It asks for confirmation; `-f` (force) skips the question | `%reset -f` |
+| `%run` | `%run script.py` | Runs a Python script inside the notebook; its variables become available in the notebook | `%run myfile.py` |
+| `%time` | `%time statement` | Measures how long one run of a statement takes | `%time x = sum(range(100000))` |
+| `%timeit` | `%timeit statement` | Runs the statement many times to give an accurate average time | `%timeit x = sum(range(100000))` |
+| `%matplotlib inline` | `%matplotlib inline` | Shows plots inside the notebook. In current versions this is already the default, so you rarely need it | `%matplotlib inline` |
+| `%store` | `%store varname` | Saves a variable so that another notebook (or a later session) can load it with `%store -r varname` | `%store x` |
+| `%history` | `%history` | Shows the commands you have run in this session | `%history` |
+| `%pip` | `%pip install package` | Installs a Python package into the kernel's own environment, directly from the notebook | `%pip install numpy` |
+| `%conda` | `%conda install package` | Installs a package using conda (Anaconda only) | `%conda install pandas` |
+
+Tip: use `%pip install` rather than `!pip install` inside a notebook. The `%pip` form always installs into the Python that your kernel is using, which avoids the common "I installed it but Python still cannot find it" problem. (The `!` at the start of a line runs any operating-system command, for example `!dir` on Windows.)
+
+[Back to the Table of Contents](#table-of-contents)
+
+### 10.3 Cell Magics
+
+A **cell magic** starts with **two** `%%` and applies to the **whole cell**. It must be the **very first line** of the cell. For example, this times the entire cell:
+
+```python
+%%time
 x = 0
 for i in range(1000000):
     x += i
 ```
 
-##### 2.1.4 Common Cell magic commands in tabular form
+Output (your numbers will be different):
 
-  
+```text
+CPU times: user 65.3 ms, sys: 304 µs, total: 65.6 ms
+Wall time: 65.8 ms
+```
 
-| Name | Format | What It Does | Simple Example |
-| --- | --- | --- | --- |
-| %%time | %%time | Measures execution time of the entire cell | %%timex = [i*i for i in range(100000)] |
-| %%timeit | %%timeit | Runs full cell many times & averages the timing | %%timeitx = [i*i for i in range(100000)] |
-| %%bash | %%bash | Runs the entire cell as Bash shell commands | %%bashecho "Hello"\nls |
-| %%python | %%python | Forces execution using Python interpreter (useful in multi-kernel setups) | %%pythonprint("Hello") |
-| %%html | %%html | Renders HTML content in output | %%html<h1>Hello</h1> |
-| %%markdown | %%markdown | Renders Markdown as formatted output | %%markdown\n# Title |
-| %%writefile | %%writefile filename.py | Writes the content of the cell to a file | %%writefile test.py\nprint("Hello") |
-| %%capture | %%capture varname | Captures output (stdout, stderr) into a variable | %%capture outprint("Hidden") |
-| %%latex | %%latex | Renders LaTeX math | %%latexE=mc^2 |
-| %%javascript | %%javascript | Runs JavaScript inside notebook | %%javascriptalert("Hi!") |
+Table: Common cell magic commands
 
-### 3 Advanced concepts
+| Name | What it does | Simple example (whole cell) |
+| ---- | ------------ | --------------------------- |
+| `%%time` | Measures how long the entire cell takes to run once | `%%time`<br>`x = [i*i for i in range(100000)]` |
+| `%%timeit` | Runs the full cell many times and gives the average time | `%%timeit`<br>`x = [i*i for i in range(100000)]` |
+| `%%bash` | Runs the whole cell as Bash shell commands. Works on macOS, Linux and Colab; on Windows it needs Bash to be installed (for example Git Bash or WSL) | `%%bash`<br>`echo "Hello"`<br>`ls` |
+| `%%python` | Runs the cell in a separate Python process (useful when working with more than one kernel) | `%%python`<br>`print("Hello")` |
+| `%%html` | Shows the cell's contents as HTML | `%%html`<br>`<h1>Hello</h1>` |
+| `%%markdown` | Shows the cell's contents as formatted Markdown | `%%markdown`<br>`# Title` |
+| `%%writefile` | Writes the contents of the cell to a file | `%%writefile test.py`<br>`print("Hello")` |
+| `%%capture` | Captures the output (stdout, stderr) into a variable instead of showing it | `%%capture out`<br>`print("Hidden")`<br>(later, `out.stdout` gives `'Hidden\n'`) |
+| `%%latex` | Displays LaTeX maths | `%%latex`<br>`$$E = mc^2$$` |
+| `%%javascript` | Runs JavaScript in the browser (in the notebook page) | `%%javascript`<br>`alert("Hi!")` |
 
 [Back to the Table of Contents](#table-of-contents)
 
-#### 3.1 Flowchart
+### 10.4 Trying Magic Commands Yourself
 
-![FlowChart](https://github.com/ag999git/python-book-2026/blob/main/all-book-images/Ch-1-Jupyter-NB-Flow-chart-from-browser-to-server.jpg)
+Try these in a new notebook, one cell at a time.
 
+```python
+# Step 1 - Create a few variables
+x = 10
+name = "Asha"
+marks = [70, 80, 90]
+```
 
-##### 3.1.1 Explanation
+```python
+# Step 2 - List the variables you have created
+%who
+```
 
-###### A — Anaconda Navigator
+```text
+marks	 name	 x	 
+```
 
-Block: A[Anaconda Navigator]
+```python
+# Step 3 - List them again, with details
+%whos
+```
 
-This is the graphical launcher that comes with Anaconda.
+```text
+Variable   Type    Data/Info
+----------------------------
+marks      list    n=3
+name       str     Asha
+x          int     10
+```
 
-You click an icon → Navigator opens → you see apps like Jupyter Notebook, Spyder, VS Code, etc.
+```python
+# Step 4 - Time a single line
+%time total = sum(range(100000))
+```
 
-Meaning:- The entire workflow starts when you launch Jupyter Notebook from Anaconda Navigator.
+```text
+CPU times: user 686 µs, sys: 169 µs, total: 855 µs
+Wall time: 857 µs
+```
 
-###### A → B — Starting the Notebook Server
+Here **CPU time** is the time the processor actually spent on your code, and **Wall time** is the real time that passed on the clock ("wall clock"). The sign `µs` means microseconds (millionths of a second). Your times will be different, since they depend on your computer.
 
-Block: B[Starts Jupyter Notebook Server]
+[Back to the Table of Contents](#table-of-contents)
 
-When you click “Launch” → Navigator runs the command:
+## 11. Advanced: How a Cell Travels from Browser to Kernel
 
-jupyter-notebook
+This section describes, in more detail, the journey that was summarised in [Section 1.4](#14-what-happens-when-you-run-a-cell), starting from the moment you launch Jupyter from Anaconda Navigator.
 
-This starts something called the Jupyter Notebook Server.
+[Back to the Table of Contents](#table-of-contents)
 
-The server is a Python program running locally on your computer.
+### 11.1 The Flowchart
 
-###### B → C — Jupyter Server Running on Localhost
+![Flowchart: how code travels from the browser to the kernel and back](https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-001-jupyter-browser-to-kernel-flow.png)
 
-Block: C[Jupyter Server Running on Localhost]
+<details>
+<summary>Mermaid source of this flowchart (can be pasted into draw.io)</summary>
 
-The Jupyter server starts on something like:
+```mermaid
+flowchart TD
+    A["1. Anaconda Navigator"] --> B["2. Starts Jupyter Notebook Server"]
+    B --> C["3. Jupyter Server running on localhost"]
+    C --> D["4. Browser opens Notebook interface"]
+    D --> E["5. User writes code in a cell"]
+    E --> F["6. Browser sends code to server"]
+    F --> G["7. Server sends code to kernel"]
+    G --> H["8. Kernel executes Python code"]
+    H --> I["9. Python produces output"]
+    I --> J["10. Kernel sends output to server"]
+    J --> K["11. Server sends output to browser"]
+    K --> L["12. Browser displays output in notebook"]
+    L -->|"13. Write the next cell"| E
+```
 
+</details>
+
+[Back to the Table of Contents](#table-of-contents)
+
+### 11.2 Step-by-Step Explanation
+
+#### Step 1: Anaconda Navigator
+
+This is the graphical launcher that comes with Anaconda. You click its icon, Navigator opens, and you see tiles for applications such as Jupyter Notebook, JupyterLab and Spyder.
+
+The whole journey starts when you launch Jupyter Notebook from here.
+
+[Back to the Table of Contents](#table-of-contents)
+
+#### Step 2: Navigator Starts the Notebook Server
+
+When you click **Launch**, Navigator runs the command:
+
+```text
+jupyter notebook
+```
+
+This starts the **Jupyter Notebook Server**, a Python program running locally on your computer.
+
+[Back to the Table of Contents](#table-of-contents)
+
+#### Step 3: The Server Runs on localhost
+
+The server starts at an address such as:
+
+```text
 http://localhost:8888
+```
 
-“localhost” means your own computer.
+`localhost` means your own computer (see [Section 7](#7-understanding-the-local-server-address)).
 
 This server manages:
 
-•  Notebook files
-
-•  Saving
-
-•  Communication with kernels
-
-•  Security tokens
-
-•  Sessions
-
-###### C → D — Browser Opens Notebook Interface
-
-Block: D[Browser Opens Notebook Interface]
-
-After the server starts, your web browser opens automatically.
-
-This web page is the Jupyter Dashboard (list of notebooks) and later the Notebook Editor.
-
-Even though it looks like a website, the entire thing runs on your computer, not on the internet.
-
-###### D → E — User Writes Code
-
-Block: E[User Writes Code in Cell]
-
-Inside the browser, you type:
-```python
-a = 10
-
-a + 20
-```
-
-This is just text until you run the cell.
-
-###### E → F — Browser Sends Code to Server
-
-Block:
-
-F[Browser Sends Code to Server]
-
-When you press Shift+Enter, the browser sends your code to the Jupyter server using HTTP/WebSocket.
-
-The server receives something like:
-
-"Run cell with code: a + 20"
-
-###### F → G — Server Sends Code to Kernel
-
-Block:
-
-G[Server Sends Code to Kernel]
-
-The Jupyter server forwards the code to a kernel.
-
-The kernel is a Python process running separately:
-
-python.exe -m ipykernel
-
-This is what actually executes your code.
-
-###### G → H — Kernel Executes the Code
-
-Block: H[Kernel Executes Python Code]
-
-The kernel:
-
-•  parses your Python
-
-•  executes it
-
-•  maintains variable states
-
-•  stores your session memory
-
-###### H → I — Python Produces Output
-
-Block:
-
-I[Python Produces Output]
-
-This is simply the result of your code:
-
-30
-
-or a graph, or a printed message.
-
-10. I → J — Kernel Sends Output to Server
-
-Block:
-
-J[Kernel Sends Output to Server]
-
-After executing the code, the kernel returns:
-
-•  the output
-
-•  any errors
-
-•  stdout (print)
-
-•  rich outputs (plots, HTML, images)
-
-It sends this back in a structured JSON message.
-
-###### J → K — Server Sends Output to Browser
-
-Block:
-
-K[Server Sends Output to Browser]
-
-The Jupyter server receives the kernel's JSON output and forwards it to your browser.
-
-###### K → L — Browser Displays Output
-
-Block:
-
-L[Browser Displays Output in Notebook]
-
-The browser renders the output below your code cell.
-
-This completes the cycle:
-
-1.  You write code
-
-2.  It travels through server → kernel
-
-3.  Kernel executes
-
-4.  Result travels back
-
-5.  Browser displays it
-
-#### 3.2 Where does Jupyter Store Kernels
-
-Common paths:
-
-•  Linux / Mac:
-
-`~/.local/share/jupyter/kernels/`
-
-•  Windows:
-
-`C:\Users\<username>\AppData\Roaming\jupyter\kernels\`
-
-Each kernel has a folder with:
-
-•  kernel.json
-
-•  an icon
-
-•  the executable path
-
-3.3 SSS
-
-3.4 CCC
-
-3.5 qqq
-
-
----
-
-### Profiling Jupyter Notebooks (For Beginners)
+* your notebook files
+* saving and checkpoints
+* communication with kernels
+* security tokens
+* sessions (which notebook is connected to which kernel)
 
 [Back to the Table of Contents](#table-of-contents)
 
- - Jupyter notebooks allow profiling code easily using built-in tools
-   and external profilers.
-   
- - This guide explains the simplest and most
-   useful ways to profile notebook cells.
+#### Step 4: The Browser Opens the Notebook Interface
 
----
+After the server starts, your web browser opens automatically. It first shows the Tree View (the list of files), and later the Notebook Editor when you open a notebook.
 
-#### 1. Using the `%time` and `%timeit` Magic Commands
+Even though it looks like a website, the whole thing runs on your computer, not on the internet.
 
-##### Measure execution time of a **single run**:
+[Back to the Table of Contents](#table-of-contents)
+
+#### Step 5: You Write Code in a Cell
+
+Inside the browser, you type, for example:
+
+```python
+a = 10
+a + 20
+```
+
+At this stage it is just text. Nothing happens until you run the cell.
+
+[Back to the Table of Contents](#table-of-contents)
+
+#### Step 6: The Browser Sends the Code to the Server
+
+When you press **Shift + Enter**, the browser sends your code to the Jupyter server over a WebSocket connection.
+
+In simple words, the server receives a message that says: "Run this cell, with the code: `a = 10`, `a + 20`."
+
+[Back to the Table of Contents](#table-of-contents)
+
+#### Step 7: The Server Sends the Code to the Kernel
+
+The Jupyter server forwards the code to the kernel. The kernel is a separate Python process that was started with a command like:
+
+```text
+python -m ipykernel_launcher -f <connection file>
+```
+
+The "connection file" is a small file that tells the kernel how to talk to the server. The kernel is what actually executes your code.
+
+[Back to the Table of Contents](#table-of-contents)
+
+#### Step 8: The Kernel Executes the Code
+
+The kernel:
+
+* reads (parses) your Python code
+* executes it
+* keeps track of your variables (it now remembers that `a` is 10)
+* keeps everything in memory for the rest of the session
+
+[Back to the Table of Contents](#table-of-contents)
+
+#### Step 9: Python Produces Output
+
+The result of the code is:
+
+```text
+30
+```
+
+For other code, the output could be a graph, a printed message, or an error.
+
+[Back to the Table of Contents](#table-of-contents)
+
+#### Step 10: The Kernel Sends the Output to the Server
+
+After running the code, the kernel sends back:
+
+* the result
+* any errors
+* anything printed with `print()` (called *stdout*, the standard output)
+* rich outputs such as plots, HTML and images
+
+These are sent in a structured format called [JSON](https://www.json.org/json-en.html), a simple text format for data.
+
+[Back to the Table of Contents](#table-of-contents)
+
+#### Step 11: The Server Sends the Output to the Browser
+
+The Jupyter server receives the kernel's JSON message and forwards it to your browser.
+
+[Back to the Table of Contents](#table-of-contents)
+
+#### Step 12: The Browser Displays the Output
+
+The browser shows the output below your code cell, marked `[1]` or similar.
+
+This completes the cycle:
+
+1. You write code.
+2. It travels from the browser to the server and then to the kernel.
+3. The kernel executes it.
+4. The result travels back.
+5. The browser displays it.
+
+Then you write the next cell (Step 13 in the flowchart), and the cycle repeats from Step 5.
+
+[Back to the Table of Contents](#table-of-contents)
+
+### 11.3 Where Jupyter Stores Kernels
+
+Each kernel that Jupyter knows about is described by a **kernel specification** ("kernelspec"): a small folder containing a file called `kernel.json`. To see all the kernels on your computer and where they are stored, type this in the Anaconda Prompt (or in a notebook cell with `!` in front):
+
+```text
+jupyter kernelspec list
+```
+
+Example output on Windows (your folder names will be different):
+
+```text
+Available kernels:
+  python3    C:\Users\yourname\anaconda3\share\jupyter\kernels\python3
+  myenv      C:\Users\yourname\AppData\Roaming\jupyter\kernels\myenv
+```
+
+Common locations for kernels that you add yourself (for example with `python -m ipykernel install --user`):
+
+| Operating system | Folder |
+| ---------------- | ------ |
+| Windows | `C:\Users\<username>\AppData\Roaming\jupyter\kernels\` |
+| macOS | `~/Library/Jupyter/kernels/` |
+| Linux | `~/.local/share/jupyter/kernels/` |
+
+The default `python3` kernel usually lives inside the Python or Anaconda installation itself, as in the first line of the example output.
+
+Each kernel folder contains:
+
+* `kernel.json` - the settings, including the command used to start the kernel (and so the path to the Python that runs it)
+* logo files (icons) such as `logo-32x32.png` and `logo-64x64.png`
+
+For example, the `kernel.json` of the standard Python kernel looks like this:
+
+```json
+{
+ "argv": [
+  "python",
+  "-m",
+  "ipykernel_launcher",
+  "-f",
+  "{connection_file}"
+ ],
+ "display_name": "Python 3 (ipykernel)",
+ "language": "python",
+ "metadata": {
+  "debugger": true,
+  "supported_encryption": "curve"
+ },
+ "kernel_protocol_version": "5.5"
+}
+```
+
+`argv` is the command that starts the kernel (you saw it in Step 7), and `display_name` is the name shown in the **New** menu.
+
+[Back to the Table of Contents](#table-of-contents)
+
+## 12. Advanced: Profiling Code in Jupyter Notebook
+
+**Profiling** means measuring your program to find out **where it spends its time or memory**. A profiler tells you which function, or even which line, is slow. You can then spend your effort on the part that really matters, instead of guessing. Jupyter makes profiling easy, with built-in magic commands and some external tools.
+
+This section explains the simplest and most useful ways to profile notebook cells. Start with Sections 12.2 to 12.5, which need nothing extra. The later sections use packages that you install with `%pip`.
+
+[Back to the Table of Contents](#table-of-contents)
+
+### 12.1 Setting Up an Example Function
+
+All the examples below need a function to measure. Run this cell first. It defines a deliberately slow function, a faster one, and `my_function()`, which uses both.
+
+```python
+# Step 1 - A slow way to build a list of squares, using a loop and append()
+def slow_squares(n):
+    """Return a list of squares from 0 to n-1, built the slow way."""
+    result = []
+    for i in range(n):
+        result.append(i * i)
+    return result
+
+
+# Step 2 - A faster way to do the same thing, using a list comprehension
+def fast_squares(n):
+    return [i * i for i in range(n)]
+
+
+# Step 3 - A function that calls both, so that we have something to profile
+def my_function():
+    a = slow_squares(200_000)
+    b = fast_squares(200_000)
+    return len(a) + len(b)
+
+
+print("Step 4 - my_function() returns:", my_function())
+```
+
+Output:
+
+```text
+Step 4 - my_function() returns: 400000
+```
+
+Note: `200_000` is simply the number 200000. Python lets you put underscores in numbers to make them easier to read. All timings shown below are examples from one computer; your numbers will be different. Where a report names the cell, it shows something like `<ipython-input-1-4f7946f8a935>`; in Jupyter you will see a different name, such as a temporary file path. The line numbers refer to lines in the cell above.
+
+[Back to the Table of Contents](#table-of-contents)
+
+### 12.2 Timing One Line with time and timeit
+
+Measure the execution time of a **single run**:
+
 ```python
 %time my_function()
 ```
 
-##### Measure execution time with **multiple iterations**:
+```text
+CPU times: user 7.26 ms, sys: 11.7 ms, total: 19 ms
+Wall time: 19 ms
+```
+
+Measure the execution time over **many runs**:
+
 ```python
 %timeit my_function()
 ```
 
-`%timeit` automatically picks the best number of repetitions for accuracy.
+```text
+15.4 ms ± 397 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
+```
 
----
+`%timeit` automatically chooses how many times to repeat the code so that the result is accurate. The output means: the code was run 100 times in a row ("loops"), this was done 7 times ("runs"), and on average one call took 15.4 milliseconds, give or take 0.397 milliseconds. You can set the numbers yourself with `-n` (loops) and `-r` (runs):
 
-#### 2. Cell-level Timing with `%%time` and `%%timeit`
+```python
+%timeit -n 10 -r 3 fast_squares(10_000)
+```
 
-##### Time an entire Jupyter cell:
+```text
+225 µs ± 5.28 µs per loop (mean ± std. dev. of 3 runs, 10 loops each)
+```
+
+Why do we need both? A single run (`%time`) can be affected by other things happening on your computer at that moment. `%timeit` averages many runs, so it is better for comparing two ways of doing the same thing.
+
+[Back to the Table of Contents](#table-of-contents)
+
+### 12.3 Timing a Whole Cell
+
+To time an entire Jupyter cell once, put `%%time` on the first line:
+
 ```python
 %%time
 result = []
 for i in range(10000):
-    result.append(i*2)
+    result.append(i * 2)
 ```
 
-##### Benchmark a full cell:
+To benchmark a full cell over many runs, use `%%timeit`:
+
 ```python
 %%timeit
-sum([i*2 for i in range(10000)])
+sum([i * 2 for i in range(10000)])
 ```
 
----
+Remember that with `%%timeit` the cell is run many times, and variables created inside it are **not** kept afterwards.
 
-#### 3. Using the Built-In Profiler: `%prun`
+[Back to the Table of Contents](#table-of-contents)
 
-This runs the **cProfile** profiler on an expression.
+### 12.4 The Built-In Profiler prun
+
+`%prun` runs Python's built-in profiler, [cProfile](https://docs.python.org/3/library/profile.html), on a statement. Instead of one total time, it shows the time spent in **each function**.
 
 ```python
-%prun my_function()
+%prun -l 6 my_function()
 ```
 
-Output shows:
-- number of calls  
-- total time  
-- time per call  
-- which functions take the longest  
+(`-l 6` limits the report to the 6 most important lines.) The report appears below the cell (in some versions, in a separate panel at the bottom of the screen). It looks like this:
 
----
+```text
+         200009 function calls in 0.057 seconds
 
-#### 4. Profiling an Entire Cell: `%%prun`
+   Ordered by: internal time
+   List reduced from 9 to 6 due to restriction <6>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+        1    0.031    0.031    0.043    0.043 <ipython-input-1-4f7946f8a935>:2(slow_squares)
+   200000    0.012    0.000    0.012    0.000 {method 'append' of 'list' objects}
+        1    0.011    0.011    0.011    0.011 <ipython-input-1-4f7946f8a935>:12(<listcomp>)
+        1    0.003    0.003    0.057    0.057 <string>:1(<module>)
+        1    0.000    0.000    0.057    0.057 {built-in method builtins.exec}
+        1    0.000    0.000    0.054    0.054 <ipython-input-1-4f7946f8a935>:16(my_function)
+```
+
+How to read it:
+
+| Column | Meaning |
+| ------ | ------- |
+| `ncalls` | Number of calls - how many times the function was called |
+| `tottime` | Total time spent inside the function itself, not counting other functions it called |
+| `percall` (first) | `tottime` divided by `ncalls` |
+| `cumtime` | Cumulative time - time in the function **including** everything it called |
+| `percall` (second) | `cumtime` divided by the number of calls |
+| `filename:lineno(function)` | Which function the row is about |
+
+Here you can see that `slow_squares` takes the most time, and that `list.append` was called 200,000 times. The list comprehension (`<listcomp>`, in `fast_squares`) needed much less time for the same job.
+
+[Back to the Table of Contents](#table-of-contents)
+
+### 12.5 Profiling a Whole Cell with prun
+
+To profile all the code in a cell, use `%%prun` on the first line:
 
 ```python
 %%prun
 data = []
 for i in range(500000):
-    data.append(i*i)
+    data.append(i * i)
 ```
 
-Useful when profiling loops or multi-line code.
+This is useful when you want to profile loops or several lines of code that are not inside a function.
 
----
+[Back to the Table of Contents](#table-of-contents)
 
-#### 5. Line-by-line profiling using `line_profiler`
+### 12.6 Line-by-Line Timing with line_profiler
 
-##### Install:
-```bash
-pip install line_profiler
+`%prun` tells you which *function* is slow. [line_profiler](https://github.com/pyutils/line_profiler) goes one step further and tells you which *line* inside a function is slow.
+
+Step 1 - Install it (only once):
+
+```python
+%pip install line_profiler
 ```
 
-##### Load the Jupyter extension:
+Step 2 - Load its Jupyter extension:
+
 ```python
 %load_ext line_profiler
 ```
 
-##### Profile a function line-by-line:
+Step 3 - Profile a function line by line. After `-f` you give the name of the function to watch, and then the statement to run:
+
 ```python
-%lprun -f my_function my_function()
+%lprun -f slow_squares slow_squares(100_000)
 ```
 
----
+Output:
 
-#### 6. Memory profiling using `memory_profiler`
+```text
+Timer unit: 1e-09 s
 
-##### Install:
-```bash
-pip install memory_profiler
+Total time: 0.0282243 s
+File: <ipython-input-1-4f7946f8a935>
+Function: slow_squares at line 2
+
+Line #      Hits         Time  Per Hit   % Time  Line Contents
+==============================================================
+     2                                           def slow_squares(n):
+     3                                               """Return a list of squares from 0 to n-1, built the slow way."""
+     4         1        726.0    726.0      0.0      result = []
+     5    100001   10499868.0    105.0     37.2      for i in range(n):
+     6    100000   17723556.0    177.2     62.8          result.append(i * i)
+     7         1        194.0    194.0      0.0      return result
 ```
 
-##### Load extension:
+`Hits` is how many times each line ran, `Time` is the total time for that line (in the timer unit, here nanoseconds), and `% Time` is the share of the total. Line 6, the `append()`, takes about 63% of the time. That is the line to improve.
+
+[Back to the Table of Contents](#table-of-contents)
+
+### 12.7 Memory Profiling with memory_profiler
+
+[memory_profiler](https://pypi.org/project/memory-profiler/) shows how much memory your code uses. This is useful when you work with large lists, NumPy arrays, Pandas tables or images.
+
+Step 1 - Install it:
+
+```python
+%pip install memory_profiler
+```
+
+Step 2 - Load its extension:
+
 ```python
 %load_ext memory_profiler
 ```
 
-##### Profile line-by-line memory usage:
+Step 3 - Measure the peak memory of one statement with `%memit`:
+
 ```python
-%mprun -f my_function my_function()
+%memit slow_squares(1_000_000)
 ```
 
----
-
-#### 7. Visual Profiling Inside Jupyter Using SnakeViz
-
-`SnakeViz` creates an interactive graph of cProfile results.
-
-##### Install:
-```bash
-pip install snakeviz
+```text
+peak memory: 50.26 MiB, increment: 4.23 MiB
 ```
 
-##### Generate `.prof` file:
+`peak memory` is the most memory Python used while running the statement, and `increment` is how much extra memory the statement needed. (`MiB` is a mebibyte, about one million bytes.)
+
+Step 4 - Line-by-line memory use with `%mprun`. There is one catch: **`%mprun` only works on functions saved in a real `.py` file**, not on functions defined in a notebook cell. If you try it on a notebook function, you get this error:
+
+```text
+ERROR: Could not find file <ipython-input-1-4f7946f8a935>
+NOTE: %mprun can only be used on functions defined in physical files, and not in the IPython environment.
+```
+
+The simple way round this is to write the function to a file with `%%writefile`, then import it:
+
 ```python
-!python -m cProfile -o output.prof your_notebook_script.py
+%%writefile squares_module.py
+def slow_squares(n):
+    result = []
+    for i in range(n):
+        result.append(i * i)
+    return result
 ```
 
-##### View results:
-```bash
+```text
+Writing squares_module.py
+```
+
+```python
+from squares_module import slow_squares
+%mprun -f slow_squares slow_squares(1_000_000)
+```
+
+```text
+Filename: squares_module.py
+
+Line #    Mem usage    Increment  Occurrences   Line Contents
+=============================================================
+     1     43.0 MiB     43.0 MiB           1   def slow_squares(n):
+     2     43.0 MiB      0.0 MiB           1       result = []
+     3     81.4 MiB     30.6 MiB     1000001       for i in range(n):
+     4     81.4 MiB      7.7 MiB     1000000           result.append(i * i)
+     5     81.4 MiB      0.0 MiB           1       return result
+```
+
+The `Increment` column shows how much memory each line added. Building a list of a million numbers needed almost 40 MiB.
+
+[Back to the Table of Contents](#table-of-contents)
+
+### 12.8 Visual Profiling with SnakeViz
+
+[SnakeViz](https://jiffyclub.github.io/snakeviz/) turns the results of cProfile into an interactive picture, so that you can see at a glance where the time goes.
+
+Step 1 - Install it:
+
+```python
+%pip install snakeviz
+```
+
+Step 2 - Load its extension:
+
+```python
+%load_ext snakeviz
+```
+
+Step 3 - Profile a statement:
+
+```python
+%snakeviz my_function()
+```
+
+The result appears inside the notebook as an interactive chart. Each block is a function; the wider the block, the more time was spent in it. Click a block to zoom in.
+
+You can also save a profile to a file and open it later. `%prun -D` saves the profile, and the `snakeviz` command opens it in a new browser tab:
+
+```python
+%prun -D output.prof my_function()
+```
+
+```text
 !snakeviz output.prof
 ```
 
-This opens a browser tab with a flame graph–like visualization.
+Note that the second command keeps a small server running, so the cell shows `[*]` until you press the **Interrupt** button. That is why `%snakeviz` is usually more convenient inside a notebook.
 
----
+[Back to the Table of Contents](#table-of-contents)
 
-#### 8. Using Pyinstrument Inside Jupyter
+### 12.9 Pyinstrument
 
-Pyinstrument provides beautiful HTML output.
+[Pyinstrument](https://pyinstrument.readthedocs.io/) shows the time spent as a clear tree of function calls, and can also produce a nice HTML report.
 
-##### Install:
-```bash
-pip install pyinstrument
+Step 1 - Install it:
+
+```python
+%pip install pyinstrument
 ```
 
-##### Run inside notebook:
+Step 2 - Run it inside the notebook:
+
 ```python
 from pyinstrument import Profiler
 
+# Step 1 - Create a profiler and start it
 prof = Profiler()
 prof.start()
 
-# your code here
+# Step 2 - Run the code you want to measure
 my_function()
 
+# Step 3 - Stop the profiler and print the report
 prof.stop()
-prof.display()
+prof.print()
 ```
 
----
+Output (shortened; your numbers will differ):
 
-#### 9. Using Scalene Inside Jupyter
+```text
+Duration: 0.066     CPU time: 0.064
 
-Scalene gives CPU + memory + GPU profiling.
-
-##### Install:
-```bash
-pip install scalene
+0.066 <module>  <ipython-input-1-4f7946f8a935>:1
+├─ 0.063 my_function  <ipython-input-1-4f7946f8a935>:16
+│  ├─ 0.051 slow_squares  <ipython-input-1-4f7946f8a935>:2
+│  │  ├─ 0.030 [self]  <ipython-input-1-4f7946f8a935>
+│  │  └─ 0.022 list.append  <built-in>
+│  └─ 0.011 fast_squares  <ipython-input-1-4f7946f8a935>:11
+│     └─ 0.011 <listcomp>  <ipython-input-1-4f7946f8a935>:12
+└─ 0.003 [self]  <ipython-input-1-4f7946f8a935>
 ```
 
-##### Run scalene on notebook cell using Jupyter magic:
+Read the tree from the top down: `my_function` took 0.063 seconds, of which 0.051 seconds were spent in `slow_squares` and only 0.011 seconds in `fast_squares`.
+
+Pyinstrument also has its own magic commands. After `%load_ext pyinstrument`, you can put `%%pyinstrument` on the first line of a cell to profile the whole cell and see an interactive HTML report.
+
+[Back to the Table of Contents](#table-of-contents)
+
+### 12.10 Scalene
+
+[Scalene](https://github.com/plasma-umass/scalene) is a powerful profiler that, when run from the command line, measures CPU time, memory use and even GPU (graphics card) use.
+
+Step 1 - Install it:
+
+```python
+%pip install scalene
+```
+
+Step 2 - Load its extension:
+
+```python
+%load_ext scalene
+```
+
+Step 3 - Profile a single statement with `%scrun`, or a whole cell with `%%scalene`:
+
+```python
+%scrun my_function()
+```
+
 ```python
 %%scalene
 my_function()
 ```
 
-(Requires installing Scalene’s notebook extension.)
-
----
+Scalene shows its report inside the notebook. Keep in mind that **inside Jupyter, Scalene measures only CPU and GPU time**. For memory profiling, run it from the command line on a `.py` file, for example `scalene myscript.py`. Check the Scalene documentation for the operating systems and Python versions it currently supports.
 
 [Back to the Table of Contents](#table-of-contents)
 
-#### 10. Tips for Profiling Notebooks Effectively
+### 12.11 Tips for Profiling Notebooks Effectively
 
-### a. Restart the kernel before profiling  
-Ensures accurate results and clears cached variables.
+**1. Restart the kernel before profiling.** This clears old variables and cached results, so the measurements are accurate.
 
-### b. Profile only the function you want to optimize  
-Profiling entire notebooks gives too much noise.
+**2. Profile only the function you want to improve.** Profiling a whole notebook gives too much noise, and it becomes hard to see what matters.
 
-### c. Use `%timeit` for small operations  
-Faster and more precise.
+**3. Use `%timeit` for small operations.** It repeats the code many times, so it is more precise than a single `%time`.
 
-### d. Use line_profiler for loops and numerical code  
-Shows the real bottleneck line.
+**4. Use line_profiler for loops and number-crunching code.** It points to the exact line that is slow.
 
-### e. Use memory_profiler when dealing with large datasets  
-Especially useful for Pandas, NumPy, lists, images, etc.
+**5. Use memory_profiler when working with large data.** It is especially useful with Pandas, NumPy, big lists and images.
 
-### f. Use Pyinstrument or SnakeViz for visualization  
-Easier to interpret profiling output.
+**6. Use Pyinstrument or SnakeViz for a visual picture.** Their output is easier to understand than a long table of numbers.
 
----
+**7. Measure first, then change the code.** Only change code after the profiler has shown you where the slow part is, and measure again afterwards to check that your change really helped.
 
-#### 11. Quick Reference Table
+The flowchart below shows how to choose a tool.
 
-| Task | Best Tool |
-|------|-----------|
-| Timing a single line | `%time` |
-| Microbenchmarking | `%timeit` |
-| CPU profiling | `%prun` |
-| Line-by-line CPU profiling | `%lprun` |
-| Line-by-line memory profiling | `%mprun` |
-| CPU + Memory + GPU profiling | Scalene |
-| Visual interactive profiling | SnakeViz / Pyinstrument |
+```mermaid
+flowchart TD
+    A["1. I want to make my code faster or smaller"] --> B{"2. What do I want to measure?"}
+    B -->|Time| C{"3. How detailed?"}
+    B -->|Memory| G["7. Use memory_profiler - memit and mprun"]
+    C -->|"Whole line or cell"| D["4. Use time or timeit"]
+    C -->|"Each function"| E["5. Use prun, or SnakeViz or Pyinstrument for a picture"]
+    C -->|"Each line of a function"| F["6. Use line_profiler - lprun"]
+```
 
----
+[Back to the Table of Contents](#table-of-contents)
 
-#### Summary
+### 12.12 Quick Reference Table
 
-Jupyter notebooks support many profiling tools.  
+| Task | Best tool |
+| ---- | --------- |
+| Timing a single line once | `%time` |
+| Microbenchmarking (accurate timing of small code) | `%timeit` |
+| Timing a whole cell | `%%time`, `%%timeit` |
+| CPU profiling, function by function | `%prun`, `%%prun` |
+| Line-by-line CPU profiling | `%lprun` (line_profiler) |
+| Peak memory of a statement | `%memit` (memory_profiler) |
+| Line-by-line memory profiling | `%mprun` (memory_profiler, function must be in a `.py` file) |
+| CPU and GPU profiling in a notebook | Scalene (`%scrun`, `%%scalene`) |
+| CPU, memory and GPU profiling of a script | Scalene from the command line |
+| Visual, interactive profiling | SnakeViz, Pyinstrument |
+
+Here are all the example cells from this section together, in the order you would run them in a notebook. Each `# --- Cell n ---` line marks the start of a new cell. (A cell magic such as `%%writefile` must be the first line of its cell, so put the comment line after it or leave it out.)
+
+```python
+# --- Cell 1 --- Define the example functions
+def slow_squares(n):
+    """Return a list of squares from 0 to n-1, built the slow way."""
+    result = []
+    for i in range(n):
+        result.append(i * i)
+    return result
+
+
+def fast_squares(n):
+    return [i * i for i in range(n)]
+
+
+def my_function():
+    a = slow_squares(200_000)
+    b = fast_squares(200_000)
+    return len(a) + len(b)
+
+
+print("my_function() returns:", my_function())
+
+# --- Cell 2 --- Time one run, then many runs
+%time my_function()
+%timeit my_function()
+
+# --- Cell 3 --- Function-by-function profile
+%prun -l 6 my_function()
+
+# --- Cell 4 --- Install the extra tools (only needed once)
+%pip install line_profiler memory_profiler snakeviz pyinstrument
+
+# --- Cell 5 --- Line-by-line timing
+%load_ext line_profiler
+%lprun -f slow_squares slow_squares(100_000)
+
+# --- Cell 6 --- Peak memory
+%load_ext memory_profiler
+%memit slow_squares(1_000_000)
+
+# --- Cell 7 --- Visual profile
+%load_ext snakeviz
+%snakeviz my_function()
+
+# --- Cell 8 --- Pyinstrument
+from pyinstrument import Profiler
+prof = Profiler()
+prof.start()
+my_function()
+prof.stop()
+prof.print()
+```
+
+[Back to the Table of Contents](#table-of-contents)
+
+### 12.13 Summary
+
+Jupyter notebooks support many profiling tools.
+
 Beginners should start with:
 
-- `%time`
-- `%timeit`
-- `%prun`
+* `%time`
+* `%timeit`
+* `%prun`
 
-Intermediate users should use:
+Intermediate users can go on to:
 
-- line_profiler  
-- memory_profiler  
-- SnakeViz  
-- Pyinstrument  
-- Scalene  
+* line_profiler
+* memory_profiler
+* SnakeViz
+* Pyinstrument
+* Scalene
 
-These tools help identify slow code, memory issues, and performance bottlenecks directly inside a notebook.
+These tools help you find slow code, memory problems and other performance bottlenecks directly inside a notebook.
 
 [Back to the Table of Contents](#table-of-contents)
+
+---
+
+## Table of Changes
+
+| No. | Section / Element | In the Original File | What Was Changed (Added / Deleted / Modified) |
+| --- | ----------------- | -------------------- | --------------------------------------------- |
+| 1 | Page heading and introduction | No page title or introduction; the page started with a table of contents | Added the title "Chapter 1: Installing and Using Jupyter Notebook with Anaconda", an introduction explaining what the page covers and why it matters for the chapter, and a note that the page describes Jupyter Notebook 7 |
+| 2 | Table of Contents | 11 flat links. Most anchors were wrong (each pointed to the next section number, for example "1.1 PART 1" linked to `#12-...`), one had a capital letter and one had an extra `)` | Replaced by a nested Table of Contents generated from the headings, down to the 8.x.x sub-sections. The twelve Step headings in Section 11.2 are left out to avoid clutter. All links were checked, and headings were written so that anchors are the same on GitHub and MkDocs |
+| 3 | Heading structure | Mixed levels (`###` for main parts, `####`, `#####`, `######`), several numbered headings written as plain text (1.1.2, 1.1.6, 1.2.6, 1.3.3, 1.4.2, 1.9.1), and "Tips" sub-points written as `###` headings under a `####` heading | All sections now use `##`, `###` and `####` in the correct order and are renumbered 1 to 12. The plain-text headings became real headings. Tips became a numbered bold list. Old anchors therefore changed |
+| 4 | Back links | "Back to the Table of Contents" at only a few places, sometimes at the start of a section | Now at the end of every section and sub-section |
+| 5 | Section 1 (client-server model) | Content under "1 Anaconda / 1.1 Introduction" | Kept all points. Added simple explanations and links for client, server, WebSockets, IPython and ZeroMQ; added a numbered Mermaid diagram; added that each notebook has its own kernel and that Jupyter supports other languages. "Executes Python code" as a server job was corrected: the server starts kernels, and the kernel runs the code |
+| 6 | Repetition | The browser-server-kernel flow was described four times (1.1.2, 1.1.5, 1.7.6 and Section 3); the Tree View, menu bar and toolbar were each described twice (1.8 and 1.9) | Kept one full description of each (Sections 1.4, 8 and 11) and replaced the repeats with short cross-references. The two Tree View descriptions and the two Notebook Editor descriptions were merged into Section 8 |
+| 7 | Installing Anaconda: download | Filename `Anaconda3-2024.XX-...`; fixed link to `Anaconda3-2024.06-1-Windows-x86_64.exe`; size "about 800 MB" | Updated to the current release `Anaconda3-2026.07-1-Windows-x86_64.exe` (about 1 GB), added the archive page link so students can always find the newest file, and a note that the download page may ask for registration |
+| 8 | Installing Anaconda: steps | Steps 1 to 8 | Now Steps 1 to 9 (the licence screen got its own step). Added a numbered Mermaid flowchart of the whole installation, an explanation of PATH, advice for user names with spaces, and a note on Anaconda's licence terms. The "Register as default Python" option is noted as possibly unticked by default. Install folder shown as `anaconda3` (lowercase, as in current versions). Emoji tick marks removed |
+| 9 | Launching Jupyter | Two methods | Kept both. Added the messages shown in the Anaconda Prompt, a warning not to close that window, how to start in another folder, and a new sub-section on closing Jupyter properly |
+| 10 | Installing without Anaconda | Four short steps; Step 4 command not formatted as code | Added expected output, help for "python is not recognized" (the `py` launcher), `python -m ensurepip`, and `python -m notebook`. Formatted all commands as code |
+| 11 | Virtual environment | Create, activate (Windows only), install, launch; tip on `.venv` | Kept all, reworded the `.venv` tip for accuracy. Added activation for PowerShell and macOS/Linux, the PowerShell script error fix, a new step to register the environment as a kernel with `ipykernel` (which explains the `.venv` entry in the New menu), and `deactivate` |
+| 12 | Verifying the installation | "Click New > Python 3 (ipykernel)" | Added the Notebook 7 variant, the expected output, and a new screenshot |
+| 13 | Local server address | Sections on http, localhost, port, /tree | Kept all. Added a table of routes, a new section on the security token, and a plain-language explanation of "protocol", "port" and "loopback address" |
+| 14 | Menu bar tables | Described the classic Notebook 6 menus (File, Edit, View, Insert, Cell, Kernel, Widgets, Help), which current Anaconda no longer installs | Rewritten to match the actual Notebook 7 menus (File, Edit, View, Run, Kernel, Settings, Help), with shortcuts. Added a table showing where each classic Notebook 6 option is now found |
+| 15 | Toolbar | 13 items with emoji icons, including Move Up/Down and a Keyboard Shortcuts button that are not on the Notebook 7 toolbar | Rewritten as a table of the 13 actual Notebook 7 toolbar items, matched to a new numbered screenshot. Explained the cell toolbar (where move up/down now are) and the command palette. Kept the original annotated classic toolbar image as a second picture for readers who still have Notebook 6. The plain toolbar strip image was not used, since the annotated one shows the same toolbar. Emojis removed |
+| 16 | Tree View details | Header, toolbar, file list, right-click menu, breadcrumb, Running, Search, Footer | Updated to Notebook 7: Files and Running tabs, Filter, New, Upload, Refresh, and selection buttons (Open, Download, Rename, Duplicate, Move to Trash). The footer/server-info item was removed because Notebook 7 has no footer |
+| 17 | New menu | Options `.venv`, `Java`, `Python 3 (ipykernel)`, `Text File`, `Folder`, `Terminal` | Updated to the Notebook 7 names (New File, New Folder, Console added) in a table; the `.venv` and `Java` explanations were kept, together with the original annotated screenshot of the classic New menu. Corrected: the default kernel uses the Python that runs Jupyter (not necessarily a system-wide Python); the terminal on Windows is PowerShell, not a Linux terminal |
+| 18 | Notebook editor details | Kernel status, cells (with a run button on each cell), command/edit mode (green/blue border), shortcuts including H, output, sidebar, status, checkpoints | Updated to Notebook 7: no per-cell run button, blue bar for command mode, Ctrl + Shift + H for shortcuts. Added the `[*]` busy marker, execution numbers, Raw cells, a shortcut table, and the most common beginner mistake. Checkpoints explained more fully |
+| 19 | Screenshots | Two toolbar images in `resources` (JPG); two images linked from another repository (`ag999git/python-book-2026/.../all-book-images/`), which was private at the time, so they did not display; all image links used `github.com/.../blob/...`, which does not render as an image | Added seven new PNG images for Jupyter Notebook 7 in the `resources` folder: tree view, New menu, Running tab, notebook editor, File menu, numbered toolbar, and the browser-to-kernel flowchart. Two original images were kept as pictures of the classic Notebook 6 (the annotated New menu and the annotated toolbar). All image links now use `raw.githubusercontent.com` addresses so that they display |
+| 20 | FAQ | Five questions with one-word or one-line answers | Questions kept unchanged. Answers expanded. The answer to "Is Anaconda free?" now reflects the current licence terms; the answer to "Can I uninstall Anaconda and keep Python?" was corrected (the Python inside Anaconda is removed with it). Added two new questions (9.6 and 9.7) |
+| 21 | Magic commands | Two tables; cell magic examples were run together (for example `%%timex = ...`, `%%bashecho "Hello"\nls`); the `%%time` example was split, with the code in a separate block | Examples fixed using line breaks. The `%%latex` example now uses `$$...$$` so that it renders. Added: the rule that a cell magic must be the first line, `%reset -f` explained, `%store -r`, `%pip` versus `!pip`, `%%bash` needing Bash on Windows, and that `%matplotlib inline` is now the default. Added a hands-on section with real outputs |
+| 22 | Advanced flowchart | Image from the unreachable repository; steps labelled A to L, with one heading numbered "10." instead of a letter | The original image had steps E to H in the reverse order (the arrows ran H, G, F, E, while the text ran E, F, G, H) and some leftover editing marks around box C. Replaced with a new flowchart in the same three-row layout, with numbered steps in the correct order, plus its Mermaid source for draw.io. Steps renamed Step 1 to Step 12 (and 13 for the loop back) |
+| 23 | Kernel start command | `python.exe -m ipykernel` | Corrected to `python -m ipykernel_launcher -f <connection file>`, as in the real `kernel.json` |
+| 24 | Where Jupyter stores kernels | macOS given the same path as Linux; kernel folder said to contain "the executable path" as a separate item | macOS path corrected to `~/Library/Jupyter/kernels/`. Explained that the path is inside `kernel.json`. Added `jupyter kernelspec list` and a sample `kernel.json` |
+| 25 | Placeholders | Empty "1.10 Extra" heading, empty "Relationship between the 2 screens" heading, and "3.3 SSS", "3.4 CCC", "3.5 qqq" | Deleted |
+| 26 | Profiling: examples | Used `my_function()` without defining it; no outputs | Added a set-up cell defining `slow_squares`, `fast_squares` and `my_function`. Every profiling command was run and its real output is shown, with an explanation of how to read it, and a combined list of all cells |
+| 27 | Profiling: memory_profiler | Suggested `%mprun -f my_function my_function()` directly in a notebook | Corrected: `%mprun` only works on functions saved in a `.py` file. Added the error message and a `%%writefile` workaround, plus `%memit` |
+| 28 | Profiling: SnakeViz | Profiled a separate `.py` script with `!python -m cProfile` and then `!snakeviz` | Replaced with `%load_ext snakeviz` and `%snakeviz`, which work directly in a notebook. Kept the save-to-file method using `%prun -D`, with a note that `!snakeviz` keeps the cell busy |
+| 29 | Profiling: Pyinstrument | Used `prof.display()`, which does not exist in Pyinstrument | Corrected to `prof.print()` and mentioned the `%%pyinstrument` magic |
+| 30 | Profiling: Scalene | `%%scalene` said to need a "notebook extension"; described as CPU, memory and GPU profiling | Corrected to `%load_ext scalene`, added `%scrun`, and noted that inside Jupyter Scalene measures only CPU and GPU; memory profiling needs the command-line version |
+| 31 | Profiling: tips and reference | Tips a to f; quick reference table | Kept all. Added tip 7 (measure first), a numbered Mermaid chart for choosing a tool, and more rows in the quick reference table |
+| 32 | Install commands in profiling | `pip install ...` in bash blocks | Changed to `%pip install ...`, so the package goes into the kernel's own environment |
+| 33 | Emojis | Emoji icons and tick marks in several places | Removed throughout |
+
+
+
+
+
+
+
+

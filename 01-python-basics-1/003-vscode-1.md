@@ -326,7 +326,9 @@ Settings are opened with **File > Preferences > Settings** (or **Ctrl + ,**). Ty
 
 When you open a folder and a file, the VS Code window looks like the screenshot below. Each numbered part is explained in the table that follows it.
 
-![The main parts of the VS Code window](https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-001-vscode-ui-overview.png)
+
+
+![The main parts of the VS Code window](../resources/ch-001-vscode-ui-overview.png)
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -354,7 +356,10 @@ Below is the simplest explanation of each part:
 
 The **Activity Bar** is the thin bar on the far left. Each icon opens a different **view** in the Side Bar. Clicking the icon of the view that is already open hides the Side Bar, which gives you more room for code; click it again to bring it back.
 
-![The icons of the Activity Bar](https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-001-vscode-activity-bar.png)
+
+
+![The icons of the Activity Bar](../resources/ch-001-vscode-activity-bar.png)
+
 
 The icons typically found here are (from top to bottom):
 
@@ -395,7 +400,10 @@ This view is useful for Python beginners because you can:
 
 When you move the mouse over the folder name, four small buttons appear:
 
-![The buttons of the Explorer view](https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-001-vscode-explorer-toolbar.png)
+
+
+![The buttons of the Explorer view](../resources/ch-001-vscode-explorer-toolbar.png)
+
 
 | No. | Icon | Name | What it does |
 | --- | ---- | ---- | ------------ |
@@ -414,7 +422,10 @@ There is also an **Open Editors** section that lists every open file. It is hidd
 
 The Search view looks for text in **every file** of your project at once. Type a word in the box; the results are listed below it, grouped by file. Click a result to jump to that line.
 
-![The Search view and its buttons](https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-001-vscode-search-toolbar.png)
+
+
+![The Search view and its buttons](../resources/ch-001-vscode-search-toolbar.png)
+
 
 | No. | Icon | Name | Shortcut | What it does |
 | --- | ---- | ---- | -------- | ------------ |
@@ -431,7 +442,11 @@ To search only inside the current file, press **Ctrl + F** in the editor instead
 
 This is the main area where you view and edit your code. It has one or more open file **tabs**, like browser tabs, and a few controls.
 
-![The editor tabs and their controls](https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-001-vscode-editor-tabs.png)
+
+
+![The editor tabs and their controls](../resources/ch-001-vscode-editor-tabs.png)
+
+
 
 | No. | What you see | Meaning |
 | --- | ------------ | ------- |
@@ -450,7 +465,11 @@ The **Breadcrumbs** line just below the tabs and the **Minimap** on the right we
 
 The **Panel** appears at the bottom of the window. It holds several views, and you switch between them using the tabs. Press **Ctrl + J** to show or hide the whole Panel.
 
-![The Panel with the Terminal open](https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-001-vscode-panel.png)
+
+
+![The Panel with the Terminal open](../resources/ch-001-vscode-panel.png)
+
+
 
 | No. | Tab or button | What it does |
 | --- | ------------- | ------------ |

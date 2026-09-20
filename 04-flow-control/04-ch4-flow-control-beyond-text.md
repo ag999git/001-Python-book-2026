@@ -195,6 +195,9 @@ flowchart TD
 You do not have to find dead code by eye alone.
 
 - **Code editors.** VS Code, with the Python extension installed, greys out (dims) lines it knows can never run. If you hover the mouse over such a line, it shows the message "Code is unreachable". PyCharm does something similar.
+
+![VS Code greys out unreachable code and shows "Code is unreachable" on hover](../resources/ch04-003-vscode-unreachable-code.png)
+
 - **Linters.** A *linter* is a tool that reads your code without running it and reports likely problems. [Pylint](https://pylint.readthedocs.io/) reports dead lines as warning [`W0101: unreachable`](https://pylint.readthedocs.io/en/stable/user_guide/messages/warning/unreachable.html).
 
 Here is what Pylint says about the example script above, saved as `dead_code.py`. (Install it once with `pip install pylint`, then run `pylint dead_code.py` in a terminal. Only the relevant lines are shown.)

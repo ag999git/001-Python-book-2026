@@ -22,9 +22,12 @@ jobs:
           token: ${{ secrets.MIRROR_TOKEN }}
       - name: Sync Folders & Clean GitBook Artifacts
         run: |
-          # 1. Debug: Check if index.md exists in Primary Repo
-          echo "Checking for index.md in Primary Repo:"
-          ls -F primary-repo/index.md || echo "index.md NOT FOUND in primary-repo root"
+          # 1. Debug: Check that README.md exists in Primary Repo.
+          #    README.md is the single source for the home page of all three
+          #    surfaces: the GitHub repo landing page, the GitBook home, and
+          #    (copied to docs/index.md in step 4 below) this MkDocs site.
+          echo "Checking for README.md in Primary Repo:"
+          ls -F primary-repo/README.md || echo "README.md NOT FOUND in primary-repo root"
           # 2. Setup folders
           mkdir -p mkdocs-repo/docs
           rm -rf mkdocs-repo/docs/*
@@ -36,6 +39,14 @@ jobs:
               echo "Copied folder: $folder"
             fi
           done
+          # 3a. GitBook stores images in .gitbook/assets. MkDocs excludes
+          #     dot-directories from its build output, so those images never
+          #     reach the site. Copy them to a plain folder name instead.
+          if [ -d ".gitbook/assets" ]; then
+            mkdir -p ../mkdocs-repo/docs/gitbook-assets
+            cp -r .gitbook/assets/. ../mkdocs-repo/docs/gitbook-assets/
+            echo "Copied .gitbook/assets -> docs/gitbook-assets"
+          fi
           # 3b. Fix root-relative image paths for MkDocs project-page hosting.
           # Source markdown uses root-relative paths like "/resources/foo.png"
           # which work on GitHub's preview and on GitBook (site root = docs root),
@@ -45,14 +56,23 @@ jobs:
           echo "Rewriting root-relative image paths for MkDocs subpath hosting:"
           find ../mkdocs-repo/docs -name "*.md" -print0 | xargs -0 sed -i \
             -e 's#](/resources/#](/001-mkdocs/resources/#g' \
-            -e 's#](/images/#](/001-mkdocs/images/#g'
+            -e 's#](/images/#](/001-mkdocs/images/#g' \
+            -e 's#](\.*[./]*\.gitbook/assets/#](/001-mkdocs/gitbook-assets/#g'
           echo "Path rewrite complete."
-          # 4. Copy index.md with explicit check
-          if [ -f "index.md" ]; then
-            cp index.md ../mkdocs-repo/docs/
-            echo "Successfully copied index.md to mkdocs-repo/docs/"
+          # 4. Use README.md as the MkDocs home page (docs/index.md).
+          #    The folder loop above never copies root-level files, so without
+          #    this the site would have no page at "/" and the root URL 404s.
+          if [ -f "README.md" ]; then
+            cp README.md ../mkdocs-repo/docs/index.md
+            # Apply the same root-relative path fix as step 3b: that pass ran
+            # before this file existed, so it must be repeated for this one.
+            sed -i \
+              -e 's#](/resources/#](/001-mkdocs/resources/#g' \
+              -e 's#](/images/#](/001-mkdocs/images/#g' \
+              ../mkdocs-repo/docs/index.md
+            echo "Copied README.md -> mkdocs-repo/docs/index.md"
           else
-            echo "WARNING: index.md not found in primary-repo root!"
+            echo "WARNING: README.md not found in primary-repo root!"
           fi
           cd ..
           # 5. Final cleanup

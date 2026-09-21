@@ -62,6 +62,21 @@ jobs:
           # 6. Final Debug: List what is currently in docs
           echo "Current content of docs folder:"
           ls -R mkdocs-repo/docs/
+      # ------------------------------------------------------------------
+      # Translate SUMMARY.md (GitBook's navigation file, which MkDocs cannot
+      # read) into the `.pages` files used by mkdocs-awesome-pages-plugin.
+      # SUMMARY.md then drives the navigation of BOTH sites.
+      #
+      # continue-on-error: if this step fails for any reason the sync still
+      # completes and the site keeps its current automatic navigation.
+      # ------------------------------------------------------------------
+      - name: Generate MkDocs navigation from SUMMARY.md
+        continue-on-error: true
+        run: |
+          python3 primary-repo/.github/scripts/gen_mkdocs_pages.py \
+                  primary-repo/SUMMARY.md \
+                  mkdocs-repo/docs
+
       - name: Commit and Push Changes
         env:
           PAT_TOKEN: ${{ secrets.MIRROR_TOKEN }}

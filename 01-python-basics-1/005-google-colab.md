@@ -4,7 +4,7 @@
 
 You can open a working Google Colab notebook for this chapter by clicking the badge below.
 
-[![Open In Colab](https://img.shields.io/badge/Google_Colab-Try_Interactive_Code-FFD700?style=for-the-badge\&logo=googlecolab\&logoColor=white\&labelColor=228B22)](https://colab.research.google.com/github/ag999git/001-Python-book-2026/blob/main/colab-nb/01Chapter1_pep.ipynb)
+[![Open In Colab](https://img.shields.io/badge/Google_Colab-Try_Interactive_Code-FFD700?style=for-the-badge\&logo=googlecolab\&logoColor=white\&labelColor=228B22)](https://colab.research.google.com/github/ag999git/001-Python-book-2026/blob/main/colab-nb/01-10-python-basics.ipynb)
 
 **About this page**
 
@@ -143,13 +143,13 @@ If you do not see **Google Colaboratory** under **More**, click **Connect more a
 3. OR change the web address by hand. Replace `github.com/` with `colab.research.google.com/github/`. For example:
 
 ```text
-https://github.com/ag999git/001-Python-book-2026/blob/main/colab-nb/01Chapter1_pep.ipynb
+https://github.com/ag999git/001-Python-book-2026/blob/main/colab-nb/01-10-python-basics.ipynb
 ```
 
 becomes:
 
 ```text
-https://colab.research.google.com/github/ag999git/001-Python-book-2026/blob/main/colab-nb/01Chapter1_pep.ipynb
+https://colab.research.google.com/github/ag999git/001-Python-book-2026/blob/main/colab-nb/01-10-python-basics.ipynb
 ```
 
 (Some people use a shortcut service that works by changing `github.com` to `githubtocolab.com`. It does the same job, but it is run by a third party, not by Google.)

@@ -1,0 +1,20 @@
+# GitBook Site Git Sync — site structure
+#
+# This file describes the SITE: which spaces exist and which repository
+# directory each one syncs from.
+#
+# It does NOT describe the pages inside a space — that remains the job of
+# SUMMARY.md at the root of this repository, which is unchanged.
+
+$schema: https://api.gitbook.com/gitbook-docs.yaml
+
+site:
+  title: Python 999
+  structure:
+    - type: space
+      key: python999
+      title: Python 999
+      path: python999
+      default: true
+      content:
+        directory: ./

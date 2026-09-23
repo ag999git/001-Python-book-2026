@@ -25,7 +25,6 @@ If you would like the wider companion resources for this chapter, see [`10-ch13-
 - [The twelve conversions, one at a time](#the-twelve-conversions-one-at-a-time)
 - [How the twelve functions fit together](#how-the-twelve-functions-fit-together)
 - [Combined script: all twelve conversions together](#combined-script-all-twelve-conversions-together)
-- [Summary of changes made to this page](#summary-of-changes-made-to-this-page)
 
 ## The twelve conversions, one at a time
 

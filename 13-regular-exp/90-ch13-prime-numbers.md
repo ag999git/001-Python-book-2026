@@ -38,7 +38,6 @@ This page keeps the original assignment exactly as it was written in the printed
 9. [Why primes fail to match, in one table](#why-primes-fail-to-match-in-one-table)
 10. [Just how inefficient is "extremely inefficient"?](#just-how-inefficient-is-extremely-inefficient)
 11. [Answering the assignment's deliverables directly](#answering-the-assignments-deliverables-directly)
-12. [Summary of changes made to this page](#summary-of-changes-made-to-this-page)
 
 ---
 

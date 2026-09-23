@@ -38,7 +38,6 @@ If you would like the wider companion resources for this chapter, see [`10-ch13-
 - [Worked example: choosing which part of a match to capture](#worked-example-choosing-which-part-of-a-match-to-capture)
 - [Case study: removing duplicate words with a backreference](#case-study-removing-duplicate-words-with-a-backreference)
 - [Decision guide: capturing or non-capturing?](#decision-guide-capturing-or-non-capturing)
-- [Summary of changes made to this page](#summary-of-changes-made-to-this-page)
 
 ## Why parentheses have two separate jobs in regex
 

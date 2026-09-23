@@ -51,7 +51,6 @@ All Python code, terminal output, and claims about Python's own source code on t
 14. [Why an empty string is used](#why-an-empty-string-is-used)
 15. [Key takeaways](#key-takeaways)
 16. [One-sentence summary](#one-sentence-summary)
-17. [Summary of changes made to this page](#summary-of-changes-made-to-this-page)
 
 ---
 

@@ -30,7 +30,6 @@ If you would like the fuller companion resource for this chapter — eighteen wo
 - [Beginner Level](#beginner-level)
 - [Intermediate Level](#intermediate-level)
 - [Advanced Level](#advanced-level)
-- [Summary of changes made to this page](#summary-of-changes-made-to-this-page)
 
 ## Conceptual questions on Regular Expression (re)
 

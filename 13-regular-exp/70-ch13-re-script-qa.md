@@ -31,7 +31,6 @@ If you would like the wider companion resources for this chapter, see [`10-ch13-
 - [What this page contains, and why it matters](#what-this-page-contains-and-why-it-matters)
 - [Part A: Questions based mainly on the chapter topics (Q1–Q30)](#part-a-questions-based-mainly-on-the-chapter-topics)
 - [Part B: Advanced and extension questions (Q31–Q40)](#part-b-advanced-and-extension-questions)
-- [Summary of changes made to this page](#summary-of-changes-made-to-this-page)
 
 ## Part A: Questions Based Mainly on the Chapter Topics
 

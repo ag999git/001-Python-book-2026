@@ -36,7 +36,6 @@ This page is worth spending time on for three reasons. First, it is one of the f
 11. [A test case worth a second look](#a-test-case-worth-a-second-look)
 12. [How the whole check flows](#how-the-whole-check-flows)
 13. [Follow-up questions](#follow-up-questions)
-14. [Summary of changes made to this page](#summary-of-changes-made-to-this-page)
 
 ---
 

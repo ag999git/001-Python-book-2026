@@ -51,7 +51,6 @@ Every script on this page was actually run while preparing it, and every line of
 19. [Question 18: validating an Indian mobile number](#question-18)
 20. [Question 19: extracting dates in DD-MM-YYYY format](#question-19)
 21. [Question 20: re.finditer() and match positions](#question-20)
-22. [Summary of changes made to this page](#summary-of-changes-made-to-this-page)
 
 ## Overview: which regex tool does each question use?
 

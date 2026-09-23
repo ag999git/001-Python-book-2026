@@ -119,6 +119,8 @@ flowchart TD
     G -- "No" --> H["8. Print Big-O summary"]
 ```
 
+![Q1. Linear Search vs Binary Search Timing](../resources/ch16-scripting-qa-hard-fig-01.png)
+
 [Back to the Table of Contents](#table-of-contents)
 
 ### 1.2 Answer Script
@@ -280,6 +282,8 @@ flowchart TD
     J --> B
     I -- "No" --> K["11. Done"]
 ```
+
+![Q2. Bubble Sort with Early Exit](../resources/ch16-scripting-qa-hard-fig-02.png)
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -446,6 +450,8 @@ flowchart TD
     H --> B
     G -- "No" --> I["9. Sorted"]
 ```
+
+![Q3. Insertion Sort: Shifts vs Swaps](../resources/ch16-scripting-qa-hard-fig-03.png)
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -779,6 +785,8 @@ flowchart TD
     G --> H
     H --> I["9. Program ends"]
 ```
+
+![Q5. FIFO Queue and Producer-Consumer Threads](../resources/ch16-scripting-qa-hard-fig-04.png)
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1139,6 +1147,8 @@ flowchart TD
     C --> F["index 5: 73"]
 ```
 
+![Q7. heapq: Min-Heap, Max-Heap and Priority Queue](../resources/ch16-scripting-qa-hard-fig-05.png)
+
 Check the rule: 41 is smaller than 55 and 60; 55 is smaller than 92 and 88; 60 is smaller than 73.
 
 [Back to the Table of Contents](#table-of-contents)
@@ -1305,6 +1315,8 @@ flowchart TD
     E -- "No" --> F["6. Done"]
 ```
 
+![Q8. bisect: Duplicates, Leaderboard and Grade Lookup](../resources/ch16-scripting-qa-hard-fig-06.png)
+
 [Back to the Table of Contents](#table-of-contents)
 
 ### 8.2 Answer Script
@@ -1453,6 +1465,8 @@ flowchart TD
     F -- "No" --> H["8. Done"]
     G --> H
 ```
+
+![Q9. OrderedDict and an LRU Cache](../resources/ch16-scripting-qa-hard-fig-07.png)
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -2105,6 +2119,8 @@ flowchart TD
     H --> I["9. Return result"]
 ```
 
+![Q13. lrucache and Fibonacci](../resources/ch16-scripting-qa-hard-fig-08.png)
+
 [Back to the Table of Contents](#table-of-contents)
 
 ### 13.2 Answer Script
@@ -2259,6 +2275,8 @@ flowchart TD
     D -- "Yes" --> B
     D -- "No" --> E["5. Return result, 120"]
 ```
+
+![Q14. partial() and reduce()](../resources/ch16-scripting-qa-hard-fig-09.png)
 
 GST (Goods and Services Tax) is the tax added to most sales in India. `₹` is the symbol for the Indian rupee.
 
@@ -2445,6 +2463,8 @@ flowchart TD
     F -- "Yes" --> B
     F -- "No" --> G["7. All groups produced"]
 ```
+
+![Q15. chain, islice and groupby](../resources/ch16-scripting-qa-hard-fig-10.png)
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -2780,6 +2800,8 @@ flowchart TD
     L --> B
     K -- "No" --> M["13. Sorted"]
 ```
+
+![Q17. Selection Sort with Trace](../resources/ch16-scripting-qa-hard-fig-11.png)
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -3317,6 +3339,8 @@ flowchart TD
     K -- "No" --> L["12. Print table and growth ratios"]
     L --> M["13. Draw and save the graph"]
 ```
+
+![Q20. Big-O Timing Comparison](../resources/ch16-scripting-qa-hard-fig-12.png)
 
 [Back to the Table of Contents](#table-of-contents)
 

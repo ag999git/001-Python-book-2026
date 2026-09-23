@@ -74,16 +74,7 @@ See [Level of measurement (Wikipedia)](https://en.wikipedia.org/wiki/Level_of_me
 
 **How to choose a plot, step by step**
 
-```mermaid
-flowchart TD
-    A[1 - Identify each variable you want to show] --> B[2 - Decide its data type]
-    B --> C[3 - Decide what the graph must show]
-    C --> D{4 - What is the goal}
-    D -->|Compare categories| E[5 - Bar chart]
-    D -->|Change over time| F[6 - Line plot]
-    D -->|Spread of one numeric variable| G[7 - Histogram, box plot or violin plot]
-    D -->|Relationship of two numeric variables| H[8 - Scatter plot]
-```
+![Four common goals and the plot that suits each one](../resources/ch-15-fig-18-plot-choice-by-goal.png)
 
 **Example of a wrong choice:** joining the sales figures of Apples, Bananas and Mangoes with a line suggests that sales "rise" or "fall" from one fruit to the next. Fruits are nominal categories with no order, so this trend is false. A bar chart shows the same numbers honestly.
 
@@ -218,12 +209,7 @@ Yes. Python accepts any valid name as an alias, and you would then write `graph.
 
 The workflow consists of four stages: import the plotting library, prepare the data, create the plot, and display the result. Data is usually stored in lists, NumPy arrays, or pandas objects. Functions such as `plt.plot()` create the graphical representation. Finally, `plt.show()` renders the graph, which means it draws the graph and displays it on the screen. Following this sequence ensures a predictable and organized plotting process.
 
-```mermaid
-flowchart TD
-    A[Step 1 - Import the plotting library] --> B[Step 2 - Prepare the data]
-    B --> C[Step 3 - Create the plot]
-    C --> D[Step 4 - Display the result]
-```
+![The four steps every Matplotlib script needs](../resources/ch-15-fig-19-minimal-script-steps.png)
 
 **The four steps as a script**
 
@@ -604,13 +590,7 @@ It is written as an option inside `ax.plot()` (Layer 2), but its purpose is to s
 
 Some chart elements depend on the plotted data. A legend, for example, can only list lines or bars that already exist, so it must be added after the data is plotted. Titles, axis labels and grids do not strictly need the data first, because they belong to the plot area rather than to the lines. Still, adding them after plotting keeps the script in a clear, natural order: first draw, then explain. All of these elements must be added before `plt.show()`, because `plt.show()` is the step that displays the finished chart. In a normal script the program waits at `plt.show()` until the window is closed, and changes made after that are not seen in the window. Following the order `Plot → Customize → Show` reduces confusion and prevents missing elements.
 
-```mermaid
-flowchart TD
-    A[Step 1 - Plot the data with labels] --> B[Step 2 - Add title and axis labels]
-    B --> C[Step 3 - Add legend and grid]
-    C --> D[Step 4 - Save the figure if needed]
-    D --> E[Step 5 - Show the figure]
-```
+![The five steps that turn a bare plot into a finished figure](../resources/ch-15-fig-20-polishing-a-figure.png)
 
 ```python
 # Step 1 - Import pyplot

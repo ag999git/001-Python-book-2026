@@ -155,6 +155,8 @@ flowchart TD
     E --> F["6. Test still PASSES: the bug is missed"]
 ```
 
+![Flow chart (Using only try/except without else)](../resources/ch20-pytest-raises-vs-try-except-fig-01.png)
+
 [Back to the Table of Contents](070-ch20-pytest-raises-vs-try-except.md#table-of-contents)
 
 ## 4. Improved Manual Approach (try/except/else)
@@ -202,6 +204,8 @@ flowchart TD
     E --> F["6. assert False: test FAILS with a message"]
 ```
 
+![Flow chart for try/except with else](../resources/ch20-pytest-raises-vs-try-except-fig-02.png)
+
 [Back to the Table of Contents](070-ch20-pytest-raises-vs-try-except.md#table-of-contents)
 
 ## 5. Recommended Approach (pytest.raises)
@@ -232,6 +236,8 @@ flowchart TD
     E -- Yes --> F["6. pytest.raises catches it: test PASSES"]
     E -- No --> G["7. The other exception is not caught: test FAILS"]
 ```
+
+![Flow chart of pytest raises](../resources/ch20-pytest-raises-vs-try-except-fig-03.png)
 
 [Back to the Table of Contents](070-ch20-pytest-raises-vs-try-except.md#table-of-contents)
 

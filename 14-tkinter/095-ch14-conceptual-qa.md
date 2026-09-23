@@ -302,11 +302,11 @@ What you **can** do — and should — is use different managers in *different* 
 
 ```mermaid
 flowchart TD
-    A[root window] --> B[frame_one placed with pack]
-    A --> C[frame_two placed with pack]
-    B --> D[its children all use grid - allowed]
-    C --> E[its children all use pack - allowed]
-    F[One container mixing pack and grid] --> G[TclError raised at once]
+    A["GOOD: the root window"] --> B["frame_one placed with pack"]
+    A --> C["frame_two placed with pack"]
+    B --> D["its children all use grid - allowed"]
+    C --> E["its children all use pack - allowed"]
+    F["BAD: one container mixing pack and grid"] --> G["TclError raised at once"]
 ```
 
 Each container is judged on its own, so a frame can be packed into the root while everything inside that frame uses grid. The rule only forbids two managers competing for the same parent.
@@ -660,12 +660,12 @@ Why this matters so much in a GUI is that the default behaviour for a callback e
 
 ```mermaid
 flowchart TD
-    A[An exception is raised somewhere in your program] --> B{Was it raised inside a Tkinter callback}
-    B -->|Yes - a button click or after job or bind or trace| C[Tkinter catches it first]
-    C --> D[root.report_callback_exception is called]
-    B -->|No - ordinary top level code| E[It travels up the call chain]
-    E --> F[sys.excepthook is called]
-    D --> G[Point both names at one handler to cover every case]
+    A["An exception is raised somewhere in your program"] --> B{"Was it raised inside a Tkinter callback?"}
+    B -->|"Yes: a button click, after job, bind or trace"| C["Tkinter catches it first"]
+    C --> D["root.report_callback_exception is called"]
+    B -->|"No: ordinary top level code"| E["It travels up the call chain"]
+    E --> F["sys.excepthook is called"]
+    D --> G["Point both names at one handler to cover every case"]
     F --> G
 ```
 

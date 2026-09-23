@@ -103,7 +103,7 @@ This part explains how a dictionary differs from the sequences you already know 
 3. If it is a **mapping** (a dictionary), `x` can be any hashable value. Python looks for a key equal to `x`. If there is no such key, it raises `KeyError`.
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["Step 1: Python sees something[x]"] --> B{"Step 2: Is something a sequence or a mapping?"}
     B -- Sequence --> C["Step 3: Treat x as a position number"]
     C --> D{"Step 4: Does position x exist?"}
@@ -114,6 +114,8 @@ flowchart TD
     H -- Yes --> I["Step 9: Return the value for that key"]
     H -- No --> J["Step 10: Raise KeyError"]
 ```
+
+![Q1. What makes a dictionary a "mapping" rather than a "sequence," and how does this affect the way you access its elements?](../resources/ch19-dictionary-conceptual-qa-fig-01.png)
 
 In this chart, steps 3 to 6 are the sequence branch and steps 7 to 10 are the mapping branch.
 
@@ -342,7 +344,7 @@ Formally, an object must meet three conditions:
 **How a dictionary uses the three rules to find a key**
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["Step 1: Look up d[key]"] --> B["Step 2: Work out hash(key). Rule 1 makes sure it is the same number as when the key was stored"]
     B --> C["Step 3: Go to the place in the table that this hash points to"]
     C --> D{"Step 4: Is a stored key there with the same hash?"}
@@ -352,6 +354,8 @@ flowchart TD
     F -- No --> H["Step 8: A collision. Keep checking the next candidate place"]
     H --> D
 ```
+
+![Q4. What is a "hashable" object? State the three formal criteria an object must satisfy to be considered hashable.](../resources/ch19-dictionary-conceptual-qa-fig-02.png)
 
 This picture is simplified, but it shows why each rule is needed.
 
@@ -531,7 +535,7 @@ No. Inside one run, every key keeps the same hash, so every lookup works. The ra
 **How Python decides, step by step**
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["Step 1: hash(t) is called on a tuple"] --> B["Step 2: Take the next item of the tuple"]
     B --> C{"Step 3: Is this item hashable?"}
     C -- No --> D["Step 4: Stop. Raise TypeError: unhashable type"]
@@ -540,6 +544,8 @@ flowchart TD
     F -- Yes --> B
     F -- No --> G["Step 7: Return the combined hash. The tuple is hashable"]
 ```
+
+![Q7. Tuples are described as "conditionally hashable." Explain what this means, with one example each of a hashable and an unhashable tuple.](../resources/ch19-dictionary-conceptual-qa-fig-03.png)
 
 **Script: hashable and unhashable tuples**
 
@@ -775,7 +781,7 @@ Example: `{word: len(word) for word in ["apple", "fig", "kiwi"] if len(word) > 3
 **How it runs, step by step**
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["Step 1: Start with an empty dictionary"] --> B{"Step 2: Is there another item in the iterable?"}
     B -- No --> H["Step 8: Return the finished dictionary"]
     B -- Yes --> C["Step 3: Put the next item into the loop variable"]
@@ -786,6 +792,8 @@ flowchart TD
     F --> G["Step 7: Store key: value in the dictionary"]
     G --> B
 ```
+
+![Q10. Write out the general syntax of a dictionary comprehension and identify its four mandatory components plus the one optional component.](../resources/ch19-dictionary-conceptual-qa-fig-04.png)
 
 **Script: a comprehension and the loop it replaces**
 
@@ -1131,6 +1139,8 @@ flowchart TD
     E --> F["Step 6: The loop finishes safely"]
 ```
 
+![Q14. What error occurs if you try to delete a key from a dictionary while directly looping over it, and what is the recommended safe technique to avoid it?](../resources/ch19-dictionary-conceptual-qa-fig-05.png)
+
 **Script: the error and two safe fixes**
 
 ```python
@@ -1422,13 +1432,15 @@ No. Dictionaries have no natural order for comparison, so `{"a": 1} < {"b": 2}` 
 **What happens for a missing key, step by step**
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["Step 1: Read a value for a key"] --> B{"Step 2: Does the key exist?"}
     B -- Yes --> C["Step 3: Both d[key] and d.get(key) return the value"]
     B -- No --> D{"Step 4: Which way was used?"}
     D -- "d[key]" --> E["Step 5: Raise KeyError. The program stops unless it is caught"]
     D -- "d.get(key, default)" --> F["Step 6: Return the default, or None if no default was given"]
 ```
+
+![Q18. Why is dict.get(key, default) generally preferred over dict[key] for reading values? Illustrate with what happens for a missing key in each case.](../resources/ch19-dictionary-conceptual-qa-fig-06.png)
 
 | Situation | `d[key]` | `d.get(key)` | `d.get(key, 0)` |
 | --- | --- | --- | --- |
@@ -1580,13 +1592,15 @@ A small warning about names: do not call your copy `copy`. That would hide the `
 | `b = copy.deepcopy(a)` | Yes | Yes | No |
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["Step 1: original = {scores: [10, 20, 30]}"] --> B["Step 2: shallow = original.copy()"]
     B --> C["Step 3: A new outer dictionary is made"]
     C --> D["Step 4: Its scores key points to the SAME list as the original"]
     D --> E["Step 5: shallow[scores].append(40) changes that one shared list"]
     E --> F["Step 6: original[scores] shows 40 as well"]
 ```
+
+![Q20. What does dict.copy() actually copy, and why is it described as a "shallow" copy? Give an example showing where this limitation causes unexpected behaviour.](../resources/ch19-dictionary-conceptual-qa-fig-07.png)
 
 **Script: shallow copy versus deep copy**
 

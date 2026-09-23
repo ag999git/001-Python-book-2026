@@ -1362,7 +1362,7 @@ This section describes, in more detail, the journey that was summarised in [Sect
 
 ### 11.1 The Flowchart
 
-![Flowchart: how code travels from the browser to the kernel and back](https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-001-jupyter-browser-to-kernel-flow.png)
+![Flowchart: how code travels from the browser to the kernel and back](../resources/ch-001-jupyter-browser-to-kernel-flow.png)
 
 ![Flowchart: how code travels from the browser to the kernel and back](../resources/ch-001-jupyter-browser-to-kernel-flow.png)
 

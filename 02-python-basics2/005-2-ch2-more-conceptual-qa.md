@@ -181,13 +181,15 @@ TypeError: 'tuple' object does not support item assignment
 ```
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["1. You change a value, for example add an item"] --> B{"2. Is the object mutable?"}
     B -->|Yes| C["3. Python changes the same object in place"]
     C --> D["4. id() stays the same, and every name pointing to it sees the change"]
     B -->|No| E["5. Python creates a new object with the new value"]
     E --> F["6. The name now points to the new object, and id() changes"]
 ```
+
+![What is the difference between mutable and immutable objects in Python?](../resources/ch02-2-ch2-more-conceptual-qa-fig-01.png)
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -652,6 +654,8 @@ flowchart TD
     D -->|No| F["6. KeyError"]
 ```
 
+![Why must dictionary keys be immutable?](../resources/ch02-2-ch2-more-conceptual-qa-fig-02.png)
+
 If the key could change after being stored, its hash at step 2 would no longer point to the slot where it was stored, and the lookup would fail.
 
 ```python
@@ -961,6 +965,8 @@ flowchart TD
     F --> G["7. The operation runs with the converted value"]
 ```
 
+![What is the difference between implicit and explicit type conversion?](../resources/ch02-2-ch2-more-conceptual-qa-fig-03.png)
+
 [Back to the Table of Contents](#table-of-contents)
 
 ### 26. Why is converting a `float` to an integer called narrowing conversion?
@@ -1026,13 +1032,15 @@ None -> False
 Notice that `[0]` and `"0"` are **true**. They are not empty: one holds a zero and the other holds the character "0".
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["1. Python needs to know if x is true or false"] --> B{"2. Does x define its own truth rule, __bool__?"}
     B -->|Yes| C["3. Use that rule, for example 0 is False"]
     B -->|No| D{"4. Does x have a length, __len__?"}
     D -->|Yes| E["5. Length 0 means False, otherwise True"]
     D -->|No| F["6. True"]
 ```
+
+![Why are empty containers considered False in Boolean contexts?](../resources/ch02-2-ch2-more-conceptual-qa-fig-04.png)
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1224,6 +1232,8 @@ flowchart TD
     C --> J["10. Bind the name in your program"]
     I --> J
 ```
+
+![Why does Python cache imported modules in sys.modules?](../resources/ch02-2-ch2-more-conceptual-qa-fig-05.png)
 
 Python stores the module in `sys.modules` (step 8) just before running its code (step 9). So if two modules import each other, the second import finds the half-built module in the cache instead of starting an endless loop.
 

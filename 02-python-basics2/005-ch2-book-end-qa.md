@@ -416,7 +416,7 @@ As a float:   12345678901234567168
 ```
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["1. A value must change type"] --> B{"2. Who asks for the change?"}
     B -->|Python, in mixed arithmetic| C["3. Implicit casting"]
     C --> D["4. Always narrow to wide, for example int to float: no data lost"]
@@ -425,6 +425,8 @@ flowchart TD
     F -->|Wider| G["7. Wide casting, for example float(5): no data lost"]
     F -->|Narrower| H["8. Narrow casting, for example int(9.78): data may be lost"]
 ```
+
+![e.6 All the Examples in One Script](../resources/ch02-book-end-qa-fig-01.png)
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -546,6 +548,8 @@ flowchart TD
     E --> F["6. a_mod exists but is only half built: func_a is not defined yet"]
     F --> G["7. ImportError: cannot import name func_a"]
 ```
+
+![g.2 Circular Import Example](../resources/ch02-book-end-qa-fig-02.png)
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -781,7 +785,7 @@ TypeError: 'set' object is not subscriptable
 ```
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["Python containers"] --> B["Sequenced: ordered, access by position"]
     A --> C["Non-sequenced: no access by position"]
     B --> B1["list: mutable"]
@@ -791,6 +795,8 @@ flowchart TD
     C --> C1["dict: access by key, remembers insertion order"]
     C --> C2["set: no order, unique items"]
 ```
+
+![j.2 Non-sequenced Containers](../resources/ch02-book-end-qa-fig-03.png)
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1086,6 +1092,8 @@ flowchart TD
     B -->|Imported: import greet| E["5. __name__ is set to greet"]
     E --> F["6. The block is skipped; only the function definitions are loaded"]
 ```
+
+![p.3 Controlling Runnable Code with name](../resources/ch02-book-end-qa-fig-04.png)
 
 [Back to the Table of Contents](#table-of-contents)
 

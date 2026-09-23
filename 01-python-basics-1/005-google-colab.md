@@ -111,6 +111,8 @@ flowchart LR
     D["Your notebook file"] ---|"saved in"| E["Google Drive"]
 ```
 
+![What Is Google Colab](../resources/ch01-google-colab-fig-01.png)
+
 The Google computer that runs your code is called the **runtime**. It is lent to you for a while and then taken back. This is why your notebook (saved in Google Drive) is permanent, but anything stored on the runtime itself is temporary. This idea comes up again and again on this page.
 
 [Back to the Table of Contents](#table-of-contents)
@@ -251,6 +253,8 @@ flowchart TD
     S9 --> S3
     S8 --> S2
 ```
+
+![How to Run Code](../resources/ch01-google-colab-fig-02.png)
 
 [Back to the Table of Contents](#table-of-contents)
 

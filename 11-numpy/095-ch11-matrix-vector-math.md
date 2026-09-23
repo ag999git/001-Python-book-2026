@@ -70,7 +70,7 @@ converting a row into a column.
 
 ### The following flowchart shows the various common transformations a matrix can apply to a vector
 
-![Flowchart](https://github.com/ag999git/001-Python-book-2026/blob/main/resources/ch11-matrix-vector-maths.png)
+![Flowchart](../resources/ch11-matrix-vector-maths.png)
 
 ### Turning this into NumPy code
 

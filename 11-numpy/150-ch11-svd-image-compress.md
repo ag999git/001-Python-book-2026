@@ -90,7 +90,7 @@ plt.show()
 
 ### The (1) original image (2)  Its grey scale version and its (3) SVD compressed version are shown in figure below:
 
-![SVD Image compression](https://github.com/ag999git/001-Python-book-2026/blob/main/resources/ch11-svd-image-compression.png)
+![SVD Image compression](../resources/ch11-svd-image-compression.png)
 
 
 
@@ -313,7 +313,7 @@ Keep only important features
 
 #### SVD Image Compression Flow chart
 
-![SVD Image Compression Flow Chart](https://github.com/ag999git/001-Python-book-2026/blob/main/resources/ch11-svd-image-compression-2.png)
+![SVD Image Compression Flow Chart](../resources/ch11-svd-image-compression-2.png)
 
 
 

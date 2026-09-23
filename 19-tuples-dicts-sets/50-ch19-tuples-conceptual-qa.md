@@ -109,13 +109,15 @@ There is one exception to the comma rule. An **empty tuple** is written as a pai
 5. If there is no comma, the brackets only group the value. The value keeps its own type, such as `int` or `str`.
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["Step 1: Python reads the value on the right of ="] --> B{"Step 2: Is it an empty pair of brackets ( ) ?"}
     B -- Yes --> C["Step 3: An empty tuple is created"]
     B -- No --> D{"Step 4: Is there at least one comma?"}
     D -- Yes --> E["Step 5: A tuple is created"]
     D -- No --> F["Step 6: The brackets only group the value. It keeps its own type, for example int"]
 ```
+
+![Q1. Define syntactic criteria for tuples. Why does x = (5) fail to produce a tuple?](../resources/ch19-tuples-conceptual-qa-fig-01.png)
 
 **Script: the comma makes the tuple**
 
@@ -476,6 +478,8 @@ flowchart TD
     E -- No --> G["Step 7: Python frees the memory of the old tuple"]
 ```
 
+![Q5. Explain how t1 = t1 + (4, 5) modifies a variable. Trace memory via id().](../resources/ch19-tuples-conceptual-qa-fig-02.png)
+
 **Script: tracing memory with `id()`**
 
 ```python
@@ -759,7 +763,7 @@ In Python 3.14 and later the first message also tells you how many items there w
 **How unpacking works, step by step**
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["Step 1: Python evaluates the right-hand side, for example (10, 20, 30)"] --> B["Step 2: Count the items on the right"]
     B --> C["Step 3: Count the variables on the left"]
     C --> D{"Step 4: Are the two counts equal?"}
@@ -767,6 +771,8 @@ flowchart TD
     D -- "No, too many items" --> F["Step 6: ValueError - too many values to unpack"]
     D -- "No, too few items" --> G["Step 7: ValueError - not enough values to unpack"]
 ```
+
+![Q8. Detail tuple packing vs. unpacking. What happens during structural mismatches?](../resources/ch19-tuples-conceptual-qa-fig-03.png)
 
 **Summary table**
 
@@ -1205,7 +1211,7 @@ Notice that the first line, `invalid_key = (1, [2, 3])`, works without any probl
 **How Python checks a key, step by step**
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["Step 1: Python is asked to use an object as a dictionary key"] --> B{"Step 2: Is the object a tuple?"}
     B -- No --> C{"Step 3: Is the object itself hashable? For example int or str"}
     C -- Yes --> D["Step 4: The key is accepted"]
@@ -1215,6 +1221,8 @@ flowchart TD
     G -- Yes --> H["Step 8: The tuple is accepted as a key"]
     G -- No --> I["Step 9: TypeError - unhashable type: list"]
 ```
+
+![Q13. State requirements for dictionary keys. Can a tuple containing a list be a key?](../resources/ch19-tuples-conceptual-qa-fig-04.png)
 
 In this chart, the "not a tuple" branch uses steps 3 to 5, and the "tuple" branch uses steps 6 to 9. Note that the check in Step 6 goes all the way down. A tuple inside a tuple is checked item by item as well.
 
@@ -1406,6 +1414,8 @@ flowchart LR
     E --> F["Step 6: Result: a = 10, b = 5"]
 ```
 
+![Q15. Explain Pythonic variable swapping via a, b = b, a without temporary storage.](../resources/ch19-tuples-conceptual-qa-fig-05.png)
+
 A technical note for the curious: for two or three names, CPython is clever enough to skip building a real tuple and swaps the values directly. The result is exactly the same, so it is still correct to think of it as packing and unpacking.
 
 **Script: swapping values**
@@ -1472,7 +1482,7 @@ On each turn of the loop, Python takes the next tuple and unpacks it straight in
 6. When no pairs are left, the loop ends.
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["Step 1: d.items() provides the key-value pairs"] --> B{"Step 2: Is there another pair?"}
     B -- Yes --> C["Step 3: Take the next pair, for example ('apple', 40)"]
     C --> D["Step 4: Unpack: key = 'apple'"]
@@ -1481,6 +1491,8 @@ flowchart TD
     F --> B
     B -- No --> G["Step 7: The loop ends"]
 ```
+
+![Q16. How does loop unpacking operate on dict.items() collections? Detail the steps.](../resources/ch19-tuples-conceptual-qa-fig-06.png)
 
 This built-in unpacking means you do not need to write `pair[0]` and `pair[1]` inside the loop. Your loops become shorter, cleaner and much easier to read.
 
@@ -1565,7 +1577,7 @@ For each `case`, from top to bottom, Python checks the following:
 In the example, the first case fails at Step 3 (`404` is not `200`). The second case passes all the checks, so `msg` becomes `"Not Found"` and the program prints `Error Alert: Not Found`.
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["Step 1: Take the next case pattern, from top to bottom"] --> B{"Step 2: Is the value a sequence of the right length?"}
     B -- No --> F{"Step 6: Are there more case patterns?"}
     B -- Yes --> C{"Step 3: Do the fixed values match, for example 404?"}
@@ -1575,6 +1587,8 @@ flowchart TD
     F -- Yes --> A
     F -- No --> G["Step 7: No match - nothing runs, unless case _ is present"]
 ```
+
+![Q17. Explain structural pattern matching (match-case) on tuples. Detail the flow.](../resources/ch19-tuples-conceptual-qa-fig-07.png)
 
 **Script: matching HTTP status tuples**
 
@@ -1665,6 +1679,8 @@ flowchart LR
     B --> C["Step 3: [0] picks its first item"]
     C --> D["Step 4: Result is 3"]
 ```
+
+![Q18. Explain nested tuple indexing. How do you extract 3 from ((1, 2), (3, 4))?](../resources/ch19-tuples-conceptual-qa-fig-08.png)
 
 **Script: nested indexing**
 
@@ -1837,7 +1853,7 @@ print(new_t)  # Output: ('a', 'b', 'd')
 ```
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["Step 1: Start with t = ('a', 'b', 'c', 'd') and remove position 2"] --> B["Step 2: Slice before it: t[:2] gives ('a', 'b')"]
     A --> C["Step 3: Slice after it: t[3:] gives ('d',)"]
     B --> D["Step 4: Join the two slices with +"]
@@ -1845,6 +1861,8 @@ flowchart TD
     D --> E["Step 5: New tuple ('a', 'b', 'd')"]
     A --> F["Step 6: The original t is still ('a', 'b', 'c', 'd')"]
 ```
+
+![Q20. Detail how to simulate element removal from an immutable tuple using slicing.](../resources/ch19-tuples-conceptual-qa-fig-09.png)
 
 This approach keeps the original tuple `t` completely safe and unchanged in memory. Any other part of the program that uses `t` will not be affected.
 

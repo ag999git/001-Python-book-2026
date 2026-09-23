@@ -111,12 +111,14 @@ These three properties are not three separate quirks. They all follow from **one
 Understanding this one fact, **"a set is a hash table of keys with no values"**, explains almost every rule covered in the rest of this page.
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["Step 1: A set is stored as a hash table"] --> B["Step 2: Items are placed by their hash value"]
     B --> C["Step 3: An equal item lands in the same place, so it is not stored twice: UNIQUE"]
     B --> D["Step 4: Placement does not depend on arrival order, so there are no positions: UNORDERED"]
     B --> E["Step 5: The hash value must never change, or the item could not be found again: HASHABLE ONLY"]
 ```
+
+![Q1. A Python set — unordered? unique? hashable-only? Why each?](../resources/ch19-sets-conceptual-qa-fig-01.png)
 
 **Script: the three properties in action**
 
@@ -267,13 +269,15 @@ Once there is at least one element, `{...}` is no longer unclear. Python looks i
 This is one of the very few places in Python where an empty literal and a non-empty literal of the "same" syntax build different types. So it is worth memorising as a rule rather than working it out each time: **"`{}` is always a dict; `set()` is always a set."**
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["Step 1: Python reads a pair of curly braces"] --> B{"Step 2: Is there anything inside?"}
     B -- No --> C["Step 3: Empty dict"]
     B -- Yes --> D{"Step 4: Are the items written as key: value?"}
     D -- Yes --> E["Step 5: dict"]
     D -- No --> F["Step 6: set"]
 ```
+
+![Q3. The classic {} trap — (a) what does {} actually create (b) how do you correctly make an empty set (c) what changes once the set is non-empty?](../resources/ch19-sets-conceptual-qa-fig-02.png)
 
 **Script: which type do the braces give?**
 
@@ -617,6 +621,8 @@ flowchart TD
     F --> D
 ```
 
+![Q7. Set comprehension — (a) syntax vs list comprehension (b) what "nested set comprehension" means and (c) how do you read the for clauses in one?](../resources/ch19-sets-conceptual-qa-fig-03.png)
+
 **Script: set comprehensions**
 
 ```python
@@ -793,7 +799,7 @@ Because step 3 touches only a tiny, near-constant number of slots, however large
 The word "average" matters. Two different items can sometimes get the same slot (a **collision**). Python then checks a few more slots. With well-spread hash values, this happens rarely enough that lookups stay fast.
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["Step 1: Python is asked: is x in my_set?"] --> B["Step 2: Work out hash(x)"]
     B --> C["Step 3: Use the hash to find x's slot in the table"]
     C --> D{"Step 4: Is the slot empty?"}
@@ -803,6 +809,8 @@ flowchart TD
     F -- No --> H["Step 8: A collision. Move to the next candidate slot"]
     H --> D
 ```
+
+![Q9. Hashability — (a) what makes an object hashable (b) which built-in types qualify/disqualify and why (c) how does this give O(1) average-case membership testing internally?](../resources/ch19-sets-conceptual-qa-fig-04.png)
 
 **Script: testing hashability**
 
@@ -1045,13 +1053,15 @@ s = {1, 2, 2, 3}         # duplicate 2 collapses to {1, 2, 3}
 A useful warning sign: if you find yourself writing `if item not in my_list:` before every `append()`, inside a loop that runs many times, the list should probably have been a set.
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["Step 1: What does the data need?"] --> B{"Step 2: Do you look values up by a label?"}
     B -- Yes --> C["Step 3: Use a dict"]
     B -- No --> D{"Step 4: Do order or repeated items matter?"}
     D -- Yes --> E["Step 5: Use a list"]
     D -- No --> F["Step 6: Use a set, for unique items and fast in checks"]
 ```
+
+![Q12. Structural comparison — list vs dict vs set: (a) ordering (b) duplicates (c) access method (d) mutability (e) empty-literal syntax for each?](../resources/ch19-sets-conceptual-qa-fig-05.png)
 
 **Script: the same data in all three**
 
@@ -1213,7 +1223,7 @@ students.clear()                    # -> set()
 **A simple way to choose**
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["Step 1: What do you want to remove?"] --> B{"Step 2: One particular element x?"}
     B -- Yes --> C{"Step 3: Must x be there? Is a missing x a bug?"}
     C -- Yes --> D["Step 4: Use remove(x). It raises KeyError if x is missing"]
@@ -1222,6 +1232,8 @@ flowchart TD
     F -- Yes --> G["Step 7: Use pop(). It returns the removed element"]
     F -- No --> H["Step 8: Everything: use clear()"]
 ```
+
+![Q14. Four removal-family methods — .remove(), .discard(), .pop(), .clear(): (a) behaviour when element is missing/set is empty (b) return value (c) which to choose when](../resources/ch19-sets-conceptual-qa-fig-06.png)
 
 **How each one relates to what you already know**
 
@@ -1341,6 +1353,8 @@ flowchart TD
     B -- "numbers.copy()" --> E["Step 5: remove() changes only the original"]
     E --> F["Step 6: The loop finishes safely"]
 ```
+
+![Q15. Modifying a set while iterating over it — (a) what happens and why (b) the correct fix](../resources/ch19-sets-conceptual-qa-fig-07.png)
 
 **Script: the error, the fixes, and the list surprise**
 
@@ -1718,6 +1732,8 @@ flowchart TD
     E -- Yes --> F["Step 6: A is also a proper subset, so A < B"]
     E -- No --> G["Step 7: A equals B. A <= B is True but A < B is False"]
 ```
+
+![Q19. Subset, proper subset, superset, and disjoint — (a) define each (b) exact distinction between subset and proper subset?](../resources/ch19-sets-conceptual-qa-fig-08.png)
 
 **Script: subset, superset and disjoint**
 

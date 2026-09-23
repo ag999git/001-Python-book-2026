@@ -108,6 +108,8 @@ flowchart TD
     K --> L["12. End of the pytest run"]
 ```
 
+![The Fixture Lifecycle Hierarchy](../resources/ch20-payment-gateway-fig-01.png)
+
 Notice that the session fixture wraps around everything. It is set up at step 2 and not torn down until step 11, after both files have finished. The module fixtures are set up and torn down once for each file.
 
 [Back to the Table of Contents](030-ch20-payment-gateway.md#table-of-contents)
@@ -407,6 +409,8 @@ flowchart TD
     F --> G["7. Last test of the session has finished"]
     G --> H["8. Fixture continues after yield: close the gateway"]
 ```
+
+![The Mechanics of yield Statements](../resources/ch20-payment-gateway-fig-02.png)
 
 [Back to the Table of Contents](030-ch20-payment-gateway.md#table-of-contents)
 
@@ -880,6 +884,8 @@ flowchart TD
     E -- No --> F["6. Use module or class scope"]
     E -- Yes --> G["7. Use session scope and put the fixture in conftest.py"]
 ```
+
+![Choosing the Right Scope](../resources/ch20-payment-gateway-fig-03.png)
 
 [Back to the Table of Contents](030-ch20-payment-gateway.md#table-of-contents)
 

@@ -184,6 +184,8 @@ flowchart TD
     G --> H["8. Show the results"]
 ```
 
+![Configuration Files in the Python World](../resources/ch20-config-files-fig-01.png)
+
 [Back to the Table of Contents](090-ch20-config-files.md#table-of-contents)
 
 ## 2. Why Does Pytest Need One?
@@ -369,6 +371,8 @@ flowchart TD
     D -- No --> F["6. No config file: use pytest's built-in defaults"]
 ```
 
+![Where Does the File Live?](../resources/ch20-config-files-fig-02.png)
+
 [Back to the Table of Contents](090-ch20-config-files.md#table-of-contents)
 
 ## 5. How to Fix the Warning (Step-by-Step)
@@ -506,6 +510,8 @@ flowchart TD
     G --> H["8. Run the selected tests"]
     H --> I["9. Show a detailed report because of -v"]
 ```
+
+![Visualizing the Lifecycle (Flowchart)](../resources/ch20-config-files-fig-03.png)
 
 [Back to the Table of Contents](090-ch20-config-files.md#table-of-contents)
 

@@ -1,6 +1,7 @@
 
 
 
+
 # Data Types and Choosing the Right Plot: The Foundation for Matplotlib
 
 This page is a companion to the chapter on **Matplotlib** in the book. Matplotlib is the most widely used Python library for drawing graphs and charts. Before we start writing plotting code, we need to answer a simpler question: *what kind of data do we have, and which picture suits it best?*
@@ -154,17 +155,7 @@ So a single variable can belong to both systems at once. For example, the number
 
 Nominal and ordinal data are called **qualitative** or **categorical** data, because they describe qualities or categories. Interval and ratio data are called **quantitative** or **numeric** data, because they describe amounts.
 
-```mermaid
-flowchart TD
-    A[Data] --> B[Qualitative or Categorical]
-    A --> C[Quantitative or Numeric]
-    B --> D[Nominal - no order]
-    B --> E[Ordinal - ordered]
-    C --> F[Interval - no true zero]
-    C --> G[Ratio - true zero]
-    C --> H[Discrete - counted]
-    C --> I[Continuous - measured]
-```
+![How the six kinds of data are related to one another](../resources/ch-15-fig-01-data-classification.png)
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -333,20 +324,7 @@ Notes on the table:
 
 When you meet a new column in a dataset, ask the questions in the flowchart below, in order.
 
-```mermaid
-flowchart TD
-    A[Start with one variable] --> B{Do the values measure or count an amount}
-    B -->|No| C{Do the categories have a natural order}
-    C -->|No| D[Nominal data]
-    C -->|Yes| E[Ordinal data]
-    B -->|Yes| F{Does zero mean none of the quantity}
-    F -->|No| G[Interval data]
-    F -->|Yes| H[Ratio data]
-    H --> I{Are the values counted or measured}
-    G --> I
-    I -->|Counted| J[Discrete]
-    I -->|Measured| K[Continuous]
-```
+![The questions to ask, in order, to find the type of a variable](../resources/ch-15-fig-02-identify-data-type.png)
 
 **A common trap:** some columns contain numbers that are really labels. PIN codes, roll numbers and jersey numbers are written as digits, but adding or averaging them makes no sense. They are **nominal** data. Always ask what the number *means*, not just whether it looks like a number.
 
@@ -430,25 +408,7 @@ This section answers the first part of the research question: *how do we systema
 4. **Match the question and the data types to a plot** using the flowchart below.
 5. **Check the plot for honesty.** Look at the axis scale, the order of the categories, the number of bins and the number of slices. Ask whether a reader could misread the picture.
 
-```mermaid
-flowchart TD
-    A[What should the plot show] --> B[Compare categories]
-    A --> C[Change over time]
-    A --> D[Spread of one numeric variable]
-    A --> E[Relationship between two numeric variables]
-    A --> F[Parts of a whole]
-    A --> G[One numeric variable across several groups]
-    A --> H[Values in a grid of rows and columns]
-    B --> B1[Bar chart]
-    C --> C1[Line plot or area plot]
-    D --> D1[Histogram]
-    E --> E1[Scatter plot]
-    F --> F1{Five or fewer categories}
-    F1 -->|Yes| F2[Pie chart]
-    F1 -->|No| B1
-    G --> G1[Box plot]
-    H --> H1[Heatmap]
-```
+![Matching the question you want answered to a type of plot](../resources/ch-15-fig-03-choosing-a-plot.png)
 
 The table below links the data types to the flowchart.
 
@@ -610,16 +570,7 @@ The script draws four plots in one figure. Each plot matches one kind of data:
 | Bottom-left | Histogram | `total_bill` | Continuous ratio | How are the bill amounts spread out? |
 | Bottom-right | Scatter plot | `total_bill`, `tip` | Ratio and ratio | Do bigger bills get bigger tips? |
 
-```mermaid
-flowchart TD
-    A[Step 1 - Import libraries] --> B[Step 2 - Load the tips dataset]
-    B --> C[Step 3 - Create a 2 by 2 grid of plots]
-    C --> D[Step 4 - Line plot of average bill by time]
-    D --> E[Step 5 - Bar chart of tables served by day]
-    E --> F[Step 6 - Histogram of total bill]
-    F --> G[Step 7 - Scatter plot of bill against tip]
-    G --> H[Step 8 - Tidy layout, save and show]
-```
+![The eight steps of the script that draws four plots for four types of data](../resources/ch-15-fig-04-four-plots-script-steps.png)
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1218,15 +1169,7 @@ The columns of the penguins dataset are:
 
 A box plot squeezes all the values of a group into a small picture built from five numbers, plus any outliers.
 
-```mermaid
-flowchart TD
-    O1[Dots above the upper whisker - high outliers] --- A[Upper whisker end - largest value that is not an outlier]
-    A --- B[Top of box - Q3 - 75 percent of values are below this]
-    B --- C[Line inside box - Median - the middle value]
-    C --- D[Bottom of box - Q1 - 25 percent of values are below this]
-    D --- E[Lower whisker end - smallest value that is not an outlier]
-    E --- O2[Dots below the lower whisker - low outliers]
-```
+![The parts of a box plot, from the highest value down to the lowest](../resources/ch-15-fig-05-box-plot-anatomy.png)
 
 | Part of the plot | Name | Meaning |
 | --- | --- | --- |
@@ -1718,13 +1661,7 @@ A histogram of these marks would have three touching bars of heights 2, 5 and 3.
 
 The script below uses the real-world `tips` dataset from Seaborn to show how the continuous ratio variable `total_bill` is distributed across a restaurant's transactions.
 
-```mermaid
-flowchart TD
-    A[Load 244 bill amounts] --> B[Find smallest and largest bill]
-    B --> C[Divide this range into 15 equal bins]
-    C --> D[Count the bills that fall in each bin]
-    D --> E[Draw one touching bar per bin with height equal to its count]
-```
+![How Matplotlib turns a list of raw values into a histogram](../resources/ch-15-fig-06-how-a-histogram-is-built.png)
 
 [Back to the Table of Contents](#table-of-contents)
 

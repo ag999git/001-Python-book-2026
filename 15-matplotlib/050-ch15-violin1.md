@@ -200,14 +200,7 @@ The graph often looks like the body of a musical violin. The density curve is dr
 
 The same process as a flowchart:
 
-```mermaid
-flowchart TD
-    A[Step 1 - Collect the data, for example exam scores] --> B[Step 2 - Draw a histogram of the data]
-    B --> C[Step 3 - Smooth the bars into a density curve]
-    C --> D[Step 4 - Mirror the curve about a central line]
-    D --> E[Step 5 - Add median, mean and quartile lines]
-    E --> F[Step 6 - Final violin plot showing shape and summary]
-```
+![A violin plot is a smoothed histogram, mirrored and given summary lines](../resources/ch-15-fig-11-how-a-violin-plot-is-built.png)
 
 **A note on Step 3:** Matplotlib does not actually draw a histogram first. It builds the smooth curve directly from the data using kernel density estimation. Thinking of the curve as a "smoothed histogram" is still a helpful way to understand what it shows.
 
@@ -252,16 +245,7 @@ Choose based on your goal.
 
 The flowchart below turns these choices into questions. The numbers show the order in which to ask them.
 
-```mermaid
-flowchart TD
-    A[1 - What do you need to see] --> B{2 - Do you need exact counts in each range}
-    B -->|Yes| C[3 - Use a histogram]
-    B -->|No| D{4 - Do you need the shape or the number of peaks}
-    D -->|No| E[5 - Use a box plot]
-    D -->|Yes| F{6 - Does each group have more than about 10 values}
-    F -->|Yes| G[7 - Use a violin plot]
-    F -->|No| H[8 - Use a strip plot that shows every point]
-```
+![Choosing between a histogram, a box plot, a violin plot and a strip plot](../resources/ch-15-fig-12-which-distribution-plot.png)
 
 A **strip plot** simply draws every data point as a dot along a line. It is the best choice when there are only a few values. See [seaborn.stripplot](https://seaborn.pydata.org/generated/seaborn.stripplot.html).
 
@@ -408,16 +392,7 @@ A few terms used in the script:
 
 The flow of the script:
 
-```mermaid
-flowchart TD
-    A[Step 1 - Import the libraries] --> B[Step 2 - Create 100 scores and add 3 outliers]
-    B --> C[Step 3 - Calculate mean, median, Q1 and Q3]
-    C --> D[Step 4 - Create the figure and axis]
-    D --> E[Step 5 - Draw the violin plot with options]
-    E --> F[Step 6 - Color the violin and its lines]
-    F --> G[Step 7 - Add title, labels, grid and legend]
-    G --> H[Step 8 - Display the plot]
-```
+![The eight steps of the single violin plot script](../resources/ch-15-fig-13-violin-script-steps.png)
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -813,16 +788,7 @@ The script below draws all three plots, one above the other, using the same 100 
 
 **Note on Matplotlib versions:** the script uses `orientation="horizontal"` to lay the box plot and violin plot on their sides. This option was added in Matplotlib 3.10. If you have an older version and get an error, replace `orientation="horizontal"` with `vert=False`. In Matplotlib 3.10 and later, `vert` still works but is being phased out.
 
-```mermaid
-flowchart TD
-    A[Step 1 - Import the libraries] --> B[Step 2 - Create Class A around 50 and Class B around 80, then combine]
-    B --> C[Step 3 - Calculate quartiles and count scores in three bands]
-    C --> D[Step 4 - Create three stacked plot areas sharing one score axis]
-    D --> E[Step 5 - Top panel - histogram with quartile lines]
-    E --> F[Step 6 - Middle panel - box plot]
-    F --> G[Step 7 - Bottom panel - violin plot]
-    G --> H[Step 8 - Add title, print summary and display]
-```
+![The eight steps of the script that shows one dataset as a histogram, a box plot and a violin plot](../resources/ch-15-fig-14-three-views-script-steps.png)
 
 [Back to the Table of Contents](#table-of-contents)
 

@@ -297,15 +297,7 @@ Inside the Figure sit one or more **Axes** objects (usually stored in `ax`). An 
 
 Everything that is drawn, from lines and bars to text, is called an **Artist**. Lines are `Line2D` artists, bars are `Rectangle` artists (a kind of patch), and labels are `Text` artists. See [Anatomy of a figure (Matplotlib)](https://matplotlib.org/stable/gallery/showcase/anatomy.html).
 
-```mermaid
-graph TD
-    A[1 - Figure - the outer frame and window] --> B[2 - Axes 1 - a plotting area]
-    A --> C[7 - Axes 2 - another plotting area]
-    B --> D[3 - X-Axis - ticks, tick labels and axis label]
-    B --> E[4 - Y-Axis - ticks, tick labels and axis label]
-    B --> F[5 - Artists - lines, bars, markers and text]
-    B --> G[6 - Axes title, grid and legend]
-```
+![How a Figure, its Axes and the objects inside them fit together](../resources/ch-15-fig-21-anatomy-of-a-figure.png)
 
 Axes 2 contains the same kinds of parts (x-axis, y-axis, artists, title) as Axes 1.
 
@@ -712,14 +704,7 @@ Unlike a bar chart, which draws heights that you supply, `ax.hist()` works out t
 
 "Sorting" here means placing each value into the right bin, not arranging the values in order. The counting is done by NumPy's `histogram()` function. See [matplotlib.axes.Axes.hist](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.hist.html) and [numpy.histogram](https://numpy.org/doc/stable/reference/generated/numpy.histogram.html).
 
-```mermaid
-flowchart TD
-    A[Step 1 - Read the raw values] --> B[Step 2 - Find the minimum and maximum]
-    B --> C[Step 3 - Split the range into equal bins]
-    C --> D[Step 4 - Place each value in its bin and count]
-    D --> E[Step 5 - Draw one touching bar per bin]
-    E --> F[Step 6 - Return counts, bin edges and bar objects]
-```
+![The six things ax.hist() does for you](../resources/ch-15-fig-22-what-hist-does.png)
 
 ```python
 # Description: Demonstrates how ax.hist() places values into bins and counts them
@@ -929,16 +914,27 @@ Lines drawn in total: 3
 Legend text  : ['Revenue', 'Costs']
 ```
 
+**A note on the colour line.** On Matplotlib 3.10 and later you will see the two colours printed as triples of decimal numbers instead of as text:
+
+```text
+Colors       : [(0.12156862745098039, 0.4666666666666667, 0.7058823529411765),
+                (1.0, 0.4980392156862745, 0.054901960784313725)]
+```
+
+These are the same two colours. `#1f77b4` is simply the hexadecimal way of writing red 0.1216, green 0.4667, blue 0.7059, and `#ff7f0e` is the same for the second colour. Newer versions of Matplotlib store the default colour cycle as numbers, so `get_color()` hands back numbers. If you prefer the short hexadecimal form, convert it:
+
+```python
+# Add this import at the top of the script, then use this line
+# in place of the "Colors" line in Step 3.
+from matplotlib.colors import to_hex
+print("Colors       :", [to_hex(h.get_color()) for h in handles])
+```
+
+Written that way, the output reads `Colors       : ['#1f77b4', '#ff7f0e']` on every version of Matplotlib.
+
 ![Plot with a legend showing only the labelled lines](../resources/ch15-qa2-q12-legend.png)
 
-```mermaid
-flowchart TD
-    A[Step 1 - Plot lines, giving some of them a label] --> B[Step 2 - Call ax.legend]
-    B --> C[Step 3 - Collect artists that have a label]
-    C --> D[Step 4 - Skip lines with no label]
-    D --> E[Step 5 - Draw a small sample of each line with its label]
-    E --> F[Step 6 - Place the legend box using loc]
-```
+![What ax.legend() does behind the scenes](../resources/ch-15-fig-23-how-a-legend-is-built.png)
 
 **Follow-up question:** How can you give a line a label but still keep it out of the legend?
 
@@ -1262,14 +1258,7 @@ To choose each color, Matplotlib follows two steps:
 
 In this way a table of raw numbers becomes a picture of color intensities, called a **heat map**. See [Heat map (Wikipedia)](https://en.wikipedia.org/wiki/Heat_map), [Colormap normalization (Matplotlib)](https://matplotlib.org/stable/users/explain/colors/colormapnorms.html) and [Choosing colormaps (Matplotlib)](https://matplotlib.org/stable/users/explain/colors/colormaps.html).
 
-```mermaid
-graph TD
-    A[1 - Matrix of values in rows and columns] --> B[2 - Find the smallest and largest values]
-    B --> C[3 - Normalize each value to a number from 0 to 1]
-    C --> D[4 - Look up that number in the colormap]
-    D --> E[5 - Draw one colored square per cell]
-    E --> F[6 - Add a color bar as the key]
-```
+![How a number in a matrix becomes a coloured square](../resources/ch-15-fig-24-how-imshow-colours-a-matrix.png)
 
 ```python
 # Step 1 - Import the libraries
@@ -1721,16 +1710,7 @@ The fix is to free each figure's memory at the end of every loop pass by calling
 | `plt.close("all")` | Every open figure |
 | `plt.get_fignums()` | Closes nothing; it lists the numbers of the open figures, which is useful for checking |
 
-```mermaid
-flowchart TD
-    A[Step 1 - Start the loop] --> B[Step 2 - Create a figure]
-    B --> C[Step 3 - Draw the plot]
-    C --> D[Step 4 - Save the figure to a file]
-    D --> E[Step 5 - Close the figure with plt.close fig]
-    E --> F{Step 6 - More plots to make}
-    F -->|Yes| B
-    F -->|No| G[Step 7 - Finish]
-```
+![Why a figure must be closed each time round a loop that saves many plots](../resources/ch-15-fig-25-closing-figures-in-a-loop.png)
 
 ```python
 # =====================================================================
@@ -1820,6 +1800,16 @@ Files in batch_plots: 50
 ```
 
 This script does not show any graph on screen. It only saves image files into a folder called `batch_plots`.
+
+**A warning you should expect to see.** While Step 2 is running, Matplotlib itself prints a message something like this:
+
+```text
+RuntimeWarning: More than 20 figures have been opened. Figures created through
+the pyplot interface (matplotlib.pyplot.figure) are retained until explicitly
+closed and may consume too much memory.
+```
+
+Do not be alarmed. This warning is not a mistake in the script; it is the whole point of Step 2. Matplotlib counts the figures you leave open, and once the count passes 20 it warns you that memory is being used up. Step 2 opens 25 figures on purpose so that you can see this happen. Step 3 then shows the cure, and the warning never appears again, because no more than one figure is ever open at a time. If you want to change the limit at which Matplotlib warns you, it is the `figure.max_open_warning` setting.
 
 **What the output proves:**
 

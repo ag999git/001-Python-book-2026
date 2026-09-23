@@ -22,14 +22,7 @@ Writing plotting scripts is a good way to practise many basic Python skills at t
 
 **The basic pattern that every script follows:**
 
-```mermaid
-flowchart TD
-    A[Step 1 - Import matplotlib and any other libraries] --> B[Step 2 - Prepare the data]
-    B --> C[Step 3 - Create the plot]
-    C --> D[Step 4 - Add title, labels, legend and grid]
-    D --> E[Step 5 - Save the figure if needed]
-    E --> F[Step 6 - Show the figure]
-```
+![The skeleton that every script in this chapter follows](../resources/ch-15-fig-26-script-skeleton.png)
 
 ## Table of Contents
 
@@ -769,20 +762,7 @@ Series plotted x = [0, 1, 2, 3, 4], y = [10, 15, 20, 25, 30]
 
 **How data reaches the finished graph:**
 
-```mermaid
-flowchart TD
-    A[1 - Choose the input data]
-    A --> B[2a - Python list]
-    A --> C[2b - NumPy array]
-    A --> D[2c - pandas Series]
-    B --> E[3 - ax.plot draws the line]
-    C --> E
-    D --> E
-    E --> F[4 - Add title]
-    F --> G[5 - Add axis labels]
-    G --> H[6 - Add grid]
-    H --> I[7 - Final figure with three subplots]
-```
+![A list, a NumPy array and a pandas Series all reach ax.plot() the same way](../resources/ch-15-fig-27-list-array-series.png)
 
 **Follow-up question:** If the Series were created as `pd.Series([10, 15, 20, 25, 30], index=[2020, 2021, 2022, 2023, 2024])`, what would the third subplot show on its x-axis?
 
@@ -1187,15 +1167,7 @@ A combined chart uses bars for one variable and a line for another. The bars sho
 
 Sales (120 to 260) are much larger than profit (15 to 45). If both are drawn on the same y-axis, the profit line is squashed near the bottom of the chart and its changes are hard to see. So the script draws the profit line on a **second y-axis** created with `twinx()`. The two charts share the same months along the bottom, but each has its own scale: sales on the left and profit on the right. See [matplotlib.axes.Axes.twinx](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.twinx.html).
 
-```mermaid
-flowchart TD
-    A[Step 1 - Create figure and axes for sales] --> B[Step 2 - Draw sales as bars]
-    B --> C[Step 3 - Create a twin axes with twinx]
-    C --> D[Step 4 - Draw profit as a line on the twin axes]
-    D --> E[Step 5 - Label both y-axes]
-    E --> F[Step 6 - Join the legends of both axes]
-    F --> G[Step 7 - Add grid and show]
-```
+![The seven steps that put two different scales on one chart](../resources/ch-15-fig-28-twinx-steps.png)
 
 ```python
 # ==========================================================
@@ -1523,16 +1495,7 @@ plt.show()
 
 A bar chart compares amounts across separate categories, here the college departments. **Data labels** are numbers written on or above each bar so that the reader does not have to estimate the value from the axis. `plt.bar()` returns a container of bar objects. Looping over it gives the position and height of each bar, which tells us where to place its label. See [matplotlib.pyplot.bar](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.bar.html).
 
-```mermaid
-flowchart TD
-    A[Step 1 - Prepare department names and book counts] --> B[Step 2 - Draw the bars and keep them in a variable]
-    B --> C[Step 3 - Take the next bar]
-    C --> D[Step 4 - Find its centre and its height]
-    D --> E[Step 5 - Write the height just above the bar]
-    E --> F{Step 6 - Any bars left}
-    F -->|Yes| C
-    F -->|No| G[Step 7 - Add title, labels, grid and legend, then show]
-```
+![The loop that writes a value above each bar](../resources/ch-15-fig-29-labelling-every-bar.png)
 
 ```python
 # ==========================================================
@@ -2476,15 +2439,7 @@ A **surface** gives a height z for every point (x, y). To draw it, we need z val
 
 Since x² + y² is the squared distance from the centre, every point at the same distance from (0, 0) has the same z. That is why both plots show **rings**. The rings get closer together further out, because x² + y² grows faster and faster, so the sine wave goes up and down more quickly.
 
-```mermaid
-flowchart TD
-    A[Step 1 - Make 200 x-values and 200 y-values] --> B[Step 2 - Build a 200 by 200 grid with meshgrid]
-    B --> C[Step 3 - Calculate z at every grid point]
-    C --> D[Step 4a - contour draws lines of equal z]
-    C --> E[Step 4b - contourf fills bands between levels]
-    D --> F[Step 5 - Add labels, color bar and show]
-    E --> F
-```
+![contour() and contourf() draw the same grid in two different ways](../resources/ch-15-fig-30-contour-and-contourf.png)
 
 ```python
 # ==========================================================
@@ -2977,16 +2932,7 @@ It would still have the dark_background style, because `plt.style.use()` changes
 | PDF | Vector: drawn with shapes, sharp at any size | Printing and reports |
 | SVG | Vector | Web pages, and editing in drawing programs |
 
-```mermaid
-flowchart TD
-    A[Step 1 - Create the graph and add labels] --> B[Step 2 - Save as PNG, PDF and SVG]
-    B --> C[Step 3 - Check each file exists and is not empty]
-    C --> D{Step 4 - All files saved}
-    D -->|Yes| E[Step 5 - Print a success message]
-    D -->|No| F[Step 6 - Print a warning]
-    E --> G[Step 7 - Show the graph]
-    F --> G
-```
+![Saving a figure in three formats and checking that each file really exists](../resources/ch-15-fig-31-saving-and-checking-files.png)
 
 ```python
 # ==========================================================

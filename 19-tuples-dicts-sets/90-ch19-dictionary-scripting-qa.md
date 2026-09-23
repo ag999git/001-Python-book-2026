@@ -140,11 +140,13 @@ fruit_colors['grape'] -> KeyError: 'grape'
 | `fruit_colors.get(key, "Unknown")` | `'yellow'` | `'Unknown'` |
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["Step 1: fruit_colors.get(key, Unknown)"] --> B{"Step 2: Is key in the dictionary?"}
     B -- Yes --> C["Step 3: Return the stored colour"]
     B -- No --> D["Step 4: Return the default, Unknown. No error"]
 ```
+
+![Q1. Create dict of 3 fruits→colours. Print colour of "banana" (safe, no error). Also try missing key "grape", default "Unknown".](../resources/ch19-dictionary-scripting-qa-fig-01.png)
 
 **Try this next**
 
@@ -366,13 +368,15 @@ Eraser : ₹5
 - The rupee sign `₹` is an ordinary character in a Python string. If your console cannot show it, you can write `Rs.` instead.
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["Step 1: cart.items() provides the pairs"] --> B{"Step 2: Is there another pair?"}
     B -- Yes --> C["Step 3: Unpack the pair into item and price"]
     C --> D["Step 4: Print item : price with the rupee sign"]
     D --> B
     B -- No --> E["Step 5: The loop ends"]
 ```
+
+![Q4. Given dict of item→price, print each as "item : ₹price" using the traversal method that gives both key and value directly.](../resources/ch19-dictionary-scripting-qa-fig-02.png)
 
 **Try this next**
 
@@ -553,7 +557,7 @@ RuntimeError: dictionary changed size during iteration
 The loop keeps track of its place inside the dictionary. Deleting an entry changes the dictionary's size, and Python stops the loop rather than risk skipping or repeating entries.
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["Step 1: Make a snapshot: list(marks.keys())"] --> B{"Step 2: Another name in the snapshot?"}
     B -- No --> F["Step 6: Done. Print marks"]
     B -- Yes --> C{"Step 3: Are this student's marks below 40?"}
@@ -562,6 +566,8 @@ flowchart TD
     D --> E["Step 5: The snapshot is unchanged, so the loop carries on safely"]
     E --> B
 ```
+
+![Q6. Given dict of student→marks, remove all students scoring below 40. Must not raise RuntimeError.](../resources/ch19-dictionary-scripting-qa-fig-03.png)
 
 **Try this next**
 
@@ -787,12 +793,14 @@ hi       (str  ) -> True
 - In the `print()` line, `:<8` and `:<5` pad the text with spaces to a fixed width, so the columns line up. They do not affect the result.
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["Step 1: is_valid_key(k) is called"] --> B["Step 2: Try hash(k)"]
     B --> C{"Step 3: Did Python raise TypeError?"}
     C -- No --> D["Step 4: k is hashable. Return True"]
     C -- Yes --> E["Step 5: k is unhashable. Return False"]
 ```
+
+![Q9. Write isvalidkey(k) returning True/False if k can be used as a dict key. Test on 5, "hi", (1,2), [1,2], {1:2}.](../resources/ch19-dictionary-scripting-qa-fig-04.png)
 
 **Try this next**
 
@@ -962,7 +970,7 @@ February is unchanged: {'Notebook': 70, 'Eraser': 30}
 | `"Eraser"` | (not present) | 30 | 30 (added) |
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["Step 1: Take the next key from feb_sales"] --> B{"Step 2: Is the key already in jan_sales?"}
     B -- Yes --> C["Step 3: Overwrite the value in jan_sales"]
     B -- No --> D["Step 4: Add the key and value to jan_sales"]
@@ -971,6 +979,8 @@ flowchart TD
     E -- Yes --> A
     E -- No --> F["Step 6: Done. update() returns None"]
 ```
+
+![Q11. Two dicts: Jan sales and Feb sales by product. Merge Feb into Jan with update() (overlaps must update, not add duplicates).](../resources/ch19-dictionary-scripting-qa-fig-05.png)
 
 **Try this next**
 
@@ -1134,6 +1144,8 @@ flowchart TD
     G -- No --> H["Step 8: Print grouped"]
 ```
 
+![Q13. Empty dict category→list. Given list of (category, item) tuples, group items under categories using setdefault() — no manual if key in dict check.](../resources/ch19-dictionary-scripting-qa-fig-06.png)
+
 **Try this next**
 
 Use the grouped dictionary: print each category with a count of its items.
@@ -1225,13 +1237,15 @@ Same list object? True
 | `settings_copy["recent_scores"] = [99]` | Replace the list with a new one | No |
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["Step 1: settings.copy() makes a new outer dictionary"] --> B["Step 2: Both theme keys point to the string light"]
     A --> C["Step 3: Both recent_scores keys point to ONE shared list"]
     B --> D["Step 4: copy theme = dark: only the copy's key is moved. Original safe"]
     C --> E["Step 5: append(30) changes the shared list itself"]
     E --> F["Step 6: The original sees [10, 20, 30] too"]
 ```
+
+![Q14. Given dict of settings, copy() it, change one value in the copy -- prove original unaffected. Add a nested list value; mutate it via the copy -- show original is affected (shallow copy).](../resources/ch19-dictionary-scripting-qa-fig-07.png)
 
 **Try this next**
 
@@ -1402,12 +1416,15 @@ The same pattern continues for `s`, `i`, `p`, `p` and `i`, giving the final resu
 
 ```mermaid
 flowchart TD
-    A["Step 1: freq = {} and take the next character ch"] --> B["Step 2: current = freq.get(ch, 0)"]
-    B --> C["Step 3: freq[ch] = current + 1"]
-    C --> D{"Step 4: More characters?"}
-    D -- Yes --> A
-    D -- No --> E["Step 5: Print freq"]
+    A["Step 1: Start with an empty dictionary freq"] --> B["Step 2: Take the next character ch"]
+    B --> C["Step 3: current = freq.get(ch, 0)"]
+    C --> D["Step 4: freq[ch] = current + 1"]
+    D --> E{"Step 5: More characters?"}
+    E -- Yes --> B
+    E -- No --> F["Step 6: Print freq"]
 ```
+
+![Q16. Count frequency of each character in "mississippi" using a dictionary, no library. Use get() with default 0.](../resources/ch19-dictionary-scripting-qa-fig-08.png)
 
 **Try this next**
 
@@ -1495,6 +1512,8 @@ flowchart LR
     C --> D["Step 4: dict() turns each pair into key: value"]
     D --> E["Step 5: {Ann: 90, Bob: 85, Cid: 78}"]
 ```
+
+![Q17. Two separate lists — names, marks (same order). Combine into one dictionary using zip() and dict().](../resources/ch19-dictionary-scripting-qa-fig-09.png)
 
 **Try this next**
 

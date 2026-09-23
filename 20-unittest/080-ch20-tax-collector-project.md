@@ -445,6 +445,8 @@ flowchart TD
     J -- No --> K["11. Print the summary"]
 ```
 
+![Project: The "Micro-Precision" Tax Calculator (Using Parameterized Testing)](../resources/ch20-tax-collector-project-fig-01.png)
+
 Notice that step 9 does not stop the run. It records the failure and moves on to the next case. The next section explains why this matters.
 
 [Back to the Table of Contents](080-ch20-tax-collector-project.md#table-of-contents)

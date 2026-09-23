@@ -354,6 +354,8 @@ flowchart TD
     D --> E["5. len() hands 5 back to the code"]
 ```
 
+![Execution Flow of len()](../resources/ch20-magicmock-fig-01.png)
+
 [Back to the Table of Contents](067-ch20-magicmock.md#table-of-contents)
 
 ## Example 2: Simulating String Conversion
@@ -527,6 +529,8 @@ flowchart TD
     E --> D
     D -- No --> F["6. The loop ends"]
 ```
+
+![Execution Flow of Iteration](../resources/ch20-magicmock-fig-02.png)
 
 [Back to the Table of Contents](067-ch20-magicmock.md#table-of-contents)
 
@@ -710,6 +714,8 @@ flowchart TD
     E --> F["6. Python calls fake_file.__exit__(None, None, None)"]
     F --> G["7. The program continues after the with block"]
 ```
+
+![Context Manager Flow](../resources/ch20-magicmock-fig-03.png)
 
 For mocking the built-in `open()` function itself, `unittest.mock` provides a ready-made helper called `mock_open()`. It is used in the pytest tests later on this page.
 

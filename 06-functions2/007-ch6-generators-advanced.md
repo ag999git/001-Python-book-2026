@@ -12,7 +12,7 @@ This is **not an error in your program** — it's a normal, expected signal that
 
 The diagram below shows the flow of control as a generator function runs, pauses at each `yield`, and eventually raises `StopIteration` once its body finishes:
 
-![StopIteration Diagram](https://github.com/ag999git/001-Python-book-2026/blob/main/resources/ch6-generators-stopiteration.png)
+![StopIteration Diagram](../resources/ch6-generators-stopiteration.png)
 
 ### Script Demonstrating `StopIteration`
 

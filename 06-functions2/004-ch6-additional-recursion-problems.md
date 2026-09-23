@@ -223,7 +223,7 @@ print(f"GCD(17, 5)  = {gcd_recursive(17, 5)}")    # 1  (co-prime numbers)
 
 The diagram below illustrates Euclid's Algorithm for computing $\gcd(48, 18)$, with numbered blocks so you can follow the flow step by step.
 
-![GCD recursion flowchart](https://github.com/ag999git/001-Python-book-2026/raw/main/resources/ch-6-functions2-gcd-recursion.png)
+![GCD recursion flowchart](../resources/ch-6-functions2-gcd-recursion.png)
 
 **What each block in the flowchart does**
 

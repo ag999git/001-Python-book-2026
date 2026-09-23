@@ -579,6 +579,8 @@ flowchart TD
     E --> F["6. id() is different after the change"]
 ```
 
+![Write a Python script that demonstrates mutability of lists using the id() function.](../resources/ch02-3-ch2-scripting-qa-fig-01.png)
+
 [Back to the Table of Contents](#table-of-contents)
 
 ### 10. Write a Python script to demonstrate tuple creation, indexing, slicing, and tuple unpacking.
@@ -747,13 +749,15 @@ Updated dictionary:
 | Unsafe read | `student["course"]` | Raises `KeyError` if the key is missing |
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["1. You want the value for a key"] --> B{"2. Could the key be missing?"}
     B -->|No| C["3. Use d[key]"]
     B -->|Yes| D["4. Use d.get(key, default)"]
     D --> E["5. Get the value, or the default if the key is missing"]
     C --> F["6. Get the value, or KeyError if you were wrong"]
 ```
+
+![Write a Python script to create a dictionary of student details and perform adding, updating, deleting, and safe retrieval operations.](../resources/ch02-3-ch2-scripting-qa-fig-02.png)
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1328,6 +1332,8 @@ flowchart TD
     C -->|Yes| E["5. Convert the text with int()"]
     E --> F["6. Do the arithmetic and print the result"]
 ```
+
+![Write a Python script that accepts age input from the user and converts it into an integer before using it in arithmetic.](../resources/ch02-3-ch2-scripting-qa-fig-03.png)
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1934,6 +1940,8 @@ flowchart LR
     T --> C["slot 2: reference"]
     C --> L["list object: 3, 4, 5 (can change)"]
 ```
+
+![Write a Python script to demonstrate that tuples can contain mutable objects like lists. Modify the internal list and observe the result.](../resources/ch02-3-ch2-scripting-qa-fig-04.png)
 
 [Back to the Table of Contents](#table-of-contents)
 

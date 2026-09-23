@@ -115,6 +115,8 @@ flowchart LR
     E --> F["6. Run the executable - no compiler needed"]
 ```
 
+![Examples](../resources/ch01-question-answers1-fig-01.png)
+
 [Back to the Table of Contents](#table-of-contents)
 
 ### What are the Advantages of Using a Compiler?
@@ -172,6 +174,8 @@ flowchart LR
     C -->|No| E["5. Python Virtual Machine runs the bytecode"]
     E --> F["6. Output, or a runtime error at the line where it happens"]
 ```
+
+![How does Python actually run your code?](../resources/ch01-question-answers1-fig-02.png)
 
 This has an important effect that surprises many beginners: **a syntax error anywhere in a file stops the whole file from running**, even the lines before it. Try this file, saved as `syntax_demo.py`:
 
@@ -656,6 +660,8 @@ flowchart LR
     O1 -.->|"5. no longer used by x"| G["6. freed if nothing else uses it"]
 ```
 
+![Step 3 - and now to a decimal number (float)](../resources/ch01-question-answers1-fig-03.png)
+
 A note on the term: in other books, "dynamic binding" (also called **late binding**) often means something slightly different - deciding *which method to call* while the program runs, a topic you will meet in the chapters on classes. In this chapter, it means binding names to values while the program runs.
 
 [Back to the Table of Contents](#table-of-contents)
@@ -764,6 +770,8 @@ flowchart TD
     F -->|Yes| G["7. Garbage collector frees it later"]
     F -->|No| H["8. Object stays in use"]
 ```
+
+![Step 3 - Convert the number to text first, then join them](../resources/ch01-question-answers1-fig-04.png)
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1021,6 +1029,8 @@ flowchart LR
     C --> D["4. Run python hello.py"]
     D --> E["5. See the output"]
 ```
+
+![Step 4 - The garbage collector finds the cycle and frees both objects](../resources/ch01-question-answers1-fig-05.png)
 
 [Back to the Table of Contents](#table-of-contents)
 

@@ -112,10 +112,12 @@ flowchart TD
     A3 --> A5{"5. Iteration: repeat again?"}
     A4 --> A5
     A5 -- "Yes" --> A6["6. Run the loop body"]
-    A6 -- "7. break jumps straight out" --> A8
+    A6 -- "break jumps straight out" --> A7
     A6 --> A5
-    A5 -- "No" --> A8["8. Back to sequence: next line after the loop"]
+    A5 -- "No" --> A7["7. Back to sequence: next line after the loop"]
 ```
+
+![I. Foundations of Program Flow: Sequence, Selection, Iteration and Truthiness](../resources/ch4-conceptual-qa-fig-01.png)
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -151,6 +153,8 @@ flowchart TD
     B4 -- "No" --> B7["7. Dispense cash"]
     B7 --> B8["8. End of transaction"]
 ```
+
+![Q1. The ATM Analogy: From Sequence to Loop](../resources/ch4-conceptual-qa-fig-02.png)
 
 **Script**
 
@@ -375,6 +379,8 @@ flowchart TD
     C3 --> C6["6. Both paths meet: print receipt"]
     C5 --> C6
 ```
+
+![Q4. Selection as the Decision-Maker](../resources/ch4-conceptual-qa-fig-03.png)
 
 **Script**
 
@@ -750,7 +756,7 @@ This has two effects.
 4. Continue with the first line after the whole chain.
 
 ```mermaid
-flowchart TD
+flowchart LR
     D1{"1. if n greater than 0?"} -- "True" --> D2["2. Run Branch 1"]
     D1 -- "False" --> D3{"3. elif n greater than -5?"}
     D3 -- "True" --> D4["4. Run Branch 2"]
@@ -762,6 +768,8 @@ flowchart TD
     D6 --> D8
     D7 --> D8
 ```
+
+![Q1. The Rule of One in if-elif-else](../resources/ch4-conceptual-qa-fig-04.png)
 
 **Script**
 
@@ -1595,6 +1603,8 @@ flowchart TD
     E5 --> E6["6. Convert to int and continue the program"]
 ```
 
+![Q5. Simulating a do...until Loop](../resources/ch4-conceptual-qa-fig-05.png)
+
 **Script**
 
 ```python
@@ -1652,7 +1662,7 @@ Notice that `-5` was rejected. The minus sign is not a digit, so `"-5".isdigit()
 ```mermaid
 flowchart TD
     F1{"1. Any items left?"} -- "Yes" --> F2["2. Take the next item"]
-    F1 -- "No" --> F9["9. First line after the loop"]
+    F1 -- "No" --> F9["6. First line after the loop"]
     F2 --> F3{"3. Should we stop completely?"}
     F3 -- "Yes: break" --> F9
     F3 -- "No" --> F4{"4. Should we skip this item?"}
@@ -1660,6 +1670,8 @@ flowchart TD
     F4 -- "No" --> F5["5. Rest of the loop body"]
     F5 --> F1
 ```
+
+![Q6. break versus continue](../resources/ch4-conceptual-qa-fig-06.png)
 
 **Script**
 
@@ -1799,6 +1811,8 @@ flowchart TD
     G1 -- "No: natural completion" --> G4["4. Run the else block"]
     G4 --> G5
 ```
+
+![Q8. The else Clause on a Loop](../resources/ch4-conceptual-qa-fig-07.png)
 
 **Script**
 
@@ -2004,6 +2018,8 @@ flowchart TD
     H5 --> H2
     H3 -- "Yes" --> H6["6. Loop ends quietly"]
 ```
+
+![Q1. The Iterator Protocol](../resources/ch4-conceptual-qa-fig-08.png)
 
 **Script**
 

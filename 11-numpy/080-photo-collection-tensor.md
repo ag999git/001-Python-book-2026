@@ -127,7 +127,7 @@ possible.
 | `3` | RGB channels |
 
 
-![Flowchart](/resources/ch-11-numpy-august-2026-organizing-photo-collection-1.png)
+![Flowchart](../resources/ch-11-numpy-august-2026-organizing-photo-collection-1.png)
 
 ---
 
@@ -192,7 +192,7 @@ Dataset
 
 Here's the same folder structure as flowchart:
 
-![Flowchart](/resources/ch-11-numpy-august-2026-organizing-photo-collection-2.png)
+![Flowchart](../resources/ch-11-numpy-august-2026-organizing-photo-collection-2.png)
 
 
 
@@ -269,7 +269,7 @@ dataset = np.stack(collection_list, axis=0)
 `np.stack()` takes each item in the list and gives it a position along a
 **brand-new axis**, then combines everything into one single array.
 
-![Flowchart](/resources/ch-11-numpy-august-2026-organizing-photo-collection-3.png)
+![Flowchart](../resources/ch-11-numpy-august-2026-organizing-photo-collection-3.png)
 
 
 

@@ -70,7 +70,7 @@ This means:
 - Only the **magnitude changes**, by a factor of $\lambda$.
 
 
-![Flowchart](/resources/ch-11-numpy-august-2026-eigen-decomposition.png)
+![Flowchart](../resources/ch-11-numpy-august-2026-eigen-decomposition.png)
 
 
 **Beginner tip:** this is precisely what makes $\vec{v}$ special — for
@@ -153,7 +153,7 @@ $$A = Q \Lambda Q^{-1}$$
 
 
 
-![Flowchart](/resources/ch-11-numpy-august-2026-eigen-decomposition-02.png)
+![Flowchart](../resources/ch-11-numpy-august-2026-eigen-decomposition-02.png)
 
 
 

@@ -43,7 +43,7 @@ can also use this page as a quick lookup later, not just a first read.
 >   [NumPy random sampling guide](https://numpy.org/doc/stable/reference/random/index.html).
 
 
-![Flowchart](/resources/ch-11-numpy-august-2026-numpy-array-creation-beginner-to-advanced.png)
+![Flowchart](../resources/ch-11-numpy-august-2026-numpy-array-creation-beginner-to-advanced.png)
 
 
 ---
@@ -641,7 +641,7 @@ print("np.random.uniform():->\n", h)
 The tree below groups every array-creation tool by *what kind of input it
 starts from* — useful as a "which function do I actually want?" lookup.
 
-![Flowchart](/resources/ch-11-numpy-august-2026-numpy-array-creation-complete-map.png)
+![Flowchart](../resources/ch-11-numpy-august-2026-numpy-array-creation-complete-map.png)
 
 
 

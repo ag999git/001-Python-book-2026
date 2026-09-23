@@ -107,19 +107,19 @@ in memory.
 ### The following figure shows how broadcasting was done on a scalar in the script above:
 
 
-![Broadcasting of a scalar](/resources/ch11-broadcast-scalar.png)
+![Broadcasting of a scalar](../resources/ch11-broadcast-scalar.png)
 
 ### The following figure shows how broadcasting was done on a row vector in the above script
 
 
 
-![Broadcasting a row vector](/resources/ch11-broadcast-row-vector.png)
+![Broadcasting a row vector](../resources/ch11-broadcast-row-vector.png)
 
 ### The following figure shows how broadcasting was done on a column vector in the above script
 
 
 
-![Broadcasting Column Vector](/resources/ch11-broadcast-column-vector.png)
+![Broadcasting Column Vector](../resources/ch11-broadcast-column-vector.png)
 
 
 ---
@@ -130,12 +130,12 @@ Before diving into the detailed rules, look at this decision process. Every
 time you write `A + B` in NumPy, this is effectively the logic the engine
 runs through.
 
-![Broadcasting Decision Tree](/resources/ch11-broadcast-rule-flowchart.png)
+![Broadcasting Decision Tree](../resources/ch11-broadcast-rule-flowchart.png)
 
 
 Here's the same logic as a different flowchart:
 
-![Flowchart](/resources/ch-11-numpy-august-2026-broadcasting1.png)
+![Flowchart](../resources/ch-11-numpy-august-2026-broadcasting1.png)
 
 ---
 
@@ -172,12 +172,12 @@ runs out of dimensions on B's side, so it pads B with a `1` at the front.
 
 Both shapes now match exactly, so the arithmetic operation can proceed.
 
-![Flowchart](/resources/ch-11-numpy-august-2026-broadcasting2.png)
+![Flowchart](../resources/ch-11-numpy-august-2026-broadcasting2.png)
 
 ### The following figure shows the steps in broadcasting of Array A shape `(8, 1, 6, 1)` and Array B shape `(7, 1, 5)`
 
 
-![Flow chart showing broadcasting of A (8,1,6,1) and B (7,1,5)](/resources/ch11-broadcast-2-matrices-different-dimensions.png)
+![Flow chart showing broadcasting of A (8,1,6,1) and B (7,1,5)](../resources/ch11-broadcast-2-matrices-different-dimensions.png)
 
 
 **Do's and don'ts:**

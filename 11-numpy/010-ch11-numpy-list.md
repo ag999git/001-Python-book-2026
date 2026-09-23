@@ -58,7 +58,7 @@ at once, instead of one item at a time.
 Neither one is "better" in every situation — they're suited to different
 jobs, which is exactly what this chapter's script demonstrates.
 
-![Flowchart](/resources/ch-11-numpy-august-2026-numpy-array-vs-list.png)
+![Flowchart](../resources/ch-11-numpy-august-2026-numpy-array-vs-list.png)
 
 ---
 

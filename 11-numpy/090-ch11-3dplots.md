@@ -45,7 +45,7 @@ Understand how:
 - functions $Z = f(X, Y)$ create surfaces
 - Matplotlib visualizes them
 
-![Flowchart](/resources/ch-11-numpy-august-2026-3D-surface.png)
+![Flowchart](../resources/ch-11-numpy-august-2026-3D-surface.png)
 
 
 
@@ -296,7 +296,7 @@ Derived from $Z^2 = X^2 + Y^2$
 
 ### Flowchart of the process
 
-![Flowchart](/resources/ch11-numpy-flowchart-matplotlib.png)
+![Flowchart](../resources/ch11-numpy-flowchart-matplotlib.png)
 
 ---
 
@@ -384,11 +384,11 @@ plt.show()
 
 ### Output Figure (Plane)
 
-![Figure Plane](/resources/ch11-numpy-matplotlib-plane.png)
+![Figure Plane](../resources/ch11-numpy-matplotlib-plane.png)
 
 ### Output Figure (Cone)
 
-![Figure Cone](/resources/ch11-numpy-matplotlib-cone.png)
+![Figure Cone](../resources/ch11-numpy-matplotlib-cone.png)
 
 ---
 

@@ -72,7 +72,7 @@ sequence of arrays that all share the *same* shape, and joins them along a
   now have a "page number" dimension that simply didn't exist before.
 
 
-![Flowchart](/resources/ch-11-numpy-august-2026-combining-arrays-into-new-dimensions-2.png)
+![Flowchart](../resources/ch-11-numpy-august-2026-combining-arrays-into-new-dimensions-2.png)
 
 
 
@@ -205,7 +205,7 @@ np.stack((a, b), axis=1)
 
 ### Visual intuition
 
-![Flowchart](/resources/ch-11-numpy-august-2026-combining-arrays-into-new-dimensions-3.png)
+![Flowchart](../resources/ch-11-numpy-august-2026-combining-arrays-into-new-dimensions-3.png)
 
 ---
 
@@ -341,12 +341,12 @@ The following flowchart visualizes the script above and shows the three
 possible ways `np.stack()` was used:
 
 
-![Diagram](/resources/ch11-np-stack.png)
+![Diagram](../resources/ch11-np-stack.png)
 
 
 
 ## Another flowchart
-![Flowchart](/resources/ch-11-numpy-august-2026-combining-arrays-into-new-dimensions-1.png)
+![Flowchart](../resources/ch-11-numpy-august-2026-combining-arrays-into-new-dimensions-1.png)
 
 ---
 

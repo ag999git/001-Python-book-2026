@@ -80,7 +80,7 @@ For `y`:
   A 1D array has no `axis=1` to speak of — this single fact is the root
   cause of the different behaviour you're about to see.
 
-![Flowchart](/resources/ch-11-numpy-august-2026-hstack-vstack.png)
+![Flowchart](../resources/ch-11-numpy-august-2026-hstack-vstack.png)
 
 
 
@@ -130,7 +130,7 @@ axis = 0
 
 > For 1D arrays, **`hstack()` is identical to `concatenate(axis=0)`.**
 
-![Flowchart](/resources/ch-11-numpy-august-2026-hstack-vstack--2.png)
+![Flowchart](../resources/ch-11-numpy-august-2026-hstack-vstack--2.png)
 
 
 
@@ -170,7 +170,7 @@ most important detail in this whole chapter, because it's exactly what
 
 **Shape:** `(2, 2)` — a genuine 2D matrix now, with 2 rows and 2 columns.
 
-![Flowchart](/resources/ch-11-numpy-august-2026-hstack-vstack--3.png)
+![Flowchart](../resources/ch-11-numpy-august-2026-hstack-vstack--3.png)
 
 
 

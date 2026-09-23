@@ -109,7 +109,7 @@ summing a `(2, 2, 2)` array along `axis=0` leaves you with a `(2, 2)`
 result: one dimension has been removed, and the other two survive
 unchanged.
 
-![Flowchart](/resources/ch-11-numpy-august-2026-3D-arrays-axis-ops.png)
+![Flowchart](../resources/ch-11-numpy-august-2026-3D-arrays-axis-ops.png)
 
 ---
 
@@ -145,7 +145,7 @@ Layer 1:
  [7 8]]
 ```
 
-![Flowchart](/resources/ch-11-numpy-august-2026-3D-arrays-2.png)
+![Flowchart](../resources/ch-11-numpy-august-2026-3D-arrays-2.png)
 
 
 

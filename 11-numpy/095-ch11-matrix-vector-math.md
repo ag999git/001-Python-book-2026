@@ -37,7 +37,7 @@ are exactly what `matrix @ vector` computes in a single line of Python.
 
 
 
-![Flowchart](/resources/ch-11-numpy-august-2026-vector-matrices-01.png)
+![Flowchart](../resources/ch-11-numpy-august-2026-vector-matrices-01.png)
 
 
 

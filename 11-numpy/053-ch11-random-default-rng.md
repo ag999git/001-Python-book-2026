@@ -147,7 +147,7 @@ print(b)
 # line runs first changes which numbers end up in which variable.
 ```
 
-![Flowchart](/resources/ch-11-numpy-august-2026-prng1.png)
+![Flowchart](../resources/ch-11-numpy-august-2026-prng1.png)
 
 
 
@@ -182,7 +182,7 @@ print(b_next)
 # completely unaffected by anything happening to the other generator.
 ```
 
-![Flowchart](/resources/ch-11-numpy-august-2026-prng2.png)
+![Flowchart](../resources/ch-11-numpy-august-2026-prng2.png)
 
 
 

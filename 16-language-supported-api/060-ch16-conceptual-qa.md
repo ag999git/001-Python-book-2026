@@ -153,6 +153,8 @@ flowchart TD
     I --> B
 ```
 
+![Answer to Q1 (b): Why binary search is O(log n)](../resources/ch16-conceptual-qa-fig-01.png)
+
 The script below counts the comparisons made by both methods, so you can see the difference for yourself.
 
 ```python
@@ -315,6 +317,8 @@ flowchart TD
     K -- "No" --> I
 ```
 
+![When O(n) is achievable](../resources/ch16-conceptual-qa-fig-02.png)
+
 The script below counts comparisons for the basic and optimised versions on a sorted list and on a reversed list.
 
 ```python
@@ -423,6 +427,8 @@ flowchart TD
     H --> B
     G -- "No" --> I["9. List is sorted"]
 ```
+
+![Answer to Q3: The card analogy](../resources/ch16-conceptual-qa-fig-03.png)
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -937,6 +943,8 @@ flowchart TD
     C --> F["index 5: value 5"]
 ```
 
+![How Python stores a heap](../resources/ch16-conceptual-qa-fig-04.png)
+
 Check the rule: 1 is smaller than 3 and 2. 3 is smaller than 7 and 4. 2 is smaller than 5. Every parent is smaller than its children, so this is a valid min-heap.
 
 [Back to the Table of Contents](#table-of-contents)
@@ -1231,6 +1239,8 @@ flowchart TD
     G --> H["8. Worker thread ends"]
 ```
 
+![The None sentinel pattern](../resources/ch16-conceptual-qa-fig-05.png)
+
 ```python
 # Step 1 - Imports
 import queue
@@ -1322,6 +1332,8 @@ flowchart TD
     D --> E["5. Save the result in the cache"]
     E --> F["6. Return the result"]
 ```
+
+![Answer to Q10: What memoisation is](../resources/ch16-conceptual-qa-fig-06.png)
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1919,6 +1931,8 @@ flowchart TD
     D -- "No" --> E["5. Return result, 120"]
 ```
 
+![Step-by-step trace for reduce(multiply, [2, 3, 4, 5])](../resources/ch16-conceptual-qa-fig-07.png)
+
 [Back to the Table of Contents](#table-of-contents)
 
 #### Why Guido van Rossum moved it to functools
@@ -2053,6 +2067,8 @@ flowchart TD
     E -- "No" --> G["7. Convert the data to json-friendly types first, then use json"]
 ```
 
+![Practical rule](../resources/ch16-conceptual-qa-fig-08.png)
+
 ```python
 # Step 1 - Imports
 import json
@@ -2136,6 +2152,8 @@ flowchart TD
     G -- "Yes" --> B
     G -- "No" --> H["8. List is sorted"]
 ```
+
+![Answer to Q17: The sorted and unsorted parts](../resources/ch16-conceptual-qa-fig-09.png)
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -2546,6 +2564,8 @@ flowchart TD
     D -- "Yes" --> E["7. Run the module code once and store it in sys.modules"]
     E --> F
 ```
+
+![How importing works](../resources/ch16-conceptual-qa-fig-10.png)
 
 See [the import system](https://docs.python.org/3/reference/import.html) for full details.
 

@@ -128,7 +128,7 @@ A useful way to think about it:
 
 ### Visual Representation
 
-![Visual Representation](/resources/ch16-pytest-080-flags-mental-model.png)
+![Visual Representation](../resources/ch16-pytest-080-flags-mental-model.png)
 
 [Back to the Table of Contents](010-ch20-pytest-flags.md#table-of-contents)
 
@@ -159,7 +159,7 @@ When pytest starts, it follows the same order every time:
 4. It runs the selected tests. If you did not use `-s`, it captures any `print()` output.
 5. It displays the results, in short form or in detail (with `-v`).
 
-![How pytest processes flags](/resources/ch16-pytest-090-how-process-flags.png)
+![How pytest processes flags](../resources/ch16-pytest-090-how-process-flags.png)
 
 [Back to the Table of Contents](010-ch20-pytest-flags.md#table-of-contents)
 
@@ -371,7 +371,7 @@ You can read more in the pytest guide on [capturing output](https://docs.pytest.
 
 ### Output Capture Flow
 
-![Output Capture Flow](/resources/ch16-pytest-092-flags-output-capture.png)
+![Output Capture Flow](../resources/ch16-pytest-092-flags-output-capture.png)
 
 [Back to the Table of Contents](010-ch20-pytest-flags.md#table-of-contents)
 
@@ -627,7 +627,7 @@ The message `Running withdraw test` does not appear because `test_withdraw` was 
 
 ### How -k Works
 
-![How -k works](/resources/ch16-pytest-095-flag-k.png)
+![How -k works](../resources/ch16-pytest-095-flag-k.png)
 
 In simple steps:
 
@@ -735,7 +735,7 @@ When no file name is given, as here, pytest searches the current folder (and the
 
 ### Combined Execution Flow
 
-![Combined Execution Flow](/resources/ch16-pytest-096-combining-tests.png)
+![Combined Execution Flow](../resources/ch16-pytest-096-combining-tests.png)
 
 [Back to the Table of Contents](010-ch20-pytest-flags.md#table-of-contents)
 

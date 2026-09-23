@@ -403,7 +403,7 @@ When a test asks for a fixture, pytest searches for it in a fixed order, startin
 
 #### Flowchart
 
-![Flow chart](/resources/ch16-pytest-010-conftest-py.png)
+![Flow chart](../resources/ch16-pytest-010-conftest-py.png)
 
 The same lookup, step by step:
 

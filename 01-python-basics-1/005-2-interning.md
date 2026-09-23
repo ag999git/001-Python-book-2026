@@ -78,6 +78,8 @@ flowchart LR
     D["5. d = 257, built at run time"] --> O2["7. Another object: 257"]
 ```
 
+![What Is Interning](../resources/ch01-2-interning-fig-01.png)
+
 In the picture, `a` and `b` point to **one** object, so `a is b` is `True`. But `c` and `d` point to **two different** objects that happen to hold the same value, so `c == d` is `True` while `c is d` is `False`. (Section 6 shows this with real code.)
 
 A word of caution: interning is an **implementation detail** of CPython - the standard version of Python that you download from python.org. It is not part of the Python language rules, so the exact details can differ between Python versions, and between CPython and other versions of Python such as PyPy.
@@ -116,6 +118,8 @@ flowchart TD
     D -->|Yes| R
     D -->|No| N["6. Create a new object"]
 ```
+
+![Where Does Interning Happen](../resources/ch01-2-interning-fig-02.png)
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -406,6 +410,8 @@ flowchart TD
     D -->|Yes| E["5. Use is - rare in everyday code"]
     D -->|No| F["6. Use == - the right choice almost every time"]
 ```
+
+![The Golden Rule for Comparing Values](../resources/ch01-2-interning-fig-03.png)
 
 [Back to the Table of Contents](#table-of-contents)
 

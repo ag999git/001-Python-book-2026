@@ -57,7 +57,7 @@ A note on the outputs. Where a script accepts input from the keyboard, the sampl
 Before the questions, here is a short map of the ideas that follow. Each box is explained by one or more questions on this page.
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["1. A string is a built-in type: an ordered sequence of characters"] --> B["2. Create it with single, double or triple quotes"]
     B --> C["3. Reach one character by index, many by slicing"]
     C --> D["4. Strings are immutable, so every operation returns a NEW string"]
@@ -65,6 +65,8 @@ flowchart TD
     E --> F["6. Built-in methods do the common jobs: case, search, split, join"]
     F --> G["7. f-strings put values neatly into text for display"]
 ```
+
+![How Strings Fit Into Python](../resources/ch17-conceptual-qa-fig-01.png)
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -657,6 +659,8 @@ flowchart LR
     E --> F["n (5, -1)"]
 ```
 
+![Question 4. Positive and Negative String Indexing](../resources/ch17-conceptual-qa-fig-02.png)
+
 **Follow-up questions**
 
 **4.1 What does a single character returned by indexing look like to Python?**
@@ -850,6 +854,8 @@ flowchart LR
     B --> C["3. New string created: HELLO"]
     A --> D["4. Original string still Hello"]
 ```
+
+![Question 5. String Immutability](../resources/ch17-conceptual-qa-fig-03.png)
 
 **Follow-up questions**
 
@@ -1107,7 +1113,7 @@ Are both the same string? True
 **Flowchart**
 
 ```mermaid
-flowchart LR
+flowchart TD
     A["1. Python reads the string character by character"] --> B{"2. Is the character a backslash?"}
     B -->|"No"| C["3. Store the character as it is"]
     B -->|"Yes"| D["4. Read the next character too"]
@@ -1115,6 +1121,8 @@ flowchart LR
     C --> F["6. Move to the next character"]
     E --> F
 ```
+
+![Question 6. Escape Sequences](../resources/ch17-conceptual-qa-fig-04.png)
 
 **Common beginner mistakes**
 
@@ -1286,13 +1294,15 @@ Regular expressions are the most common use of all. There the backslash has its 
 **Diagram**
 
 ```mermaid
-flowchart LR
+flowchart TD
     A["1. Python meets a backslash inside a string"] --> B{"2. Does the literal have an r prefix?"}
     B -->|"Yes"| C["3. Keep the backslash as an ordinary character"]
     B -->|"No"| D["4. Read the next character and form an escape sequence"]
     C --> E["5. Continue with the rest of the string"]
     D --> E
 ```
+
+![Question 7. Raw Strings](../resources/ch17-conceptual-qa-fig-05.png)
 
 **One limitation worth knowing**
 
@@ -1546,15 +1556,17 @@ flowchart TD
     D --> E["5. Process the character"]
     E --> F{"6. Any characters left?"}
     F -->|"Yes"| D
-    F -->|"No"| L["11. End"]
+    F -->|"No"| L["12. End"]
     C -->|"while"| G["7. Set the index to 0"]
     G --> H["8. Read the character at the index"]
     H --> I["9. Process the character"]
     I --> J["10. Add 1 to the index"]
-    J --> K{"Index still less than the length?"}
+    J --> K{"11. Index still less than the length?"}
     K -->|"Yes"| H
     K -->|"No"| L
 ```
+
+![Question 8. Traversing a String With for and while](../resources/ch17-conceptual-qa-fig-06.png)
 
 **Common beginner mistakes**
 
@@ -1887,7 +1899,7 @@ Does the message contain a banned word? False
 **Flowchart**
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["1. Original string"] --> B{"2. Which operator?"}
     B -->|"+"| C["3. New joined string"]
     B -->|"*"| D["4. New repeated string"]
@@ -1896,6 +1908,8 @@ flowchart TD
     D --> F
     E --> F
 ```
+
+![Question 9. Concatenation, Repetition and Membership](../resources/ch17-conceptual-qa-fig-07.png)
 
 **Common beginner mistakes**
 
@@ -2084,13 +2098,15 @@ For `text[2:9:2]` Python
 **Flowchart**
 
 ```mermaid
-flowchart LR
+flowchart TD
     A["1. Go to the start index"] --> B["2. Copy the character"]
     B --> C["3. Move forward by the step"]
     C --> D{"4. Has the stop index been reached?"}
     D -->|"No"| B
     D -->|"Yes"| E["5. Return the new string"]
 ```
+
+![Question 10. String Slicing](../resources/ch17-conceptual-qa-fig-08.png)
 
 **Examples**
 
@@ -2450,6 +2466,8 @@ flowchart LR
     B -->|"4. chr()"| C["5. The character again, A"]
 ```
 
+![Question 11. ASCII, Unicode, ord() and chr()](../resources/ch17-conceptual-qa-fig-09.png)
+
 **Practical applications**
 
 `ord()` and `chr()` are useful in
@@ -2778,16 +2796,18 @@ In this example both sorts happen to agree. Change `"Apple"` to `"apple"` and `"
 **Flowchart**
 
 ```mermaid
-flowchart TD
-    A["1. Compare two strings"] --> B["2. Look at the first character of each"]
+flowchart LR
+    A["1. Compare two strings"] --> B["2. Look at the first pair of characters"]
     B --> C{"3. Are they equal?"}
     C -->|"No"| D["4. The one with the smaller code point is the smaller string"]
     C -->|"Yes"| E["5. Move to the next pair of characters"]
     E --> F{"6. Has either string ended?"}
-    F -->|"No"| B
+    F -->|"No"| C
     F -->|"Yes, both together"| G["7. The strings are equal"]
     F -->|"Yes, one of them"| H["8. The shorter string is the smaller one"]
 ```
+
+![Question 12. Comparing Strings](../resources/ch17-conceptual-qa-fig-10.png)
 
 **Common beginner mistakes**
 
@@ -3011,6 +3031,8 @@ flowchart LR
     C --> D["4. replace() swaps one word for another"]
     D --> E["5. Final string"]
 ```
+
+![Question 13. String Methods as Object Methods](../resources/ch17-conceptual-qa-fig-11.png)
 
 **Why are methods preferable to ordinary functions?**
 
@@ -3384,7 +3406,7 @@ Step 4 is one of the most frequent beginner errors. Nothing goes wrong, no error
 **Flowchart**
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["1. Original string"] --> B["2. lower() returns a new string"]
     A --> C["3. replace() returns a new string"]
     A --> D["4. split() returns a list"]
@@ -3393,6 +3415,8 @@ flowchart TD
     D --> E
     A --> F["6. The original object is never changed"]
 ```
+
+![Question 14. The Common String Methods](../resources/ch17-conceptual-qa-fig-12.png)
 
 **Choosing the appropriate method**
 
@@ -3662,6 +3686,8 @@ flowchart TD
     C -->|"Yes"| D["4. Convert and process the value"]
     C -->|"No"| E["5. Show an error message and ask again"]
 ```
+
+![Question 15. The is Family of Methods](../resources/ch17-conceptual-qa-fig-13.png)
 
 **Comparison table**
 
@@ -4020,6 +4046,8 @@ flowchart LR
     D --> E["5. The finished string is produced"]
 ```
 
+![Question 16. f-Strings](../resources/ch17-conceptual-qa-fig-14.png)
+
 **Common beginner mistakes**
 
 | Mistake | Explanation |
@@ -4230,6 +4258,8 @@ flowchart TD
     G -->|"Yes"| H["8. Palindrome"]
 ```
 
+![Question 17. Palindrome Using Indexing](../resources/ch17-conceptual-qa-fig-15.png)
+
 **Advantages**
 
 - Efficient, because it stops at the first mismatch.
@@ -4408,6 +4438,8 @@ flowchart TD
     D -->|"Yes"| E["5. Palindrome"]
     D -->|"No"| F["6. Not a palindrome"]
 ```
+
+![Question 18. Palindrome Using Slicing](../resources/ch17-conceptual-qa-fig-16.png)
 
 **Advantages**
 
@@ -4596,6 +4628,8 @@ flowchart TD
     G --> H["8. Add a cleaning step if needed"]
 ```
 
+![Question 19. Comparing the Two Palindrome Methods](../resources/ch17-conceptual-qa-fig-17.png)
+
 **Key points**
 
 - Both algorithms are correct.
@@ -4618,7 +4652,7 @@ Understanding strings requires connecting several independent concepts. Each of 
 **Concept map**
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["String"] --> B["Unicode, Question 11"]
     A --> C["Indexing, Question 4"]
     A --> D["Slicing, Question 10"]
@@ -4628,6 +4662,8 @@ flowchart TD
     A --> H["Comparison, Question 12"]
     A --> I["Immutability, Question 5"]
 ```
+
+![Question 20. Strings, a Comprehensive Review](../resources/ch17-conceptual-qa-fig-18.png)
 
 **How the concepts work together**
 

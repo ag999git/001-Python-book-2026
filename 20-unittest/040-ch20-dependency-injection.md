@@ -648,6 +648,8 @@ flowchart TD
     J --> K["11. Test completes: PASSED or FAILED"]
 ```
 
+![Flow for EACH test (testinjection / testconnect / teststate)](../resources/ch20-dependency-injection-fig-01.png)
+
 In words:
 
 1. Pytest collects the test function `test_injection(db)`.
@@ -705,6 +707,8 @@ flowchart TD
     G --> H["8. Check: assert result == 'connected'"]
 ```
 
+![For testconnect(db)](../resources/ch20-dependency-injection-fig-02.png)
+
 [Back to the Table of Contents](040-ch20-dependency-injection.md#table-of-contents)
 
 ### For test_state(db)
@@ -719,6 +723,8 @@ flowchart TD
     F --> G["7. Run db.new_flag = 'set in test_state'"]
     G --> H["8. Check: assert db.new_flag == 'set in test_state'"]
 ```
+
+![For teststate(db)](../resources/ch20-dependency-injection-fig-03.png)
 
 [Back to the Table of Contents](040-ch20-dependency-injection.md#table-of-contents)
 

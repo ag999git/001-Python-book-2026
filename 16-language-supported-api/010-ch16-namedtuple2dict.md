@@ -39,7 +39,6 @@ This exercise belongs to Chapter 16, which deals with the ready-made tools Pytho
 - [6. Follow-up Questions with Answers](#6-follow-up-questions-with-answers)
 - [7. Common Mistakes](#7-common-mistakes)
 - [8. Summary](#8-summary)
-- [Table of Changes](#table-of-changes)
 
 ---
 

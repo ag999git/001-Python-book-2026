@@ -56,7 +56,6 @@ All scripts on this page were tested with Python 3.11. They should work the same
   - [8.4 permutations: Seating Arrangements](#84-permutations-seating-arrangements)
 - [9. Check Your Understanding](#9-check-your-understanding)
 - [10. Summary](#10-summary)
-- [Table of Changes](#table-of-changes)
 
 ---
 
@@ -1097,7 +1096,7 @@ Step 4 - Value : 404
 Step 4 - HttpStatus(500) is HttpStatus.SERVER_ERROR
 Step 4 - HttpStatus.NOT_FOUND == 404 ? False
 Step 4 - HttpStatus.NOT_FOUND.value == 404 ? True
-Step 5 - AttributeError: NOT_FOUNT
+Step 5 - AttributeError: type object 'HttpStatus' has no attribute 'NOT_FOUNT'
 ```
 
 **Explanation:** `HttpStatus.NOT_FOUND` stands for the number `404`, and you can get that number with `HttpStatus.NOT_FOUND.value`. Using the name makes the code instantly understandable to another developer. If you type `HttpStatus.NOT_FOUNT` by mistake, Python immediately raises an `AttributeError`, so typos are caught at once. A bare number like `4040` would slip through unnoticed.

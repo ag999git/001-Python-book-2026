@@ -209,6 +209,8 @@ flowchart LR
     C --> F["Step 6: flag = True"]
 ```
 
+![Q2. Write a script that puts three values ("Data", 2026, True) into one tuple. Then, unpack those values into three separate variables and print them.](../resources/ch19-tuples-scripting-qa-fig-01.png)
+
 **Try this next**
 
 What happens if you try to unpack the three values into only two variables?
@@ -282,6 +284,8 @@ flowchart TD
     D --> E["Step 5: except block catches it and prints the message"]
     E --> F["Step 6: The tuple is still (10, 20, 30)"]
 ```
+
+![Q3. Write a script that shows you cannot change a tuple element. Try to change the first item of a tuple and print the error message.](../resources/ch19-tuples-scripting-qa-fig-02.png)
 
 **Try this next**
 
@@ -453,12 +457,14 @@ Same object as before? False
 - You can only join a tuple to another tuple. That is why the script uses `(40,)` with a comma. Writing `my_tuple + 40` or `my_tuple + (40)` raises `TypeError: can only concatenate tuple (not "int") to tuple`.
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["Step 1: my_tuple points to (10, 20, 30)"] --> B["Step 2: Python evaluates my_tuple + (40,)"]
     B --> C["Step 3: A new tuple (10, 20, 30, 40) is built at a new memory address"]
     C --> D["Step 4: The name my_tuple now points to the new tuple"]
     D --> E["Step 5: The old tuple is unchanged, and is freed if nothing else uses it"]
 ```
+
+![Q5. Write a script that adds the number 40 to the end of the tuple (10, 20, 30) using the + operator. Print the tuple and its memory ID before and after the change.](../resources/ch19-tuples-scripting-qa-fig-03.png)
 
 **Try this next**
 
@@ -746,12 +752,14 @@ Type of rest_of_items: <class 'list'>
 - Extended unpacking was added to Python by [PEP 3132](https://peps.python.org/pep-3132/). (A PEP is a document that proposes a new feature for Python.)
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["Step 1: data = (10, 20, 30, 40, 50)"] --> B["Step 2: Normal name first_item takes the first item"]
     B --> C["Step 3: first_item = 10"]
     C --> D["Step 4: Starred name collects every item that is left"]
     D --> E["Step 5: rest_of_items = [20, 30, 40, 50], always a list"]
 ```
+
+![Q9. Write a script to unpack the tuple (10, 20, 30, 40, 50). Capture the first item in a normal variable, and use the  operator to collect the rest of the items.](../resources/ch19-tuples-scripting-qa-fig-04.png)
 
 **Try this next**
 
@@ -987,11 +995,13 @@ bool(0):    False
 - Values that count as `False` are often called **falsy**, and values that count as `True` are called **truthy**. See [Python docs: Truth value testing](https://docs.python.org/3/library/stdtypes.html#truth-value-testing).
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["Step 1: A tuple is used in an if statement"] --> B{"Step 2: Does the tuple have any items?"}
     B -- "No, it is empty" --> C["Step 3: It counts as False, so the else branch runs"]
     B -- "Yes, one or more" --> D["Step 4: It counts as True, so the if branch runs. The values inside are not checked"]
 ```
+
+![Q12. Write a script that tests an empty tuple () and a single-item tuple (0,) inside an if statement to check if Python sees them as True or False.](../resources/ch19-tuples-scripting-qa-fig-05.png)
 
 | Tuple | Number of items | Counts as |
 | --- | --- | --- |
@@ -1076,6 +1086,8 @@ flowchart TD
     E -- Yes --> B
     E -- No --> F["Step 6: Return False"]
 ```
+
+![Q13. Write a script that uses the in operator to check if the item "Apple" exists inside the tuple ("Apple", "Banana", "Cherry"). Then check for "Orange".](../resources/ch19-tuples-scripting-qa-fig-06.png)
 
 **Try this next**
 
@@ -1162,6 +1174,8 @@ flowchart LR
     D --> E["Step 5: Unpack: second item goes to t2"]
     E --> F["Step 6: t1 = (2, Beta), t2 = (1, Alpha)"]
 ```
+
+![Q14. Write a script that swaps the values of two tuple variables t1 and t2 in a single line without using any temporary storage variables.](../resources/ch19-tuples-scripting-qa-fig-07.png)
 
 **Try this next**
 
@@ -1409,6 +1423,8 @@ flowchart LR
     C --> D["Step 4: Result is 3"]
 ```
 
+![Q17. Write a script to extract the number 3 out of the nested data tuple ((1, 2), (3, 4)) using index brackets.](../resources/ch19-tuples-scripting-qa-fig-08.png)
+
 **Try this next**
 
 Get the number `4` in two different ways, and unpack the whole nested tuple in one line.
@@ -1489,12 +1505,14 @@ Min: 10 | Max: 30 | Total sum: 60
 - `min()`, `max()` and `sum()` are built-in functions that work on any tuple or list of numbers.
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["Step 1: Call analyze_sequence((10, 20, 30))"] --> B["Step 2: Work out min = 10, max = 30, sum = 60"]
     B --> C["Step 3: return packs them into one tuple (10, 30, 60)"]
     C --> D["Step 4: The tuple is sent back to the caller"]
     D --> E["Step 5: Unpack: low = 10, high = 30, total = 60"]
 ```
+
+![Q18. Write a function that takes a tuple and returns its minimum value, maximum value, and total sum all at once. Call the function with the tuple (10, 20, 30) and unpack the results.](../resources/ch19-tuples-scripting-qa-fig-09.png)
 
 **Try this next**
 
@@ -1563,7 +1581,7 @@ Student name: Bob | Exam grade: 92
 - The loop variables can have any names. `name` and `score` are chosen because they describe the data.
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["Step 1: grades.items() provides the pairs"] --> B{"Step 2: Is there another pair?"}
     B -- Yes --> C["Step 3: Take the next pair, for example (Alice, 85)"]
     C --> D["Step 4: Unpack it: name = Alice, score = 85"]
@@ -1571,6 +1589,8 @@ flowchart TD
     E --> B
     B -- No --> F["Step 6: The loop ends"]
 ```
+
+![Q19. Write a script that loops through the dictionary items {"Alice": 85, "Bob": 92} and automatically unpacks the keys and values during each pass of the loop.](../resources/ch19-tuples-scripting-qa-fig-10.png)
 
 **Try this next**
 
@@ -1647,13 +1667,15 @@ Handled error message: Not Found
 - **Line `case _:`** uses the wildcard `_`, which matches anything. It is a good habit to include it as the last case, so that unexpected values do not pass by silently.
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["Step 1: status = (404, Not Found)"] --> B{"Step 2: case (200, message) - two items and first item 200?"}
     B -- Yes --> C["Step 3: Print the success message"]
     B -- No --> D{"Step 4: case (404, message) - two items and first item 404?"}
     D -- Yes --> E["Step 5: message = Not Found, print the error message"]
     D -- No --> F["Step 6: case _ matches anything, print Unknown status"]
 ```
+
+![Q20. Write a script that uses a match-case statement to check the tuple variable status = (404, "Not Found") and print a custom message based on its contents.](../resources/ch19-tuples-scripting-qa-fig-11.png)
 
 Read more in the [Python tutorial on match statements](https://docs.python.org/3/tutorial/controlflow.html#match-statements).
 

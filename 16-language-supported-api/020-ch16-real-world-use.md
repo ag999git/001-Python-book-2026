@@ -129,6 +129,8 @@ flowchart TD
     E --> F["6. Print each code and its count"]
 ```
 
+![Counter: Log File Analysis](../resources/ch16-real-world-use-fig-01.png)
+
 ```python
 # Step 1 - Import Counter
 from collections import Counter
@@ -272,6 +274,8 @@ flowchart TD
     F -- "Yes" --> B
     F -- "No" --> G["7. Print the grade book"]
 ```
+
+![defaultdict: Grouping Grades by Letter](../resources/ch16-real-world-use-fig-02.png)
 
 ```python
 # Step 1 - Import defaultdict
@@ -521,6 +525,8 @@ flowchart TD
     D -- "No" --> F["6. Raise KeyError"]
 ```
 
+![ChainMap: Application Configuration](../resources/ch16-real-world-use-fig-03.png)
+
 ```python
 # Step 1 - Import ChainMap
 from collections import ChainMap
@@ -626,6 +632,8 @@ flowchart TD
     C -- "Yes" --> F["6. End"]
 ```
 
+![Priority Task Manager](../resources/ch16-real-world-use-fig-04.png)
+
 ```python
 # Step 1 - Import heapq and create an empty heap
 import heapq
@@ -725,6 +733,8 @@ flowchart TD
     C --> D["4. List is now 40, 55, 65, 70, 80, 95"]
     D --> E["5. Print ascending and descending order"]
 ```
+
+![Student Marks List](../resources/ch16-real-world-use-fig-05.png)
 
 ```python
 # Step 1 - Import bisect and create a sorted list
@@ -1014,6 +1024,8 @@ flowchart TD
     F -- "No" --> H["8. Print Unknown status"]
 ```
 
+![HTTP Status Codes](../resources/ch16-real-world-use-fig-06.png)
+
 ```python
 # Step 1 - Import Enum and create the status code class
 from enum import Enum
@@ -1243,6 +1255,8 @@ flowchart TD
     B -- "Yes: cache hit" --> G["7. Return the saved result at once"]
 ```
 
+![lrucache: Simulating a Slow Database](../resources/ch16-real-world-use-fig-07.png)
+
 ```python
 # Step 1 - Import lru_cache and time
 from functools import lru_cache
@@ -1440,6 +1454,8 @@ flowchart TD
     D -- "Yes" --> B
     D -- "No" --> E["5. Return acc as the grand total"]
 ```
+
+![reduce: Calculating Shopping Cart Total](../resources/ch16-real-world-use-fig-08.png)
 
 ```python
 # Step 1 - Import reduce and create the cart

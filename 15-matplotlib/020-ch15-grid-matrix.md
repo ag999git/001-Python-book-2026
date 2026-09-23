@@ -697,21 +697,7 @@ A **heat map** is a grid of colored cells in which the color shows the size of e
 
 The flowchart below shows how to decide which kind of data you have and which method to use.
 
-```mermaid
-flowchart TD
-    A[Look at how the values are arranged] --> B{Is each reading a pair of x and y values}
-    B -->|Yes| C[Coordinate data]
-    B -->|No| D{Are the values arranged in rows and columns}
-    D -->|Yes| E[Grid or matrix data]
-    D -->|No| F[Reorganize the data first, for example with pivot]
-    F --> E
-    C --> G{What should the graph show}
-    G -->|Trend or change over time| H[Use plot]
-    G -->|Separate points or a relationship| I[Use scatter]
-    E --> J{What should the graph show}
-    J -->|Each value as a colored cell| K[Use imshow]
-    J -->|Lines or bands of equal value| L[Use contour or contourf]
-```
+![Deciding whether your data is coordinate data or grid data, and which method to use](../resources/ch-15-fig-07-coordinate-or-grid-data.png)
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1298,18 +1284,7 @@ print(B)
 
 #### Flowchart: Matrix Slicing
 
-```mermaid
-flowchart TD
-    A[Start with a matrix] --> B[Decide the first and last row needed]
-    B --> C[row_start = first row index]
-    C --> D[row_end = last row index plus 1]
-    D --> E{Are all columns needed}
-    E -->|Yes| F[Use a single colon for the columns]
-    E -->|No| G[column_start = first column index and column_end = last column index plus 1]
-    F --> H[Write matrix with row part, comma, column part inside square brackets]
-    G --> H
-    H --> I[Print the result and check its shape]
-```
+![Writing a matrix slice, one decision at a time](../resources/ch-15-fig-08-matrix-slicing-steps.png)
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1522,17 +1497,7 @@ A[::2, ::2] =
 
 The six tasks follow one path. The flights data starts as a long table, is reshaped into a matrix, is sliced, and is then plotted in two different ways.
 
-```mermaid
-flowchart TD
-    A[Task 1 - Load the flights table with 144 rows] --> B[Task 2 - Pivot into a 12 by 12 matrix]
-    B --> C[Task 3 - Convert to a NumPy array and slice the years 1952 to 1958]
-    A --> D[Task 4 - Pick one year and plot it as coordinate data]
-    D --> E[Line plot and scatter plot]
-    C --> F[Task 5 - Plot the sliced matrix as grid data]
-    F --> G[imshow and contourf]
-    E --> H[Task 6 - Compare the graphs]
-    G --> H
-```
+![The six tasks of the flights script, and how the two routes meet again at the comparison](../resources/ch-15-fig-09-flights-script-tasks.png)
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1727,11 +1692,7 @@ It must first be converted into:
 
 The pandas method `pivot()` does this. It takes one column for the row labels, one column for the column labels, and one column for the values that fill the cells. See [pandas DataFrame.pivot](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.pivot.html).
 
-```mermaid
-flowchart LR
-    A[Long table - year, month, passengers - 144 rows] --> B[pivot with index year, columns month, values passengers]
-    B --> C[Matrix - 12 rows of years by 12 columns of months]
-```
+![A long table becomes a matrix when it is pivoted](../resources/ch-15-fig-10-pivot-long-to-matrix.png)
 
 The small table below shows what `pivot()` does with the first two months of 1949 and 1950.
 

@@ -383,6 +383,8 @@ flowchart TD
     E --> F["6. Answer: (ac - bd) + (ad + bc)j"]
 ```
 
+![How Multiplication Works by Hand](../resources/ch02-complex-numbers-basics-fig-01.png)
+
 [Back to the Table of Contents](#table-of-contents)
 
 #### 5.2 How Division Works by Hand
@@ -405,6 +407,8 @@ flowchart TD
     E --> F
     F --> G["7. Answer as a complex number"]
 ```
+
+![How Division Works by Hand](../resources/ch02-complex-numbers-basics-fig-02.png)
 
 Steps 3 and 4 can be done in either order. They meet again at step 6.
 
@@ -653,7 +657,7 @@ abs(z1) > abs(z2) -> True
 If you need to know which of two complex numbers is "bigger", decide what you mean. Usually it is the distance from 0, so compare `abs()` values, as in Step 4.
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["1. You apply an operation to complex numbers"] --> B{"2. Which operation?"}
     B -->|Arithmetic| C["3. Add, subtract, multiply, divide, power: allowed, gives a complex number"]
     B -->|Equality| D["4. Equal or not equal: allowed, gives True or False"]
@@ -661,6 +665,8 @@ flowchart TD
     B -->|Ordering| F["6. Less than or greater than: TypeError, no natural order"]
     F --> G["7. To compare sizes, compare abs(z1) and abs(z2)"]
 ```
+
+![Unsupported Operations (Error Examples)](../resources/ch02-complex-numbers-basics-fig-03.png)
 
 [Back to the Table of Contents](#table-of-contents)
 

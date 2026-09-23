@@ -149,6 +149,8 @@ flowchart TD
     E --> F["Step 6: Still a set, now with 3 elements"]
 ```
 
+![Q1. Write script: (a) x = {} — print its type. (b) Create empty set correctly. (c) Add "Delhi", "Mumbai", "Pune" to it. (d) Print type before and after adding.](../resources/ch19-sets-scripting-qa-fig-01.png)
+
 **Try this next**
 
 What happens if you try to call `.add()` on `x`, and how can you add all three cities in one call?
@@ -383,7 +385,7 @@ Total scores: 9 | unique scores: 6
 - **Step 4**'s equality check confirms that the comprehension is not just shorter to type; it behaves exactly the same as the explicit loop.
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["Step 1: Start with an empty set"] --> B{"Step 2: Outer loop - another row?"}
     B -- No --> G["Step 7: Done. 6 unique scores"]
     B -- Yes --> C["Step 3: Take the next row, e.g. [78, 85, 90]"]
@@ -393,6 +395,8 @@ flowchart TD
     E --> F["Step 6: Add it to the set. A repeat is ignored"]
     F --> D
 ```
+
+![Q4. examscores = [[78,85,90],[85,92,78],[60,90,100]]. Script: (a) nested set comprehension to get unique scores. (b) same result using explicit nested for loop. (c) confirm both are equal.](../resources/ch19-sets-scripting-qa-fig-02.png)
 
 **Try this next**
 
@@ -564,13 +568,15 @@ The printed order of `{10, (1, 2), 20}` may differ on your computer. That is nor
 - **General tip:** whenever you get "unhashable type: 'list'", converting the list to a tuple is almost always the right first thing to try, **provided** the list's own contents are all hashable too (see [Q7](#q7)).
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["Step 1: my_set.add(something)"] --> B{"Step 2: Is it hashable?"}
     B -- "No, e.g. a list" --> C["Step 3: TypeError. The set is unchanged"]
     C --> D["Step 4: Convert: tuple([1, 2])"]
     D --> A
     B -- "Yes, e.g. a tuple" --> E["Step 5: Added to the set"]
 ```
+
+![Q6. Script: (a) try adding a list [1,2] as a set element, catch the error. (b) fix it by converting to tuple, add successfully. Print set after each step.](../resources/ch19-sets-scripting-qa-fig-03.png)
 
 **Try this next**
 
@@ -846,6 +852,8 @@ flowchart TD
     F --> G["Step 7: Result: a, b, c"]
 ```
 
+![Q9. Script: (a) s1={"a"}, do s1.add("bc"); print. (b) s2={"a"}, do s2.update("bc"); print. Explain difference in a comment.](../resources/ch19-sets-scripting-qa-fig-04.png)
+
 **Try this next**
 
 Predict the results of these three calls before you run them.
@@ -1019,12 +1027,14 @@ The pattern worth remembering:
 - `.clear()` is for wiping everything at once, and never needs protecting.
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["Step 1: Call nums.pop()"] --> B{"Step 2: Is the set empty?"}
     B -- No --> C["Step 3: Remove some element and return it"]
     C --> A
     B -- Yes --> D["Step 4: Raise KeyError: pop from an empty set"]
 ```
+
+![Q11. nums = {1,2,3}. Script: (a) .pop() twice, print each removed item. (b) .pop() on the now-single-item set, then again on the resulting empty set — catch the error. (c) .clear() and print final set.](../resources/ch19-sets-scripting-qa-fig-05.png)
 
 **Try this next**
 
@@ -1214,6 +1224,8 @@ flowchart TD
     B -- "nums.copy()" --> E["Step 5: remove() changes only the original"]
     E --> F["Step 6: Loop finishes. nums = {1, 3, 5, 7}"]
 ```
+
+![Q13. nums = {1,2,3,4,5,6,7,8}. Script: (a) try removing even numbers while looping directly over nums — catch the resulting error. (b) fix using .copy(), print final set.](../resources/ch19-sets-scripting-qa-fig-06.png)
 
 **Try this next**
 
@@ -1653,7 +1665,7 @@ This exercise reinforces the chapter's main comparison:
 | Dict | No (keys are unique) | Yes (insertion order) | Yes | 3 |
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["Step 1: data = Amit, Amit, Sneha, Ravi"] --> B["Step 2: list(data)"]
     A --> C["Step 3: set(data)"]
     A --> D["Step 4: name: 1 for each name"]
@@ -1661,6 +1673,8 @@ flowchart TD
     C --> F["Step 6: 3 items, repeat dropped, no order"]
     D --> G["Step 7: 3 keys, repeat dropped, order kept, each with a value"]
 ```
+
+![Q18. Same data ["Amit","Amit","Sneha","Ravi"]. Script: store it as (a) a list, (b) a set, (c) a dict (using names as keys, value=1). Print all three and comment on what changed in each.](../resources/ch19-sets-scripting-qa-fig-07.png)
 
 **Try this next**
 

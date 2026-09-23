@@ -420,6 +420,8 @@ flowchart TD
     E -- No --> F["6. Stop: report ERROR fixture 'fresh_account' not found"]
 ```
 
+![How Pytest Resolves Distributed Fixtures](../resources/ch20-conftest-py-fig-01.png)
+
 | Search Order | Where Pytest Looks | Example |
 | --- | --- | --- |
 | 1 | The test file itself (and the test's class, if it has one) | A `fresh_account` fixture written inside `test_deposits.py` |

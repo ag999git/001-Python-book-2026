@@ -1364,8 +1364,6 @@ This section describes, in more detail, the journey that was summarised in [Sect
 
 ![Flowchart: how code travels from the browser to the kernel and back](../resources/ch-001-jupyter-browser-to-kernel-flow.png)
 
-![Flowchart: how code travels from the browser to the kernel and back](../resources/ch-001-jupyter-browser-to-kernel-flow.png)
-
 
 
 <details>

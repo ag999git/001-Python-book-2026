@@ -212,6 +212,8 @@ flowchart LR
     B -->|"7. Forwards result"| A
 ```
 
+![What Happens When You Run a Cell](../resources/ch01-jupyternb-fig-01.png)
+
 For the curious: the browser and the server talk over HTTP and WebSockets, while the server and the kernel talk using a messaging library called [ZeroMQ](https://zeromq.org/). You do not need to know these details to use Jupyter. A more detailed, twelve-step version of this flow is given in [Section 11](#11-advanced-how-a-cell-travels-from-browser-to-kernel).
 
 [Back to the Table of Contents](#table-of-contents)
@@ -275,6 +277,8 @@ flowchart TD
     S11 --> S12["12. Click Next, Next, Finish"]
     S12 --> S13["13. Open Anaconda Navigator"]
 ```
+
+![Part 1: Installing Anaconda on Windows](../resources/ch01-jupyternb-fig-02.png)
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -745,6 +749,8 @@ flowchart TD
     B -->|"3. Open or create a notebook"| C["4. Notebook Editor - where you write code"]
     C -->|"5. Go back to pick another file"| B
 ```
+
+![The Jupyter Notebook User Interface](../resources/ch01-jupyternb-fig-03.png)
 
 Screen 1 is the **launcher**; Screen 2 is the **work screen**. You always begin at Screen 1, unless you start Jupyter with a notebook name, for example `jupyter notebook MyNotebook.ipynb`.
 
@@ -1381,6 +1387,8 @@ flowchart TD
     L -->|"13. Write the next cell"| E
 ```
 
+![Advanced: How a Cell Travels from Browser to Kernel](../resources/ch01-jupyternb-fig-04.png)
+
 </details>
 
 [Back to the Table of Contents](#table-of-contents)
@@ -2003,6 +2011,8 @@ flowchart TD
     C -->|"Each function"| E["5. Use prun, or SnakeViz or Pyinstrument for a picture"]
     C -->|"Each line of a function"| F["6. Use line_profiler - lprun"]
 ```
+
+![Tips for Profiling Notebooks Effectively](../resources/ch01-jupyternb-fig-05.png)
 
 [Back to the Table of Contents](#table-of-contents)
 

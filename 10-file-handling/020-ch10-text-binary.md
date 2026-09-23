@@ -47,7 +47,7 @@ Getting this distinction right matters immediately and practically: opening an i
 ## Deciding which mode to use
 
 
-![Flowchart](/resources/ch-10-august-2026-text-vs-binary.png)
+![Flowchart](../resources/ch-10-august-2026-text-vs-binary.png)
 
 
 A simple rule of thumb: if you'd expect to be able to open the file in a plain text editor and read something meaningful, it's a text file. If opening it in a text editor would show you a screen full of unreadable symbols, it's binary.

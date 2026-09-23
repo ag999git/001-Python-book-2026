@@ -95,7 +95,7 @@ with open("research_demo.txt", mode="r", encoding="utf-8") as f:
     print("Remaining lines:", f.readlines())   # -> ['Line 2: Python File Handling\n']
 ```
 
-![Flowchart](/resources/ch-10-file-object-behavior-2.png)
+![Flowchart](../resources/ch-10-file-object-behavior-2.png)
 
 
 
@@ -202,7 +202,7 @@ with open("research_demo.txt", "r", encoding="utf-8") as f:
 
 ## Deciding which exception to expect
 
-![Flowchart](/resources/ch-10-file-object-behavior.png)
+![Flowchart](../resources/ch-10-file-object-behavior.png)
 
 
 

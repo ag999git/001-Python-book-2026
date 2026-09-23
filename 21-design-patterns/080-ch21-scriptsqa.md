@@ -184,6 +184,8 @@ flowchart TD
     E --> F["6. Every caller receives the same object"]
 ```
 
+![Q1. Write a script implementing a basic Singleton pattern to maintain a single configuration reference. Verify if two instances point to the exact same memory object.](../resources/ch21-scriptsqa-fig-01.png)
+
 **Pattern Explanation:**
 
 - **Design Pattern Used:** Singleton Pattern (Creational family).
@@ -792,13 +794,15 @@ Step 3: Client using the adapter:
 **Mermaid flowchart**
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["1. Client calls get_json on the adapter"] --> B["2. Adapter calls request_xml on the legacy object"]
     B --> C["3. Legacy object returns XML text"]
     C --> D["4. Adapter reads the XML into a dictionary"]
     D --> E["5. Adapter converts the dictionary to JSON"]
     E --> F["6. Client receives JSON and uses it"]
 ```
+
+![Q8. Write an Adapter pattern script that converts a legacy incompatible .requestxml() output method style into a client-expected .getjson() format.](../resources/ch21-scriptsqa-fig-02.png)
 
 **Pattern Explanation:**
 
@@ -1077,6 +1081,8 @@ flowchart TD
     D -- Yes --> F
 ```
 
+![Q11. Implement a lazy-loading proxy pattern class (ImageProxy) that defers actual instantiation of an expensive internal RealImage object until .display() is invoked.](../resources/ch21-scriptsqa-fig-03.png)
+
 **Pattern Explanation:**
 
 - **Design Pattern Used:** Proxy Pattern (Structural family). This kind is called a **virtual proxy**, because it delays creating an expensive object.
@@ -1174,7 +1180,7 @@ Station: new temperature 28°C
 **Mermaid flowchart**
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["1. Observers call attach on the station"] --> B["2. Station adds them to its observer list"]
     B --> C["3. Client calls set_temperature"]
     C --> D["4. Station stores the new value"]
@@ -1182,6 +1188,8 @@ flowchart TD
     E --> F["6. update is called on every observer in the list"]
     F --> G["7. Each display prints the new temperature"]
 ```
+
+![Q12. Build an architectural event listener tracking routine matching an Observer workflow by linking a WeatherStation subject update with registered display units.](../resources/ch21-scriptsqa-fig-04.png)
 
 **Pattern Explanation:**
 
@@ -1430,6 +1438,8 @@ flowchart TD
     H --> I["9. Call undo on it"]
 ```
 
+![Q14. Implement an undoable transaction command routing pipeline using the descriptive Command Pattern framework mapping action targets against a Light resource receptor.](../resources/ch21-scriptsqa-fig-05.png)
+
 **Pattern Explanation:**
 
 - **Design Pattern Used:** Command Pattern (Behavioral family).
@@ -1543,6 +1553,8 @@ flowchart TD
     F --> C
     D -- Yes --> G["7. Raise StopIteration and the loop ends"]
 ```
+
+![Q15. Write a custom sequence traversal loop pattern using the traditional Iterator architecture by defining sequential steps inside CustomIterator and CustomCollection.](../resources/ch21-scriptsqa-fig-06.png)
 
 **Pattern Explanation:**
 
@@ -1766,6 +1778,8 @@ flowchart TD
     D -- Yes --> F["6. __exit__ runs and closes the connection"]
     F --> G["7. __exit__ returns False, so the error reaches the caller"]
 ```
+
+![Q17. Develop an elegant Pythonic native alternative to resource management workflows by configuring a class utilizing Context Manager protocols.](../resources/ch21-scriptsqa-fig-07.png)
 
 **Pattern Explanation:**
 

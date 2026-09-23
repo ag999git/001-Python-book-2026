@@ -187,15 +187,7 @@ All the scripts on this page use the OOP style.
 
 This script draws six sample values as a stem plot with blue stems, red markers and a black baseline. The plotting code is short, so extra `print()` statements have been added to show the data and the parts that `ax.stem()` creates.
 
-```mermaid
-flowchart TD
-    A[Step 1 - Import matplotlib] --> B[Step 2 - Prepare the x and y lists]
-    B --> C[Step 3 - Create the figure and plot area]
-    C --> D[Step 4 - Draw the stem plot with chosen styles]
-    D --> E[Step 5 - Add title and axis labels]
-    E --> F[Step 6 - Add a grid]
-    F --> G[Step 7 - Display the graph]
-```
+![The seven steps of the basic stem plot script](../resources/ch-15-fig-15-stem-plot-script-steps.png)
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -467,16 +459,7 @@ Examples:
 
 The flowchart below helps you decide. Follow the numbers.
 
-```mermaid
-flowchart TD
-    A[1 - You have a sequence of values] --> B{2 - Is each separate value important}
-    B -->|No, the trend matters most| C[3 - Use a line plot]
-    B -->|Yes| D{4 - Are there more than about 50 values}
-    D -->|Yes| C
-    D -->|No| E{5 - Does the distance from a baseline such as zero matter}
-    E -->|Yes| F[6 - Use a stem plot]
-    E -->|No| G[7 - Use a scatter plot]
-```
+![When a stem plot is the right choice, and when it is not](../resources/ch-15-fig-16-when-to-use-a-stem-plot.png)
 
 The figure of about 50 values is only a rough guide. The real test is whether the stems can still be told apart on the screen.
 
@@ -542,16 +525,7 @@ This is Script 2 on this page.
 
 `plt.subplots(3, 1)` creates a figure with 3 rows and 1 column of plot areas, stacked one above the other. See [matplotlib.pyplot.subplots](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplots.html).
 
-```mermaid
-flowchart TD
-    A[Step 1 - Import matplotlib] --> B[Step 2 - Prepare one set of x and y values]
-    B --> C[Step 3 - Create three stacked plot areas]
-    C --> D[Step 4 - Top panel - scatter plot]
-    D --> E[Step 5 - Middle panel - stem plot]
-    E --> F[Step 6 - Bottom panel - line plot]
-    F --> G[Step 7 - Adjust spacing]
-    G --> H[Step 8 - Display the graphs]
-```
+![The eight steps of the script that compares a scatter plot, a stem plot and a line plot](../resources/ch-15-fig-17-three-panel-script-steps.png)
 
 [Back to the Table of Contents](#table-of-contents)
 

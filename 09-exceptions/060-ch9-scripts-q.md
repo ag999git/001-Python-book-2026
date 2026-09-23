@@ -317,7 +317,7 @@ except ChildError:
     print("Caught by Child block.")
 ```
 
-![Flowchart](/resources/ch-9-exceptions-august-2026-scripting-question-bank01.png)
+![Flowchart](../resources/ch-9-exceptions-august-2026-scripting-question-bank01.png)
 
 
 
@@ -571,7 +571,7 @@ result = check_finally()
 print(result)
 ```
 
-![Flowchart](/resources/ch-9-exceptions-august-2026-scripting-question9.png)
+![Flowchart](../resources/ch-9-exceptions-august-2026-scripting-question9.png)
 
 
 ---
@@ -822,7 +822,7 @@ except ValueError as e:
     print(f"Outer: Caught converted exception: {e}")
 ```
 
-![Flowchart](/resources/ch-9-exceptions-august-2026-scripting-question39.png)
+![Flowchart](../resources/ch-9-exceptions-august-2026-scripting-question39.png)
 
 
 ---

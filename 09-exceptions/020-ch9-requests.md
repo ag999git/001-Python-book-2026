@@ -299,7 +299,7 @@ RequestException
 
 The same relationship, as a flowchart 
 
-![Flowchart](/resources/ch-9-exceptions-august-2026-exceptions-for-internet-project.png)
+![Flowchart](../resources/ch-9-exceptions-august-2026-exceptions-for-internet-project.png)
 
 
 > **Why the order of `except` blocks still matters here too:** exactly as explained for `urllib` in the previous section, Python checks `except` blocks from top to bottom and stops at the first match. Since every exception in this tree — `HTTPError`, `ConnectionError`, `Timeout`, and `TooManyRedirects` — is *also* a `RequestException`, a generic `except requests.exceptions.RequestException:` block placed too early would catch all of them, and the more specific, more informative blocks below it would never run. That's why the script in Part 3 lists its `except` blocks from most specific to most general, with `RequestException` last.

@@ -84,7 +84,7 @@ else:
 4. This "bubbling up" repeats, one level at a time, until either a matching handler is found somewhere in the chain of calls, or the very top of the program is reached.
 5. If it reaches the top without ever being caught, Python's own default handler takes over: it prints a traceback and stops the program.
 
-![Flowchart](/resources/ch-9-exceptions-august-2026-conceptual-question-bank1.png)
+![Flowchart](../resources/ch-9-exceptions-august-2026-conceptual-question-bank1.png)
 
 
 > **New term — "bubbling up" / "propagation":** this is just the everyday name for an exception moving outward through the chain of function calls, level by level, until something catches it. See the [official Python docs on the exception-handling statement](https://docs.python.org/3/reference/compound_stmts.html#the-try-statement) for the formal description of this process.
@@ -525,7 +525,7 @@ In practice, printing the whole exception object (`print(e)`) or its string form
 2. `IndexError` (invalid position in a sequence) and `KeyError` (invalid key in a dictionary) are both **subclasses** of `LookupError`.
 3. This means a single `except LookupError:` block can catch either problem — useful when your code doesn't care *which specific kind* of "not found" occurred, just that a lookup failed.
 
-![Flowchart](/resources/ch-9-exceptions-august-2026-conceptual-question-bank02.png)
+![Flowchart](../resources/ch-9-exceptions-august-2026-conceptual-question-bank02.png)
 
 
 ```python

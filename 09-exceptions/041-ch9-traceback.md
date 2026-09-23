@@ -189,7 +189,7 @@ Extract file, line, function, code
 
 The same flow, as a flowchart 
 
-![Flowchart](/resources/ch-9-exceptions-august-2026-exception-object-traceback-module.png)
+![Flowchart](../resources/ch-9-exceptions-august-2026-exception-object-traceback-module.png)
 
 
 ### The Script

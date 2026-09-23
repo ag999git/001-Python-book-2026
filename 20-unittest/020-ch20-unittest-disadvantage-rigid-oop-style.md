@@ -197,6 +197,8 @@ flowchart TD
     J --> K["11. Change a value and run again"]
 ```
 
+![Running the Scripts on Your Computer](../resources/ch20-unittest-disadvantage-rigid-oop-style-fig-01.png)
+
 [Back to the Table of Contents](020-ch20-unittest-disadvantage-rigid-oop-style.md#table-of-contents)
 
 ### Step 1: Check That Python Is Installed
@@ -575,6 +577,8 @@ flowchart TD
     G -- No --> H["8. Report the results"]
 ```
 
+![How the xUnit Setup Runs](../resources/ch20-unittest-disadvantage-rigid-oop-style-fig-02.png)
+
 Notice that step 4 has no choice in it. There is no question like "does this test need an account?". The setup runs for every test method, every time.
 
 [Back to the Table of Contents](020-ch20-unittest-disadvantage-rigid-oop-style.md#table-of-contents)
@@ -799,6 +803,8 @@ flowchart TD
     I -- Yes --> A
     I -- No --> J["10. Report the results"]
 ```
+
+![How Pytest Supplies a Fixture](../resources/ch20-unittest-disadvantage-rigid-oop-style-fig-03.png)
 
 Compare this with the xUnit flowchart earlier. There, the setup ran for every test with no choice. Here, step 3 makes a decision for each test, based only on the parameters the test asks for.
 

@@ -184,9 +184,11 @@ flowchart TD
     T3 --> T1
     T2 -- "Yes" --> T4["4. Print Found the Gold!"]
     T4 --> T5["5. break: leave the loop"]
-    T6["6. Dead line after break: never reached"]
+    T5 -. "never runs" .-> T6["6. Dead line after break: never reached"]
     T5 --> T7["7. Function ends"]
 ```
+
+![Example Script: How Dead Code Creeps In](../resources/ch4-flow-control-beyond-text-fig-01.png)
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -354,6 +356,8 @@ flowchart TD
     S7 --> S8["8. Terminate: break"]
     S8 --> S9["9. Program continues normally"]
 ```
+
+![Solution Script](../resources/ch4-flow-control-beyond-text-fig-02.png)
 
 ```python
 # --- BEYOND TEXT: MANUAL ITERATION ---

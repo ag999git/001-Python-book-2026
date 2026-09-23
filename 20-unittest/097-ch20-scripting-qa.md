@@ -330,6 +330,8 @@ flowchart TD
     D --> E["5. Fixture teardown (once)"]
 ```
 
+![Modify the fixture example to use session scope so that the object is created only once for all tests.](../resources/ch20-scripting-qa-fig-01.png)
+
 The setup and teardown happen only once. In the output, `[FIXTURE] session setup` and `[FIXTURE] session teardown` each appear a single time, even though there are three tests.
 
 The second `[DB] connecting` line comes from `test_three` itself, which calls `db.connect()` in its `assert`. It is not a second setup.
@@ -404,6 +406,8 @@ flowchart TD
     D --> E["5. The object is placed into the test parameter user"]
     E --> F["6. The test body runs"]
 ```
+
+![Write a pytest script demonstrating dependency injection. Show how pytest injects a fixture object into a test function parameter.](../resources/ch20-scripting-qa-fig-02.png)
 
 Note that steps 2 to 5 all happen **before** the first line of the test runs. That is why `[FIXTURE] creating User object` is printed before `[TEST] received object`.
 
@@ -891,6 +895,8 @@ flowchart TD
     D --> E["5. Teardown: stop the Resource"]
 ```
 
+![Write a pytest fixture using yield to perform setup and teardown operations.](../resources/ch20-scripting-qa-fig-03.png)
+
 **Important:**
 
 - The code before `yield` is the setup.
@@ -1010,6 +1016,8 @@ flowchart LR
     C --> D["4. The test checks the result"]
 ```
 
+![Write a pytest example that uses a mock object instead of calling a real external service.](../resources/ch20-scripting-qa-fig-04.png)
+
 Mocking helps create:
 
 - fast tests
@@ -1127,6 +1135,8 @@ flowchart TD
     B -- No --> C{"3. Is it defined in conftest.py in this folder?"}
     C -- Yes --> D["4. Run the fixture and inject the object"]
 ```
+
+![Create a conftest.py file containing a fixture and use it in a test file without importing it.](../resources/ch20-scripting-qa-fig-05.png)
 
 Any other test file in this folder, or in a folder inside it, could use the `calculator` fixture in the same way.
 
@@ -1377,6 +1387,8 @@ flowchart TD
     C --> D["4. test_status passes, but only because test_login ran first"]
 ```
 
+![Demonstrate the shared state problem with a session-scoped fixture.](../resources/ch20-scripting-qa-fig-06.png)
+
 Now run `test_status` **on its own**:
 
 ```bash
@@ -1520,6 +1532,8 @@ flowchart TD
     C -- No exception --> G["7. FAIL: DID NOT RAISE"]
     C -- A different exception --> H["8. FAIL: that exception is reported"]
 ```
+
+![Test exceptions and floating point values using pytest tools.](../resources/ch20-scripting-qa-fig-07.png)
 
 **Part B: Testing floating-point values**
 
@@ -1850,6 +1864,8 @@ flowchart TD
     G --> H["8. Fixture creates another new LoginSystem"]
     H --> I["9. Test runs with abc"]
 ```
+
+![Combine parameterized testing and fixtures to test multiple cases.](../resources/ch20-scripting-qa-fig-08.png)
 
 Note that the fixture runs **three times**, once for each parameter set, as the output shows. Each parameter set is a separate test, and a function-scoped fixture is created fresh for every test. If you wanted one shared `LoginSystem`, you would give the fixture a wider scope, such as `scope="module"`.
 

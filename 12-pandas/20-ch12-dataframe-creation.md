@@ -95,7 +95,7 @@ The `io` module (part of Python's standard library) provides two tools that let 
 **A practical note:** in real projects, you will almost always use genuine file paths rather than these in-memory tools — they're used here purely so this script can be copied, pasted, and run immediately, without you needing to first create any actual files on your own computer.
 
 
-![Flowchart](/resources/ch12-august-2026-DataFrame-creation-02.png)
+![Flowchart](../resources/ch12-august-2026-DataFrame-creation-02.png)
 
 ### The script
 

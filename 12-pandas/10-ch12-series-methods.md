@@ -38,7 +38,7 @@ These four pillars break down further into ten categories:
 9. String Methods (`.str`)
 10. DateTime Methods (`.dt`)
 
-![Flowchart](/resources/ch12-august-2026-series-01.png)
+![Flowchart](../resources/ch12-august-2026-series-01.png)
 
 ---
 
@@ -82,7 +82,7 @@ These four pillars break down further into ten categories:
 The following diagram (from the book's own resources) shows all the key methods grouped into categories and pillars:
 
 
-![Flowchart of Methods of Series](/resources/ch12-pandas-series-methods.png)
+![Flowchart of Methods of Series](../resources/ch12-pandas-series-methods.png)
 
 ---
 

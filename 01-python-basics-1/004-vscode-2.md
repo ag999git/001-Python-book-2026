@@ -92,6 +92,8 @@ flowchart TD
     S8 --> S9["9. Select the .venv kernel and run the cells - Part 7"]
 ```
 
+![Key Words Used on This Page](../resources/ch01-vscode-2-fig-01.png)
+
 [Back to the Table of Contents](#table-of-contents)
 
 ## Part 1: Install VS Code
@@ -559,6 +561,8 @@ flowchart TD
     D --> G["7. Select the .venv kernel"]
     G --> H["8. Install the package in a cell with %pip install"]
 ```
+
+![Part 9: Common Problems and Fixes](../resources/ch01-vscode-2-fig-02.png)
 
 [Back to the Table of Contents](#table-of-contents)
 

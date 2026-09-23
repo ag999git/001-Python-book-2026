@@ -80,6 +80,8 @@ flowchart TD
     F --> G["7. You can now write import requests in your programs"]
 ```
 
+![What is pip?](../resources/ch02-beyond-text-fig-01.png)
+
 Step 6 is important: `pip` installs into **one particular Python**. If your computer has more than one Python, or you use virtual environments (section 1.3), always check which one you are installing into.
 
 [Back to the Table of Contents](#table-of-contents)
@@ -341,6 +343,8 @@ flowchart TD
     E --> F["6. uv builds the same environment from uv.lock"]
 ```
 
+![A Complete uv Project, Step by Step](../resources/ch02-beyond-text-fig-02.png)
+
 [Back to the Table of Contents](#table-of-contents)
 
 ### 2.5 Common Errors and Fixes
@@ -383,7 +387,7 @@ flowchart TD
 | Best for | Learning, quick installs, systems where you cannot add new tools | New projects, teams, anything where speed and repeatable setups matter |
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["1. You need to install Python packages"] --> B{"2. Are you allowed to install new tools on this computer?"}
     B -->|No| C["3. Use pip inside a venv virtual environment"]
     B -->|Yes| D{"4. Is it a project you will keep or share?"}
@@ -393,6 +397,8 @@ flowchart TD
     E --> G
     F --> H["8. uv records them in pyproject.toml and uv.lock"]
 ```
+
+![Comparison Table: pip vs uv](../resources/ch02-beyond-text-fig-03.png)
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -445,6 +451,8 @@ flowchart TD
     E --> F["6. pip install -r requirements.txt installs the same versions"]
     F --> G["7. Your code runs the same way on both computers"]
 ```
+
+![Common Commands](../resources/ch02-beyond-text-fig-04.png)
 
 [Back to the Table of Contents](#table-of-contents)
 

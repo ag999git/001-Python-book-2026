@@ -292,7 +292,7 @@ Step 2: Months: [1, 2, 3, 4, 5, 6]
 Step 3: Line plot created with 6 points
 ```
 
-![Line plot of monthly sales](/resources/ch15-qa-q4-workflow.png)
+![Line plot of monthly sales](../resources/ch15-qa-q4-workflow.png)
 
 A title and axis labels were added in Step 3. They are not one of the four basic steps, but a real graph should almost always have them (see Question 18).
 
@@ -360,9 +360,9 @@ Type of fig: Figure
 Type of ax : Axes
 ```
 
-![Graph drawn in the state-based style](/resources/ch15-qa-q5-state-based.png)
+![Graph drawn in the state-based style](../resources/ch15-qa-q5-state-based.png)
 
-![Graph drawn in the object-oriented style](/resources/ch15-qa-q5-object-oriented.png)
+![Graph drawn in the object-oriented style](../resources/ch15-qa-q5-object-oriented.png)
 
 `plt.gca()` means "get current axes". It shows the plot area that the state-based style was quietly using. In the object-oriented style we never need it, because we already hold the plot area in the variable `ax`.
 
@@ -420,7 +420,7 @@ plot() error   : x and y must have same first dimension, but have shapes (3,) an
 scatter() error: x and y must be the same size
 ```
 
-![Line plot with matching x and y lengths](/resources/ch15-qa-q6-matching-lengths.png)
+![Line plot with matching x and y lengths](../resources/ch15-qa-q6-matching-lengths.png)
 
 **How to fix the error, step by step:**
 
@@ -571,7 +571,7 @@ Layer 2 - Options: color=red, linewidth=2, marker=o, alpha=0.8
 Layer 3 - Chart elements: title, axis labels, legend, grid
 ```
 
-![Chart built from data, options and chart elements](/resources/ch15-qa-q7-three-layers.png)
+![Chart built from data, options and chart elements](../resources/ch15-qa-q7-three-layers.png)
 
 **Follow-up question:** Is `label="Delhi"` an option or a chart element?
 
@@ -617,7 +617,7 @@ Title: Title set first
 Legend entries: ['Series A']
 ```
 
-![Chart with title and legend](/resources/ch15-qa-q8-order.png)
+![Chart with title and legend](../resources/ch15-qa-q8-order.png)
 
 The title was set before anything was plotted, and it still works. The legend was called after the labelled line was drawn, so it found one entry. If `ax.legend()` were called before `ax.plot()`, Matplotlib would print a warning like this and draw no legend:
 
@@ -703,7 +703,7 @@ array * 2 : [ 6 10  8 12 16]
 list * 2  : [3, 5, 4, 6, 8, 3, 5, 4, 6, 8]
 ```
 
-![The same data plotted from a list, a NumPy array and a pandas Series](/resources/ch15-qa-q9-list-array-series.png)
+![The same data plotted from a list, a NumPy array and a pandas Series](../resources/ch15-qa-q9-list-array-series.png)
 
 **What to notice:**
 
@@ -763,7 +763,7 @@ y-values given    : [4, 7, 5, 9]
 x-values generated: [0.0, 1.0, 2.0, 3.0]
 ```
 
-![Line plot with automatically generated x-values](/resources/ch15-qa-q10-y-only.png)
+![Line plot with automatically generated x-values](../resources/ch15-qa-q10-y-only.png)
 
 **The two patterns compared**
 
@@ -826,7 +826,7 @@ Histogram bin edges      : [45.0, 54.2, 63.4, 72.6, 81.8, 91.0]
 Histogram counts (found) : [2, 3, 3, 3, 3]
 ```
 
-![Bar chart and histogram side by side](/resources/ch15-qa-q11-bar-vs-histogram.png)
+![Bar chart and histogram side by side](../resources/ch15-qa-q11-bar-vs-histogram.png)
 
 | Feature | Bar chart | Histogram |
 | --- | --- | --- |
@@ -1073,7 +1073,7 @@ contour() line values  : [2.0, 4.0, 6.0]
 contourf() band edges  : [1.0, 2.0, 4.0, 6.0, 7.0]
 ```
 
-![The same matrix drawn with imshow, contour and contourf](/resources/ch15-qa-q15-imshow-contour-contourf.png)
+![The same matrix drawn with imshow, contour and contourf](../resources/ch15-qa-q15-imshow-contour-contourf.png)
 
 | Feature | `imshow()` | `contour()` | `contourf()` |
 | --- | --- | --- | --- |
@@ -1143,7 +1143,7 @@ Fertilizer B: mean = 15.30 cm, standard deviation = 0.56 cm
 Fertilizer C: mean = 13.70 cm, standard deviation = 2.10 cm
 ```
 
-![Mean plant heights with error bars](/resources/ch15-qa-q16-error-bars.png)
+![Mean plant heights with error bars](../resources/ch15-qa-q16-error-bars.png)
 
 **Reading the result, step by step:**
 
@@ -1209,7 +1209,7 @@ Marker areas (s): [200, 450, 300, 750, 550]
 Variables shown: area (x), population (y), budget (size), green cover (color)
 ```
 
-![Bubble plot showing four variables](/resources/ch15-qa-q17-bubble-plot.png)
+![Bubble plot showing four variables](../resources/ch15-qa-q17-bubble-plot.png)
 
 | What you see | Variable it shows | How it is set in `scatter()` |
 | --- | --- | --- |
@@ -1305,7 +1305,7 @@ Drew East in a plot area
 Drew West in a plot area
 ```
 
-![Four subplots sharing the same axes](/resources/ch15-qa-q19-subplots.png)
+![Four subplots sharing the same axes](../resources/ch15-qa-q19-subplots.png)
 
 **What to notice:**
 

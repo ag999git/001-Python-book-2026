@@ -394,6 +394,8 @@ flowchart LR
     B -->|"7. Result shown under the cell"| A
 ```
 
+![h. When we say that Jupyter Notebook is a “server-client” application, what does it mean?](../resources/ch01-question-answers2-fig-01.png)
+
 Because of this design, the same notebook interface can work with a server on your own computer or with one far away, as in Google Colab.
 
 * **Further study:** [How Jupyter Notebook works - the Jupyter Notebook page of this chapter](002-jupyternb.md#1-how-jupyter-notebook-works-the-client-server-model)

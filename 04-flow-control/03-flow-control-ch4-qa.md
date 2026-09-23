@@ -287,6 +287,8 @@ flowchart TD
     D4 --> D6["6. Continue with the rest of the program"]
 ```
 
+![d. Python does not have do...until syntax. How to implement it?](../resources/ch4-flow-control-qa-fig-01.png)
+
 **Script 1: the basic pattern**
 
 ```python
@@ -1008,13 +1010,15 @@ The **Euclidean algorithm** is a quick way to find it, known for over 2,000 year
 5. Go back to Step 2.
 
 ```mermaid
-flowchart TD
+flowchart LR
     E1["1. Read a and b"] --> E2{"2. Is b equal to 0?"}
     E2 -- "No" --> E3["3. Work out remainder r = a % b"]
     E3 --> E4["4. Set a = b and b = r"]
     E4 --> E2
     E2 -- "Yes" --> E5["5. The GCD is a"]
 ```
+
+![e. GCD using Euclidean Algorithm.](../resources/ch4-flow-control-qa-fig-02.png)
 
 The line `a, b = b, a % b` does Step 4 in one go. Python works out both values on the right side first, and only then stores them in `a` and `b`. This is called **tuple unpacking** or simultaneous assignment. If you wrote `a = b` and then `b = a % b` on separate lines, the second line would use the *new* `a`, and the answer would be wrong.
 
@@ -1171,6 +1175,8 @@ flowchart TD
     G6 --> G2
 ```
 
+![g. Hailstone sequence - iterative and recursive.](../resources/ch4-flow-control-qa-fig-03.png)
+
 **Trace table** for `n = 68` (first few rounds)
 
 | Round | `n` at start | Even or odd? | Rule used | Next `n` (added to list) |
@@ -1307,7 +1313,7 @@ A **prime number** is a whole number greater than 1 that has exactly two divisor
 5. If no divisor is found, the number is prime.
 
 ```mermaid
-flowchart TD
+flowchart LR
     H1["1. Read num"] --> H2{"2. Is num less than 2?"}
     H2 -- "Yes" --> H7["7. Not Prime"]
     H2 -- "No" --> H3["3. Set i = 2"]
@@ -1318,6 +1324,8 @@ flowchart TD
     H5 -- "No" --> H6["6. i = i + 1"]
     H6 --> H4
 ```
+
+![h. Check for Prime](../resources/ch4-flow-control-qa-fig-04.png)
 
 **Script 1: the basic method**
 

@@ -80,7 +80,7 @@ Step 6 compares `sys.getsizeof()` for a single `PetNormal` object against a sing
 | Flexibility | High | Low |
 
 
-![Flowchart](/resources/ch-8-august-2026-pet-slots-project.png)
+![Flowchart](../resources/ch-8-august-2026-pet-slots-project.png)
 
 ---
 

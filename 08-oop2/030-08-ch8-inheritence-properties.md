@@ -50,7 +50,7 @@ The assignment demonstrates *single-level* inheritance (`Pet → Dog`, `Pet → 
 
 ## Visualizing the hierarchy
 
-![Flowchart](/resources/ch-8-august-2026-11-properties-of-inheritence.png)
+![Flowchart](../resources/ch-8-august-2026-11-properties-of-inheritence.png)
 
 Unlike the earlier Animal Management System assignment, `Dog` and `Cat` each have **only one** parent here (`Pet`) — this is single inheritance, not multiple inheritance, which is why the MRO for both classes will be shorter and simpler.
 

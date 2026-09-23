@@ -76,7 +76,7 @@ The MRO is the exact, predictable order Python follows when searching for a meth
 **C3 Linearization** is the specific algorithm Python actually uses to calculate the MRO. It guarantees two things: a child class is always checked *before* any of its parents, and multiple parents are checked in the exact order they were listed. This matters because a simpler, older-style "pure depth-first" search (used by Python 2's old-style classes) could accidentally check a shared grandparent class *before* fully finishing the second parent — visiting an ancestor too early, out of order. C3 Linearization fixes this by strictly guaranteeing "child before parent, left parent before right parent" at every single step.
 
 
-![Flowchart](/resources/ch-8-august-2026-conceptual-question-II-10.png)
+![Flowchart](../resources/ch-8-august-2026-conceptual-question-II-10.png)
 
 
 With C3 Linearization, `Dog`'s MRO is `Dog → Walker → Swimmer → Pet → object` — `Pet` (the shared grandparent) is correctly checked *last*, only after both `Walker` and `Swimmer` have had their turn, exactly as the earlier "Diamond Problem" chapter page demonstrated with real code.
@@ -176,7 +176,7 @@ a = Airplane()
 print(isinstance(a, Flyer))          # -> True
 ```
 
-![Flowchart](/resources/ch-8-august-2026-conceptual-question-II-22.png)
+![Flowchart](../resources/ch-8-august-2026-conceptual-question-II-22.png)
 
 
 
@@ -220,7 +220,7 @@ reg["car1"] = "Toyota"   # calls __setitem__ automatically
 print(reg["car1"])       # -> Toyota  (calls __getitem__ automatically)
 ```
 
-![Flowchart](/resources/ch-8-august-2026-conceptual-question-II-25.png)
+![Flowchart](../resources/ch-8-august-2026-conceptual-question-II-25.png)
 
 
 

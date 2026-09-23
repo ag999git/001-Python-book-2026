@@ -37,7 +37,7 @@ The original exercise checks `__str__` specifically. As a natural extension: **i
 
 ## Understanding the check, visually
 
-![Flowchart](/resources/ch8-august-2026-multiple-inherit-inspecting-built-in.png)
+![Flowchart](../resources/ch8-august-2026-multiple-inherit-inspecting-built-in.png)
 
 
 

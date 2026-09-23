@@ -31,7 +31,7 @@ Not all Has-A relationships behave the same way, though. They differ along four 
 
 These four questions are exactly what distinguish the three kinds of Has-A relationship covered below: **Composition**, **Aggregation**, and **Dependency**, ordered from strongest to weakest.
 
-![Flowchart](/resources/ch-8-august-2026-3-types-of-has-a-relationship.png)
+![Flowchart](../resources/ch-8-august-2026-3-types-of-has-a-relationship.png)
 
 
 

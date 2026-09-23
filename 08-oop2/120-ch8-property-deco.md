@@ -147,7 +147,7 @@ They're **built into Python itself** — no import is needed. Internally, `prope
 
 </details>
 
-![Flowchart](/resources/ch-8-august-2026-property-decorator.png)
+![Flowchart](../resources/ch-8-august-2026-property-decorator.png)
 
 
 

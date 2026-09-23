@@ -52,7 +52,7 @@ class Cat(metaclass=PetMeta):
 # Output: TypeError: Cat must implement speak()
 ```
 
-![Flowchart](/resources/ch-8-august-2026-using-metaclasses-advanced.png)
+![Flowchart](../resources/ch-8-august-2026-using-metaclasses-advanced.png)
 
 
 ---

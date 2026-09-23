@@ -89,7 +89,7 @@ Part G asks you to share one `Toy` between two `Dog`s. As a natural extension: *
 
 ## Visualizing the relationships
 
-![Flowchart](/resources/ch-8-august-2026-11-building-composition-aggregation-dependency.png)
+![Flowchart](../resources/ch-8-august-2026-11-building-composition-aggregation-dependency.png)
 
 
 ## ANSWER (Solution)

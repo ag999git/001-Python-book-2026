@@ -49,7 +49,7 @@ Object creation in Python is a **two-step process**, not one:
 
 ## Flow of execution, visualized
 
-![Flowchart](/resources/ch-8-august-2026-new-vs-init.png)
+![Flowchart](../resources/ch-8-august-2026-new-vs-init.png)
 
 
 ---

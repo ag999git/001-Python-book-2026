@@ -68,7 +68,7 @@ They differ only in *when* and *how* that storing happens.
 | **3. Automatic Registration** | The base class itself automatically tracks every subclass that's ever created, with no extra code needed on each subclass | Best for large systems and frameworks, where you can't rely on every contributor remembering to register their own classes |
 
 
-![Flowchart](/resources/ch-8-august-2026-3-approaches-to-class-registration.png)
+![Flowchart](../resources/ch-8-august-2026-3-approaches-to-class-registration.png)
 
 
 

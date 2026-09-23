@@ -196,7 +196,7 @@ pc = Computer("MyPC", "Intel")
 print(f"{pc.name} has an {pc.processor.brand} CPU")   # -> MyPC has an Intel CPU
 ```
 
-![Flowchart](/resources/ch-8-august-2026-scripting-question-09.png)
+![Flowchart](../resources/ch-8-august-2026-scripting-question-09.png)
 
 ---
 
@@ -261,7 +261,7 @@ print(D.__mro__)
 # separate paths (via B and via C).
 ```
 
-![Flowchart](/resources/ch-8-august-2026-scripting-question-12.png)
+![Flowchart](../resources/ch-8-august-2026-scripting-question-12.png)
 
 ---
 
@@ -403,7 +403,7 @@ b.attack()   # -> Attacking!
 # this is hierarchical inheritance: one parent, multiple independent children.
 ```
 
-![Flowchart](/resources/ch-8-august-2026-scripting-question-19.png)
+![Flowchart](../resources/ch-8-august-2026-scripting-question-19.png)
 
 
 ---

@@ -31,7 +31,7 @@ There are two levels of "creation" happening in every Python program, whether yo
 1. **Metaclass → creates → Class** (e.g., `type` creates `Dog`)
 2. **Class → creates → Object** (e.g., `Dog` creates `dog`)
 
-![Flowchart](/resources/ch-8-august-2026-metaclass-part1.png)
+![Flowchart](../resources/ch-8-august-2026-metaclass-part1.png)
 
 
 ---

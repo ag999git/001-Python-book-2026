@@ -108,7 +108,7 @@ print("Modified name:->", d.name)
 ```
 
 
-![Flowchart](/resources/ch-8-august-2026-namespaces-and-legb-rules--corrected-2.png)
+![Flowchart](../resources/ch-8-august-2026-namespaces-and-legb-rules--corrected-2.png)
 
 ### What this confirms
 
@@ -144,7 +144,7 @@ One more important subtlety: **assignment behaves differently from access.** Whe
 
 
 
-![Flowchart](/resources/ch-8-august-2026-namespaces-and-legb-rules.png)
+![Flowchart](../resources/ch-8-august-2026-namespaces-and-legb-rules.png)
 
 
 

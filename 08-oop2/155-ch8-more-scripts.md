@@ -155,7 +155,7 @@ d1.action()   # -> Walking...
 d2.action()   # -> Swimming...
 ```
 
-![Flowchart](/resources/ch-8-august-2026-scripting-question-II-q7.png)
+![Flowchart](../resources/ch-8-august-2026-scripting-question-II-q7.png)
 
 
 
@@ -255,7 +255,7 @@ print(f"RobotDog MRO: {RobotDog.__mro__}")
 # but the actual method-lookup chain (__mro__) is completely unaffected by it.
 ```
 
-![Flowchart](/resources/ch-8-august-2026-scripting-question-II-q11.png)
+![Flowchart](../resources/ch-8-august-2026-scripting-question-II-q11.png)
 
 
 

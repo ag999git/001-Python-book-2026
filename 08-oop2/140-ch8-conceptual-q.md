@@ -65,7 +65,7 @@ This pattern is genuinely useful — see Question 26 below for a specific real-w
 
 Transitivity means inheritance "passes through" multiple levels automatically: if Class `B` inherits from Class `A`, and Class `C` inherits from Class `B`, then Class `C` automatically possesses everything Class `A` provides too, even though `C` never mentions `A` directly.
 
-![Flowchart](/resources/ch-8-august-2026-conceptual-question-6.png)
+![Flowchart](../resources/ch-8-august-2026-conceptual-question-6.png)
 
 
 
@@ -114,7 +114,7 @@ By default, it returns a string containing the class name and the object's memor
 It's the basic logic Python's MRO calculation uses when resolving multiple inheritance: Python fully searches the leftmost parent (and that parent's *entire* ancestry) before moving on to the next parent listed to its right.
 
 
-![Flowchart](/resources/ch-8-august-2026-conceptual-question-13.png)
+![Flowchart](../resources/ch-8-august-2026-conceptual-question-13.png)
 
 
 
@@ -193,7 +193,7 @@ A chain of inheritance where a class is derived from another *derived* class —
 
 A structure where a single parent class serves as the base for *multiple* different, independent subclasses — for example, `Pet` being the shared parent for both `Dog` and `Cat`, as seen throughout this chapter's `Pet`/`Dog`/`Cat` examples.
 
-![Flowchart](/resources/ch-8-august-2026-conceptual-question-23.png)
+![Flowchart](../resources/ch-8-august-2026-conceptual-question-23.png)
 
 
 

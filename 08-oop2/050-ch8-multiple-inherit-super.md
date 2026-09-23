@@ -38,7 +38,7 @@ Following the MRO instead of a fixed "parent" relationship gives multiple inheri
 
 A very common shape in multiple inheritance looks like this: two classes (`Walker` and `Swimmer`) both inherit from the same base class (`Pet`), and a further class (`Dog`) inherits from both of them.
 
-![Flowchart](/resources/ch-8-august-2026-11-diamond-structure.png)
+![Flowchart](../resources/ch-8-august-2026-11-diamond-structure.png)
 
 
 The shape gives this pattern its name: `Pet` sits at the top, `Walker` and `Swimmer` form the two "sides," and `Dog` sits at the bottom — a diamond. The natural question this raises: **when `Dog` is created, does `Pet.__init__` run once, or twice (once via each side)?** The rules below explain exactly how Python guarantees it only ever runs once.
@@ -277,7 +277,7 @@ print(Dog2.__mro__)
 
 ## Constructor flow for `Dog1`, visualized
 
-![Flowchart](/resources/ch-8-august-2026-dog1-constructor.png)
+![Flowchart](../resources/ch-8-august-2026-dog1-constructor.png)
 
 
 
@@ -286,7 +286,7 @@ print(Dog2.__mro__)
 
 ## Method flow for `Dog1.action()`, visualized
 
-![Flowchart](/resources/ch-8-august-2026-11-dog1-action.png)
+![Flowchart](../resources/ch-8-august-2026-11-dog1-action.png)
 
 
 

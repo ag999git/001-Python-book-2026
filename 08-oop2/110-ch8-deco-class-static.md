@@ -63,7 +63,7 @@ The assignment's `create_from_string()` factory method assumes the input string 
 | Static | *(none — plain parameters only)* | A general utility function, logically grouped with the class | `is_valid_age()` |
 
 
-![Flowchart](/resources/ch-8-august-2026-instance-methods-class-methods-etc.png)
+![Flowchart](../resources/ch-8-august-2026-instance-methods-class-methods-etc.png)
 
 
 

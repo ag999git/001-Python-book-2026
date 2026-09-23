@@ -176,6 +176,8 @@ flowchart TD
     S7 --> S8["8. VS Code opens with the Welcome page"]
 ```
 
+![Installing VS Code on Windows (Step-by-Step)](../resources/ch01-vscode-1-fig-01.png)
+
 [Back to the Table of Contents](#table-of-contents)
 
 #### Step 1: Double-Click the Installer
@@ -584,6 +586,8 @@ flowchart TD
     S12 --> S7
 ```
 
+![A Beginner's Python Workflow in VS Code](../resources/ch01-vscode-1-fig-02.png)
+
 [Back to the Table of Contents](#table-of-contents)
 
 ### 5.1 Step 1: Install Python
@@ -908,6 +912,8 @@ flowchart TD
     F -->|No| E
 ```
 
+![Common Beginner Errors and Quick Fixes](../resources/ch01-vscode-1-fig-03.png)
+
 [Back to the Table of Contents](#table-of-contents)
 
 ### 8.1 ERROR 1: "python is not recognized"
@@ -1050,6 +1056,8 @@ flowchart TD
     S7 -->|No| S9["9. Add more breakpoints"]
     S9 --> S3
 ```
+
+![What Is Debugging](../resources/ch01-vscode-1-fig-04.png)
 
 [Back to the Table of Contents](#table-of-contents)
 

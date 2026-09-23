@@ -28,7 +28,6 @@
     - [B6. Sample Output](#b6-sample-output)
     - [B7. Optional Enhancement — A Live Countdown](#b7-optional-enhancement--a-live-countdown)
 - [Common Errors and How to Fix Them](#common-errors-and-how-to-fix-them)
-- [Summary of Changes Made to This Page](#summary-of-changes-made-to-this-page)
 
 ## About This Page
 

@@ -46,7 +46,6 @@
 - [Checking These Answers for Yourself](#checking-these-answers-for-yourself)
     - [The Combined Self-Check Script](#the-combined-self-check-script)
     - [What It Prints](#what-it-prints)
-- [Summary of Changes Made to This Page](#summary-of-changes-made-to-this-page)
 
 ## About This Page
 

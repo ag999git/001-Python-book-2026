@@ -30,7 +30,6 @@
     - [B7. Expected Output](#b7-expected-output)
 - [Flowchart](#flowchart)
 - [Common Errors and How to Fix Them](#common-errors-and-how-to-fix-them)
-- [Summary of Changes Made to This Page](#summary-of-changes-made-to-this-page)
 
 ## About This Page
 

@@ -688,6 +688,8 @@ flowchart TD
     H -- No --> I["9. Show summary: 1 passed, 2 deselected"]
 ```
 
+![Using and, or and not with -k](../resources/ch20-pytest-flags-fig-01.png)
+
 [Back to the Table of Contents](010-ch20-pytest-flags.md#table-of-contents)
 
 ### Things to Watch Out For with -k
@@ -828,6 +830,8 @@ flowchart TD
     H --> I["9. Run the full test suite"]
     I --> C
 ```
+
+![Typical Pytest Workflow](../resources/ch20-pytest-flags-fig-02.png)
 
 Once all tests pass, remember to remove any `print()` statements you added only for debugging.
 

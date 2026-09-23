@@ -110,6 +110,8 @@ flowchart TD
     J -- "No" --> K["11. Print how time grew with n"]
 ```
 
+![Linear Search Timing](../resources/ch16-scripting-qa-easy-fig-01.png)
+
 [Back to the Table of Contents](#table-of-contents)
 
 ### 1.2 Answer Script
@@ -309,6 +311,8 @@ flowchart TD
     I --> B
 ```
 
+![Binary Search](../resources/ch16-scripting-qa-easy-fig-02.png)
+
 Here is the search for 70 in `[10, 20, 30, 40, 50, 60, 70]`:
 
 | Round | left | right | middle | Item at middle | Result |
@@ -440,6 +444,8 @@ flowchart TD
     J --> B
     I -- "No" --> K["11. List is sorted"]
 ```
+
+![Bubble Sort Implementation](../resources/ch16-scripting-qa-easy-fig-03.png)
 
 The line `numbers[i], numbers[i+1] = (numbers[i+1], numbers[i])` swaps two items in one step. Python first builds the pair on the right, then assigns it to the two positions on the left. This is called [tuple unpacking](https://docs.python.org/3/tutorial/datastructures.html#tuples-and-sequences).
 
@@ -585,6 +591,8 @@ flowchart TD
     G -- "No" --> I["9. List is sorted"]
 ```
 
+![Insertion Sort](../resources/ch16-scripting-qa-easy-fig-04.png)
+
 [Back to the Table of Contents](#table-of-contents)
 
 ### 4.2 Answer Script
@@ -696,6 +704,8 @@ flowchart TD
     K --> B
     J -- "No" --> L["12. List is sorted"]
 ```
+
+![Selection Sort](../resources/ch16-scripting-qa-easy-fig-05.png)
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -902,6 +912,8 @@ flowchart TD
     C -- "Yes" --> F["6. All tasks done"]
 ```
 
+![Queue using deque](../resources/ch16-scripting-qa-easy-fig-06.png)
+
 [Back to the Table of Contents](#table-of-contents)
 
 ### 7.2 Answer Script
@@ -1103,6 +1115,8 @@ flowchart TD
     F -- "Yes" --> B
     F -- "No" --> G["7. Print the groups"]
 ```
+
+![defaultdict](../resources/ch16-scripting-qa-easy-fig-07.png)
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1314,6 +1328,8 @@ flowchart TD
     D -- "No" --> F["6. Raise KeyError"]
 ```
 
+![ChainMap: Combine User Settings with Default Settings](../resources/ch16-scripting-qa-easy-fig-08.png)
+
 | Setting | In `user_settings` | In `default_settings` | Value returned by `settings` |
 |---|---|---|---|
 | `theme` | `"dark"` | `"light"` | `"dark"` (user wins) |
@@ -1425,6 +1441,8 @@ flowchart TD
     E --> C
     C -- "No" --> F["6. All tasks done"]
 ```
+
+![heapq: Process Tasks According to Priority](../resources/ch16-scripting-qa-easy-fig-09.png)
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1841,6 +1859,8 @@ flowchart TD
     D -- "No" --> F["6. Print Server error"]
 ```
 
+![Enum: Represent Fixed Choices](../resources/ch16-scripting-qa-easy-fig-10.png)
+
 [Back to the Table of Contents](#table-of-contents)
 
 ### 17.2 Answer Script
@@ -2068,6 +2088,8 @@ flowchart TD
     D --> E["5. Return the result"]
     B -- "Yes" --> F["6. Return the saved result immediately"]
 ```
+
+![lrucache: Avoid Repeated Calculations](../resources/ch16-scripting-qa-easy-fig-11.png)
 
 [Back to the Table of Contents](#table-of-contents)
 

@@ -397,6 +397,8 @@ flowchart TD
     F -- Yes --> H["8. Return the user dictionary"]
 ```
 
+![What the Script Does](../resources/ch20-user-registration-fig-01.png)
+
 [Back to the Table of Contents](060-ch20-user-registration.md#table-of-contents)
 
 ### Need for Validation in the Script
@@ -651,6 +653,8 @@ flowchart TD
     H -- Yes --> J["10. Exception is caught: the test carries on after the with block"]
     G -- No --> J
 ```
+
+![Why This Example Is Good for pytest.raises()](../resources/ch20-user-registration-fig-02.png)
 
 [Back to the Table of Contents](060-ch20-user-registration.md#table-of-contents)
 

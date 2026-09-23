@@ -123,6 +123,8 @@ flowchart TD
     H --> I["9. Convert to a local zone only for display"]
 ```
 
+![C. Naive vs. Aware at a Glance](../resources/ch17-assignment-timezone-fig-01.png)
+
 [Back to the Table of Contents](#table-of-contents)
 
 ### D. Key Terms Used on This Page
@@ -446,7 +448,7 @@ Follow these logical steps:
 7. Print the original object again to show that it was not changed.
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["Step 1: Import datetime and ZoneInfo"] --> B["Step 2: naive_dt = datetime.now"]
     B --> C["Step 3: Print naive_dt and its tzinfo, which is None"]
     C --> D["Step 4: kolkata_tz = ZoneInfo Asia/Kolkata"]
@@ -454,6 +456,8 @@ flowchart TD
     E --> F["Step 6: Print aware_dt, its tzinfo and offset +05:30"]
     F --> G["Step 7: Print naive_dt again: still naive"]
 ```
+
+![Solution Approach for Question 1](../resources/ch17-assignment-timezone-fig-02.png)
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -616,6 +620,8 @@ flowchart TD
     F --> G["7. Result: correct aware Kolkata time"]
 ```
 
+![An Important Warning: replace() Labels, It Does Not Convert](../resources/ch17-assignment-timezone-fig-03.png)
+
 [Back to the Table of Contents](#table-of-contents)
 
 #### Follow-Up Questions for Question 1
@@ -680,13 +686,15 @@ Python raises `TypeError: can't subtract offset-naive and offset-aware datetimes
 6. Print the value, its `tzinfo` and its offset to confirm that it is aware and set to UTC.
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["Step 1: Import datetime and ZoneInfo"] --> B["Step 2: def get_current_utc with no parameters"]
     B --> C["Step 3: utc_timestamp = datetime.now with ZoneInfo UTC"]
     C --> D["Step 4: return utc_timestamp"]
     D --> E["Step 5: current_utc_time = get_current_utc"]
     E --> F["Step 6: Print value, tzinfo UTC and offset 0:00:00"]
 ```
+
+![Solution Approach for Question 2](../resources/ch17-assignment-timezone-fig-04.png)
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -990,6 +998,8 @@ flowchart TD
     G --> H["8. Python subtracts 02:30 minus 02:00"]
     H --> I["9. Result: 30 minutes, which is correct"]
 ```
+
+![Timeline Table for the Simulation](../resources/ch17-assignment-timezone-fig-05.png)
 
 [Back to the Table of Contents](#table-of-contents)
 

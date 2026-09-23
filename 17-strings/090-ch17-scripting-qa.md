@@ -24,7 +24,7 @@ Every program on this page was run on Python 3.11, and every output block is the
 **The tools used on this page**
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["1. Make a string: quotes, triple quotes, str()"] --> B["2. Measure and test it: len(), in, not in"]
     B --> C["3. Reach into it: index, slice, for, while"]
     C --> D["4. Clean it: strip(), lower(), replace()"]
@@ -32,6 +32,8 @@ flowchart TD
     E --> F["6. Break it up or put it together: split(), join(), +, *"]
     F --> G["7. Show the result: print(), f-strings"]
 ```
+
+![Strings: Scripting Questions and Answers](../resources/ch17-scripting-qa-fig-01.png)
 
 ## Table of Contents
 
@@ -243,6 +245,8 @@ flowchart TD
     D --> E["5. The old empty string is left behind and cleared away"]
     A --> F["6. Nothing was changed inside the old string"]
 ```
+
+![Question 2. An Empty String, Concatenation and the Immutability Rule](../resources/ch17-scripting-qa-fig-02.png)
 
 **Design Pattern Explanation**
 
@@ -559,6 +563,8 @@ flowchart TD
     F --> G
 ```
 
+![Question 4. Escape Sequences and the Raw String Prefix](../resources/ch17-scripting-qa-fig-03.png)
+
 **Design Pattern Explanation**
 
 - **Escape Character Processing Pattern:** In an ordinary string the backslash is a signal, not a character. Python turns `\n` into a newline, `\t` into a tab, `\r` into a carriage return that moves the writing position to the start of the line, and `\b` into a backspace that moves it one column to the left. Each pair becomes one character in the stored string.
@@ -693,7 +699,7 @@ The counter ends at `-1`. That is one step past the first character, and it is e
 **The two loops side by side**
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["1. Start with the word"] --> B{"2. Which direction?"}
     B -->|"Forward"| C["3. for character in word"]
     C --> D["4. Python hands over the next character"]
@@ -709,6 +715,8 @@ flowchart TD
     H -->|"No"| K["11. The counter has passed the first character"]
     K --> M
 ```
+
+![Question 5. Forward Traversal and Backward Traversal](../resources/ch17-scripting-qa-fig-04.png)
 
 **Design Pattern Explanation**
 
@@ -1249,6 +1257,8 @@ flowchart LR
     B -->|"4. chr() reads the number back"| C["5. The character again, 'A'"]
 ```
 
+![Question 9. From Character to Number and Back](../resources/ch17-scripting-qa-fig-05.png)
+
 **Design Pattern Explanation**
 
 - **Character-to-Integer Translation Pattern, `ord()`:** `ord()` takes a string of exactly one character and returns its Unicode number. Two characters, or a number, will raise a `TypeError`.
@@ -1370,7 +1380,7 @@ The last line catches most beginners. In a dictionary, "apple" comes before "Ban
 **Flowchart**
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["1. Compare two strings"] --> B["2. Look at the characters in the same position"]
     B --> C{"3. Are they the same?"}
     C -->|"No"| D["4. The smaller code point wins, and the comparison ends"]
@@ -1380,6 +1390,8 @@ flowchart TD
     F -->|"Both at once"| G["7. The strings are equal"]
     F -->|"One of them"| H["8. The shorter string is the smaller one"]
 ```
+
+![Question 10. Comparing Two Strings, and the Tie-Breaker](../resources/ch17-scripting-qa-fig-06.png)
 
 **Design Pattern Explanation**
 
@@ -1670,6 +1682,8 @@ flowchart TD
     G --> H["8. Report the fault if it is raised"]
 ```
 
+![Question 12. find() and index(), and What Each Does on Failure](../resources/ch17-scripting-qa-fig-07.png)
+
 **Design Pattern Explanation**
 
 - **Safe Sentinel Return Pattern, `find()`:** `find()` returns the position of the first match, or `-1` when there is no match. A value like that `-1`, returned to stand for "nothing found", is called a sentinel. The program does not stop, so the caller must check the value before using it.
@@ -1910,6 +1924,8 @@ flowchart LR
     A["1. One string: apple,banana,orange,grape"] -->|"2. split(',')"| B["3. A list of four strings"]
     B -->|"4. '-'.join(list)"| C["5. One string again: apple-banana-orange-grape"]
 ```
+
+![Question 14. Splitting a Line and Joining It Back](../resources/ch17-scripting-qa-fig-08.png)
 
 Note which object each method belongs to. `split()` is called on the string that is being cut up. `join()` is called on the separator, and the list is passed to it. Beginners often write `parsed_list.join("-")`, which does not work, because a list has no `join()` method.
 
@@ -2690,6 +2706,8 @@ flowchart TD
     E --> G
 ```
 
+![Question 19. A Decision Taken on the First Character](../resources/ch17-scripting-qa-fig-09.png)
+
 **Design Pattern Explanation**
 
 - **State-Driven Conditional Transformation Pattern:** The program first asks a question about the data, then decides what to do with it. Here the question is asked by `islower()` on a single character, `sample_text[0]`, and the answer decides whether the whole string is transformed. Keeping the two parts separate, first the test and then the action, is what makes such code easy to read and easy to change.
@@ -2879,6 +2897,8 @@ flowchart TD
     E -->|"No"| F["6. strip() removes the space at the end"]
     F --> G["7. Print the finished sentence"]
 ```
+
+![Question 20. Building One Sentence From a List of Mixed Values](../resources/ch17-scripting-qa-fig-10.png)
 
 **Design Pattern Explanation**
 

@@ -86,6 +86,8 @@ flowchart LR
     B --> C["3. Assert: check the result"]
 ```
 
+![What is unit testing? Why do we test code even when the program runs correctly?](../resources/ch20-conceptual-qa-fig-01.png)
+
 Example:
 
 ```python
@@ -213,6 +215,8 @@ flowchart TD
     F --> G["7. Run each collected test and record PASSED or FAILED"]
     G --> H["8. Print the summary"]
 ```
+
+![How does pytest discover test files and test functions automatically?](../resources/ch20-conceptual-qa-fig-02.png)
 
 This automatic discovery removes the need to call every test function yourself.
 
@@ -380,6 +384,8 @@ flowchart TD
     D --> E["5. Pass the object into the test as database"]
     E --> F["6. Run the test body: database.connect()"]
 ```
+
+![Explain pytest dependency injection using fixtures. Why does the fixture name become the test parameter name?](../resources/ch20-conceptual-qa-fig-03.png)
 
 The parameter name is not an ordinary variable. It is a **request**: "please give me the fixture called `database`". Pytest fulfils the request **before** the test starts. Giving a function what it needs from outside, instead of letting it create it, is called **dependency injection**.
 
@@ -1245,6 +1251,8 @@ flowchart LR
     B --> C["3. Assertions check the results"]
     C --> D["4. Fixtures clean up"]
 ```
+
+![Why are pytest fixtures considered one of the most important pytest features?](../resources/ch20-conceptual-qa-fig-04.png)
 
 This separation makes large test suites easier to read, change and maintain.
 

@@ -26,7 +26,7 @@ Every value your program creates — a number, a string, or an instance of your 
 
 A variable name in the Stack doesn't hold the object itself — it holds the **memory address** of the object on the Heap. This link between a name and an object is called a **reference**.
 
-![Flowchart](/resources/ch-7-oop-del-working-memory-ref.png)
+![Flowchart](../resources/ch-7-oop-del-working-memory-ref.png)
 
 
 
@@ -128,7 +128,7 @@ End of script.
 | `del p1` | Count becomes **1** | No — `p2` still holds a reference |
 | `del p2` | Count becomes **0** | **Yes** — memory is released |
 
-![Sequence Diagram](/resources/ch-7-august-2026-del-diagram-2.png)
+![Sequence Diagram](../resources/ch-7-august-2026-del-diagram-2.png)
 
 
 
@@ -145,7 +145,7 @@ Overriding `__del__()` in your own class does **not** give you control over memo
 
 
 
-![Flowchart](/resources/ch-7-august-2026-del-diagram.png)
+![Flowchart](../resources/ch-7-august-2026-del-diagram.png)
 
 
 

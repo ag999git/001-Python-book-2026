@@ -43,7 +43,7 @@ Everything about the sequence — every future "random" number — is completely
 Because the formula above is **linear** (no squaring, no exponentials — just multiplication and addition), seeing just a few consecutive outputs is enough to set up simple equations and solve for the hidden constants. There are two attack scenarios, depending on how much the attacker already knows:
 
 
-![Flowchart](/resources/ch-7-oop-prng-vulnerability.png)
+![Flowchart](../resources/ch-7-oop-prng-vulnerability.png)
 
 
 

@@ -40,7 +40,7 @@ Both are answered below, alongside the original two cases from the book, so you 
 
 If a class defines `__repr__()` but does **not** define `__str__()`, then calling `str()` (or `print()`) will automatically **fall back to using `__repr__()` instead.** Python only does this substitution in one direction — `__repr__()` is treated as the more fundamental, "always available" representation.
 
-![Flowchart](/resources/ch-7-august-2026-str-versus-repr.png)
+![Flowchart](../resources/ch-7-august-2026-str-versus-repr.png)
 
 
 

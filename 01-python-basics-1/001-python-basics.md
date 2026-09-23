@@ -199,6 +199,8 @@ flowchart TD
     D -->|No| F["6. Use hash comments, one hash at the start of each line"]
 ```
 
+![Which One Should I Use](../resources/ch01-python-basics-fig-01.png)
+
 [Back to the Table of Contents](#table-of-contents)
 
 ## 2. Good Rules for Writing Identifiers in Python
@@ -263,6 +265,8 @@ flowchart TD
     F -->|Yes| G["7. Legal, but choose a different name"]
     F -->|No| H["8. Good to use"]
 ```
+
+![Valid and Invalid Identifiers](../resources/ch01-python-basics-fig-02.png)
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -848,6 +852,8 @@ flowchart TD
     S12 -->|No| S14
     S14 --> S4
 ```
+
+![The Debugging Flowchart](../resources/ch01-python-basics-fig-03.png)
 
 [Back to the Table of Contents](#table-of-contents)
 

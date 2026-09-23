@@ -459,7 +459,7 @@ A wider test confirms where each hook applies:
 
 ## Flowchart Showing the Execution of the Script
 
-![Flowchart handling global exceptions](/resources/ch14-tkinter-exceptions.png)
+![Flowchart handling global exceptions](../resources/ch14-tkinter-exceptions.png)
 
 The same sequence in text form, showing what happens from the moment the button is clicked:
 

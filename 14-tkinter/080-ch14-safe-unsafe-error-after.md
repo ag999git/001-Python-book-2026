@@ -766,7 +766,7 @@ This file is the clearest proof of the whole lesson. **Both buttons caused exact
 
 The flowchart shows the steps in the execution of the above script:
 
-![Unsafe vs Safe after Callback](/resources/ch14-tkinter-safe-unsafe-after.png)
+![Unsafe vs Safe after Callback](../resources/ch14-tkinter-safe-unsafe-after.png)
 
 The same two journeys in text form, side by side:
 

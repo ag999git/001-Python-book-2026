@@ -862,7 +862,7 @@ Three things in that file are worth noticing:
 
 The flowchart shows the steps in execution of the given script:
 
-![Flowchart](/resources/ch14-tkinter-professional-error-handling.png)
+![Flowchart](../resources/ch14-tkinter-professional-error-handling.png)
 
 The same two journeys through the program in text form — typing into the box, and clicking the button:
 

@@ -254,6 +254,8 @@ flowchart TD
     I --> J["9. End"]
 ```
 
+![Exercise: Convert a NamedTuple into a Dictionary](../resources/ch16-namedtuple2dict-fig-01.png)
+
 Steps 5a and 5b happen side by side. Both feed into Step 6, where `zip()` joins them.
 
 [Back to the Table of Contents](#table-of-contents)
@@ -541,6 +543,8 @@ flowchart TD
     F -- "No" --> J["10. Print student_dicts"]
     J --> K["11. End"]
 ```
+
+![Optional Extension Task](../resources/ch16-namedtuple2dict-fig-02.png)
 
 Steps 7, 8 and 9 form the loop. After Step 9 the program goes back to Step 6 and checks whether another record is waiting. When no record is left, it moves on to Step 10.
 

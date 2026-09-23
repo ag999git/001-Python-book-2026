@@ -404,6 +404,8 @@ flowchart TD
     F --> G["7. print() shows the shortest text that gives back the same float: 0.1"]
 ```
 
+![Why 0.1 Cannot Be Stored Exactly](../resources/ch02-float-data-fig-01.png)
+
 Step 7 explains why `print(0.1)` still shows `0.1`. Python hides the tiny error when it prints a single number. The error shows up only after arithmetic, as in `0.1 + 0.2`, which prints `0.30000000000000004`.
 
 Learn more: [Floating-point arithmetic: issues and limitations](https://docs.python.org/3/tutorial/floatingpoint.html).
@@ -641,7 +643,7 @@ Note that `float("3,5")` fails. Python always uses a point, never a comma, as th
 The flowchart shows how `float()` decides what to do.
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["1. Call float(x)"] --> B{"2. What type is x?"}
     B -->|int or bool| C{"3. Is the int too large, more than about 309 digits?"}
     C -->|Yes| D["4. OverflowError"]
@@ -653,6 +655,8 @@ flowchart TD
     E --> J["10. Return the new float"]
     G --> J
 ```
+
+![All the Conversions in One Script](../resources/ch02-float-data-fig-02.png)
 
 Branch numbers: the int branch is steps 3 to 5, the string branch is steps 6 to 8 and the other branch is step 9. The two successful branches meet at step 10.
 
@@ -734,7 +738,7 @@ Output:
 | Good for | Science, engineering, graphics, measurements | Money, banking, anything that must match hand calculations | Exact fractions, probability, maths teaching |
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["1. What kind of numbers do you need?"] --> B{"2. Only whole numbers?"}
     B -->|Yes| C["3. Use int"]
     B -->|No| D{"4. Money or exact decimal places?"}
@@ -743,6 +747,8 @@ flowchart TD
     F -->|Yes| G["7. Use Fraction"]
     F -->|No| H["8. Use float"]
 ```
+
+![Comparing the Three Types](../resources/ch02-float-data-fig-03.png)
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -929,6 +935,8 @@ flowchart TD
     E --> G["7. Use the True or False result in your program"]
     F --> G
 ```
+
+![Using math.isclose() Correctly](../resources/ch02-float-data-fig-04.png)
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1256,6 +1264,8 @@ flowchart TD
     D --> F["6. Return the result"]
     E --> F
 ```
+
+![Block 4: isinteger() and round()](../resources/ch02-float-data-fig-05.png)
 
 Step 2 is the key to the `round(2.675, 2)` surprise. The stored value is slightly less than 2.675, so at step 3 it is **not** exactly halfway, and step 4 picks the nearer choice, 2.67.
 

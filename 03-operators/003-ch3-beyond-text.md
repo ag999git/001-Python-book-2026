@@ -149,6 +149,8 @@ flowchart TD
     H -- No --> I["9. Answer is ready"]
 ```
 
+![How Matrix Multiplication Works](../resources/ch3-beyond-text-fig-01.png)
+
 [Back to the Table of Contents](#table-of-contents)
 
 ---
@@ -482,13 +484,15 @@ In the Venn diagrams below, the shaded part is the result of each operator.
 **Which operator do I need?**
 
 ```mermaid
-flowchart TD
-    A["1. Start: two sets A and B"] --> B{"2. Do you want items that are in both sets?"}
-    B -->|"Yes, only those"| C["3. Use intersection: A and-sign B"]
-    B -->|"No, I want all items"| D["4. Use union: A pipe B"]
-    B -->|"No, only items in A"| E["5. Use difference: A minus B"]
-    B -->|"No, items in exactly one set"| F["6. Use symmetric difference: A caret B"]
+flowchart LR
+    A["1. Start: two sets A and B"] --> B{"2. Which items do you want?"}
+    B -- "In both sets" --> C["3. Intersection: A & B"]
+    B -- "In either set, or both" --> D["4. Union: A | B"]
+    B -- "In A but not in B" --> E["5. Difference: A - B"]
+    B -- "In exactly one of them" --> F["6. Symmetric difference: A ^ B"]
 ```
+
+![The Four Set Operators at a Glance](../resources/ch3-beyond-text-fig-02.png)
 
 In the chart, "and-sign" means `&`, "pipe" means `|` and "caret" means `^`.
 

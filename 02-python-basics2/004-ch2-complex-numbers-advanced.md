@@ -526,6 +526,8 @@ flowchart TD
     F --> G["7. Compare with the original using cmath.isclose()"]
 ```
 
+![Polar Operations with cmath](../resources/ch02-complex-numbers-advanced-fig-01.png)
+
 [Back to the Table of Contents](#table-of-contents)
 
 ### 5. IEEE-754 Behavior and Edge Cases
@@ -775,7 +777,7 @@ sorted(nums, key=abs) -> [(1+1j), 2j, (3+4j), (-6+0j)]
 In Step 5, the magnitudes of `3+4j`, `1+1j`, `-6+0j` and `2j` are 5, about 1.414, 6 and 2. So the sorted order is `1+1j`, `2j`, `3+4j`, `-6+0j`.
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["1. You want to compare complex numbers a and b"] --> B{"2. What do you need to know?"}
     B -->|Equal or not| C{"3. Are a and b results of calculations?"}
     C -->|No| D["4. Use a == b"]
@@ -783,6 +785,8 @@ flowchart TD
     B -->|Which is bigger| F["6. Choose a rule, for example the magnitude"]
     F --> G["7. Compare abs(a) and abs(b), or sort with key=abs"]
 ```
+
+![Comparison of Complex Numbers](../resources/ch02-complex-numbers-advanced-fig-02.png)
 
 [Back to the Table of Contents](#table-of-contents)
 

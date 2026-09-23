@@ -416,6 +416,8 @@ flowchart TD
     F --> G
 ```
 
+![Floor Division with Negative Numbers](../resources/ch02-python-data-types-fig-01.png)
+
 [Back to the Table of Contents](#table-of-contents)
 
 ### 3.4 The Remainder Operator with Negative Numbers
@@ -604,6 +606,8 @@ flowchart TD
     D --> E["5. Convert back: 64 + 16 = 80"]
     E --> F["6. Check: 10 x 2 to the power 3 = 80"]
 ```
+
+![Advanced Concept: How the Left Shift Works (Example: 10 Shifted Left by 3)](../resources/ch02-python-data-types-fig-02.png)
 
 **The same steps in Python**
 
@@ -810,7 +814,7 @@ A few points to note:
 ### 7.2 How int() Decides What to Do
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["1. Call int(x)"] --> B{"2. What type is x?"}
     B -->|bool| C["3. True gives 1, False gives 0"]
     B -->|float| D{"4. Is x infinity or NaN?"}
@@ -824,6 +828,8 @@ flowchart TD
     F --> K
     H --> K
 ```
+
+![How int() Decides What to Do](../resources/ch02-python-data-types-fig-03.png)
 
 Branch numbers: the bool branch is step 3, the float branch is steps 4 to 6, the string branch is steps 7 to 9 and the other branch is step 10. The three successful branches meet again at step 11.
 
@@ -1200,6 +1206,8 @@ flowchart TD
     E --> G
     F --> G
 ```
+
+![How Python Picks the Result Type](../resources/ch02-python-data-types-fig-04.png)
 
 | Left operand | Right operand | Result type | Example | Result |
 | ------------ | ------------- | ----------- | ------- | ------ |
@@ -1761,6 +1769,8 @@ flowchart TD
     E --> F
 ```
 
+![Advanced Concept: Understanding Performance of Integer Operations in Python](../resources/ch02-python-data-types-fig-05.png)
+
 The script below shows the cache at work. It uses `int("100")` instead of the literal `100` on purpose. When the same literal appears twice in one script, Python may reuse one object for both, even for large numbers, which would hide the effect we want to see.
 
 ```python
@@ -1839,6 +1849,8 @@ flowchart TD
     E --> G
     F --> G
 ```
+
+![Advanced Concept: Understanding Performance of Integer Operations in Python](../resources/ch02-python-data-types-fig-06.png)
 
 </details>
 

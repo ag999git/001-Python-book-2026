@@ -114,15 +114,7 @@ Thus, Matplotlib plotting methods can be broadly divided into three categories:
 2. **Plots that work in both 2D and 3D**
 3. **Plots specifically designed for 3D visualization**
 
-```mermaid
-flowchart TD
-    A[1 - Matplotlib plotting methods] --> B[2 - Primarily 2D only]
-    A --> C[3 - Work in both 2D and 3D]
-    A --> D[4 - Designed for 3D]
-    B --> B1[2a - pie, boxplot, violinplot, imshow, hist]
-    C --> C1[3a - plot, scatter, bar, stem, contour, text]
-    D --> D1[4a - plot_surface, plot_wireframe, plot_trisurf, voxels]
-```
+![Which Matplotlib methods work in two dimensions, in both, or only in three](../resources/ch-15-fig-32-which-methods-work-in-3d.png)
 
 The following sections discuss these three categories.
 
@@ -510,16 +502,7 @@ This is explained fully in the section [Understanding np.meshgrid()](#understand
 
 ### Surface Plot Workflow
 
-```mermaid
-flowchart TD
-    A[Step 1 - Make 1D x values] --> C[Step 3 - Pass x and y to meshgrid]
-    B[Step 2 - Make 1D y values] --> C
-    C --> D[Step 4 - Receive the X grid]
-    C --> E[Step 5 - Receive the Y grid]
-    D --> F[Step 6 - Calculate Z from X and Y]
-    E --> F
-    F --> G[Step 7 - Draw with plot_surface]
-```
+![Two one-dimensional lists become two grids, and those grids give Z](../resources/ch-15-fig-33-how-meshgrid-works.png)
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -890,16 +873,7 @@ The row number comes first in matrix indexing, but the x-value comes first in a 
 
 ### How Surface Plots Use meshgrid()
 
-```mermaid
-flowchart LR
-    A[Step 1 - x values] --> C[Step 3 - meshgrid]
-    B[Step 2 - y values] --> C
-    C --> D[Step 4 - X grid]
-    C --> E[Step 5 - Y grid]
-    D --> F[Step 6 - Calculate Z]
-    E --> F
-    F --> G[Step 7 - plot_surface]
-```
+The steps are the same ones shown in the figure under [Surface Plot Workflow](#surface-plot-workflow) above: the two 1D lists go into `meshgrid()`, the two grids that come back are used to calculate `Z`, and `Z` is what `plot_surface()` draws.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1185,15 +1159,7 @@ A **helix** may be thought of as a circle that gradually rises in height, like a
 
 The circle is made with the functions cosine and sine. For an angle `t`, the point `(r × cos(t), r × sin(t))` lies on a circle of radius `r`. As `t` grows, the point travels around the circle. See [Unit circle (Wikipedia)](https://en.wikipedia.org/wiki/Unit_circle).
 
-```mermaid
-flowchart TD
-    A[Step 1 - Create 3D axes] --> B[Step 2 - Make 1000 angle values t from 0 to 20 pi]
-    B --> C[Step 3 - x = r cos t and y = r sin t give a circle]
-    C --> D[Step 4 - z rises evenly from 0 to 10]
-    D --> E[Step 5 - Print shapes and statistics]
-    E --> F[Step 6 - ax.plot x, y, z draws the helix]
-    F --> G[Step 7 - Add labels and show]
-```
+![The seven steps of the 3D helix script](../resources/ch-15-fig-34-helix-script-steps.png)
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1560,18 +1526,7 @@ Lowest z = 0.007, highest z = 18.0
 
 ### Workflow of Script 3
 
-```mermaid
-flowchart TD
-    A[Step 1 - X values] --> C[Step 3 - meshgrid]
-    B[Step 2 - Y values] --> C
-    C --> D[Step 4 - X grid]
-    C --> E[Step 5 - Y grid]
-    D --> F[Step 6 - Calculate Z]
-    E --> F
-    F --> G[Step 7 - plot_surface]
-    G --> H[Step 8 - Apply colormap]
-    H --> I[Step 9 - Display color bar]
-```
+![The nine steps that draw a coloured surface with its colour bar](../resources/ch-15-fig-35-surface-with-a-colormap.png)
 
 [Back to the Table of Contents](#table-of-contents)
 

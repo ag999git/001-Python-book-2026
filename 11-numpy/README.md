@@ -12,6 +12,7 @@ You need Chapter 18 (Lists) first. The plotting projects also use Matplotlib, fr
 | --- | --- | --- |
 | [Python Lists versus NumPy Arrays](010-ch11-numpy-list.md) | What an array gives you that a list does not, and what it costs | Start here |
 | [Creating NumPy Arrays: A Complete Reference](020-arrays.md) | Every way to make an array, in one place | Reference |
+| [The shape Attribute](030-shape-attribute.md) | What `shape` tells you, why `(3,)` and `(3, 1)` differ, and `reshape()` | Before broadcasting |
 | [Row Vectors versus Column Vectors](040-row-column-vector.md) | A shape of `(3,)` is not the same as `(3, 1)`, and why that matters | Early, and again later |
 | [3D Arrays and Axis Operations](045-ch11-3d-array-axis-ops.md) | What `axis=0` actually means, shown in three dimensions | When `axis` starts to confuse you |
 | [Broadcasting](050-ch11-broadcasting.md) | The rules that let arrays of different shapes work together | The most important page here |
@@ -48,7 +49,7 @@ You need Chapter 18 (Lists) first. The plotting projects also use Matplotlib, fr
 ## Suggested Reading Order
 
 1. **Lists versus Arrays**, then **Creating Arrays** as a reference.
-2. **Row versus Column Vectors** and **3D Arrays and Axis Operations**. Shape is the thing beginners get wrong, and both pages are about shape.
+2. **The shape Attribute**, then **Row versus Column Vectors** and **3D Arrays and Axis Operations**. Shape is the thing beginners get wrong, and all three pages are about shape.
 3. **Broadcasting**, carefully, then **Broadcasting in AI** and **Vectorization**. This trio is the heart of the chapter.
 4. **The joining pages** when you need them.
 5. **The linear algebra pages in order**: matrix-vector, then eigen decomposition, then SVD, then the image compression project, which uses everything before it.
@@ -69,4 +70,3 @@ Every script is complete and ready to run. Copy it into a `.py` file or a notebo
 NumPy does not come with Python. Install it once with `pip install numpy`. The plotting and image pages also need Matplotlib, and the image compression project needs a photograph of your own — any JPEG will do.
 
 Scripts that use random numbers will give different values on your machine unless the page sets a seed. Timing comparisons depend on your hardware; only the size of the difference is meant to match.
-

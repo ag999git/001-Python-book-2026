@@ -428,6 +428,8 @@ flowchart TD
     C -- No --> G["7. Factory raises ValueError"]
 ```
 
+![Q3. Explain the Factory Method Pattern. What problem does it solve? How does it improve software compared to directly creating objects?](../resources/ch21-conceptualqa-fig-01.png)
+
 **Advantages**
 
 - brings object creation to one place;
@@ -1661,6 +1663,8 @@ flowchart TD
     D -- Yes --> F
 ```
 
+![Q12. Explain the Proxy Pattern. Why is it used? Compare it with directly accessing an object.](../resources/ch21-conceptualqa-fig-02.png)
+
 Read more at [Refactoring Guru: Proxy](https://refactoring.guru/design-patterns/proxy).
 
 **Comparison table**
@@ -1787,7 +1791,7 @@ Station: temperature changed to 30 C
 **Mermaid flowchart of the script**
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["1. Create the WeatherStation subject"] --> B["2. Attach PhoneDisplay and AlertSystem"]
     B --> C["3. Temperature changes"]
     C --> D["4. Subject calls notify"]
@@ -1795,6 +1799,8 @@ flowchart TD
     E --> F["6. Each observer reacts in its own way"]
     F --> G["7. An observer may detach and receive no more updates"]
 ```
+
+![Q13. Explain the Observer Pattern. How does it support communication between objects? Give suitable applications.](../resources/ch21-conceptualqa-fig-03.png)
 
 Read more at [Refactoring Guru: Observer](https://refactoring.guru/design-patterns/observer).
 
@@ -2093,6 +2099,8 @@ flowchart TD
     F -- No --> H["8. Pop the last command"]
     H --> I["9. Call undo on that command"]
 ```
+
+![Q15. Explain the Command Pattern. How does it help in implementing undo operations, menus and task queues?](../resources/ch21-conceptualqa-fig-04.png)
 
 Read more at [Refactoring Guru: Command](https://refactoring.guru/design-patterns/command).
 
@@ -2523,7 +2531,7 @@ Understanding the **purpose** of each pattern is therefore more important than m
 **Mermaid flowchart: a quick decision path**
 
 ```mermaid
-flowchart TD
+flowchart LR
     A["1. Describe the problem in plain words"] --> B{"2. Can a plain function or built-in feature solve it?"}
     B -- Yes --> C["3. Use the simple solution, no pattern needed"]
     B -- No --> D{"4. Is it about creating objects?"}
@@ -2532,6 +2540,8 @@ flowchart TD
     F -- Yes --> G["7. Look at Decorator, Adapter, Facade, Composite, Proxy"]
     F -- No --> H["8. Look at Observer, Strategy, Command, Iterator, Template Method"]
 ```
+
+![Q18. How should a programmer choose the appropriate design pattern? What factors should be considered before applying one?](../resources/ch21-conceptualqa-fig-05.png)
 
 **Flowchart**
 

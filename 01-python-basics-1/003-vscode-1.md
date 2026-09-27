@@ -878,18 +878,8 @@ These are the most common problems Indian beginners face on Windows.
 
 The flowchart below helps with the most common one: the `python` command not working.
 
-```mermaid
-flowchart TD
-    A["1. Type python --version in a new terminal"] --> B{"2. What happens?"}
-    B -->|"Shows a version"| C["3. Python works - carry on"]
-    B -->|"Not recognized"| D["4. Try py --version"]
-    B -->|"Microsoft Store opens"| E["7. Python is not installed - install it, see Section 5.1"]
-    D --> F{"5. Does py work?"}
-    F -->|Yes| G["6. Use py instead of python, or fix PATH, see Section 8.1"]
-    F -->|No| E
-```
 
-![Common Beginner Errors and Quick Fixes](../resources/ch01-vscode-1-fig-03.png)
+![Common Beginner Errors and Quick Fixes](../resources/0000-08-ch1-common-beginner-error-quick-fixes.png)
 
 [Back to the Table of Contents](#table-of-contents)
 

@@ -1957,15 +1957,7 @@ Scalene shows its report inside the notebook. Keep in mind that **inside Jupyter
 
 The flowchart below shows how to choose a tool.
 
-```mermaid
-flowchart TD
-    A["1. I want to make my code faster or smaller"] --> B{"2. What do I want to measure?"}
-    B -->|Time| C{"3. How detailed?"}
-    B -->|Memory| G["7. Use memory_profiler - memit and mprun"]
-    C -->|"Whole line or cell"| D["4. Use time or timeit"]
-    C -->|"Each function"| E["5. Use prun, or SnakeViz or Pyinstrument for a picture"]
-    C -->|"Each line of a function"| F["6. Use line_profiler - lprun"]
-```
+
 
 ![Tips for Profiling Notebooks Effectively](../resources/ch01-jupyternb-fig-05.png)
 

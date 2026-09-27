@@ -387,15 +387,6 @@ True
 
 The flowchart below sums up the rule.
 
-```mermaid
-flowchart TD
-    A["1. I want to compare two things"] --> B{"2. Am I checking for None, True or False?"}
-    B -->|Yes| C["3. Use is - for example: if x is None"]
-    B -->|No| D{"4. Do I really need to know if they are the very same object?"}
-    D -->|Yes| E["5. Use is - rare in everyday code"]
-    D -->|No| F["6. Use == - the right choice almost every time"]
-```
-
 ![The Golden Rule for Comparing Values](../resources/ch01-2-interning-fig-03.png)
 
 [Back to the Table of Contents](#table-of-contents)

@@ -80,19 +80,7 @@ The key idea: **a `.py` file runs with the interpreter you select, and a noteboo
 
 The flowchart below shows the whole setup. Each part is explained in the sections that follow.
 
-```mermaid
-flowchart TD
-    S1["1. Install VS Code - Part 1"] --> S2["2. Install the Python and Jupyter extensions - Part 2"]
-    S2 --> S3["3. Open your project folder - Part 3"]
-    S3 --> S4["4. Create a .venv virtual environment - Part 5"]
-    S4 --> S5["5. Select the .venv interpreter - Part 4"]
-    S5 --> S6{"6. What do you want to write?"}
-    S6 -->|"A Python file"| S7["7. Create a .py file and run it - Part 6"]
-    S6 -->|"A notebook"| S8["8. Create a notebook - Part 7"]
-    S8 --> S9["9. Select the .venv kernel and run the cells - Part 7"]
-```
-
-![Key Words Used on This Page](../resources/ch01-vscode-2-fig-01.png)
+![Key Words Used on This Page](../resources/0000-10-ch1-venv-py-ipynb-on-vscode.png)
 
 [Back to the Table of Contents](#table-of-contents)
 

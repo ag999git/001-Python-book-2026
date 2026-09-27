@@ -256,24 +256,8 @@ Anaconda is the easiest and most common way for beginners to get Python and Jupy
 
 The flowchart below gives the whole process at a glance. Each step is explained after it.
 
-```mermaid
-flowchart TD
-    S1["1. Open anaconda.com/download"] --> S2["2. Download the Anaconda Distribution installer, not Miniconda"]
-    S2 --> S3["3. Double-click the downloaded .exe file"]
-    S3 --> S4["4. Click Next and then I Agree"]
-    S4 --> S5["5. Choose Just Me"]
-    S5 --> S6["6. Keep the default install folder"]
-    S6 --> S7{"7. Is another Python already installed on this computer?"}
-    S7 -->|Yes or not sure| S8["8. Leave Add to PATH unticked"]
-    S7 -->|No| S9["9. Add to PATH is optional"]
-    S8 --> S10["10. Tick Register Anaconda as my default Python and click Install"]
-    S9 --> S10
-    S10 --> S11["11. Wait for the installation"]
-    S11 --> S12["12. Click Next, Next, Finish"]
-    S12 --> S13["13. Open Anaconda Navigator"]
-```
 
-![Part 1: Installing Anaconda on Windows](../resources/ch01-jupyternb-fig-02.png)
+![Part 1: Installing Anaconda on Windows](../resources/0000-04-ch1-installing-anaconda-on-windows.png)
 
 [Back to the Table of Contents](#table-of-contents)
 

@@ -1338,28 +1338,13 @@ This section describes, in more detail, the journey that was summarised in [Sect
 
 
 
-<details>
-<summary>Mermaid source of this flowchart (can be pasted into draw.io)</summary>
 
-```mermaid
-flowchart TD
-    A["1. Anaconda Navigator"] --> B["2. Starts Jupyter Notebook Server"]
-    B --> C["3. Jupyter Server running on localhost"]
-    C --> D["4. Browser opens Notebook interface"]
-    D --> E["5. User writes code in a cell"]
-    E --> F["6. Browser sends code to server"]
-    F --> G["7. Server sends code to kernel"]
-    G --> H["8. Kernel executes Python code"]
-    H --> I["9. Python produces output"]
-    I --> J["10. Kernel sends output to server"]
-    J --> K["11. Server sends output to browser"]
-    K --> L["12. Browser displays output in notebook"]
-    L -->|"13. Write the next cell"| E
-```
+Another flowchart 
 
-![Advanced: How a Cell Travels from Browser to Kernel](../resources/ch01-jupyternb-fig-04.png)
 
-</details>
+![Advanced: How a Cell Travels from Browser to Kernel](../resources/0000-06-ch1-How-code-travels-from-browser-and-back.png)
+
+
 
 [Back to the Table of Contents](#table-of-contents)
 

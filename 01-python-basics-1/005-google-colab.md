@@ -104,14 +104,9 @@ You only need a web browser (Google Chrome works best, but any modern browser wi
 
 The picture below shows how Colab works. Your browser only shows the notebook; the code runs on Google's computer and the result comes back to you.
 
-```mermaid
-flowchart LR
-    A["1. You type code in the browser"] -->|"2. Code is sent over the internet"| B["3. Google's computer - the runtime - runs it"]
-    B -->|"4. Result is sent back"| C["5. Output appears under the cell"]
-    D["Your notebook file"] ---|"saved in"| E["Google Drive"]
-```
 
-![What Is Google Colab](../resources/ch01-google-colab-fig-01.png)
+
+![What Is Google Colab](../resources/0000-13-ch1-how-google-colab-works.png)
 
 The Google computer that runs your code is called the **runtime**. It is lent to you for a while and then taken back. This is why your notebook (saved in Google Drive) is permanent, but anything stored on the runtime itself is temporary. This idea comes up again and again on this page.
 

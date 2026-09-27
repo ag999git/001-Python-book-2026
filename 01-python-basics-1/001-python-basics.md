@@ -190,14 +190,7 @@ Note: from Python 3.13 onwards, Python removes the extra spaces at the start of 
 
 The flowchart below helps you decide. Follow the numbers.
 
-```mermaid
-flowchart TD
-    A["1. I want to add a note to my code"] --> B{"2. Does it explain HOW or WHY some lines work?"}
-    B -->|Yes| C["3. Use a hash comment on the line or just above it"]
-    B -->|No| D{"4. Does it describe WHAT a module, class or function does and how to use it?"}
-    D -->|Yes| E["5. Use a triple-quoted docstring as the first line after def or class"]
-    D -->|No| F["6. Use hash comments, one hash at the start of each line"]
-```
+
 
 ![Which One Should I Use](../resources/ch01-python-basics-fig-01.png)
 

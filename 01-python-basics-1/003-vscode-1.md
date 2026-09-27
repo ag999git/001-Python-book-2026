@@ -165,16 +165,7 @@ When the download finishes, you will find the `.exe` file in your **Downloads** 
 
 The flowchart below shows the whole installation at a glance. Each step is explained after it.
 
-```mermaid
-flowchart TD
-    S1["1. Double-click the installer in Downloads"] --> S2["2. Accept the licence agreement"]
-    S2 --> S3["3. Keep the default install folder"]
-    S3 --> S4["4. Keep the default Start Menu folder"]
-    S4 --> S5["5. Tick the additional tasks"]
-    S5 --> S6["6. Click Install and wait"]
-    S6 --> S7["7. Tick Launch Visual Studio Code and click Finish"]
-    S7 --> S8["8. VS Code opens with the Welcome page"]
-```
+
 
 ![Installing VS Code on Windows (Step-by-Step)](../resources/ch01-vscode-1-fig-01.png)
 

@@ -238,6 +238,10 @@ The usual way of working in Colab is shown below.
 
 ![How to Run Code](../resources/0000-13-ch1-how-google-colab-works.png)
 
+
+
+![Usual way of working in Google Colab](../resources/0000-14-usual-way-of-working-in-Google-colab.png)
+
 [Back to the Table of Contents](#table-of-contents)
 
 ## 6. How to Install Libraries

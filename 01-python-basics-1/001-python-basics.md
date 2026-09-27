@@ -245,21 +245,11 @@ Table 2: Examples of valid and invalid identifiers
 
 The flowchart below shows how to check a name, step by step.
 
-```mermaid
-flowchart TD
-    A["1. Start with the name you want to use"] --> B{"2. Does it start with a letter or an underscore?"}
-    B -->|No| X["9. Not allowed - Python gives a SyntaxError"]
-    B -->|Yes| C{"3. Are all other characters letters, digits or underscores?"}
-    C -->|No| X
-    C -->|Yes| D{"4. Is it a Python keyword?"}
-    D -->|Yes| X
-    D -->|No| E["5. It is a valid identifier"]
-    E --> F{"6. Does it hide a built-in name such as print, list or sum?"}
-    F -->|Yes| G["7. Legal, but choose a different name"]
-    F -->|No| H["8. Good to use"]
-```
 
-![Valid and Invalid Identifiers](../resources/ch01-python-basics-fig-02.png)
+
+![Valid and Invalid Identifiers](../resources/0000-01-ch1--how-to-select-variable-name.png)
+
+
 
 [Back to the Table of Contents](#table-of-contents)
 

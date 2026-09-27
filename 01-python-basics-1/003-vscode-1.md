@@ -561,23 +561,9 @@ Adds a button to run code with one click, for many languages. It is optional and
 
 This is the simplest workflow for complete beginners. The flowchart shows it at a glance; the steps are explained below it.
 
-```mermaid
-flowchart TD
-    S1["1. Install Python"] --> S2["2. Install VS Code"]
-    S2 --> S3["3. Install the Python extension"]
-    S3 --> S4["4. Create a project folder"]
-    S4 --> S5["5. Open the folder in VS Code"]
-    S5 --> S6["6. Create a file such as main.py"]
-    S6 --> S7["7. Write your code and save it"]
-    S7 --> S8["8. Open the Terminal"]
-    S8 --> S9["9. Run python main.py"]
-    S9 --> S10{"10. Did it work?"}
-    S10 -->|Yes| S11["11. Done - change the code and run again"]
-    S10 -->|No| S12["12. Read the error and see Section 8"]
-    S12 --> S7
-```
 
-![A Beginner's Python Workflow in VS Code](../resources/ch01-vscode-1-fig-02.png)
+
+![A Beginner's Python Workflow in VS Code](../resources/0000-07-ch1-beginner-work-flow-vs-code.png)
 
 [Back to the Table of Contents](#table-of-contents)
 

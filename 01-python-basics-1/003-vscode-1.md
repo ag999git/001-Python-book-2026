@@ -1011,20 +1011,7 @@ Debugging means:
 
 The flowchart below shows the usual cycle. Each step is explained in the sections that follow.
 
-```mermaid
-flowchart TD
-    S1["1. Open the Python file"] --> S2["2. Click in the margin to set a breakpoint"]
-    S2 --> S3["3. Press F5 to start debugging"]
-    S3 --> S4["4. Program pauses at the breakpoint"]
-    S4 --> S5["5. Look at variables - hover, Variables, Watch"]
-    S5 --> S6["6. Step Over, Step Into or Continue"]
-    S6 --> S7{"7. Found the mistake?"}
-    S7 -->|Yes| S8["8. Stop, fix the code and run again"]
-    S7 -->|No| S9["9. Add more breakpoints"]
-    S9 --> S3
-```
-
-![What Is Debugging](../resources/ch01-vscode-1-fig-04.png)
+![What Is Debugging](../resources/0000-09-ch1-debugging-cycle.png)
 
 [Back to the Table of Contents](#table-of-contents)
 

@@ -204,15 +204,10 @@ Here is the step-by-step process inside Jupyter:
 
 All of this normally happens in a fraction of a second.
 
-```mermaid
-flowchart LR
-    A["1. Browser - the client"] -->|"2. Sends cell code"| B["3. Jupyter Server"]
-    B -->|"4. Passes code on"| C["5. Kernel - IPython runs the code"]
-    C -->|"6. Sends result back"| B
-    B -->|"7. Forwards result"| A
-```
 
-![What Happens When You Run a Cell](../resources/ch01-jupyternb-fig-01.png)
+
+
+![What Happens When You Run a Cell](../resources/0000-03-ch1-running-jupyter-cell.png)
 
 For the curious: the browser and the server talk over HTTP and WebSockets, while the server and the kernel talk using a messaging library called [ZeroMQ](https://zeromq.org/). You do not need to know these details to use Jupyter. A more detailed, twelve-step version of this flow is given in [Section 11](#11-advanced-how-a-cell-travels-from-browser-to-kernel).
 

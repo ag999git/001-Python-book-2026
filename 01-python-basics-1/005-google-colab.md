@@ -234,22 +234,9 @@ Useful keyboard shortcuts:
 
 The usual way of working in Colab is shown below.
 
-```mermaid
-flowchart TD
-    S1["1. Open Colab and create a notebook"] --> S2["2. Type code in a cell"]
-    S2 --> S3["3. Press Shift + Enter"]
-    S3 --> S4{"4. Connected to a runtime?"}
-    S4 -->|No| S5["5. Colab connects automatically"]
-    S5 --> S6["6. The cell runs and output appears"]
-    S4 -->|Yes| S6
-    S6 --> S7{"7. Correct result?"}
-    S7 -->|Yes| S8["8. Add the next cell"]
-    S7 -->|No| S9["9. Fix the code"]
-    S9 --> S3
-    S8 --> S2
-```
 
-![How to Run Code](../resources/ch01-google-colab-fig-02.png)
+
+![How to Run Code](../resources/0000-13-ch1-how-google-colab-works.png)
 
 [Back to the Table of Contents](#table-of-contents)
 

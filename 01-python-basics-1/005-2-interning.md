@@ -70,15 +70,9 @@ So when you create a new variable with one of those values, Python reuses the sa
 1. **speed** - no time is spent making a new object, and comparing two identical objects is quick,
 2. **memory use** - one object is shared instead of many copies.
 
-```mermaid
-flowchart LR
-    A["1. a = 256"] --> OBJ["3. One shared object: 256"]
-    B["2. b = 256"] --> OBJ
-    C["4. c = 257, built at run time"] --> O1["6. Object: 257"]
-    D["5. d = 257, built at run time"] --> O2["7. Another object: 257"]
-```
 
-![What Is Interning](../resources/ch01-2-interning-fig-01.png)
+
+![What Is Interning](../resources/0000-12-ch1-interning-what-is.png)
 
 In the picture, `a` and `b` point to **one** object, so `a is b` is `True`. But `c` and `d` point to **two different** objects that happen to hold the same value, so `c == d` is `True` while `c is d` is `False`. (Section 6 shows this with real code.)
 

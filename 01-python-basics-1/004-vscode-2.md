@@ -539,18 +539,10 @@ Keep the terminal open while you work. To stop the server, click in the terminal
 
 The flowchart below helps you find the right fix for the most common problem: code that cannot find a package.
 
-```mermaid
-flowchart TD
-    A["1. ModuleNotFoundError: No module named ..."] --> B{"2. Is it a .py file or a notebook?"}
-    B -->|".py file"| C["3. Check the interpreter in the Status Bar"]
-    B -->|"Notebook"| D["6. Check the kernel at the top right of the notebook"]
-    C --> E["4. Select the .venv interpreter"]
-    E --> F["5. Install the package in a new terminal with python -m pip install"]
-    D --> G["7. Select the .venv kernel"]
-    G --> H["8. Install the package in a cell with %pip install"]
-```
 
-![Part 9: Common Problems and Fixes](../resources/ch01-vscode-2-fig-02.png)
+
+![Part 9: Common Problems and Fixes](../resources/0000-11-ch1-fix-for-code-that-cannot-find-package.png)
+
 
 [Back to the Table of Contents](#table-of-contents)
 

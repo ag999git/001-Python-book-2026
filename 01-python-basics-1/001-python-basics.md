@@ -813,30 +813,11 @@ The following flowchart shows how to debug a Python script.
 ![Flowchart for debugging a Python script in an IDE](../resources/Debugging-chart.png)
 
 
-The same cycle is shown below as a numbered Mermaid flowchart, so that you can follow each step by its number.
+The same cycle is shown below as a numbered flowchart, so that you can follow each step by its number.
 
-```mermaid
-flowchart TD
-    S1["1. Start debugging"] --> S2["2. Open code"]
-    S2 --> S3["3. Set breakpoints"]
-    S3 --> S4{"4. Run debugger?"}
-    S4 -->|Not yet| S3
-    S4 -->|Yes - press F5| S5["5. Debugger starts"]
-    S5 --> S6{"6. Breakpoint hit?"}
-    S6 -->|Yes| S7["7. Inspect variables"]
-    S6 -->|No| S8["8. Continue running"]
-    S8 --> S6
-    S7 --> S9{"9. Bug found?"}
-    S9 -->|Yes| S10["10. Fix code"]
-    S9 -->|No| S14["14. Add breakpoints or logs"]
-    S10 --> S11["11. Test fix"]
-    S11 --> S12{"12. Working?"}
-    S12 -->|Yes| S13["13. End"]
-    S12 -->|No| S14
-    S14 --> S4
-```
+![The Debugging Flowchart](../resources/0000-02-ch1-debugging-steps.png)
 
-![The Debugging Flowchart](../resources/ch01-python-basics-fig-03.png)
+
 
 [Back to the Table of Contents](#table-of-contents)
 

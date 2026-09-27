@@ -102,16 +102,7 @@ A few other objects exist only once in the whole program: `None`, `True` and `Fa
 
 The flowchart below shows, in simplified form, how CPython decides whether to reuse an object.
 
-```mermaid
-flowchart TD
-    A["1. Python needs a value"] --> B{"2. Is it a small integer from -5 to 256?"}
-    B -->|Yes| R["5. Reuse the stored object"]
-    B -->|No| C{"3. Is it a string written in the code that looks like a name?"}
-    C -->|Yes| R
-    C -->|No| D{"4. Is it an empty string or an empty tuple?"}
-    D -->|Yes| R
-    D -->|No| N["6. Create a new object"]
-```
+
 
 ![Where Does Interning Happen](../resources/ch01-2-interning-fig-02.png)
 

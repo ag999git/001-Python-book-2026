@@ -105,17 +105,7 @@ A **compiler** converts the **entire source code** into machine code (or into an
 
 The flowchart below shows the steps.
 
-```mermaid
-flowchart LR
-    A["1. Source code, for example hello.cpp"] --> B["2. Compiler translates the whole program"]
-    B --> C{"3. Any errors?"}
-    C -->|Yes| D["4. Fix the code and compile again"]
-    D --> B
-    C -->|No| E["5. Executable file, for example hello.exe"]
-    E --> F["6. Run the executable - no compiler needed"]
-```
-
-![Examples](../resources/ch01-question-answers1-fig-01.png)
+![Examples](../resources/0000-15-steps-in-how-compiler-works.png)
 
 [Back to the Table of Contents](#table-of-contents)
 

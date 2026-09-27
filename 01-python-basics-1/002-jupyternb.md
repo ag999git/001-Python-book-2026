@@ -722,14 +722,7 @@ You can think of Jupyter Notebook as having **two main screens**:
 1. **Screen 1: the Tree View** (home page), where you pick or create notebooks.
 2. **Screen 2: the Notebook Editor**, where you write and run code.
 
-```mermaid
-flowchart TD
-    A["1. Start Jupyter"] --> B["2. Tree View - the file browser"]
-    B -->|"3. Open or create a notebook"| C["4. Notebook Editor - where you write code"]
-    C -->|"5. Go back to pick another file"| B
-```
-
-![The Jupyter Notebook User Interface](../resources/ch01-jupyternb-fig-03.png)
+![The Jupyter Notebook User Interface](../resources/0000-05-ch1-jupyter-notebook-UI.png)
 
 Screen 1 is the **launcher**; Screen 2 is the **work screen**. You always begin at Screen 1, unless you start Jupyter with a notebook name, for example `jupyter notebook MyNotebook.ipynb`.
 

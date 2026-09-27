@@ -300,15 +300,6 @@ What you **can** do — and should — is use different managers in *different* 
 
 
 
-```mermaid
-flowchart TD
-    A["GOOD: the root window"] --> B["frame_one placed with pack"]
-    A --> C["frame_two placed with pack"]
-    B --> D["its children all use grid - allowed"]
-    C --> E["its children all use pack - allowed"]
-    F["BAD: one container mixing pack and grid"] --> G["TclError raised at once"]
-```
-
 Each container is judged on its own, so a frame can be packed into the root while everything inside that frame uses grid. The rule only forbids two managers competing for the same parent.
 
 [Back to Table of Contents](#table-of-contents)

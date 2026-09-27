@@ -649,16 +649,7 @@ Why this matters so much in a GUI is that the default behaviour for a callback e
 ![Flowchart](../resources/ch14-tkinter-September-2026-conceptual-QA-006.png)
 
 
-```mermaid
-flowchart TD
-    A["An exception is raised somewhere in your program"] --> B{"Was it raised inside a Tkinter callback?"}
-    B -->|"Yes: a button click, after job, bind or trace"| C["Tkinter catches it first"]
-    C --> D["root.report_callback_exception is called"]
-    B -->|"No: ordinary top level code"| E["It travels up the call chain"]
-    E --> F["sys.excepthook is called"]
-    D --> G["Point both names at one handler to cover every case"]
-    F --> G
-```
+
 
 [Back to Table of Contents](#table-of-contents)
 

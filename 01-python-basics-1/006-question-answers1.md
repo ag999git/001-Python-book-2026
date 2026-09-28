@@ -636,14 +636,9 @@ x = "hi"   # x -> string object "hi"
 
 `x` is *re-bound* each time: it simply points to a different object.
 
-```mermaid
-flowchart LR
-    X1["1. x = 10"] --> O1["2. int object: 10"]
-    X2["3. x = 'hi'"] --> O2["4. str object: 'hi'"]
-    O1 -.->|"5. no longer used by x"| G["6. freed if nothing else uses it"]
-```
 
-![Step 3 - and now to a decimal number (float)](../resources/ch01-question-answers1-fig-03.png)
+
+![Step 3 - and now to a decimal number (float)](../resources/0000-17.png)
 
 A note on the term: in other books, "dynamic binding" (also called **late binding**) often means something slightly different - deciding *which method to call* while the program runs, a topic you will meet in the chapters on classes. In this chapter, it means binding names to values while the program runs.
 

@@ -156,16 +156,9 @@ When you run a Python program with the standard interpreter (**CPython**, the ve
 2. The **Python Virtual Machine (PVM)**, which is part of the interpreter, then runs the bytecode instruction by instruction.
 3. For modules that you import, Python saves the bytecode in a `__pycache__` folder as `.pyc` files, so that it does not have to compile them again next time.
 
-```mermaid
-flowchart LR
-    A["1. Source code: hello.py"] --> B["2. Python compiles it to bytecode"]
-    B --> C{"3. Any syntax errors?"}
-    C -->|Yes| D["4. SyntaxError - nothing runs"]
-    C -->|No| E["5. Python Virtual Machine runs the bytecode"]
-    E --> F["6. Output, or a runtime error at the line where it happens"]
-```
 
-![How does Python actually run your code?](../resources/ch01-question-answers1-fig-02.png)
+
+![How does Python actually run your code?](../resources/0000-16-how-does-python-run-code.png)
 
 This has an important effect that surprises many beginners: **a syntax error anywhere in a file stops the whole file from running**, even the lines before it. Try this file, saved as `syntax_demo.py`:
 

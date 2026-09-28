@@ -715,17 +715,6 @@ Output:
 | Speed | Very fast (done by the processor) | Slower | Slowest |
 | Good for | Science, engineering, graphics, measurements | Money, banking, anything that must match hand calculations | Exact fractions, probability, maths teaching |
 
-```mermaid
-flowchart LR
-    A["1. What kind of numbers do you need?"] --> B{"2. Only whole numbers?"}
-    B -->|Yes| C["3. Use int"]
-    B -->|No| D{"4. Money or exact decimal places?"}
-    D -->|Yes| E["5. Use Decimal"]
-    D -->|No| F{"6. Exact fractions such as 1/3?"}
-    F -->|Yes| G["7. Use Fraction"]
-    F -->|No| H["8. Use float"]
-```
-
 ![Comparing the Three Types](../resources/ch02-float-data-fig-03.png)
 
 [Back to the Table of Contents](#table-of-contents)

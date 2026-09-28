@@ -394,15 +394,7 @@ To turn a decimal fraction into binary, we multiply it by 2 again and again. Eac
 
 So 0.1 in binary is `0.0001100110011001100...`, with `0011` repeating forever. A float can keep only 53 significant bits, so Python cuts the pattern off and rounds it. The stored value is very slightly more than 0.1.
 
-```mermaid
-flowchart TD
-    A["1. You type 0.1 in your code"] --> B["2. Python converts it to binary"]
-    B --> C["3. The binary digits repeat forever: 0.000110011..."]
-    C --> D["4. Only 53 significant bits can be kept"]
-    D --> E["5. The rest are rounded off"]
-    E --> F["6. Stored value: 0.1000000000000000055511..."]
-    F --> G["7. print() shows the shortest text that gives back the same float: 0.1"]
-```
+
 
 ![Why 0.1 Cannot Be Stored Exactly](../resources/ch02-float-data-fig-01.png)
 

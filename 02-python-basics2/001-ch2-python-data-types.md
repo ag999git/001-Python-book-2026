@@ -795,21 +795,7 @@ A few points to note:
 
 ### 7.2 How int() Decides What to Do
 
-```mermaid
-flowchart LR
-    A["1. Call int(x)"] --> B{"2. What type is x?"}
-    B -->|bool| C["3. True gives 1, False gives 0"]
-    B -->|float| D{"4. Is x infinity or NaN?"}
-    D -->|Yes| E["5. OverflowError or ValueError"]
-    D -->|No| F["6. Cut off the part after the decimal point"]
-    B -->|str| G{"7. Is the text a valid whole number in the given base?"}
-    G -->|Yes| H["8. Read the digits"]
-    G -->|No| I["9. ValueError"]
-    B -->|other| J["10. TypeError, for example list, dict or None"]
-    C --> K["11. Return the new int"]
-    F --> K
-    H --> K
-```
+
 
 ![How int() Decides What to Do](../resources/ch02-python-data-types-fig-03.png)
 

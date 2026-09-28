@@ -405,18 +405,7 @@ The table below sums it up.
 
 The flowchart shows the steps Python follows for `a // b`.
 
-```mermaid
-flowchart TD
-    A["1. Start: a // b"] --> B["2. Work out the exact answer a / b"]
-    B --> C{"3. Is the exact answer a whole number?"}
-    C -->|Yes| D["4. Keep that whole number"]
-    C -->|No| E["5. Move DOWN to the next smaller whole number"]
-    E --> F["6. Example: -3.75 becomes -4"]
-    D --> G["7. This is the result of a // b"]
-    F --> G
-```
-
-![Floor Division with Negative Numbers](../resources/ch02-python-data-types-fig-01.png)
+![Floor Division with Negative Numbers](../resources/0000-20-floor-division-with-negative-numbers.png)
 
 [Back to the Table of Contents](#table-of-contents)
 

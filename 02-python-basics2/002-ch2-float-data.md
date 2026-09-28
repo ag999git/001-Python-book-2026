@@ -634,20 +634,6 @@ Note that `float("3,5")` fails. Python always uses a point, never a comma, as th
 
 The flowchart shows how `float()` decides what to do.
 
-```mermaid
-flowchart LR
-    A["1. Call float(x)"] --> B{"2. What type is x?"}
-    B -->|int or bool| C{"3. Is the int too large, more than about 309 digits?"}
-    C -->|Yes| D["4. OverflowError"]
-    C -->|No| E["5. Nearest float to the int"]
-    B -->|str| F{"6. Is the text a valid number, inf or nan?"}
-    F -->|Yes| G["7. Nearest float, or inf if the number is too large"]
-    F -->|No| H["8. ValueError"]
-    B -->|other| I["9. TypeError, for example None or a list"]
-    E --> J["10. Return the new float"]
-    G --> J
-```
-
 ![All the Conversions in One Script](../resources/ch02-float-data-fig-02.png)
 
 Branch numbers: the int branch is steps 3 to 5, the string branch is steps 6 to 8 and the other branch is step 9. The two successful branches meet at step 10.

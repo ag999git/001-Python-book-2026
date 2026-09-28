@@ -587,14 +587,7 @@ Each step to the left doubles a bit's place value, just as each step to the left
 
 **The same steps as a flowchart**
 
-```mermaid
-flowchart TD
-    A["1. Start with the number 10"] --> B["2. Write it in binary: 1010"]
-    B --> C["3. Shift left by 3: add three zeros on the right"]
-    C --> D["4. New binary number: 1010000"]
-    D --> E["5. Convert back: 64 + 16 = 80"]
-    E --> F["6. Check: 10 x 2 to the power 3 = 80"]
-```
+
 
 ![Advanced Concept: How the Left Shift Works (Example: 10 Shifted Left by 3)](../resources/ch02-python-data-types-fig-02.png)
 

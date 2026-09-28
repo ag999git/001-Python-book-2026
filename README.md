@@ -10,6 +10,35 @@ Read it as a book on **[GitBook](https://anuraggupta.gitbook.io/python999/)** or
 
 - [Chapters](#chapters)
 - [Google Colab notebooks](#google-colab-notebooks)
+- [What's New](#whats-new)
+- [Coming Soon](#coming-soon)
+- [Questions, mistakes and suggestions](#questions-mistakes-and-suggestions)
+
+## What's New
+
+| Date | Update |
+|---|---|
+| 28 Sep 2026 | The online resource for the Second Edition is live, including online Chapter 20 (Unit Testing with pytest) and Chapter 21 (Design Patterns). [Read the announcement](https://github.com/ag999git/001-Python-book-2026/discussions/2) |
+
+To get notified of new chapters and videos, click **Watch → Custom → Discussions** at the top of this page.
+
+## Coming Soon
+
+These topics did not fit in the printed book. They will be added as online chapters.
+
+| Topic | Status |
+|---|---|
+| Git and GitHub | Planned |
+| Type hints and the typing module | Planned |
+| Vector embeddings | Planned |
+| Requests and BeautifulSoup, for the web | Planned |
+| Natural Language Processing: the basics | Planned |
+| Geospatial data with Cartopy and Folium | Planned |
+| YouTube videos on the topics in this book | Planned |
+
+## Questions, mistakes and suggestions
+
+Please post them in the [discussion forum](https://github.com/ag999git/001-Python-book-2026/discussions). Read the [welcome post](https://github.com/ag999git/001-Python-book-2026/discussions/1) first to see which category to use.
 
 ## Chapters
 

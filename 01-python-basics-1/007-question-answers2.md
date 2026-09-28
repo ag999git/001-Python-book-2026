@@ -386,15 +386,8 @@ Step 3 - same id after count + 1? False
 
 When you run a cell, the browser sends the code to the server, the kernel runs it, and the result is sent back to the browser to be shown under the cell.
 
-```mermaid
-flowchart LR
-    A["1. Browser - the client"] -->|"2. Sends the code in a cell"| B["3. Jupyter server"]
-    B -->|"4. Passes it on"| C["5. Kernel runs the code"]
-    C -->|"6. Result"| B
-    B -->|"7. Result shown under the cell"| A
-```
 
-![h. When we say that Jupyter Notebook is a “server-client” application, what does it mean?](../resources/ch01-question-answers2-fig-01.png)
+![h. When we say that Jupyter Notebook is a “server-client” application, what does it mean?](../resources/0000-19-jupyter-NB-as-server-client.png)
 
 Because of this design, the same notebook interface can work with a server on your own computer or with one far away, as in Google Colab.
 

@@ -1163,19 +1163,7 @@ Learn more: [Numeric types](https://docs.python.org/3/library/stdtypes.html#nume
 
 ### 10.2 How Python Picks the Result Type
 
-```mermaid
-flowchart TD
-    A["1. Python sees a + b"] --> B{"2. Is either a or b a complex number?"}
-    B -->|Yes| C["3. Convert both to complex"]
-    B -->|No| D{"4. Is either a or b a float?"}
-    D -->|Yes| E["5. Convert both to float"]
-    D -->|No| F["6. Both are int or bool: keep int"]
-    C --> G["7. Do the arithmetic and return the result"]
-    E --> G
-    F --> G
-```
-
-![How Python Picks the Result Type](../resources/ch02-python-data-types-fig-04.png)
+![How Python Picks the Result Type](../resources/0000-21-how-python-picks-result-type.png)
 
 | Left operand | Right operand | Result type | Example | Result |
 | ------------ | ------------- | ----------- | ------- | ------ |

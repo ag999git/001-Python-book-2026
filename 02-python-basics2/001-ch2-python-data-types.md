@@ -1715,17 +1715,7 @@ Small numbers such as loop counters and list positions are used all the time, so
 
 The flowchart shows what Python does when it needs an integer.
 
-```mermaid
-flowchart TD
-    A["1. Python needs an int with value v"] --> B{"2. Is v between -5 and 256?"}
-    B -->|Yes| C["3. Take the ready-made object from the cache"]
-    B -->|No| D["4. Set aside memory for a new int object"]
-    D --> E["5. Store the value v in it"]
-    C --> F["6. Give the object to your variable"]
-    E --> F
-```
-
-![Advanced Concept: Understanding Performance of Integer Operations in Python](../resources/ch02-python-data-types-fig-05.png)
+![Advanced Concept: Understanding Performance of Integer Operations in Python](../resources/0000-22-what-python-does-when-it-needs-an-integer.png)
 
 The script below shows the cache at work. It uses `int("100")` instead of the literal `100` on purpose. When the same literal appears twice in one script, Python may reuse one object for both, even for large numbers, which would hide the effect we want to see.
 

@@ -738,18 +738,8 @@ It means that:
 - So Python also has a **garbage collector**, which runs from time to time, finds such unreachable groups of objects, and frees them.
 - Together, these two methods prevent most memory leaks (memory that is never given back) and help programs use memory efficiently.
 
-```mermaid
-flowchart TD
-    A["1. Object created - count is 1"] --> B["2. Another name refers to it - count goes up"]
-    B --> C["3. A name is deleted or reused - count goes down"]
-    C --> D{"4. Is the count zero?"}
-    D -->|Yes| E["5. Memory freed at once"]
-    D -->|No| F{"6. Is it only kept alive by a cycle?"}
-    F -->|Yes| G["7. Garbage collector frees it later"]
-    F -->|No| H["8. Object stays in use"]
-```
 
-![Step 3 - Convert the number to text first, then join them](../resources/ch01-question-answers1-fig-04.png)
+![Step 3 - Convert the number to text first, then join them](../resources/0000-18-garbage-collection.png)
 
 [Back to the Table of Contents](#table-of-contents)
 

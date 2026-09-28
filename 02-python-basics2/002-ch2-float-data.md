@@ -891,19 +891,8 @@ True
 
 Note the last two lines. From Python 3.12, the built-in `sum()` adds floats more carefully, so it also gives `1.0` here. In older versions it gives `0.9999999999999999`. `math.fsum()` is accurate in every version.
 
-```mermaid
-flowchart TD
-    A["1. You want to compare two floats a and b"] --> B{"2. Could either value be NaN?"}
-    B -->|Yes| C["3. Check with math.isnan() first"]
-    B -->|No| D{"4. Could one value be zero or very close to zero?"}
-    C --> D
-    D -->|Yes| E["5. Use math.isclose(a, b, abs_tol=small value)"]
-    D -->|No| F["6. Use math.isclose(a, b)"]
-    E --> G["7. Use the True or False result in your program"]
-    F --> G
-```
 
-![Using math.isclose() Correctly](../resources/ch02-float-data-fig-04.png)
+![Using math.isclose() Correctly](../resources/0000-24-using-isclose.png)
 
 [Back to the Table of Contents](#table-of-contents)
 

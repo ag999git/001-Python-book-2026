@@ -1784,19 +1784,9 @@ CPython picks the multiplication method based on the size of the numbers.
 
 CPython's `int` does **not** use FFT-based methods (such as the Schönhage–Strassen algorithm). These are faster still for numbers with many thousands of digits. If you need that speed, the outside library [gmpy2](https://pypi.org/project/gmpy2/) provides it. Python's own [`decimal`](https://docs.python.org/3/library/decimal.html) module also uses a fast transform-based method for very large numbers.
 
-```mermaid
-flowchart TD
-    A["1. Python multiplies a * b"] --> B{"2. Do both numbers fit in one 30-bit piece?"}
-    B -->|Yes| C["3. One quick machine multiplication"]
-    B -->|No| D{"4. Do both numbers have about 70 or more pieces?"}
-    D -->|No| E["5. Schoolbook method, O(n squared)"]
-    D -->|Yes| F["6. Karatsuba method, about O(n to the power 1.585)"]
-    C --> G["7. Return a new int object"]
-    E --> G
-    F --> G
-```
 
-![Advanced Concept: Understanding Performance of Integer Operations in Python](../resources/ch02-python-data-types-fig-06.png)
+
+![Advanced Concept: Understanding Performance of Integer Operations in Python](../resources/0000-23.png)
 
 </details>
 

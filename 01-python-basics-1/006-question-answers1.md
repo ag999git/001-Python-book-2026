@@ -990,13 +990,7 @@ The differences are summarised in the tables in the next question and in [the co
 
 ### What are the steps to create and run a Python script?
 
-```mermaid
-flowchart LR
-    A["1. Create the file hello.py"] --> B["2. Type the code and save"]
-    B --> C["3. Open a terminal in that folder"]
-    C --> D["4. Run python hello.py"]
-    D --> E["5. See the output"]
-```
+
 
 ![Step 4 - The garbage collector finds the cycle and frees both objects](../resources/ch01-question-answers1-fig-05.png)
 

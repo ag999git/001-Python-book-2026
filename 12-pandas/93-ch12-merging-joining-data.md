@@ -1004,7 +1004,7 @@ MATCHING (with key) →  pd.merge(df1, df2, on='key') how = inner / left / right
 - The **Task** line from your original was restored (it had been dropped in my first version).
 - Step 6's CASE 1/CASE 2 explanatory text now matches your original's full wording (my first version had shortened it against your instruction not to shorten long explanations).
 - The combined script now mirrors your original's step-numbering style (`# ===== STEP 0 ... =====`) with the OUTPUT HINT comments preserved.
-- All links, tables, and mermaid blocks were checked for corruption; no broken markdown remains.
+- All links, tables, and diagrams were checked for corruption; no broken markdown remains.
 - Your original content (conceptual deep dive tables, dos/don'ts, common errors, row/column join effects) is fully retained — improved in clarity but not shortened.
 
 

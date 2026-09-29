@@ -81,13 +81,13 @@ Testing helps us:
 
 A unit test usually follows three steps, known as **Arrange, Act, Assert**:
 
-```mermaid
-flowchart LR
-    A["1. Arrange: prepare the input"] --> B["2. Act: call the code being tested"]
-    B --> C["3. Assert: check the result"]
-```
+![What is unit testing? Why do we test code even when the program runs correctly?](../resources/S20-LR-ch20-conceptual-qa-fig-01.png)
 
-![What is unit testing? Why do we test code even when the program runs correctly?](../resources/ch20-conceptual-qa-fig-01.png)
+**Reading the figure**
+
+- **Step 1:** Arrange: prepare everything the test needs, such as the input values and the expected result.
+- **Step 2:** Act: call the function or code being tested, once.
+- **Step 3:** Assert: check that the result is what was expected. If it is not, the test fails and tells you so.
 
 Example:
 
@@ -1238,14 +1238,14 @@ Tests       →  exercise the behaviour
 Assertions  →  check the results
 ```
 
-```mermaid
-flowchart LR
-    A["1. Fixtures prepare the environment"] --> B["2. Tests run the code"]
-    B --> C["3. Assertions check the results"]
-    C --> D["4. Fixtures clean up"]
-```
+![Why are pytest fixtures considered one of the most important pytest features?](../resources/S20-LR-ch20-conceptual-qa-fig-04.png)
 
-![Why are pytest fixtures considered one of the most important pytest features?](../resources/ch20-conceptual-qa-fig-04.png)
+**Reading the figure**
+
+- **Step 1:** Fixtures prepare the environment: they create the objects, data or connections a test needs.
+- **Step 2:** The test runs the code being tested, using what the fixtures provided.
+- **Step 3:** Assertions check the results.
+- **Step 4:** Fixtures clean up afterwards, in the code after `yield`, even if the test failed.
 
 This separation makes large test suites easier to read, change and maintain.
 

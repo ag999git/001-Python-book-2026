@@ -750,21 +750,18 @@ This has two effects.
 3. If none was `True`, run the `else` block (if there is one).
 4. Continue with the first line after the whole chain.
 
-```mermaid
-flowchart LR
-    D1{"1. if n greater than 0?"} -- "True" --> D2["2. Run Branch 1"]
-    D1 -- "False" --> D3{"3. elif n greater than -5?"}
-    D3 -- "True" --> D4["4. Run Branch 2"]
-    D3 -- "False" --> D5{"5. elif n is even?"}
-    D5 -- "True" --> D6["6. Run Branch 3"]
-    D5 -- "False" --> D7["7. else: Run Branch 4"]
-    D2 --> D8["8. Continue after the chain"]
-    D4 --> D8
-    D6 --> D8
-    D7 --> D8
-```
+![Q1. The Rule of One in if-elif-else](../resources/S04-LR-ch4-conceptual-qa-fig-04.png)
 
-![Q1. The Rule of One in if-elif-else](../resources/ch4-conceptual-qa-fig-04.png)
+**Reading the figure**
+
+- **Step 1:** Test the `if` condition first: is `n > 0`?
+- **Step 2:** True: run Branch 1, then jump straight to Step 8. No other condition is tested.
+- **Step 3:** False: test the first `elif`: is `n > -5`?
+- **Step 4:** True: run Branch 2, then jump to Step 8.
+- **Step 5:** False: test the next `elif`: is `n` even?
+- **Step 6:** True: run Branch 3, then jump to Step 8.
+- **Step 7:** None of the conditions was `True`, so run the `else` block, Branch 4.
+- **Step 8:** Continue with the first line after the whole chain. Whatever happens, exactly one branch runs: the Rule of One.
 
 **Script**
 

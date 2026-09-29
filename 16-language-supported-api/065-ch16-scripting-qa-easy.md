@@ -93,24 +93,21 @@ The plan for the script:
 
 We use [time.perf_counter()](https://docs.python.org/3/library/time.html#time.perf_counter) because it is a precise clock made for measuring short periods. [random.randint(a, b)](https://docs.python.org/3/library/random.html#random.randint) gives a random whole number between `a` and `b`, including both.
 
-```mermaid
-flowchart TD
-    A["1. Take the next list size n"] --> B["2. Build a list of n random numbers"]
-    B --> C["3. Start the timer"]
-    C --> D["4. Check each item against the target"]
-    D --> E{"5. Item equals target?"}
-    E -- "Yes" --> F["6. Return True"]
-    E -- "No" --> G{"7. More items left?"}
-    G -- "Yes" --> D
-    G -- "No" --> H["8. Return False"]
-    F --> I["9. Stop the timer and record the time"]
-    H --> I
-    I --> J{"10. More sizes left?"}
-    J -- "Yes" --> A
-    J -- "No" --> K["11. Print how time grew with n"]
-```
+![Linear Search Timing](../resources/LR-ch16-scripting-qa-easy-fig-01.png)
 
-![Linear Search Timing](../resources/ch16-scripting-qa-easy-fig-01.png)
+**Reading the figure**
+
+- **Step 1:** Take the next list size `n` from `sizes = [1000, 10000, 100000, 500000]`.
+- **Step 2:** Build a list of `n` random numbers with `random.randint(1, 100000)`.
+- **Step 3:** Start the timer with `time.perf_counter()` and call `linear_search()`.
+- **Step 4:** Linear search takes the next item from the list.
+- **Step 5:** Does the item equal the target?
+- **Step 6:** Yes: return `True`. (In this script the target is `-1`, which is never in the list, so this branch is never taken.)
+- **Step 7:** No: if more items are left, go back to Step 4.
+- **Step 8:** No items are left: return `False`. Every item has been checked, which is the worst case.
+- **Step 9:** Stop the timer and record the time taken for this size.
+- **Step 10:** If more sizes are left, go back to Step 1.
+- **Step 11:** Print each size with its time. The time grows roughly in step with `n`, which is O(n).
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -297,21 +294,19 @@ With a list comprehension: `numbers = [random.randint(1, 100000) for _ in range(
    5. Otherwise, search the left half: `right = middle - 1`.
 3. If `left` passes `right`, the target is not in the list. Return `-1`.
 
-```mermaid
-flowchart TD
-    A["1. left = 0, right = last index, comparisons = 0"] --> B{"2. Is left less than or equal to right?"}
-    B -- "No" --> C["3. Not found. Return -1 and comparisons"]
-    B -- "Yes" --> D["4. middle = left + right, then // 2. comparisons + 1"]
-    D --> E{"5. Is middle item equal to target?"}
-    E -- "Yes" --> F["6. Return middle and comparisons"]
-    E -- "No" --> G{"7. Is target bigger than middle item?"}
-    G -- "Yes" --> H["8. left = middle + 1"]
-    G -- "No" --> I["9. right = middle - 1"]
-    H --> B
-    I --> B
-```
+![Binary Search](../resources/LR-ch16-scripting-qa-easy-fig-02.png)
 
-![Binary Search](../resources/ch16-scripting-qa-easy-fig-02.png)
+**Reading the figure**
+
+- **Step 1:** Start with the whole list: `left = 0`, `right = len(numbers) - 1`, and `comparisons = 0`.
+- **Step 2:** Is `left <= right`? While it is, part of the list is still left to search.
+- **Step 3:** No: the target is not in the list. Return -1 and the number of comparisons.
+- **Step 4:** Yes: find the middle, `middle = (left + right) // 2`, and count one comparison.
+- **Step 5:** Is the item at `middle` equal to the target?
+- **Step 6:** Yes: return `middle` and the number of comparisons.
+- **Step 7:** No: is the target bigger than the middle item?
+- **Step 8:** Yes: the target can only be in the right half, so `left = middle + 1`. Go back to Step 2.
+- **Step 9:** No: the target can only be in the left half, so `right = middle - 1`. Go back to Step 2.
 
 Here is the search for 70 in `[10, 20, 30, 40, 50, 60, 70]`:
 
@@ -428,24 +423,21 @@ The [bisect](https://docs.python.org/3/library/bisect.html) module. See Question
 4. Each pass can stop one position earlier than the last, because the end of the list is already sorted.
 5. Print the list after each pass.
 
-```mermaid
-flowchart TD
-    A["1. pass_no = 0"] --> B["2. i = 0"]
-    B --> C{"3. Is numbers at i bigger than numbers at i + 1?"}
-    C -- "Yes" --> D["4. Swap the two items"]
-    C -- "No" --> E["5. Leave them"]
-    D --> F{"6. More pairs in this pass?"}
-    E --> F
-    F -- "Yes" --> G["7. i = i + 1"]
-    G --> C
-    F -- "No" --> H["8. Print the list after this pass"]
-    H --> I{"9. More passes left?"}
-    I -- "Yes" --> J["10. pass_no = pass_no + 1"]
-    J --> B
-    I -- "No" --> K["11. List is sorted"]
-```
+![Bubble Sort Implementation](../resources/LR-ch16-scripting-qa-easy-fig-03.png)
 
-![Bubble Sort Implementation](../resources/ch16-scripting-qa-easy-fig-03.png)
+**Reading the figure**
+
+- **Step 1:** Start with the first pass, `pass_no = 0`.
+- **Step 2:** Start each pass at the first pair, `i = 0`.
+- **Step 3:** Is `numbers[i]` bigger than the item after it, `numbers[i + 1]`?
+- **Step 4:** Yes: swap the two items, so the bigger one moves right.
+- **Step 5:** No: leave the pair as it is.
+- **Step 6:** Are there more pairs in this pass? Each pass stops one position earlier than the last, because the end of the list is already sorted.
+- **Step 7:** Yes: move to the next pair, `i = i + 1`, and go back to Step 3.
+- **Step 8:** No: the pass is over. Print the list, so you can watch the biggest remaining item settle at the end.
+- **Step 9:** Are there more passes left?
+- **Step 10:** Yes: `pass_no = pass_no + 1`, and go back to Step 2.
+- **Step 11:** No: the list is sorted.
 
 The line `numbers[i], numbers[i+1] = (numbers[i+1], numbers[i])` swaps two items in one step. Python first builds the pair on the right, then assigns it to the two positions on the left. This is called [tuple unpacking](https://docs.python.org/3/tutorial/datastructures.html#tuples-and-sequences).
 
@@ -577,21 +569,19 @@ Change `>` to `<` in the comparison, so that smaller items move to the end.
 5. Put the key into the gap.
 6. Repeat until every item has been placed.
 
-```mermaid
-flowchart TD
-    A["1. key_index = 1"] --> B["2. key = numbers at key_index. position = key_index - 1"]
-    B --> C{"3. position at least 0 AND numbers at position bigger than key?"}
-    C -- "Yes" --> D["4. Shift: numbers at position + 1 = numbers at position"]
-    D --> E["5. position = position - 1"]
-    E --> C
-    C -- "No" --> F["6. Insert: numbers at position + 1 = key"]
-    F --> G{"7. More items?"}
-    G -- "Yes" --> H["8. key_index = key_index + 1"]
-    H --> B
-    G -- "No" --> I["9. List is sorted"]
-```
+![Insertion Sort](../resources/LR-ch16-scripting-qa-easy-fig-04.png)
 
-![Insertion Sort](../resources/ch16-scripting-qa-easy-fig-04.png)
+**Reading the figure**
+
+- **Step 1:** Start with the second item, `key_index = 1`. A single item on its own is already sorted.
+- **Step 2:** Pick up the item as `key`, and start comparing with the item just before it: `position = key_index - 1`.
+- **Step 3:** Is `position` still inside the list (`position >= 0`), and is the item there bigger than `key`? Both must be true.
+- **Step 4:** Yes: shift that item one place to the right, `numbers[position + 1] = numbers[position]`.
+- **Step 5:** Move one step further left, `position = position - 1`, and go back to Step 3.
+- **Step 6:** No: the gap is at `position + 1`, so put `key` there.
+- **Step 7:** Are there more items to place?
+- **Step 8:** Yes: `key_index = key_index + 1`, and go back to Step 2.
+- **Step 9:** No: every item has been placed, so the list is sorted.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -686,26 +676,22 @@ None. For each key, the item on its left is already smaller, so the `while` loop
    3. If the smallest item is not already at this position, swap them.
 2. When every position has been filled, the list is sorted.
 
-```mermaid
-flowchart TD
-    A["1. position = 0"] --> B["2. min_index = position"]
-    B --> C["3. Scan items after position"]
-    C --> D{"4. Found a smaller item?"}
-    D -- "Yes" --> E["5. min_index = index of that item"]
-    D -- "No" --> F{"6. More items to scan?"}
-    E --> F
-    F -- "Yes" --> C
-    F -- "No" --> G{"7. Is min_index different from position?"}
-    G -- "Yes" --> H["8. Swap the two items"]
-    G -- "No" --> I["9. No swap needed"]
-    H --> J{"10. More positions?"}
-    I --> J
-    J -- "Yes" --> K["11. position = position + 1"]
-    K --> B
-    J -- "No" --> L["12. List is sorted"]
-```
+![Selection Sort](../resources/LR-ch16-scripting-qa-easy-fig-05.png)
 
-![Selection Sort](../resources/ch16-scripting-qa-easy-fig-05.png)
+**Reading the figure**
+
+- **Step 1:** Start with the first position, `position = 0`.
+- **Step 2:** Assume for now that the smallest item is the one at `position`: `min_index = position`.
+- **Step 3:** Take the next item after `position`.
+- **Step 4:** Is it smaller than the smallest item found so far, the one at `min_index`?
+- **Step 5:** Yes: remember its index, `min_index` = index of that item.
+- **Step 6:** If more items are left to scan, go back to Step 3.
+- **Step 7:** The scan is over. Is `min_index` different from `position`?
+- **Step 8:** Yes: swap the item at `position` with the smallest item.
+- **Step 9:** No: the smallest item is already in place, so no swap is needed.
+- **Step 10:** Are there more positions to fill?
+- **Step 11:** Yes: `position = position + 1`, and go back to Step 2.
+- **Step 12:** No: every position has been filled, so the list is sorted.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -902,17 +888,16 @@ A **queue** is a collection where the first item added is the first item removed
 2. Add tasks at the right end with `append()`.
 3. While the deque is not empty, remove the task at the left end with `popleft()` and process it.
 
-```mermaid
-flowchart TD
-    A["1. Create an empty deque"] --> B["2. append Task 1, Task 2, Task 3 at the right end"]
-    B --> C{"3. Is the queue empty?"}
-    C -- "No" --> D["4. popleft removes the oldest task from the left end"]
-    D --> E["5. Process and print the task"]
-    E --> C
-    C -- "Yes" --> F["6. All tasks done"]
-```
+![Queue using deque](../resources/LR-ch16-scripting-qa-easy-fig-06.png)
 
-![Queue using deque](../resources/ch16-scripting-qa-easy-fig-06.png)
+**Reading the figure**
+
+- **Step 1:** Create an empty `deque`.
+- **Step 2:** Add Task 1, Task 2 and Task 3 at the right end with `append()`.
+- **Step 3:** Is the queue empty?
+- **Step 4:** No: `popleft()` removes the task at the left end, which is the oldest one. First in, first out.
+- **Step 5:** Process and print the task, then go back to Step 3.
+- **Step 6:** Yes: the queue is empty, so all tasks are done.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1104,19 +1089,17 @@ Convert the words to lowercase first: `Counter(word.lower() for word in words)`.
 3. The first time a subject is used, an empty list is created for it automatically.
 4. Print the groups.
 
-```mermaid
-flowchart TD
-    A["1. students = defaultdict of list"] --> B["2. students at subject . append name"]
-    B --> C{"3. Does this subject key exist?"}
-    C -- "No" --> D["4. Create the key with an empty list"]
-    D --> E["5. Append the name to the list"]
-    C -- "Yes" --> E
-    E --> F{"6. More students?"}
-    F -- "Yes" --> B
-    F -- "No" --> G["7. Print the groups"]
-```
+![defaultdict](../resources/LR-ch16-scripting-qa-easy-fig-07.png)
 
-![defaultdict](../resources/ch16-scripting-qa-easy-fig-07.png)
+**Reading the figure**
+
+- **Step 1:** Create `students = defaultdict(list)`. A missing key will get an empty list.
+- **Step 2:** Take the next student's name and subject.
+- **Step 3:** The line `students[subject].append(name)` first looks up the subject. Does that key exist yet?
+- **Step 4:** No: `defaultdict` creates the key with an empty list, `[]`, instead of raising `KeyError`.
+- **Step 5:** The name is appended to the list for that subject. (Yes from Step 3 comes straight here.)
+- **Step 6:** If more students are left, go back to Step 2.
+- **Step 7:** No: print the groups, each subject with its list of names.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1319,16 +1302,16 @@ Use the `defaults` argument (Python 3.7+): `Student = namedtuple("Student", ["na
 3. Combine them with `ChainMap(user_settings, default_settings)`. The order matters: the first dictionary is searched first.
 4. When you look up a key, ChainMap checks `user_settings` first. If the key is not there, it checks `default_settings`.
 
-```mermaid
-flowchart TD
-    A["1. Look up a setting in settings"] --> B{"2. Is the key in user_settings?"}
-    B -- "Yes" --> C["3. Use the user's value"]
-    B -- "No" --> D{"4. Is the key in default_settings?"}
-    D -- "Yes" --> E["5. Use the default value"]
-    D -- "No" --> F["6. Raise KeyError"]
-```
+![ChainMap: Combine User Settings with Default Settings](../resources/LR-ch16-scripting-qa-easy-fig-08.png)
 
-![ChainMap: Combine User Settings with Default Settings](../resources/ch16-scripting-qa-easy-fig-08.png)
+**Reading the figure**
+
+- **Step 1:** Look up a key in `settings = ChainMap(user_settings, default_settings)`.
+- **Step 2:** `ChainMap` searches the first dictionary first. Is the key in `user_settings`?
+- **Step 3:** Yes: use the user's value. `default_settings` is not looked at.
+- **Step 4:** No: is the key in `default_settings`?
+- **Step 5:** Yes: use the default value.
+- **Step 6:** No: the key is in neither dictionary, so `KeyError` is raised.
 
 | Setting | In `user_settings` | In `default_settings` | Value returned by `settings` |
 |---|---|---|---|
@@ -1432,17 +1415,16 @@ The [heapq](https://docs.python.org/3/library/heapq.html) module uses an ordinar
 3. Tuples are compared by their first item, so the priority number decides the order. A smaller number means more important.
 4. Remove tasks one by one with `heapq.heappop()`. It always returns the tuple with the smallest priority number.
 
-```mermaid
-flowchart TD
-    A["1. tasks = empty list"] --> B["2. heappush each task as priority and name"]
-    B --> C{"3. Any tasks left?"}
-    C -- "Yes" --> D["4. heappop removes the task with the smallest priority number"]
-    D --> E["5. Print the priority and the task"]
-    E --> C
-    C -- "No" --> F["6. All tasks done"]
-```
+![heapq: Process Tasks According to Priority](../resources/LR-ch16-scripting-qa-easy-fig-09.png)
 
-![heapq: Process Tasks According to Priority](../resources/ch16-scripting-qa-easy-fig-09.png)
+**Reading the figure**
+
+- **Step 1:** Start with an empty list, `tasks = []`, which `heapq` will use as a heap.
+- **Step 2:** Add each task as a tuple `(priority, task_name)` with `heapq.heappush()`. Tuples compare by their first item, so the priority number decides the order.
+- **Step 3:** Are there any tasks left?
+- **Step 4:** Yes: `heapq.heappop()` removes and returns the tuple with the smallest priority number, the most important task.
+- **Step 5:** Print the priority and the task, then go back to Step 3.
+- **Step 6:** No: all tasks are done.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1850,16 +1832,16 @@ Every reply from a web server carries an [HTTP status code](https://developer.mo
 2. Write a function that checks which status it has received.
 3. Call the function with a readable name.
 
-```mermaid
-flowchart TD
-    A["1. show_status receives a status"] --> B{"2. Is it Status.SUCCESS?"}
-    B -- "Yes" --> C["3. Print Request successful"]
-    B -- "No" --> D{"4. Is it Status.NOT_FOUND?"}
-    D -- "Yes" --> E["5. Print Page missing"]
-    D -- "No" --> F["6. Print Server error"]
-```
+![Enum: Represent Fixed Choices](../resources/LR-ch16-scripting-qa-easy-fig-10.png)
 
-![Enum: Represent Fixed Choices](../resources/ch16-scripting-qa-easy-fig-10.png)
+**Reading the figure**
+
+- **Step 1:** The function `show_status` is called with a member of the `Status` enum.
+- **Step 2:** Is it `Status.SUCCESS`?
+- **Step 3:** Yes: print "Request successful".
+- **Step 4:** No: is it `Status.NOT_FOUND`?
+- **Step 5:** Yes: print "Page missing".
+- **Step 6:** No: the `else` branch runs and prints "Server error".
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -2080,16 +2062,16 @@ A **cache** is a store of results that you are likely to need again. [functools.
 2. The first call with `10` runs the function body, which is slow, and saves the result.
 3. The second call with `10` finds the saved result and returns it immediately.
 
-```mermaid
-flowchart TD
-    A["1. calculate_square is called with a number"] --> B{"2. Is the result for this number already cached?"}
-    B -- "No" --> C["3. Run the body: print Calculating and wait 1 second"]
-    C --> D["4. Save the result in the cache"]
-    D --> E["5. Return the result"]
-    B -- "Yes" --> F["6. Return the saved result immediately"]
-```
+![lrucache: Avoid Repeated Calculations](../resources/LR-ch16-scripting-qa-easy-fig-11.png)
 
-![lrucache: Avoid Repeated Calculations](../resources/ch16-scripting-qa-easy-fig-11.png)
+**Reading the figure**
+
+- **Step 1:** `calculate_square(10)` is called. The function has `@lru_cache(maxsize=None)` above it.
+- **Step 2:** `lru_cache` checks whether it already holds a result for this number.
+- **Step 3:** Yes: the saved result is returned immediately. The body does not run, so nothing is printed and there is no wait.
+- **Step 4:** No: the body runs. It prints "Calculating" and waits 1 second to simulate slow work.
+- **Step 5:** `lru_cache` saves the result against the number.
+- **Step 6:** The result is returned. The next call with `10` will take the Yes path.
 
 [Back to the Table of Contents](#table-of-contents)
 

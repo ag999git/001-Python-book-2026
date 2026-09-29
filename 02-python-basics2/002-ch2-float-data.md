@@ -1211,17 +1211,16 @@ round(2.675, 2)-> 2.67
 
 Most people learn at school to round a half **up** (2.5 becomes 3). Python instead rounds a half to the nearest **even** digit (2.5 becomes 2, 3.5 becomes 4). This is called banker's rounding. When you round many numbers, rounding halves always up makes totals drift upwards. Rounding to even pushes half of them up and half down, so the errors cancel out.
 
-```mermaid
-flowchart TD
-    A["1. Call round(x) or round(x, n)"] --> B["2. Look at the value Python has actually stored"]
-    B --> C{"3. Is it exactly halfway between two choices?"}
-    C -->|No| D["4. Pick the nearer choice"]
-    C -->|Yes| E["5. Pick the choice whose last digit is even"]
-    D --> F["6. Return the result"]
-    E --> F
-```
+![Block 4: isinteger() and round()](../resources/LR-ch02-float-data-fig-05.png)
 
-![Block 4: isinteger() and round()](../resources/ch02-float-data-fig-05.png)
+**Reading the figure**
+
+- **Step 1:** Call `round(x)` to round to a whole number, or `round(x, n)` to keep `n` decimal places.
+- **Step 2:** Python looks at the value it has actually stored in binary, not the decimal you typed. `2.675` is stored as slightly less than 2.675.
+- **Step 3:** Is the stored value exactly halfway between the two possible answers?
+- **Step 4:** No: pick the nearer answer. This is why `round(2.675, 2)` gives `2.67`.
+- **Step 5:** Yes: pick the answer whose last digit is even. This is banker's rounding: `round(2.5)` gives `2` and `round(3.5)` gives `4`.
+- **Step 6:** Return the result.
 
 Step 2 is the key to the `round(2.675, 2)` surprise. The stored value is slightly less than 2.675, so at step 3 it is **not** exactly halfway, and step 4 picks the nearer choice, 2.67.
 

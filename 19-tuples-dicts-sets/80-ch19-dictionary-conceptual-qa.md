@@ -1130,16 +1130,16 @@ Because `list(my_dict.keys())` creates an independent copy of the keys at that m
 
 A second safe technique is to build a **new** dictionary that keeps only the entries you want, using a comprehension: `my_dict = {k: v for k, v in my_dict.items() if v != 2}`.
 
-```mermaid
-flowchart TD
-    A["Step 1: You want to delete some keys inside a loop"] --> B{"Step 2: What is the loop running over?"}
-    B -- "The live dictionary" --> C["Step 3: del changes its size"]
-    C --> D["Step 4: RuntimeError: dictionary changed size during iteration"]
-    B -- "A snapshot: list(my_dict)" --> E["Step 5: del changes only the dictionary, not the snapshot"]
-    E --> F["Step 6: The loop finishes safely"]
-```
+![Q14. What error occurs if you try to delete a key from a dictionary while directly looping over it, and what is the recommended safe technique to avoid it?](../resources/LR-ch19-dictionary-conceptual-qa-fig-05.png)
 
-![Q14. What error occurs if you try to delete a key from a dictionary while directly looping over it, and what is the recommended safe technique to avoid it?](../resources/ch19-dictionary-conceptual-qa-fig-05.png)
+**Reading the figure**
+
+- **Step 1:** You want to delete some keys from a dictionary while looping over it.
+- **Step 2:** What is the loop running over?
+- **Step 3:** The live dictionary itself, `for k in my_dict:`. Then `del my_dict[k]` changes the size of the dictionary being looped over.
+- **Step 4:** Python stops with `RuntimeError: dictionary changed size during iteration`.
+- **Step 5:** A snapshot of the keys, `for k in list(my_dict):`. Then `del` changes only the dictionary, not the independent list being looped over.
+- **Step 6:** The loop finishes safely.
 
 **Script: the error and two safe fixes**
 

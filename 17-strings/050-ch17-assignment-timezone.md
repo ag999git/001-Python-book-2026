@@ -110,20 +110,19 @@ One more rule is worth remembering. Python **will not let you subtract or compar
 
 The flowchart below shows how to decide what to do with a datetime object you have been given.
 
-```mermaid
-flowchart TD
-    A["1. Start with a datetime object"] --> B{"2. Is tzinfo None?"}
-    B -->|"Yes"| C["3. It is NAIVE: only a clock reading"]
-    C --> D{"4. Do you know which zone the reading came from?"}
-    D -->|"Yes"| E["5. Attach that zone with replace tzinfo"]
-    D -->|"No"| F["6. Stop: find out the source zone first"]
-    B -->|"No"| G["7. It is AWARE: the exact moment is known"]
-    E --> G
-    G --> H["8. Convert to UTC with astimezone for storage and maths"]
-    H --> I["9. Convert to a local zone only for display"]
-```
+![C. Naive vs. Aware at a Glance](../resources/LR-ch17-assignment-timezone-fig-01.png)
 
-![C. Naive vs. Aware at a Glance](../resources/ch17-assignment-timezone-fig-01.png)
+**Reading the figure**
+
+- **Step 1:** Start with a `datetime` object you have been given.
+- **Step 2:** Look at its `tzinfo` attribute. Is it `None`?
+- **Step 3:** Yes: the object is naive. It is only a clock reading, with no zone attached.
+- **Step 4:** Do you know which zone the reading was taken in?
+- **Step 5:** No: stop. A naive time cannot be fixed by guessing, so find out the source zone first.
+- **Step 6:** Yes: attach that zone with `.replace(tzinfo=zone)`. This labels the reading; it does not change the clock time.
+- **Step 7:** The object is now aware: the exact moment in time is known. (No from Step 2 comes straight here.)
+- **Step 8:** Convert it to UTC with `.astimezone(ZoneInfo("UTC"))` for storing and for any arithmetic.
+- **Step 9:** Convert to a local zone, such as Asia/Kolkata, only when you need to display the time to a person.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -610,17 +609,17 @@ Step 5 -> Error caused by replace():         5:30:00
 | `.replace(tzinfo=zone)` | Attaches a timezone label | No | You already know the reading was taken in that zone |
 | `.astimezone(zone)` | Converts the same moment to another zone's clock | Yes (unless the offsets are equal) | You want to see the same moment on a different clock |
 
-```mermaid
-flowchart TD
-    A["1. You have a naive clock reading"] --> B{"2. Was the reading taken in Asia/Kolkata?"}
-    B -->|"Yes"| C["3. Use replace with tzinfo Asia/Kolkata"]
-    C --> D["4. Result: correct aware Kolkata time"]
-    B -->|"No, it was taken in another zone"| E["5. Use replace with tzinfo of the real source zone"]
-    E --> F["6. Then use astimezone Asia/Kolkata"]
-    F --> G["7. Result: correct aware Kolkata time"]
-```
+![An Important Warning: replace() Labels, It Does Not Convert](../resources/LR-ch17-assignment-timezone-fig-03.png)
 
-![An Important Warning: replace() Labels, It Does Not Convert](../resources/ch17-assignment-timezone-fig-03.png)
+**Reading the figure**
+
+- **Step 1:** You have a naive clock reading and want an aware Kolkata time.
+- **Step 2:** Was the reading actually taken in Asia/Kolkata?
+- **Step 3:** Yes: `.replace(tzinfo=ZoneInfo("Asia/Kolkata"))` attaches the label to the same clock reading.
+- **Step 4:** The result is the correct aware Kolkata time.
+- **Step 5:** No, it was taken in another zone: first use `.replace()` with the real source zone. Attaching Kolkata directly would give the wrong moment.
+- **Step 6:** Then use `.astimezone(ZoneInfo("Asia/Kolkata"))`, which converts the same moment to Kolkata's clock.
+- **Step 7:** The result is the correct aware Kolkata time. `replace()` labels; `astimezone()` converts.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -987,19 +986,19 @@ This table puts the two events side by side on three clocks. Reading it row by r
 
 The bold values are the ones each server actually wrote down. The naive calculation subtracts one bold value from the other (`08:00 - 04:00`), which mixes two different clocks and gives 4 hours. On any **single** clock the gap is 30 minutes. The naive answer is too large by 3 hours 30 minutes, which is exactly the difference between the two offsets (5:30 minus 2:00).
 
-```mermaid
-flowchart TD
-    A["1. Payment received in Frankfurt at 04:00 local time"] --> B["2. Payment logged in Mumbai at 08:00 local time"]
-    B --> C{"3. Are the stored timestamps aware?"}
-    C -->|"No, naive"| D["4. Python subtracts 08:00 minus 04:00"]
-    D --> E["5. Result: 4 hours"]
-    E --> F["6. Wrong by 3 hours 30 minutes, and no error is shown"]
-    C -->|"Yes, aware"| G["7. Python converts both to UTC: 02:00 and 02:30"]
-    G --> H["8. Python subtracts 02:30 minus 02:00"]
-    H --> I["9. Result: 30 minutes, which is correct"]
-```
+![Timeline Table for the Simulation](../resources/LR-ch17-assignment-timezone-fig-05.png)
 
-![Timeline Table for the Simulation](../resources/ch17-assignment-timezone-fig-05.png)
+**Reading the figure**
+
+- **Step 1:** A payment is received by the server in Frankfurt at 04:00 local time.
+- **Step 2:** The same payment is logged by the server in Mumbai at 08:00 local time.
+- **Step 3:** Are the stored timestamps aware, that is, do they carry their zones?
+- **Step 4:** No, they are naive: Python simply subtracts the two clock readings, 08:00 minus 04:00.
+- **Step 5:** The result is 4 hours.
+- **Step 6:** That is wrong by 3 hours 30 minutes, and Python shows no error, because it has no zones to check.
+- **Step 7:** Yes, they are aware: Python converts both to UTC first. Frankfurt 04:00 (UTC+2) is 02:00 UTC, and Mumbai 08:00 (UTC+5:30) is 02:30 UTC.
+- **Step 8:** Python subtracts 02:30 minus 02:00.
+- **Step 9:** The result is 30 minutes, which is correct.
 
 [Back to the Table of Contents](#table-of-contents)
 

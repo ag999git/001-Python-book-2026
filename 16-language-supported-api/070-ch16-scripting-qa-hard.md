@@ -107,19 +107,18 @@ The plan:
 7. Work out the speedup: linear time divided by binary time.
 8. Print one row of the table.
 
-```mermaid
-flowchart TD
-    A["1. Take the next list size n"] --> B["2. Build random data and a sorted copy"]
-    B --> C["3. Time linear search on data, 5 runs, keep fastest"]
-    C --> D["4. Time binary search on sorted copy, 5 runs, keep fastest"]
-    D --> E["5. speedup = linear time / binary time"]
-    E --> F["6. Print n, both times and speedup"]
-    F --> G{"7. More sizes?"}
-    G -- "Yes" --> A
-    G -- "No" --> H["8. Print Big-O summary"]
-```
+![Q1. Linear Search vs Binary Search Timing](../resources/LR-ch16-scripting-qa-hard-fig-01.png)
 
-![Q1. Linear Search vs Binary Search Timing](../resources/ch16-scripting-qa-hard-fig-01.png)
+**Reading the figure**
+
+- **Step 1:** Take the next list size `n`.
+- **Step 2:** Build a list of `n` random numbers, and a sorted copy of it for binary search, which only works on sorted data.
+- **Step 3:** Time linear search on the data 5 times and keep the fastest time, the one least disturbed by other activity on the computer.
+- **Step 4:** Time binary search on the sorted copy in the same way.
+- **Step 5:** Work out how many times faster binary search is: `speedup = linear time / binary time`.
+- **Step 6:** Print one row of the table: `n`, both times and the speedup.
+- **Step 7:** If more sizes are left, go back to Step 1.
+- **Step 8:** No: print the Big-O summary. Linear search grows like O(n), binary search like O(log n), so the speedup grows as `n` grows.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -266,24 +265,21 @@ The flag works like this:
 
 **Counting comparisons.** Without an early exit, the passes make `(n - 1) + (n - 2) + ... + 1` comparisons, which adds up to `n(n - 1)/2`. The largest part of this is `n²/2`, so the count grows like `n²`. A simple test: when `n` doubles, the count should become about **four times** larger.
 
-```mermaid
-flowchart TD
-    A["1. pass_no = 0"] --> B["2. already_sorted = True"]
-    B --> C["3. Compare each neighbouring pair in the unsorted part. comparisons + 1"]
-    C --> D{"4. Left item bigger than right item?"}
-    D -- "Yes" --> E["5. Swap and set already_sorted = False"]
-    D -- "No" --> F{"6. More pairs in this pass?"}
-    E --> F
-    F -- "Yes" --> C
-    F -- "No" --> G{"7. Is already_sorted still True?"}
-    G -- "Yes" --> H["8. Stop early: list is sorted"]
-    G -- "No" --> I{"9. More passes left?"}
-    I -- "Yes" --> J["10. pass_no = pass_no + 1"]
-    J --> B
-    I -- "No" --> K["11. Done"]
-```
+![Q2. Bubble Sort with Early Exit](../resources/LR-ch16-scripting-qa-hard-fig-02.png)
 
-![Q2. Bubble Sort with Early Exit](../resources/ch16-scripting-qa-hard-fig-02.png)
+**Reading the figure**
+
+- **Step 1:** Start with the first pass, `pass_no = 0`.
+- **Step 2:** At the start of each pass, assume the list is sorted: `already_sorted = True`.
+- **Step 3:** Compare the next neighbouring pair in the unsorted part, and count one comparison.
+- **Step 4:** Is the left item bigger than the right item?
+- **Step 5:** Yes: swap them and set `already_sorted = False`, because an item was out of order.
+- **Step 6:** If more pairs are left in this pass, go back to Step 3. (No from Step 4 comes straight here.)
+- **Step 7:** The pass is over. Is `already_sorted` still `True`?
+- **Step 8:** Yes: no swap happened in the whole pass, so the list is sorted. Stop early.
+- **Step 9:** No: are there more passes left?
+- **Step 10:** Yes: `pass_no = pass_no + 1`, and go back to Step 2.
+- **Step 11:** No: all passes are done. Without the early exit the count is `n(n - 1)/2` comparisons, which grows like `n²`.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -437,21 +433,19 @@ So counting shifts against swaps gives the same number. The real difference is i
 
 (If a swap is done by hand with a temporary variable, it takes 3 assignments, which makes the difference even larger.)
 
-```mermaid
-flowchart TD
-    A["1. i = 1"] --> B["2. key = numbers at i. j = i - 1"]
-    B --> C{"3. j at least 0 AND numbers at j bigger than key?"}
-    C -- "Yes" --> D["4. Shift: numbers at j + 1 = numbers at j. shifts + 1"]
-    D --> E["5. j = j - 1"]
-    E --> C
-    C -- "No" --> F["6. Place: numbers at j + 1 = key"]
-    F --> G{"7. More items?"}
-    G -- "Yes" --> H["8. i = i + 1"]
-    H --> B
-    G -- "No" --> I["9. Sorted"]
-```
+![Q3. Insertion Sort: Shifts vs Swaps](../resources/LR-ch16-scripting-qa-hard-fig-03.png)
 
-![Q3. Insertion Sort: Shifts vs Swaps](../resources/ch16-scripting-qa-hard-fig-03.png)
+**Reading the figure**
+
+- **Step 1:** Start with the second item, `i = 1`.
+- **Step 2:** Pick up the item as `key`, and start comparing with the item before it: `j = i - 1`.
+- **Step 3:** Is `j` still inside the list (`j >= 0`), and is the item at `j` bigger than `key`?
+- **Step 4:** Yes: shift that item one place right, `numbers[j + 1] = numbers[j]`, and count one shift. A shift writes only one position.
+- **Step 5:** Move one step left, `j = j - 1`, and go back to Step 3.
+- **Step 6:** No: place `key` into the gap, `numbers[j + 1] = key`.
+- **Step 7:** Are there more items to place?
+- **Step 8:** Yes: `i = i + 1`, and go back to Step 2.
+- **Step 9:** No: the list is sorted.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -772,21 +766,19 @@ A few terms:
 
 Because two threads print at the same time, their lines could get mixed together. The script uses a **lock** so that only one thread prints at a time.
 
-```mermaid
-flowchart TD
-    A["1. Start producer and consumer threads"] --> B["2. Producer puts job-A, job-B, job-C with short pauses"]
-    B --> C["3. Producer puts None as the sentinel"]
-    A --> D["4. Consumer calls get and waits for an item"]
-    D --> E{"5. Is the item None?"}
-    E -- "No" --> F["6. Process the job and call task_done"]
-    F --> D
-    E -- "Yes" --> G["7. Call task_done and leave the loop"]
-    C --> H["8. Main program joins both threads"]
-    G --> H
-    H --> I["9. Program ends"]
-```
+![Q5. FIFO Queue and Producer-Consumer Threads](../resources/LR-ch16-scripting-qa-hard-fig-04.png)
 
-![Q5. FIFO Queue and Producer-Consumer Threads](../resources/ch16-scripting-qa-hard-fig-04.png)
+**Reading the figure**
+
+- **Step 1:** The main program starts two threads, the producer and the consumer. They run at the same time.
+- **Step 2:** The producer puts job-A, job-B and job-C into the queue, pausing briefly between them.
+- **Step 3:** When it has no more jobs, the producer puts `None` into the queue as the sentinel, the stop signal.
+- **Step 4:** Meanwhile the consumer calls `get()`, which waits until an item is in the queue and then takes it.
+- **Step 5:** The consumer checks whether the item is `None`.
+- **Step 6:** No: it is a real job. Process it, call `task_done()`, and go back to Step 4.
+- **Step 7:** Yes: it is the sentinel. Call `task_done()` for it and leave the loop.
+- **Step 8:** The main program calls `join()` on both threads and waits until both have finished.
+- **Step 9:** The program ends.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1138,16 +1130,16 @@ A common use is a **priority queue**: always process the most important task nex
 
 After `heapify`, the marks list `[41, 55, 60, 92, 88, 73]` forms this tree:
 
-```mermaid
-flowchart TD
-    A["index 0: 41"] --> B["index 1: 55"]
-    A --> C["index 2: 60"]
-    B --> D["index 3: 92"]
-    B --> E["index 4: 88"]
-    C --> F["index 5: 73"]
-```
+![Q7. heapq: Min-Heap, Max-Heap and Priority Queue](../resources/LR-ch16-scripting-qa-hard-fig-05.png)
 
-![Q7. heapq: Min-Heap, Max-Heap and Priority Queue](../resources/ch16-scripting-qa-hard-fig-05.png)
+**Reading the figure**
+
+- Index 0 holds 41, the root and the smallest mark. It is always at `heap[0]`.
+- Index 1 holds 55, the left child of index 0 (`2 * 0 + 1`).
+- Index 2 holds 60, the right child of index 0 (`2 * 0 + 2`).
+- Index 3 holds 92, the left child of index 1 (`2 * 1 + 1`).
+- Index 4 holds 88, the right child of index 1 (`2 * 1 + 2`).
+- Index 5 holds 73, the left child of index 2 (`2 * 2 + 1`). Every parent is smaller than or equal to its children, so this is a valid min-heap.
 
 Check the rule: 41 is smaller than 55 and 60; 55 is smaller than 92 and 88; 60 is smaller than 73.
 
@@ -1305,17 +1297,16 @@ Typical uses are leaderboards, grade thresholds and live streams of data that mu
 
 There must always be one more grade than there are breakpoints.
 
-```mermaid
-flowchart TD
-    A["1. Take a score"] --> B["2. index = bisect of breakpoints and score"]
-    B --> C["3. grade = grades at index"]
-    C --> D["4. Print score and grade"]
-    D --> E{"5. More scores?"}
-    E -- "Yes" --> A
-    E -- "No" --> F["6. Done"]
-```
+![Q8. bisect: Duplicates, Leaderboard and Grade Lookup](../resources/LR-ch16-scripting-qa-hard-fig-06.png)
 
-![Q8. bisect: Duplicates, Leaderboard and Grade Lookup](../resources/ch16-scripting-qa-hard-fig-06.png)
+**Reading the figure**
+
+- **Step 1:** Take the next score.
+- **Step 2:** `bisect(breakpoints, score)` counts how many breakpoints are less than or equal to the score. That count is the index.
+- **Step 3:** Use the index to pick the grade, `grade = grades[index]`. There is always one more grade than there are breakpoints.
+- **Step 4:** Print the score with its grade.
+- **Step 5:** If more scores are left, go back to Step 1.
+- **Step 6:** No: done.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1453,20 +1444,18 @@ Since Python 3.7, plain dicts already keep items in insertion order. [OrderedDic
 - When an item is read or updated, `move_to_end(key)` marks it as most recently used.
 - When the cache is too full, `popitem(last=False)` removes the item at the front, which is the least recently used.
 
-```mermaid
-flowchart TD
-    A["1. put key and value"] --> B{"2. Is key already in the cache?"}
-    B -- "Yes" --> C["3. move_to_end key"]
-    B -- "No" --> D["4. Nothing to move"]
-    C --> E["5. Store the value at key"]
-    D --> E
-    E --> F{"6. Is size now bigger than capacity?"}
-    F -- "Yes" --> G["7. popitem last=False: evict the least recently used"]
-    F -- "No" --> H["8. Done"]
-    G --> H
-```
+![Q9. OrderedDict and an LRU Cache](../resources/LR-ch16-scripting-qa-hard-fig-07.png)
 
-![Q9. OrderedDict and an LRU Cache](../resources/ch16-scripting-qa-hard-fig-07.png)
+**Reading the figure**
+
+- **Step 1:** Call `put(key, value)` on the LRU cache.
+- **Step 2:** Is `key` already in the cache?
+- **Step 3:** Yes: `move_to_end(key)` moves it to the end, marking it as the most recently used.
+- **Step 4:** No: there is nothing to move.
+- **Step 5:** Store the value at `key`. A new key is added at the end, as the most recently used.
+- **Step 6:** Is the cache now holding more items than its capacity?
+- **Step 7:** Yes: `popitem(last=False)` removes the item at the front, which is the least recently used.
+- **Step 8:** Done.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -2106,20 +2095,19 @@ Use square brackets: `OrderStatus["PENDING"]`.
 
 With the cache, each `n` from 0 to 35 is worked out only **once**, so the work drops to `O(n)`.
 
-```mermaid
-flowchart TD
-    A["1. fib_cached n is called"] --> B{"2. Is n already in the cache?"}
-    B -- "Yes: hit" --> C["3. Return saved value. hits + 1"]
-    B -- "No: miss" --> D["4. misses + 1"]
-    D --> E{"5. Is n less than 2?"}
-    E -- "Yes" --> F["6. Result is n"]
-    E -- "No" --> G["7. Result = fib_cached n-1 plus fib_cached n-2"]
-    F --> H["8. Save result in cache. currsize + 1"]
-    G --> H
-    H --> I["9. Return result"]
-```
+![Q13. lrucache and Fibonacci](../resources/LR-ch16-scripting-qa-hard-fig-08.png)
 
-![Q13. lrucache and Fibonacci](../resources/ch16-scripting-qa-hard-fig-08.png)
+**Reading the figure**
+
+- **Step 1:** `fib_cached(n)` is called. It is decorated with `@lru_cache`.
+- **Step 2:** Is the result for this `n` already in the cache?
+- **Step 3:** Yes, a hit: return the saved value at once, and `hits` goes up by 1.
+- **Step 4:** No, a miss: `misses` goes up by 1 and the function body runs.
+- **Step 5:** Is `n < 2`?
+- **Step 6:** Yes: this is a base case, so the result is `n` itself (`fib(0) = 0`, `fib(1) = 1`).
+- **Step 7:** No: the result is `fib_cached(n-1) + fib_cached(n-2)`. These two calls go through the cache too, so each value is worked out only once.
+- **Step 8:** Save the result in the cache, so `currsize` goes up by 1.
+- **Step 9:** Return the result. With the cache, the work drops from exponential to O(n).
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -2267,16 +2255,15 @@ It empties the cache and resets all the counts to zero, so the next call starts 
 | 2 | 6 | 4 | 24 |
 | 3 | 24 | 5 | 120 |
 
-```mermaid
-flowchart TD
-    A["1. result = first item, 2"] --> B["2. Take the next item"]
-    B --> C["3. result = multiply result and item. Print it"]
-    C --> D{"4. Items left?"}
-    D -- "Yes" --> B
-    D -- "No" --> E["5. Return result, 120"]
-```
+![Q14. partial() and reduce()](../resources/LR-ch16-scripting-qa-hard-fig-09.png)
 
-![Q14. partial() and reduce()](../resources/ch16-scripting-qa-hard-fig-09.png)
+**Reading the figure**
+
+- **Step 1:** No starting value is given, so `reduce` starts with the first item: `result = 2`.
+- **Step 2:** Take the next item: 3, then 4, then 5.
+- **Step 3:** Call the function on the running result and the item, `multiply(result, item)`, and print the new result: 6, 24, 120.
+- **Step 4:** If items are left, go back to Step 2.
+- **Step 5:** No: return the final result, 120.
 
 GST (Goods and Services Tax) is the tax added to most sales in India. `₹` is the symbol for the Indian rupee.
 
@@ -2452,19 +2439,17 @@ A **generator** is a function that uses `yield` instead of `return`. Each time i
 
 **Why sort before `groupby()`?** `groupby()` starts a new group every time the key changes. If "Engineering" appears, then "HR", then "Engineering" again, you get two separate Engineering groups. Sorting by department first puts all the same departments next to each other.
 
-```mermaid
-flowchart TD
-    A["1. Sort employees by dept"] --> B["2. groupby reads the next employee"]
-    B --> C{"3. Is dept the same as the current group?"}
-    C -- "Yes" --> D["4. Add employee to the current group"]
-    C -- "No" --> E["5. Start a new group for this dept"]
-    D --> F{"6. More employees?"}
-    E --> F
-    F -- "Yes" --> B
-    F -- "No" --> G["7. All groups produced"]
-```
+![Q15. chain, islice and groupby](../resources/LR-ch16-scripting-qa-hard-fig-10.png)
 
-![Q15. chain, islice and groupby](../resources/ch16-scripting-qa-hard-fig-10.png)
+**Reading the figure**
+
+- **Step 1:** Sort the employees by department first, so that everyone in the same department sits next to each other.
+- **Step 2:** `groupby` reads the next employee.
+- **Step 3:** Is this employee's department the same as the department of the current group?
+- **Step 4:** Yes: the employee joins the current group.
+- **Step 5:** No: the key has changed, so `groupby` starts a new group for this department. Without Step 1, one department could be split into several groups.
+- **Step 6:** If more employees are left, go back to Step 2.
+- **Step 7:** No: all the groups have been produced.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -2781,27 +2766,23 @@ In each pass:
 
 Selection sort is therefore a good choice when writing data is expensive, for example on flash memory, which wears out a little with every write.
 
-```mermaid
-flowchart TD
-    A["1. i = 0"] --> B["2. min_idx = i"]
-    B --> C["3. Scan j from i + 1 to the end"]
-    C --> D{"4. Is data at j smaller than data at min_idx?"}
-    D -- "Yes" --> E["5. min_idx = j"]
-    D -- "No" --> F{"6. More j?"}
-    E --> F
-    F -- "Yes" --> C
-    F -- "No" --> G{"7. Is min_idx different from i?"}
-    G -- "Yes" --> H["8. Swap data at i and data at min_idx. swaps + 1"]
-    G -- "No" --> I["9. No swap needed"]
-    H --> J["10. Print trace for this pass"]
-    I --> J
-    J --> K{"11. i less than n - 2?"}
-    K -- "Yes" --> L["12. i = i + 1"]
-    L --> B
-    K -- "No" --> M["13. Sorted"]
-```
+![Q17. Selection Sort with Trace](../resources/LR-ch16-scripting-qa-hard-fig-11.png)
 
-![Q17. Selection Sort with Trace](../resources/ch16-scripting-qa-hard-fig-11.png)
+**Reading the figure**
+
+- **Step 1:** Start with the first position, `i = 0`.
+- **Step 2:** Assume the smallest item in the unsorted part is at `i`: `min_idx = i`.
+- **Step 3:** Take the next index `j`, from `i + 1` to the end of the list.
+- **Step 4:** Is `data[j]` smaller than the smallest found so far, `data[min_idx]`?
+- **Step 5:** Yes: remember it, `min_idx = j`.
+- **Step 6:** If more `j` values are left, go back to Step 3.
+- **Step 7:** The scan is over. Is `min_idx` different from `i`?
+- **Step 8:** Yes: swap `data[i]` with `data[min_idx]` and count one swap.
+- **Step 9:** No: the smallest item is already in place, so no swap is needed.
+- **Step 10:** Print the trace for this pass, showing the list and the swap count.
+- **Step 11:** Is `i < n - 2`? That is, is there more than one item left in the unsorted part after this pass?
+- **Step 12:** Yes: `i = i + 1`, and go back to Step 2.
+- **Step 13:** No: the list is sorted. Selection sort makes at most `n - 1` swaps, which is O(n).
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -3322,25 +3303,23 @@ So this answer handles the two parts separately:
 
 **Measurement methodology**
 
-```mermaid
-flowchart TD
-    A["1. Choose the input sizes"] --> B["2. Take the next size n"]
-    B --> C["3. Build random data of size n and a sorted copy"]
-    C --> D["4. Choose a target that is not in the data: worst case"]
-    D --> E["5. Read perf_counter as start"]
-    E --> F["6. Run the algorithm, repeated several times"]
-    F --> G["7. Read perf_counter as end"]
-    G --> H["8. Time per run = end - start, divided by repeats"]
-    H --> I{"9. Done 5 rounds?"}
-    I -- "No" --> E
-    I -- "Yes" --> J["10. Keep the fastest round"]
-    J --> K{"11. More sizes?"}
-    K -- "Yes" --> B
-    K -- "No" --> L["12. Print table and growth ratios"]
-    L --> M["13. Draw and save the graph"]
-```
+![Q20. Big-O Timing Comparison](../resources/LR-ch16-scripting-qa-hard-fig-12.png)
 
-![Q20. Big-O Timing Comparison](../resources/ch16-scripting-qa-hard-fig-12.png)
+**Reading the figure**
+
+- **Step 1:** Choose the list sizes to test.
+- **Step 2:** Take the next size `n`.
+- **Step 3:** Build a list of `n` random numbers, and a sorted copy for binary search.
+- **Step 4:** Choose a target that is not in the data, so every search does the most work it can: the worst case.
+- **Step 5:** Read `time.perf_counter()` as the start time.
+- **Step 6:** Run the search many times in a row, because one search is too fast to time accurately.
+- **Step 7:** Read `time.perf_counter()` as the end time.
+- **Step 8:** Work out the time for one run: `(end - start) / repeats`.
+- **Step 9:** Have 5 rounds been done? If not, go back to Step 5.
+- **Step 10:** Yes: keep the fastest of the 5 rounds, the one least disturbed by background activity.
+- **Step 11:** If more sizes are left, go back to Step 2.
+- **Step 12:** No: print the table of times and how much each time grew from one size to the next.
+- **Step 13:** Draw the graph of time against `n` and save it.
 
 [Back to the Table of Contents](#table-of-contents)
 

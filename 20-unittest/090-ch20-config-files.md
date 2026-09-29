@@ -2,6 +2,8 @@
 
 
 
+
+
 # A Beginner's Guide to pytest.ini and pyproject.toml
 
 Have you ever used a custom marker like `@pytest.mark.slow` and seen a warning in your terminal saying `PytestUnknownMarkWarning`? This warning appears because pytest does not know what "slow" means yet. It has not been introduced to it.
@@ -168,23 +170,18 @@ If you have ever used `pip install -r requirements.txt`, you have already used a
 
 #### Flowchart Explaining How a Configuration File Is Used
 
-![Flowchart explaining how configuration file works](../resources/ch16-pytest-060-config1.png)
+![Configuration Files in the Python World](../resources/LR-ch20-config-files-fig-01.png)
 
-The same idea, step by step:
+**Reading the figure**
 
-```mermaid
-flowchart TD
-    A["1. You type: pytest"] --> B["2. pytest looks for a configuration file"]
-    B --> C{"3. Configuration file found?"}
-    C -- Yes --> D["4. Read the settings: markers, addopts, testpaths"]
-    C -- No --> E["5. Use pytest's built-in defaults"]
-    D --> F["6. Combine the settings with any flags you typed"]
-    E --> F
-    F --> G["7. Find and run the tests"]
-    G --> H["8. Show the results"]
-```
-
-![Configuration Files in the Python World](../resources/ch20-config-files-fig-01.png)
+- **Step 1:** You type `pytest` in the terminal.
+- **Step 2:** pytest looks for a configuration file such as `pytest.ini`.
+- **Step 3:** Was a configuration file found?
+- **Step 4:** Yes: read its settings, such as `markers`, `addopts` and `testpaths`.
+- **Step 5:** No: use pytest's built-in defaults.
+- **Step 6:** Combine those settings with any flags you typed on the command line.
+- **Step 7:** Find the tests and run them.
+- **Step 8:** Show the results.
 
 [Back to the Table of Contents](090-ch20-config-files.md#table-of-contents)
 
@@ -357,21 +354,16 @@ This is why you can run `pytest` from inside the `tests` folder and still get yo
 
 ### Flowchart Showing How Pytest Finds the Configuration File
 
-![Flowchart showing how Pytest finds the configuration file](../resources/ch16-pytest-065-config2.png)
+![Where Does the File Live?](../resources/LR-ch20-config-files-fig-02.png)
 
-The same search, step by step:
+**Reading the figure**
 
-```mermaid
-flowchart TD
-    A["1. Start in the current folder"] --> B{"2. Is there a config file with pytest settings here?"}
-    B -- Yes --> C["3. Use it. This folder becomes the rootdir"]
-    B -- No --> D{"4. Is there a parent folder?"}
-    D -- Yes --> E["5. Move up to the parent folder"]
-    E --> B
-    D -- No --> F["6. No config file: use pytest's built-in defaults"]
-```
-
-![Where Does the File Live?](../resources/ch20-config-files-fig-02.png)
+- **Step 1:** pytest starts looking in the current folder.
+- **Step 2:** Is there a configuration file here that contains pytest settings?
+- **Step 3:** Yes: use it. This folder becomes the `rootdir`, the root of the project.
+- **Step 4:** No: is there a parent folder above this one?
+- **Step 5:** Yes: move up to the parent folder and go back to Step 2.
+- **Step 6:** No: the top of the file system was reached with no config file found, so pytest uses its built-in defaults.
 
 [Back to the Table of Contents](090-ch20-config-files.md#table-of-contents)
 
@@ -495,23 +487,19 @@ More settings, and the rules for where pytest looks for them, are described in t
 
 ## 7. Visualizing the Lifecycle (Flowchart)
 
-![Flowchart](../resources/ch16-pytest-070-config3.png)
+![Visualizing the Lifecycle (Flowchart)](../resources/LR-ch20-config-files-fig-03.png)
 
-The whole lifecycle of a test run with a configuration file, step by step:
+**Reading the figure**
 
-```mermaid
-flowchart TD
-    A["1. You type: pytest -m fast"] --> B["2. pytest finds pytest.ini in the project root"]
-    B --> C["3. Read addopts: add -v to the command"]
-    C --> D["4. Read markers: register fast and slow"]
-    D --> E["5. Read testpaths: search only the tests folder"]
-    E --> F["6. Collect all the tests"]
-    F --> G["7. Keep only the tests marked fast; deselect the rest"]
-    G --> H["8. Run the selected tests"]
-    H --> I["9. Show a detailed report because of -v"]
-```
-
-![Visualizing the Lifecycle (Flowchart)](../resources/ch20-config-files-fig-03.png)
+- **Step 1:** You type `pytest -m fast`.
+- **Step 2:** pytest finds `pytest.ini` in the project root.
+- **Step 3:** It reads `addopts`, which adds `-v` to the command as if you had typed it.
+- **Step 4:** It reads `markers`, which registers the markers `fast` and `slow`.
+- **Step 5:** It reads `testpaths`, so it searches only the `tests` folder.
+- **Step 6:** It collects all the tests in that folder.
+- **Step 7:** `-m fast` keeps only the tests marked `fast`. The rest are deselected.
+- **Step 8:** The selected tests run.
+- **Step 9:** pytest shows a detailed report, because `-v` was added by `addopts`.
 
 [Back to the Table of Contents](090-ch20-config-files.md#table-of-contents)
 
@@ -853,4 +841,5 @@ You write `markerz =` instead of `markers =` in `pytest.ini`. What happens?
 - [Python Packaging Guide: Writing your pyproject.toml](https://packaging.python.org/en/latest/guides/writing-pyproject-toml/)
 
 [Back to the Table of Contents](090-ch20-config-files.md#table-of-contents)
+
 

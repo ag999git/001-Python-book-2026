@@ -3,6 +3,7 @@
 
 
 
+
 # Understanding Common Pytest Command-Line Flags: -v, -s and -k
 
 When we run tests with pytest, we can add short options to the command to change how pytest behaves. These options are called **command-line flags**. This page explains three flags that you will use again and again: `-v` (verbose output), `-s` (show `print()` output) and `-k` (run only selected tests by name).
@@ -673,22 +674,19 @@ test_bank.py::test_deposit PASSED                                        [100%]
 
 The following flowchart shows how pytest decides for each test in this example.
 
-```mermaid
-flowchart TD
-    A["1. Collect 3 tests from test_bank.py"] --> B["2. Take the next test"]
-    B --> C{"3. Does the name contain 'deposit'?"}
-    C -- No --> D["4. Deselect the test"]
-    C -- Yes --> E{"5. Does the name contain 'large'?"}
-    E -- Yes --> F["6. Deselect the test because of 'not large'"]
-    E -- No --> G["7. Select and run the test"]
-    D --> H{"8. Any tests left?"}
-    F --> H
-    G --> H
-    H -- Yes --> B
-    H -- No --> I["9. Show summary: 1 passed, 2 deselected"]
-```
+![Using and, or and not with -k](../resources/LR-ch20-pytest-flags-fig-01.png)
 
-![Using and, or and not with -k](../resources/ch20-pytest-flags-fig-01.png)
+**Reading the figure**
+
+- **Step 1:** The command is `pytest test_bank.py -k "deposit and not large"`. pytest first collects the 3 tests in `test_bank.py`.
+- **Step 2:** Take the next test and check its name against the `-k` expression.
+- **Step 3:** `and` needs both parts to be true. First part: does the name contain `deposit`?
+- **Step 4:** No: the first part is false, so the whole expression is false. Deselect the test. (`test_withdraw` goes this way.)
+- **Step 5:** Yes: now the second part, `not large`. Does the name contain `large`?
+- **Step 6:** Yes: `not large` is false, so deselect the test. (`test_deposit_large_amount` goes this way.)
+- **Step 7:** No: both parts are true, so select the test and run it. (`test_deposit` goes this way.)
+- **Step 8:** If any tests are left, go back to Step 2.
+- **Step 9:** No: show the summary, `1 passed, 2 deselected`.
 
 [Back to the Table of Contents](010-ch20-pytest-flags.md#table-of-contents)
 
@@ -817,21 +815,20 @@ A common workflow during development is:
 
 The same workflow as a flowchart:
 
-```mermaid
-flowchart TD
-    A["1. Write a test"] --> B["2. Run pytest"]
-    B --> C{"3. Did all tests pass?"}
-    C -- Yes --> J["10. Done"]
-    C -- No --> D["4. Add print statements"]
-    D --> E["5. Run pytest -s"]
-    E --> F["6. Run pytest -v"]
-    F --> G["7. Run pytest -v -s -k test_name"]
-    G --> H["8. Fix the bug"]
-    H --> I["9. Run the full test suite"]
-    I --> C
-```
+![Typical Pytest Workflow](../resources/LR-ch20-pytest-flags-fig-02.png)
 
-![Typical Pytest Workflow](../resources/ch20-pytest-flags-fig-02.png)
+**Reading the figure**
+
+- **Step 1:** Write a test for the code.
+- **Step 2:** Run `pytest`.
+- **Step 3:** Did all the tests pass?
+- **Step 4:** Yes: you are done.
+- **Step 5:** No: add `print()` statements where you want to see values.
+- **Step 6:** Run `pytest -s`. The `-s` flag stops pytest from capturing output, so your `print()` lines appear.
+- **Step 7:** Run `pytest -v` to see the name and result of every test.
+- **Step 8:** Run `pytest -v -s -k test_name` to run just the failing test, verbosely and with its prints.
+- **Step 9:** Fix the bug.
+- **Step 10:** Run the full test suite again, to be sure the fix broke nothing else, and go back to Step 3.
 
 Once all tests pass, remember to remove any `print()` statements you added only for debugging.
 
@@ -978,4 +975,5 @@ If a test passes with `pytest`, can it fail when you run it with `pytest -v -s`?
 - [Pytest command-line flags reference](https://docs.pytest.org/en/stable/reference/reference.html#command-line-flags)
 
 [Back to the Table of Contents](010-ch20-pytest-flags.md#table-of-contents)
+
 

@@ -119,16 +119,16 @@ The table below shows how Step 3 pulls the code out of one line.
 | `line.split()[1]` | `'404:'` |
 | `line.split()[1].rstrip(':')` | `'404'` |
 
-```mermaid
-flowchart TD
-    A["1. Store the log text"] --> B["2. Split the text into lines"]
-    B --> C["3. Take the second word of each line and remove the colon"]
-    C --> D["4. Count the codes with Counter"]
-    D --> E["5. Get the top 3 with most_common"]
-    E --> F["6. Print each code and its count"]
-```
+![Counter: Log File Analysis](../resources/LR-ch16-real-world-use-fig-01.png)
 
-![Counter: Log File Analysis](../resources/ch16-real-world-use-fig-01.png)
+**Reading the figure**
+
+- **Step 1:** Store the whole log as one multi-line string.
+- **Step 2:** `log_data.strip().split('\n')` cuts the text wherever a new line begins, giving one log entry per line.
+- **Step 3:** For each line, `line.split()[1]` takes the second word, such as `'404:'`, and `.rstrip(':')` removes the colon to leave `'404'`.
+- **Step 4:** Pass all the codes to `Counter`, which counts how many times each code appears.
+- **Step 5:** `most_common(3)` returns the three most frequent codes, most frequent first, as `(code, count)` pairs.
+- **Step 6:** Loop over those pairs and print each code with its count.
 
 ```python
 # Step 1 - Import Counter
@@ -262,19 +262,17 @@ A [defaultdict](https://docs.python.org/3/library/collections.html#collections.d
 4. Append the student's name to the list for that grade.
 5. Print the result.
 
-```mermaid
-flowchart TD
-    A["1. Create grade_book = defaultdict of list"] --> B["2. Take next name and grade"]
-    B --> C{"3. Is this grade already a key?"}
-    C -- "No" --> D["4. Create the key with an empty list"]
-    D --> E["5. Append the name to the list"]
-    C -- "Yes" --> E
-    E --> F{"6. More students left?"}
-    F -- "Yes" --> B
-    F -- "No" --> G["7. Print the grade book"]
-```
+![defaultdict: Grouping Grades by Letter](../resources/LR-ch16-real-world-use-fig-02.png)
 
-![defaultdict: Grouping Grades by Letter](../resources/ch16-real-world-use-fig-02.png)
+**Reading the figure**
+
+- **Step 1:** Create `grade_book = defaultdict(list)`. Any missing key will get an empty list as its value.
+- **Step 2:** Take the next student's name and grade.
+- **Step 3:** Check whether this grade is already a key in `grade_book`. You do not write this check yourself: `defaultdict` does it for you.
+- **Step 4:** No: `defaultdict` quietly creates the key with an empty list, `[]`, so no `KeyError` is raised.
+- **Step 5:** Append the student's name to the list for that grade. (Yes from Step 3 comes straight here.)
+- **Step 6:** If more students are left, go back to Step 2.
+- **Step 7:** No students are left, so print the grade book: each grade with the list of names that earned it.
 
 ```python
 # Step 1 - Import defaultdict
@@ -515,16 +513,16 @@ A [ChainMap](https://docs.python.org/3/library/collections.html#collections.Chai
 5. Look up "volume". It is not in the user settings, so the default value is used.
 6. Change a setting through the `ChainMap` and see where the change is stored.
 
-```mermaid
-flowchart TD
-    A["1. Ask config for a key"] --> B{"2. Is the key in user_prefs?"}
-    B -- "Yes" --> C["3. Return the value from user_prefs"]
-    B -- "No" --> D{"4. Is the key in defaults?"}
-    D -- "Yes" --> E["5. Return the value from defaults"]
-    D -- "No" --> F["6. Raise KeyError"]
-```
+![ChainMap: Application Configuration](../resources/LR-ch16-real-world-use-fig-03.png)
 
-![ChainMap: Application Configuration](../resources/ch16-real-world-use-fig-03.png)
+**Reading the figure**
+
+- **Step 1:** Look up a key in the `ChainMap`, for example `config['theme']`.
+- **Step 2:** `ChainMap` searches the first mapping first: is the key in `user_prefs`?
+- **Step 3:** Yes: the user's value is returned, and `defaults` is never looked at.
+- **Step 4:** No: `ChainMap` moves on to the next mapping, `defaults`.
+- **Step 5:** Yes: the default value is returned.
+- **Step 6:** No: the key is in neither mapping, so `KeyError` is raised.
 
 ```python
 # Step 1 - Import ChainMap
@@ -621,17 +619,16 @@ The [heapq](https://docs.python.org/3/library/heapq.html) module lets you use a 
 4. Keep popping the front task until the heap is empty.
 5. Each pop gives the most urgent task still waiting.
 
-```mermaid
-flowchart TD
-    A["1. Create empty list tasks"] --> B["2. heappush each task as priority and description"]
-    B --> C{"3. Is tasks empty?"}
-    C -- "No" --> D["4. heappop removes the task with the smallest priority number"]
-    D --> E["5. Print the priority and the task"]
-    E --> C
-    C -- "Yes" --> F["6. End"]
-```
+![Priority Task Manager](../resources/LR-ch16-real-world-use-fig-04.png)
 
-![Priority Task Manager](../resources/ch16-real-world-use-fig-04.png)
+**Reading the figure**
+
+- **Step 1:** Create an empty list, `tasks`. `heapq` will use it as a heap.
+- **Step 2:** `heapq.heappush()` adds each task as a `(priority, description)` tuple. After every push, the tuple with the smallest priority number is at the front, `tasks[0]`.
+- **Step 3:** Check whether the heap is empty.
+- **Step 4:** No: `heapq.heappop()` removes and returns the task with the smallest priority number, the most urgent one.
+- **Step 5:** Print its priority and description, then go back to Step 3.
+- **Step 6:** Yes: every task has been handled, so the program ends.
 
 ```python
 # Step 1 - Import heapq and create an empty heap
@@ -725,15 +722,15 @@ The table below shows how binary search finds the position for 65 in `[40, 55, 7
 
 Only two comparisons were needed. For a list of one million marks, binary search needs only about 20.
 
-```mermaid
-flowchart TD
-    A["1. Start with sorted marks 40, 55, 70, 80, 95"] --> B["2. bisect_left finds position 2 for new mark 65"]
-    B --> C["3. insort places 65 at position 2"]
-    C --> D["4. List is now 40, 55, 65, 70, 80, 95"]
-    D --> E["5. Print ascending and descending order"]
-```
+![Student Marks List](../resources/LR-ch16-real-world-use-fig-05.png)
 
-![Student Marks List](../resources/ch16-real-world-use-fig-05.png)
+**Reading the figure**
+
+- **Step 1:** Start with a list of marks that is already sorted: `[40, 55, 70, 80, 95]`.
+- **Step 2:** `bisect_left(marks, 65)` uses binary search and returns 2, the position where 65 belongs.
+- **Step 3:** `insort(marks, 65)` inserts 65 at that position, so the list stays sorted.
+- **Step 4:** The list is now `[40, 55, 65, 70, 80, 95]`.
+- **Step 5:** Print the marks in ascending order, and in descending order with the reversed copy `marks[::-1]`.
 
 ```python
 # Step 1 - Import bisect and create a sorted list
@@ -1012,18 +1009,18 @@ An **API** (Application Programming Interface) is a way for one program to talk 
 3. Call the function with a readable name such as `HttpStatus.NOT_FOUND`.
 4. See how to get the name and the number from an enum member, and how to go from a number back to a member.
 
-```mermaid
-flowchart TD
-    A["1. send_response receives a status"] --> B{"2. Is status HttpStatus.OK?"}
-    B -- "Yes" --> C["3. Print Success message"]
-    B -- "No" --> D{"4. Is status HttpStatus.NOT_FOUND?"}
-    D -- "Yes" --> E["5. Print Page does not exist"]
-    D -- "No" --> F{"6. Is status HttpStatus.SERVER_ERROR?"}
-    F -- "Yes" --> G["7. Print Something went wrong on the server"]
-    F -- "No" --> H["8. Print Unknown status"]
-```
+![HTTP Status Codes](../resources/LR-ch16-real-world-use-fig-06.png)
 
-![HTTP Status Codes](../resources/ch16-real-world-use-fig-06.png)
+**Reading the figure**
+
+- **Step 1:** The function `send_response` is called with an `HttpStatus` member, for example `HttpStatus.NOT_FOUND`.
+- **Step 2:** Is the status `HttpStatus.OK`?
+- **Step 3:** Yes: print the success message. Nothing else is checked.
+- **Step 4:** No: is it `HttpStatus.NOT_FOUND`?
+- **Step 5:** Yes: print "Page does not exist".
+- **Step 6:** No: is it `HttpStatus.SERVER_ERROR`?
+- **Step 7:** Yes: print "Something went wrong on the server".
+- **Step 8:** No: the status matched none of the checks, so print "Unknown status".
 
 ```python
 # Step 1 - Import Enum and create the status code class
@@ -1244,17 +1241,17 @@ LRU stands for **Least Recently Used**. An LRU cache remembers recent results. I
 4. Measure the time for each call to see the difference.
 5. Ask the cache for its statistics.
 
-```mermaid
-flowchart TD
-    A["1. Call get_user_from_db with user_id"] --> B{"2. Is the result for this user_id already in the cache?"}
-    B -- "No: cache miss" --> C["3. Run the function body"]
-    C --> D["4. Slow database query of 1 second"]
-    D --> E["5. Save the result in the cache"]
-    E --> F["6. Return the result"]
-    B -- "Yes: cache hit" --> G["7. Return the saved result at once"]
-```
+![lrucache: Simulating a Slow Database](../resources/LR-ch16-real-world-use-fig-07.png)
 
-![lrucache: Simulating a Slow Database](../resources/ch16-real-world-use-fig-07.png)
+**Reading the figure**
+
+- **Step 1:** Call the function decorated with `@lru_cache`, for example `get_user_from_db(42)`.
+- **Step 2:** `lru_cache` first checks whether it has already saved a result for this argument.
+- **Step 3:** Yes, a cache hit: the saved result is returned at once. The function body does not run, so there is no delay.
+- **Step 4:** No, a cache miss: the function body runs.
+- **Step 5:** The body simulates a slow database query that takes 1 second.
+- **Step 6:** `lru_cache` saves the result against the argument, so the next call with the same `user_id` is a hit.
+- **Step 7:** The result is returned to the caller.
 
 ```python
 # Step 1 - Import lru_cache and time
@@ -1445,16 +1442,15 @@ The table below traces how the running total (`acc`) builds up.
 | 2 | 15.99 | Pen | 2.50 | 18.49 |
 | 3 | 18.49 | Notebook | 5.00 | 23.49 |
 
-```mermaid
-flowchart TD
-    A["1. acc starts at 0"] --> B["2. Take the next item from the cart"]
-    B --> C["3. acc = acc + item price"]
-    C --> D{"4. More items in the cart?"}
-    D -- "Yes" --> B
-    D -- "No" --> E["5. Return acc as the grand total"]
-```
+![reduce: Calculating Shopping Cart Total](../resources/LR-ch16-real-world-use-fig-08.png)
 
-![reduce: Calculating Shopping Cart Total](../resources/ch16-real-world-use-fig-08.png)
+**Reading the figure**
+
+- **Step 1:** `reduce` starts the accumulator `acc` at 0, the initial value given as its third argument.
+- **Step 2:** Take the next item from the cart.
+- **Step 3:** The function adds the item's price to the running total: `acc = acc + price`.
+- **Step 4:** If there are more items in the cart, go back to Step 2.
+- **Step 5:** No items are left, so `reduce` returns `acc`, the grand total.
 
 ```python
 # Step 1 - Import reduce and create the cart

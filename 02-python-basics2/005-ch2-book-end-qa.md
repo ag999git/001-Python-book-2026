@@ -539,17 +539,17 @@ ImportError: cannot import name 'func_a' from partially initialized module 'a_mo
 
 What happens, step by step:
 
-```mermaid
-flowchart TD
-    A["1. main.py runs import a_mod"] --> B["2. Python creates an empty a_mod and starts running a_mod.py"]
-    B --> C["3. The first line of a_mod.py asks for func_b from b_mod"]
-    C --> D["4. Python starts running b_mod.py"]
-    D --> E["5. The first line of b_mod.py asks for func_a from a_mod"]
-    E --> F["6. a_mod exists but is only half built: func_a is not defined yet"]
-    F --> G["7. ImportError: cannot import name func_a"]
-```
+![g.2 Circular Import Example](../resources/LR-ch02-book-end-qa-fig-02.png)
 
-![g.2 Circular Import Example](../resources/ch02-book-end-qa-fig-02.png)
+**Reading the figure**
+
+- **Step 1:** `main.py` runs `import a_mod`.
+- **Step 2:** Python creates an empty module object for `a_mod`, stores it in `sys.modules`, and starts running `a_mod.py` from the top.
+- **Step 3:** The first line of `a_mod.py` is `from b_mod import func_b`.
+- **Step 4:** So Python pauses `a_mod.py` and starts running `b_mod.py`.
+- **Step 5:** The first line of `b_mod.py` is `from a_mod import func_a`.
+- **Step 6:** `a_mod` is already in `sys.modules`, but it is only half built: its code stopped at line 1, so `func_a` has not been defined yet.
+- **Step 7:** Python raises `ImportError: cannot import name 'func_a' from partially initialized module 'a_mod' (most likely due to a circular import)`.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1084,16 +1084,16 @@ Running `python test2.py` prints only:
 Hello, Asha!
 ```
 
-```mermaid
-flowchart TD
-    A["1. A file greet.py is used"] --> B{"2. How is it used?"}
-    B -->|Run directly: python greet.py| C["3. __name__ is set to __main__"]
-    C --> D["4. The if __name__ == __main__ block runs"]
-    B -->|Imported: import greet| E["5. __name__ is set to greet"]
-    E --> F["6. The block is skipped; only the function definitions are loaded"]
-```
+![p.3 Controlling Runnable Code with name](../resources/LR-ch02-book-end-qa-fig-04.png)
 
-![p.3 Controlling Runnable Code with name](../resources/ch02-book-end-qa-fig-04.png)
+**Reading the figure**
+
+- **Step 1:** A file called `greet.py` is used, either as a program or as a module.
+- **Step 2:** How is it being used?
+- **Step 3:** Run directly, with `python greet.py`: Python sets `__name__` to `"__main__"`.
+- **Step 4:** So the test `if __name__ == "__main__":` is `True`, and the block under it runs.
+- **Step 5:** Imported, with `import greet`: Python sets `__name__` to the module's name, `"greet"`.
+- **Step 6:** The test is `False`, so the block is skipped. Only the function definitions are loaded, ready to be called.
 
 [Back to the Table of Contents](#table-of-contents)
 

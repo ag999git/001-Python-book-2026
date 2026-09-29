@@ -1,4 +1,5 @@
 
+
 # Advanced Fixture Lifecycles and Optimization: Session Scope in Pytest
 
 Some things that tests need are slow to prepare. Connecting to a database, logging in to an online service or starting a server can take seconds each time. If every test repeats this work, a large test suite can take a very long time to run.
@@ -93,22 +94,22 @@ Two points are worth remembering:
 
 The flowchart below shows the order of events when a run has one session-scoped fixture, and two test files that each have a module-scoped fixture.
 
-```mermaid
-flowchart TD
-    A["1. Start the pytest run"] --> B["2. Session fixture: setup (once)"]
-    B --> C["3. File 1: module fixture setup"]
-    C --> D["4. Run test_1_a"]
-    D --> E["5. Run test_1_b"]
-    E --> F["6. File 1: module fixture teardown"]
-    F --> G["7. File 2: module fixture setup"]
-    G --> H["8. Run test_2_a"]
-    H --> I["9. Run test_2_b"]
-    I --> J["10. File 2: module fixture teardown"]
-    J --> K["11. Session fixture: teardown (once)"]
-    K --> L["12. End of the pytest run"]
-```
+![The Fixture Lifecycle Hierarchy](../resources/LR-ch20-payment-gateway-fig-01.png)
 
-![The Fixture Lifecycle Hierarchy](../resources/ch20-payment-gateway-fig-01.png)
+**Reading the figure**
+
+- **Step 1:** The pytest run starts.
+- **Step 2:** The session-scoped fixture is set up, once for the whole run, when the first test asks for it.
+- **Step 3:** The module fixture of file 1 is set up.
+- **Step 4:** `test_1_a` runs.
+- **Step 5:** `test_1_b` runs, sharing the same module and session objects.
+- **Step 6:** File 1 is finished, so its module fixture is torn down.
+- **Step 7:** The module fixture of file 2 is set up.
+- **Step 8:** `test_2_a` runs.
+- **Step 9:** `test_2_b` runs.
+- **Step 10:** File 2 is finished, so its module fixture is torn down.
+- **Step 11:** The last test of the run has finished, so the session fixture is torn down, once.
+- **Step 12:** The pytest run ends.
 
 Notice that the session fixture wraps around everything. It is set up at step 2 and not torn down until step 11, after both files have finished. The module fixtures are set up and torn down once for each file.
 
@@ -399,18 +400,18 @@ A function that contains `yield` is different. It is a **generator**: it can han
 3. The fixture then pauses while the tests run. How long it pauses depends on its scope: for a function-scoped fixture, until that one test ends; for a session-scoped fixture, until the last test of the whole run ends.
 4. Everything **after** `yield` is the **teardown phase**, where resources are released (here, the gateway is closed). This part runs even if a test fails.
 
-```mermaid
-flowchart TD
-    A["1. First test asks for gateway_session"] --> B["2. Fixture runs up to yield: create and connect the gateway"]
-    B --> C["3. yield hands the gateway to the test and the fixture pauses"]
-    C --> D["4. Test 1 runs"]
-    D --> E["5. Test 2 runs with the same gateway"]
-    E --> F["6. Test 3 runs with the same gateway"]
-    F --> G["7. Last test of the session has finished"]
-    G --> H["8. Fixture continues after yield: close the gateway"]
-```
+![The Mechanics of yield Statements](../resources/LR-ch20-payment-gateway-fig-02.png)
 
-![The Mechanics of yield Statements](../resources/ch20-payment-gateway-fig-02.png)
+**Reading the figure**
+
+- **Step 1:** The first test that needs the session-scoped fixture `gateway_session` asks for it.
+- **Step 2:** The fixture runs up to `yield`: it creates the gateway and connects it. This is the setup phase.
+- **Step 3:** `yield` hands the gateway to the test, and the fixture pauses.
+- **Step 4:** Test 1 runs.
+- **Step 5:** Test 2 runs with the same gateway, because the fixture's scope is the whole session.
+- **Step 6:** Test 3 runs with the same gateway.
+- **Step 7:** The last test of the session has finished.
+- **Step 8:** The fixture continues after `yield` and closes the gateway. This teardown runs even if a test failed.
 
 [Back to the Table of Contents](030-ch20-payment-gateway.md#table-of-contents)
 
@@ -875,17 +876,17 @@ A simple rule: **start with the default function scope, and widen the scope only
 | Slow setup, such as loading a large data file, used by the tests of one file | Module | Shared only inside that file |
 | Very slow setup, such as a login or a database connection, used across many files, and the tests do not change it | Session (in `conftest.py`) | Paid for only once in the whole run |
 
-```mermaid
-flowchart TD
-    A["1. Is the setup slow?"] -- No --> B["2. Use function scope"]
-    A -- Yes --> C{"3. Do the tests change the object?"}
-    C -- Yes --> D["4. Use function scope, or reset the object after each test"]
-    C -- No --> E{"5. Is it needed in many files?"}
-    E -- No --> F["6. Use module or class scope"]
-    E -- Yes --> G["7. Use session scope and put the fixture in conftest.py"]
-```
+![Choosing the Right Scope](../resources/LR-ch20-payment-gateway-fig-03.png)
 
-![Choosing the Right Scope](../resources/ch20-payment-gateway-fig-03.png)
+**Reading the figure**
+
+- **Step 1:** Is the fixture's setup slow?
+- **Step 2:** No: use the default function scope. Every test gets a fresh object, and the cost is small.
+- **Step 3:** Yes: do the tests change the object?
+- **Step 4:** Yes: sharing a changed object would make tests depend on each other, so use function scope, or reset the object after each test.
+- **Step 5:** No: is the object needed in many files?
+- **Step 6:** No: use module scope for one file, or class scope for one class.
+- **Step 7:** Yes: use session scope and put the fixture in `conftest.py`, so every file can use it and the setup is paid for only once.
 
 [Back to the Table of Contents](030-ch20-payment-gateway.md#table-of-contents)
 
@@ -962,4 +963,5 @@ If a session-scoped fixture is defined inside `test_payments.py`, can a test in 
 - [Python glossary: generator](https://docs.python.org/3/glossary.html#term-generator)
 
 [Back to the Table of Contents](030-ch20-payment-gateway.md#table-of-contents)
+
 

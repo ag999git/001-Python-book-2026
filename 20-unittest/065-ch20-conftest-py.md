@@ -2,6 +2,7 @@
 
 
 
+
 # Project and Research Task: The Distributed Test Suite (Sharing Fixtures with conftest.py)
 
 **Note: Scaling to Multiple Test Files with `conftest.py`**
@@ -403,24 +404,17 @@ When a test asks for a fixture, pytest searches for it in a fixed order, startin
 
 #### Flowchart
 
-![Flow chart](../resources/ch16-pytest-010-conftest-py.png)
+![How Pytest Resolves Distributed Fixtures](../resources/LR-ch20-conftest-py-fig-01.png)
 
-The same lookup, step by step:
+**Reading the figure**
 
-```mermaid
-flowchart TD
-    A["1. A test asks for fresh_account"] --> B{"2. Defined in the test's own file?"}
-    B -- Yes --> Z["7. Use that fixture: run it and inject the result"]
-    B -- No --> C{"3. Defined in conftest.py in the same folder?"}
-    C -- Yes --> Z
-    C -- No --> D{"4. Defined in conftest.py in a parent folder?"}
-    D -- Yes --> Z
-    D -- No --> E{"5. Provided by pytest or an installed plugin?"}
-    E -- Yes --> Z
-    E -- No --> F["6. Stop: report ERROR fixture 'fresh_account' not found"]
-```
-
-![How Pytest Resolves Distributed Fixtures](../resources/ch20-conftest-py-fig-01.png)
+- **Step 1:** A test function has a parameter named `fresh_account`, so it asks for that fixture.
+- **Step 2:** pytest looks first in the test's own file. Is the fixture defined there?
+- **Step 3:** No: is it defined in a `conftest.py` in the same folder?
+- **Step 4:** No: is it defined in a `conftest.py` in a parent folder, working upwards?
+- **Step 5:** No: is it a fixture provided by pytest itself or by an installed plugin?
+- **Step 6:** No: pytest stops and reports `fixture 'fresh_account' not found`.
+- **Step 7:** Yes at any of Steps 2 to 5: pytest uses the first fixture it found, runs it and injects the result into the test. No import is needed.
 
 | Search Order | Where Pytest Looks | Example |
 | --- | --- | --- |
@@ -662,4 +656,5 @@ Can `tests/test_deposits.py` use the `premium_account` fixture from `tests/premi
 - [pytest: Configuration files](https://docs.pytest.org/en/stable/reference/customize.html)
 
 [Back to the Table of Contents](065-ch20-conftest-py.md#table-of-contents)
+
 

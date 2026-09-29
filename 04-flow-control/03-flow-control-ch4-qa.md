@@ -277,17 +277,16 @@ To get the same effect in Python, use a `while True` loop with a `break` when th
 4. If the condition is True, `break` ends the loop.
 5. If not, the loop goes round again.
 
-```mermaid
-flowchart TD
-    D1["1. Start: while True"] --> D2["2. Ask the user for a number"]
-    D2 --> D3{"3. Is the number greater than 0?"}
-    D3 -- "Yes" --> D4["4. break out of the loop"]
-    D3 -- "No" --> D5["5. Show a message and go round again"]
-    D5 --> D2
-    D4 --> D6["6. Continue with the rest of the program"]
-```
+![d. Python does not have do...until syntax. How to implement it?](../resources/LR-ch4-flow-control-qa-fig-01.png)
 
-![d. Python does not have do...until syntax. How to implement it?](../resources/ch4-flow-control-qa-fig-01.png)
+**Reading the figure**
+
+- **Step 1:** Start an endless loop with `while True`, so the body runs at least once.
+- **Step 2:** Ask the user for a number.
+- **Step 3:** At the bottom of the loop, check the "until" condition: is the number greater than 0?
+- **Step 4:** No: show a message and go back to Step 2.
+- **Step 5:** Yes: the condition is met, so `break` ends the loop.
+- **Step 6:** Continue with the rest of the program.
 
 **Script 1: the basic pattern**
 
@@ -1163,19 +1162,17 @@ A note on "eventually ends at 1": every starting number that anyone has ever tes
 4. If `n` is odd, the next number is `3 * n + 1`.
 5. Add the next number to the list, make it the new `n`, and go back to Step 2.
 
-```mermaid
-flowchart TD
-    G1["1. Start with n"] --> G2{"2. Is n equal to 1?"}
-    G2 -- "Yes" --> G7["7. Stop and print the list and its length"]
-    G2 -- "No" --> G3{"3. Is n even?"}
-    G3 -- "Yes" --> G4["4. n = n // 2"]
-    G3 -- "No" --> G5["5. n = 3 * n + 1"]
-    G4 --> G6["6. Add n to the list"]
-    G5 --> G6
-    G6 --> G2
-```
+![g. Hailstone sequence - iterative and recursive.](../resources/LR-ch4-flow-control-qa-fig-03.png)
 
-![g. Hailstone sequence - iterative and recursive.](../resources/ch4-flow-control-qa-fig-03.png)
+**Reading the figure**
+
+- **Step 1:** Start with a number `n`, for example 68. The starting number itself is not added to the list.
+- **Step 2:** Is `n` equal to 1?
+- **Step 3:** No: is `n` even?
+- **Step 4:** Yes: the next number is `n // 2`. Floor division keeps it a whole number.
+- **Step 5:** No: `n` is odd, so the next number is `3 * n + 1`.
+- **Step 6:** Add the new `n` to the list and go back to Step 2.
+- **Step 7:** Yes at Step 2: the sequence has reached 1, so stop and print the list and its length. For 68 the list has 14 items.
 
 **Trace table** for `n = 68` (first few rounds)
 

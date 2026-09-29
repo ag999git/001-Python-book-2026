@@ -182,22 +182,21 @@ The steps are written for Windows. Where macOS or Linux is different, this is no
 
 The whole process looks like this:
 
-```mermaid
-flowchart TD
-    A["1. Check that Python is installed"] --> B["2. Install VS Code and its Python extension"]
-    B --> C["3. Create a folder for the scripts"]
-    C --> D["4. Download the six files into the folder"]
-    D --> E["5. Open the folder in VS Code"]
-    E --> F["6. Open the terminal in VS Code"]
-    F --> G{"7. Is pytest installed?"}
-    G -- No --> H["8. Install pytest"]
-    G -- Yes --> I["9. Run the scripts with pytest"]
-    H --> I
-    I --> J["10. Compare the output with this page"]
-    J --> K["11. Change a value and run again"]
-```
+![Running the Scripts on Your Computer](../resources/LR-ch20-unittest-disadvantage-rigid-oop-style-fig-01.png)
 
-![Running the Scripts on Your Computer](../resources/ch20-unittest-disadvantage-rigid-oop-style-fig-01.png)
+**Reading the figure**
+
+- **Step 1:** Check that Python is installed, for example with `python --version` in a terminal.
+- **Step 2:** Install VS Code and its Python extension.
+- **Step 3:** Create a folder to hold the scripts.
+- **Step 4:** Download the six script files into that folder.
+- **Step 5:** Open the folder in VS Code.
+- **Step 6:** Open the terminal inside VS Code.
+- **Step 7:** Is pytest installed? `pytest --version` will tell you.
+- **Step 8:** No: install it with `python -m pip install pytest`.
+- **Step 9:** Run the scripts with pytest.
+- **Step 10:** Compare the output with the output shown on this page.
+- **Step 11:** Change a value in a script and run it again, to see how the result changes.
 
 [Back to the Table of Contents](020-ch20-unittest-disadvantage-rigid-oop-style.md#table-of-contents)
 
@@ -565,19 +564,18 @@ The third point is the first limitation, described next.
 
 The flowchart shows the order in which pytest handles a test class that has a `setup_method`.
 
-```mermaid
-flowchart TD
-    A["1. Find the class TestBankAccount"] --> B["2. Take the next test method"]
-    B --> C["3. Create a new instance of the class"]
-    C --> D["4. Run setup_method: create self.account"]
-    D --> E["5. Run the test method"]
-    E --> F["6. Run teardown_method"]
-    F --> G{"7. More test methods?"}
-    G -- Yes --> B
-    G -- No --> H["8. Report the results"]
-```
+![How the xUnit Setup Runs](../resources/LR-ch20-unittest-disadvantage-rigid-oop-style-fig-02.png)
 
-![How the xUnit Setup Runs](../resources/ch20-unittest-disadvantage-rigid-oop-style-fig-02.png)
+**Reading the figure**
+
+- **Step 1:** pytest finds the test class `TestBankAccount`.
+- **Step 2:** Take the next test method in the class.
+- **Step 3:** Create a brand-new instance of the class for this one method, so no state leaks between tests.
+- **Step 4:** Run `setup_method`, which creates a fresh `self.account`.
+- **Step 5:** Run the test method itself.
+- **Step 6:** Run `teardown_method` to clean up.
+- **Step 7:** If more test methods are left, go back to Step 2.
+- **Step 8:** No: report the results.
 
 Notice that step 4 has no choice in it. There is no question like "does this test need an account?". The setup runs for every test method, every time.
 
@@ -789,22 +787,20 @@ Think of a restaurant. You do not walk into the kitchen and cook your own meal. 
 
 ### How Pytest Supplies a Fixture
 
-```mermaid
-flowchart TD
-    A["1. Find the next test function"] --> B["2. Read its parameter names"]
-    B --> C{"3. Does it name a fixture?"}
-    C -- No --> D["4. Run the test with no setup"]
-    C -- Yes --> E["5. Run the fixture code up to yield"]
-    E --> F["6. Pass the yielded object to the test"]
-    F --> G["7. Run the test"]
-    G --> H["8. Run the fixture code after yield"]
-    D --> I{"9. More tests?"}
-    H --> I
-    I -- Yes --> A
-    I -- No --> J["10. Report the results"]
-```
+![How Pytest Supplies a Fixture](../resources/LR-ch20-unittest-disadvantage-rigid-oop-style-fig-03.png)
 
-![How Pytest Supplies a Fixture](../resources/ch20-unittest-disadvantage-rigid-oop-style-fig-03.png)
+**Reading the figure**
+
+- **Step 1:** pytest finds the next test function.
+- **Step 2:** It reads the names of the test's parameters.
+- **Step 3:** Does a parameter name match a fixture?
+- **Step 4:** No: run the test with no setup.
+- **Step 5:** Yes: run the fixture's code up to `yield`. This is the setup.
+- **Step 6:** Pass the object after `yield` into the test as the argument.
+- **Step 7:** Run the test.
+- **Step 8:** Run the rest of the fixture, the code after `yield`. This is the teardown, and it runs even if the test failed.
+- **Step 9:** If more tests are left, go back to Step 1.
+- **Step 10:** No: report the results.
 
 Compare this with the xUnit flowchart earlier. There, the setup ran for every test with no choice. Here, step 3 makes a decision for each test, based only on the parameters the test asks for.
 

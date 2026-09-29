@@ -1,6 +1,7 @@
 
 
 
+
 # Conceptual Questions and Answers: pytest
 
 This page brings together twenty conceptual questions on testing with pytest, with detailed answers. The questions cover the main ideas of this chapter: what unit testing is, how pytest finds and runs tests, `assert`, fixtures and their scopes, dependency injection, mocking, testing exceptions, parameterized tests, skipping and expected failures, `conftest.py`, and how to keep tests independent.
@@ -201,22 +202,18 @@ project/
 
 Execution flow:
 
-![Execution flow](../resources/ch16-pytest-100-conceptual-qa2.png)
+![How does pytest discover test files and test functions automatically?](../resources/LR-ch20-conceptual-qa-fig-02.png)
 
-The same flow, step by step:
+**Reading the figure**
 
-```mermaid
-flowchart TD
-    A["1. You type: pytest"] --> B["2. pytest searches the folder and its sub-folders"]
-    B --> C{"3. Does the file name match test_*.py or *_test.py?"}
-    C -- No --> D["4. Skip the file"]
-    C -- Yes --> E["5. Import the file"]
-    E --> F["6. Collect functions starting with test, and Test classes"]
-    F --> G["7. Run each collected test and record PASSED or FAILED"]
-    G --> H["8. Print the summary"]
-```
-
-![How does pytest discover test files and test functions automatically?](../resources/ch20-conceptual-qa-fig-02.png)
+- **Step 1:** You type `pytest` in the terminal.
+- **Step 2:** pytest searches the current folder and all its sub-folders for files.
+- **Step 3:** Does the file name match `test_*.py` or `*_test.py`?
+- **Step 4:** No: skip the file.
+- **Step 5:** Yes: import the file.
+- **Step 6:** Collect the functions whose names start with `test`, and the classes whose names start with `Test`.
+- **Step 7:** Run each collected test and record whether it PASSED or FAILED.
+- **Step 8:** Print the summary.
 
 This automatic discovery removes the need to call every test function yourself.
 
@@ -372,20 +369,16 @@ def test_connection(database):
 
 Execution:
 
-![Flowchart](../resources/ch16-pytest-101-conceptual-qa5.png)
+![Explain pytest dependency injection using fixtures. Why does the fixture name become the test parameter name?](../resources/LR-ch20-conceptual-qa-fig-03.png)
 
-The same flow, step by step:
+**Reading the figure**
 
-```mermaid
-flowchart TD
-    A["1. pytest collects test_connection"] --> B["2. Read its parameter name: database"]
-    B --> C["3. Find the fixture named database"]
-    C --> D["4. Call the fixture: Database() is created"]
-    D --> E["5. Pass the object into the test as database"]
-    E --> F["6. Run the test body: database.connect()"]
-```
-
-![Explain pytest dependency injection using fixtures. Why does the fixture name become the test parameter name?](../resources/ch20-conceptual-qa-fig-03.png)
+- **Step 1:** pytest collects the test function `test_connection`.
+- **Step 2:** It reads the test's parameter name, `database`.
+- **Step 3:** It finds the fixture with exactly that name. This is why the fixture name becomes the parameter name.
+- **Step 4:** It calls the fixture, which creates a `Database()` object.
+- **Step 5:** It passes that object into the test as the argument `database`.
+- **Step 6:** The test body runs and calls `database.connect()`.
 
 The parameter name is not an ordinary variable. It is a **request**: "please give me the fixture called `database`". Pytest fulfils the request **before** the test starts. Giving a function what it needs from outside, instead of letting it create it, is called **dependency injection**.
 
@@ -1314,4 +1307,6 @@ Detailed, step-by-step instructions (installing Python and VS Code, downloading 
 - [Python docs: unittest.mock](https://docs.python.org/3/library/unittest.mock.html)
 
 [Back to the Table of Contents](095-ch20-conceptual-qa.md#table-of-contents)
+
+
 

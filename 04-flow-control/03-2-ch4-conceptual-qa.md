@@ -104,20 +104,17 @@ Every program, however large, is built from a few simple patterns: doing things 
 
 The picture below shows the three building blocks of flow, plus the transfer statements that can change the flow midway.
 
-```mermaid
-flowchart TD
-    A1["1. Sequence: run lines one after another"] --> A2{"2. Selection: is the condition True?"}
-    A2 -- "Yes" --> A3["3. Run the if block"]
-    A2 -- "No" --> A4["4. Run the else block"]
-    A3 --> A5{"5. Iteration: repeat again?"}
-    A4 --> A5
-    A5 -- "Yes" --> A6["6. Run the loop body"]
-    A6 -- "break jumps straight out" --> A7
-    A6 --> A5
-    A5 -- "No" --> A7["7. Back to sequence: next line after the loop"]
-```
+![I. Foundations of Program Flow: Sequence, Selection, Iteration and Truthiness](../resources/LR-ch4-conceptual-qa-fig-01.png)
 
-![I. Foundations of Program Flow: Sequence, Selection, Iteration and Truthiness](../resources/ch4-conceptual-qa-fig-01.png)
+**Reading the figure**
+
+- **Step 1:** Sequence: Python runs the lines one after another, from top to bottom.
+- **Step 2:** Selection: an `if` statement tests a condition. Is it `True`?
+- **Step 3:** Yes: run the `if` block.
+- **Step 4:** No: run the `else` block.
+- **Step 5:** Iteration: a loop asks whether to go round again.
+- **Step 6:** Yes: run the loop body, then go back to Step 5. A `break` inside the body is a transfer statement: it jumps straight out of the loop to Step 7.
+- **Step 7:** No: the loop is over, and the flow returns to sequence with the next line after the loop.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -142,19 +139,18 @@ The move from sequence to iteration matters because it lets one small, reusable 
 5. If yes, move one note and add its value to the total. Go back to Step 4.
 6. If no, stop counting and hand over the cash (back to sequence).
 
-```mermaid
-flowchart TD
-    B1["1. Insert card and verify PIN"] --> B2["2. Enter requested amount"]
-    B2 --> B3["3. Set counted = 0"]
-    B3 --> B4{"4. Is counted less than requested?"}
-    B4 -- "Yes" --> B5["5. Move one note to dispenser"]
-    B5 --> B6["6. Add note value to counted"]
-    B6 --> B4
-    B4 -- "No" --> B7["7. Dispense cash"]
-    B7 --> B8["8. End of transaction"]
-```
+![Q1. The ATM Analogy: From Sequence to Loop](../resources/LR-ch4-conceptual-qa-fig-02.png)
 
-![Q1. The ATM Analogy: From Sequence to Loop](../resources/ch4-conceptual-qa-fig-02.png)
+**Reading the figure**
+
+- **Step 1:** Sequence: insert the card and verify the PIN.
+- **Step 2:** Enter the amount you want.
+- **Step 3:** The machine starts counting from zero: `counted = 0`.
+- **Step 4:** Iteration: is the amount counted so far less than the amount requested?
+- **Step 5:** Yes: move one note to the dispenser.
+- **Step 6:** Add that note's value to `counted`, and go back to Step 4.
+- **Step 7:** No: enough notes have been counted, so dispense the cash.
+- **Step 8:** The transaction ends, back in simple sequence.
 
 **Script**
 
@@ -370,17 +366,16 @@ Without selection, a program would always follow the same fixed path, whatever t
 4. If `False`, Python skips that block and runs the `else` block, if there is one.
 5. After either block, both paths meet again and the program continues.
 
-```mermaid
-flowchart TD
-    C1["1. Customer asks for an amount"] --> C2{"2. Is amount greater than balance?"}
-    C2 -- "Yes" --> C3["3. Show Insufficient Funds"]
-    C2 -- "No" --> C4["4. Dispense cash"]
-    C4 --> C5["5. Reduce balance"]
-    C3 --> C6["6. Both paths meet: print receipt"]
-    C5 --> C6
-```
+![Q4. Selection as the Decision-Maker](../resources/LR-ch4-conceptual-qa-fig-03.png)
 
-![Q4. Selection as the Decision-Maker](../resources/ch4-conceptual-qa-fig-03.png)
+**Reading the figure**
+
+- **Step 1:** The customer asks for an amount.
+- **Step 2:** Selection: is the amount greater than the balance?
+- **Step 3:** Yes: the `if` block runs and shows "Insufficient Funds".
+- **Step 4:** No: the `else` block runs and dispenses the cash.
+- **Step 5:** The balance is reduced by the amount.
+- **Step 6:** Both paths meet again, and the receipt is printed.
 
 **Script**
 
@@ -1593,17 +1588,16 @@ To get the same effect, Python programmers use the `while True:` pattern:
 
 This is often called an **input trap**, because the user is caught in the loop and asked again and again until they type something valid. A check such as `isdigit()` decides when the input is good enough to `break` out. The user is always prompted at least once.
 
-```mermaid
-flowchart TD
-    E1["1. Start: while True"] --> E2["2. Ask the user for input"]
-    E2 --> E3{"3. Is the input all digits?"}
-    E3 -- "Yes" --> E5["5. break out of the loop"]
-    E3 -- "No" --> E4["4. Show an error message"]
-    E4 --> E2
-    E5 --> E6["6. Convert to int and continue the program"]
-```
+![Q5. Simulating a do...until Loop](../resources/LR-ch4-conceptual-qa-fig-05.png)
 
-![Q5. Simulating a do...until Loop](../resources/ch4-conceptual-qa-fig-05.png)
+**Reading the figure**
+
+- **Step 1:** Start an endless loop with `while True`. The body will always run at least once, like a do...until loop.
+- **Step 2:** Ask the user for input.
+- **Step 3:** At the bottom of the loop, test whether the job is done: is the input all digits, `text.isdigit()`?
+- **Step 4:** No: show an error message and go back to Step 2. This is the input trap.
+- **Step 5:** Yes: the input is good, so `break` ends the loop.
+- **Step 6:** Convert the input to `int` and carry on with the rest of the program.
 
 **Script**
 
@@ -1659,19 +1653,16 @@ Notice that `-5` was rejected. The minus sign is not a digit, so `"-5".isdigit()
 | Remaining rounds | Never run | Still run |
 | Loop's `else` block (see Q8) | Skipped | Still runs if the loop ends normally |
 
-```mermaid
-flowchart TD
-    F1{"1. Any items left?"} -- "Yes" --> F2["2. Take the next item"]
-    F1 -- "No" --> F9["6. First line after the loop"]
-    F2 --> F3{"3. Should we stop completely?"}
-    F3 -- "Yes: break" --> F9
-    F3 -- "No" --> F4{"4. Should we skip this item?"}
-    F4 -- "Yes: continue" --> F1
-    F4 -- "No" --> F5["5. Rest of the loop body"]
-    F5 --> F1
-```
+![Q6. break versus continue](../resources/LR-ch4-conceptual-qa-fig-06.png)
 
-![Q6. break versus continue](../resources/ch4-conceptual-qa-fig-06.png)
+**Reading the figure**
+
+- **Step 1:** The loop asks: are there any items left?
+- **Step 2:** Yes: take the next item.
+- **Step 3:** Should the loop stop completely?
+- **Step 4:** No: should this one item be skipped? (Yes at Step 3 means `break`: jump straight to Step 6, and no remaining rounds run.)
+- **Step 5:** No: run the rest of the loop body, then go back to Step 1. (Yes at Step 4 means `continue`: skip the rest of the body and go straight back to Step 1 for the next item.)
+- **Step 6:** No items are left, or `break` ran: go on to the first line after the loop.
 
 **Script**
 
@@ -1802,17 +1793,15 @@ The key rule: if the loop is ended by a **forced stop**, that is a `break` state
 
 This makes loop `else` a useful tool for code that should run only when the loop was *not* interrupted.
 
-```mermaid
-flowchart TD
-    G1{"1. Items left?"} -- "Yes" --> G2["2. Run loop body"]
-    G2 --> G3{"3. Did break run?"}
-    G3 -- "No" --> G1
-    G3 -- "Yes" --> G5["5. Skip else, go to next line"]
-    G1 -- "No: natural completion" --> G4["4. Run the else block"]
-    G4 --> G5
-```
+![Q8. The else Clause on a Loop](../resources/LR-ch4-conceptual-qa-fig-07.png)
 
-![Q8. The else Clause on a Loop](../resources/ch4-conceptual-qa-fig-07.png)
+**Reading the figure**
+
+- **Step 1:** The loop asks: are there items left?
+- **Step 2:** Yes: run the loop body.
+- **Step 3:** Did a `break` run in the body? If not, go back to Step 1.
+- **Step 4:** No items are left, so the loop has ended naturally, without a `break`. Run the `else` block. This also happens when the loop never ran at all, for example over an empty list.
+- **Step 5:** Go on to the next line after the loop. (Yes at Step 3 comes straight here: a `break` skips the `else` block entirely.)
 
 **Script**
 
@@ -2009,17 +1998,16 @@ Because of this protocol, Python can loop over strings and lists, and also over 
 
 (Method names with double underscores on both sides, like `__iter__`, are called "dunder" or *special methods*. Python calls them for you in certain situations. See [Special method names](https://docs.python.org/3/reference/datamodel.html#special-method-names).)
 
-```mermaid
-flowchart TD
-    H1["1. for loop starts: calls iter on the object"] --> H2["2. Call next on the iterator"]
-    H2 --> H3{"3. Did next raise StopIteration?"}
-    H3 -- "No" --> H4["4. Store item in loop variable"]
-    H4 --> H5["5. Run the loop body"]
-    H5 --> H2
-    H3 -- "Yes" --> H6["6. Loop ends quietly"]
-```
+![Q1. The Iterator Protocol](../resources/LR-ch4-conceptual-qa-fig-08.png)
 
-![Q1. The Iterator Protocol](../resources/ch4-conceptual-qa-fig-08.png)
+**Reading the figure**
+
+- **Step 1:** The `for` loop starts by calling `iter()` on the object, which returns an iterator.
+- **Step 2:** It calls `next()` on the iterator.
+- **Step 3:** Did `next()` raise `StopIteration`?
+- **Step 4:** No: `next()` returned an item. Store it in the loop variable.
+- **Step 5:** Run the loop body, then go back to Step 2.
+- **Step 6:** Yes: `StopIteration` means there are no more items. The `for` loop catches it for you and ends quietly.
 
 **Script**
 

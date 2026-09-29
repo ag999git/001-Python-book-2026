@@ -645,16 +645,16 @@ Dictionary keys are stored using hash values worked out from the key objects. If
 
 How a lookup such as `d["a"]` works:
 
-```mermaid
-flowchart TD
-    A["1. You ask for d[key]"] --> B["2. Python works out hash(key)"]
-    B --> C["3. The hash tells Python which slot of the table to look in"]
-    C --> D{"4. Is a key equal to the one you asked for stored there?"}
-    D -->|Yes| E["5. Return its value"]
-    D -->|No| F["6. KeyError"]
-```
+![Why must dictionary keys be immutable?](../resources/LR-ch02-2-ch2-more-conceptual-qa-fig-02.png)
 
-![Why must dictionary keys be immutable?](../resources/ch02-2-ch2-more-conceptual-qa-fig-02.png)
+**Reading the figure**
+
+- **Step 1:** You ask for a value, for example `d["a"]`.
+- **Step 2:** Python works out `hash(key)`, a number calculated from the key's contents.
+- **Step 3:** The hash tells Python which slot of the dictionary's table to look in, so it does not have to search every item.
+- **Step 4:** Is a key equal to the one you asked for stored there? (If two keys share a slot, Python checks the next slots too.)
+- **Step 5:** Yes: return its value.
+- **Step 6:** No: raise `KeyError`. If a key could change after being stored, its hash would change too, and Python would look in the wrong slot. That is why keys must be immutable.
 
 If the key could change after being stored, its hash at step 2 would no longer point to the slot where it was stored, and the lookup would fail.
 
@@ -955,17 +955,17 @@ Output:
 99 marks
 ```
 
-```mermaid
-flowchart TD
-    A["1. An operation uses two values of different types"] --> B{"2. Are both values numbers?"}
-    B -->|Yes| C["3. Implicit: Python converts the narrower type to the wider one"]
-    C --> D["4. The operation runs, for example 3 + 1.5 gives 4.5"]
-    B -->|No| E["5. Python raises TypeError"]
-    E --> F["6. Explicit: the programmer converts, for example int() or str()"]
-    F --> G["7. The operation runs with the converted value"]
-```
+![What is the difference between implicit and explicit type conversion?](../resources/LR-ch02-2-ch2-more-conceptual-qa-fig-03.png)
 
-![What is the difference between implicit and explicit type conversion?](../resources/ch02-2-ch2-more-conceptual-qa-fig-03.png)
+**Reading the figure**
+
+- **Step 1:** An operation such as `+` is given two values of different types.
+- **Step 2:** Are both values numbers, for example an `int` and a `float`?
+- **Step 3:** Yes: Python converts implicitly, turning the narrower type into the wider one, here `int` to `float`, so no information is lost.
+- **Step 4:** The operation runs: `3 + 1.5` gives `4.5`.
+- **Step 5:** No: for a mix such as `"5" + 3`, Python will not guess, so it raises `TypeError`.
+- **Step 6:** The programmer converts explicitly, on purpose, with a function such as `int()`, `float()` or `str()`.
+- **Step 7:** The operation now runs with the converted value, for example `int("5") + 3` gives `8`.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1218,22 +1218,20 @@ True
 True
 ```
 
-```mermaid
-flowchart TD
-    A["1. Python runs import name"] --> B{"2. Is name already in sys.modules?"}
-    B -->|Yes| C["3. Reuse the cached module object"]
-    B -->|No| D["4. Find the module file"]
-    D --> E{"5. Is an up-to-date .pyc file in __pycache__?"}
-    E -->|Yes| F["6. Load the bytecode from the .pyc file"]
-    E -->|No| G["7. Compile the .py file to bytecode and save a new .pyc"]
-    F --> H["8. Store the new module in sys.modules"]
-    G --> H
-    H --> I["9. Run the module's code once"]
-    C --> J["10. Bind the name in your program"]
-    I --> J
-```
+![Why does Python cache imported modules in sys.modules?](../resources/LR-ch02-2-ch2-more-conceptual-qa-fig-05.png)
 
-![Why does Python cache imported modules in sys.modules?](../resources/ch02-2-ch2-more-conceptual-qa-fig-05.png)
+**Reading the figure**
+
+- **Step 1:** Python runs the statement `import name`.
+- **Step 2:** It first checks `sys.modules`, the cache of modules already imported. Is `name` there?
+- **Step 3:** Yes: reuse the cached module object. Nothing is loaded or run again, so a second import is instant.
+- **Step 4:** No: find the module's file by searching the folders in `sys.path`.
+- **Step 5:** Is there an up-to-date `.pyc` file for it in the `__pycache__` folder?
+- **Step 6:** Yes: load the ready-made bytecode from the `.pyc` file.
+- **Step 7:** No: compile the `.py` file to bytecode and save a new `.pyc` for next time.
+- **Step 8:** Store the new module object in `sys.modules`. This happens before its code runs.
+- **Step 9:** Run the module's code once, from top to bottom, creating its functions and variables.
+- **Step 10:** Bind the name in your program so it refers to the module. (Yes from Step 2 comes straight here.)
 
 Python stores the module in `sys.modules` (step 8) just before running its code (step 9). So if two modules import each other, the second import finds the half-built module in the cache instead of starting an endless loop.
 

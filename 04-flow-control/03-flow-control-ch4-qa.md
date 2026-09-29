@@ -1008,16 +1008,15 @@ The **Euclidean algorithm** is a quick way to find it, known for over 2,000 year
 4. Make the new `a` equal to the old `b`, and the new `b` equal to the remainder.
 5. Go back to Step 2.
 
-```mermaid
-flowchart LR
-    E1["1. Read a and b"] --> E2{"2. Is b equal to 0?"}
-    E2 -- "No" --> E3["3. Work out remainder r = a % b"]
-    E3 --> E4["4. Set a = b and b = r"]
-    E4 --> E2
-    E2 -- "Yes" --> E5["5. The GCD is a"]
-```
+![e. GCD using Euclidean Algorithm.](../resources/S04-LR-ch4-flow-control-qa-fig-02.png)
 
-![e. GCD using Euclidean Algorithm.](../resources/ch4-flow-control-qa-fig-02.png)
+**Reading the figure**
+
+- **Step 1:** Read the two numbers, `a` and `b`.
+- **Step 2:** Is `b` equal to 0?
+- **Step 3:** No: work out the remainder, `r = a % b`.
+- **Step 4:** Move along: the new `a` is the old `b`, and the new `b` is the remainder. Go back to Step 2.
+- **Step 5:** Yes: stop. The answer, the greatest common divisor, is `a`.
 
 The line `a, b = b, a % b` does Step 4 in one go. Python works out both values on the right side first, and only then stores them in `a` and `b`. This is called **tuple unpacking** or simultaneous assignment. If you wrote `a = b` and then `b = a % b` on separate lines, the second line would use the *new* `a`, and the answer would be wrong.
 
@@ -1309,20 +1308,18 @@ A **prime number** is a whole number greater than 1 that has exactly two divisor
 4. If any division leaves no remainder, a divisor has been found: the number is not prime. Stop looking (`break`).
 5. If no divisor is found, the number is prime.
 
-```mermaid
-flowchart LR
-    H1["1. Read num"] --> H2{"2. Is num less than 2?"}
-    H2 -- "Yes" --> H7["7. Not Prime"]
-    H2 -- "No" --> H3["3. Set i = 2"]
-    H3 --> H4{"4. Is i less than num?"}
-    H4 -- "No" --> H8["8. Prime"]
-    H4 -- "Yes" --> H5{"5. Does num % i equal 0?"}
-    H5 -- "Yes" --> H7
-    H5 -- "No" --> H6["6. i = i + 1"]
-    H6 --> H4
-```
+![h. Check for Prime](../resources/S04-LR-ch4-flow-control-qa-fig-04.png)
 
-![h. Check for Prime](../resources/ch4-flow-control-qa-fig-04.png)
+**Reading the figure**
+
+- **Step 1:** Read the number, `num`.
+- **Step 2:** Is `num` less than 2?
+- **Step 3:** Yes: 0, 1 and negative numbers are not prime. (Yes at Step 6 also ends here.)
+- **Step 4:** No: start trying divisors at `i = 2`.
+- **Step 5:** Is `i` still less than `num`?
+- **Step 6:** Yes: does `num % i` equal 0, meaning `i` divides `num` exactly? If so, a divisor has been found, so the number is not prime: `break` and go to Step 3.
+- **Step 7:** No: try the next divisor, `i = i + 1`, and go back to Step 5.
+- **Step 8:** No divisor was found below `num`, so the number is prime.
 
 **Script 1: the basic method**
 

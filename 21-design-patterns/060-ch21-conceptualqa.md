@@ -52,7 +52,7 @@ Each question from the book is reproduced exactly as printed. Below it you will 
 - a **step-by-step explanation** that you can follow in order;
 - a **Python script** with `# Step 1`, `# Step 2` comments, followed by its **output**;
 - a **comparison table**;
-- a **flowchart** (as an image, and sometimes also as a Mermaid diagram);
+- a **flowchart** (as an image);
 - a few **follow-up questions** with short answers, to test your understanding.
 
 [Back to the Table of Contents](#table-of-contents)
@@ -1787,19 +1787,19 @@ Station: temperature changed to 30 C
 - A new kind of observer, such as an `SMSService`, can be added without changing the `WeatherStation` class at all.
 - After `detach(phone)`, only the alert system reacts to the last change.
 
-**Mermaid flowchart of the script**
+**Flowchart of the script**
 
-```mermaid
-flowchart LR
-    A["1. Create the WeatherStation subject"] --> B["2. Attach PhoneDisplay and AlertSystem"]
-    B --> C["3. Temperature changes"]
-    C --> D["4. Subject calls notify"]
-    D --> E["5. Subject calls update on every observer in its list"]
-    E --> F["6. Each observer reacts in its own way"]
-    F --> G["7. An observer may detach and receive no more updates"]
-```
+![Q13. Explain the Observer Pattern. How does it support communication between objects? Give suitable applications.](../resources/S21-LR-ch21-conceptualqa-fig-03.png)
 
-![Q13. Explain the Observer Pattern. How does it support communication between objects? Give suitable applications.](../resources/ch21-conceptualqa-fig-03.png)
+**Reading the figure**
+
+- **Step 1:** Create the `WeatherStation`, the subject that others want to watch.
+- **Step 2:** Attach two observers, a `PhoneDisplay` and an `AlertSystem`. The station keeps them in a list.
+- **Step 3:** The temperature changes.
+- **Step 4:** The subject calls its `notify()` method.
+- **Step 5:** `notify()` calls `update()` on every observer in the list. The station does not need to know what kind of object each one is.
+- **Step 6:** Each observer reacts in its own way: the display shows the value, and the alert system checks it.
+- **Step 7:** An observer can call `detach()` at any time. After `detach(phone)`, only the alert system reacts to later changes.
 
 Read more at [Refactoring Guru: Observer](https://refactoring.guru/design-patterns/observer).
 
@@ -2526,20 +2526,20 @@ Understanding the **purpose** of each pattern is therefore more important than m
 | Go through a collection | Iterator (a `for` loop or generator in Python) |
 | Same steps, some details differ | Template Method |
 
-**Mermaid flowchart: a quick decision path**
+**Flowchart: a quick decision path**
 
-```mermaid
-flowchart LR
-    A["1. Describe the problem in plain words"] --> B{"2. Can a plain function or built-in feature solve it?"}
-    B -- Yes --> C["3. Use the simple solution, no pattern needed"]
-    B -- No --> D{"4. Is it about creating objects?"}
-    D -- Yes --> E["5. Look at Singleton, Factory Method, Abstract Factory, Builder"]
-    D -- No --> F{"6. Is it about organizing or connecting objects?"}
-    F -- Yes --> G["7. Look at Decorator, Adapter, Facade, Composite, Proxy"]
-    F -- No --> H["8. Look at Observer, Strategy, Command, Iterator, Template Method"]
-```
+![Q18. How should a programmer choose the appropriate design pattern? What factors should be considered before applying one?](../resources/S21-LR-ch21-conceptualqa-fig-05.png)
 
-![Q18. How should a programmer choose the appropriate design pattern? What factors should be considered before applying one?](../resources/ch21-conceptualqa-fig-05.png)
+**Reading the figure**
+
+- **Step 1:** Describe the problem in plain words before thinking about any pattern.
+- **Step 2:** Can a plain function or a built-in Python feature solve it?
+- **Step 3:** Yes: use the simple solution. No pattern is needed, and adding one would only make the code harder to read.
+- **Step 4:** No: is the problem about creating objects?
+- **Step 5:** Yes: look at the creational patterns: Singleton, Factory Method, Abstract Factory and Builder.
+- **Step 6:** No: is it about organising or connecting objects?
+- **Step 7:** Yes: look at the structural patterns: Decorator, Adapter, Facade, Composite and Proxy.
+- **Step 8:** No: it is about how objects behave and communicate, so look at the behavioural patterns: Observer, Strategy, Command, Iterator and Template Method.
 
 **Flowchart**
 

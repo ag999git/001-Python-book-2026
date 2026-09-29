@@ -516,17 +516,17 @@ cmath.isclose(z, 3 + 4j) -> True
 
 The rebuilt number is not exactly `3 + 4j`, because the angle and the cos and sin values are rounded floats. That is why Step 5 uses `cmath.isclose()`.
 
-```mermaid
-flowchart TD
-    A["1. Start with z = x + yj (rectangular form)"] --> B["2. r = abs(z) = square root of x squared + y squared"]
-    B --> C["3. phi = cmath.phase(z), the angle in radians"]
-    C --> D["4. Polar form: (r, phi), from cmath.polar(z)"]
-    D --> E["5. x = r cos phi and y = r sin phi"]
-    E --> F["6. Back to rectangular form with cmath.rect(r, phi)"]
-    F --> G["7. Compare with the original using cmath.isclose()"]
-```
+![Polar Operations with cmath](../resources/LR-ch02-complex-numbers-advanced-fig-01.png)
 
-![Polar Operations with cmath](../resources/ch02-complex-numbers-advanced-fig-01.png)
+**Reading the figure**
+
+- **Step 1:** Start with a complex number in rectangular form, `z = x + yj`, for example `3 + 4j`.
+- **Step 2:** Its length is `r = abs(z)`, the square root of `x² + y²`. For `3 + 4j` this is `5.0`.
+- **Step 3:** Its angle is `phi = cmath.phase(z)`, measured in radians from the positive real axis.
+- **Step 4:** Together, `(r, phi)` is the polar form. `cmath.polar(z)` returns both at once.
+- **Step 5:** To go back, use `x = r cos phi` and `y = r sin phi`.
+- **Step 6:** `cmath.rect(r, phi)` does that for you and returns the rectangular form.
+- **Step 7:** The rebuilt number is not exactly `3 + 4j`, because the values are rounded floats, so compare with `cmath.isclose()` instead of `==`.
 
 [Back to the Table of Contents](#table-of-contents)
 

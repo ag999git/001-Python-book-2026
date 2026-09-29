@@ -468,17 +468,17 @@ So the *variable* `t1` now refers to something different, but no tuple has been 
 
 You can see this with the built-in function `id()`. It returns a number that identifies an object while that object exists. If the number changes, you are looking at a different object.
 
-```mermaid
-flowchart TD
-    A["Step 1: t1 points to tuple (1, 2, 3)"] --> B["Step 2: Python evaluates t1 + (4, 5)"]
-    B --> C["Step 3: A new tuple (1, 2, 3, 4, 5) is built in a new place in memory"]
-    C --> D["Step 4: The name t1 is moved to point to the new tuple"]
-    D --> E{"Step 5: Does any other name still point to (1, 2, 3)?"}
-    E -- Yes --> F["Step 6: The old tuple stays in memory, unchanged"]
-    E -- No --> G["Step 7: Python frees the memory of the old tuple"]
-```
+![Q5. Explain how t1 = t1 + (4, 5) modifies a variable. Trace memory via id().](../resources/LR-ch19-tuples-conceptual-qa-fig-02.png)
 
-![Q5. Explain how t1 = t1 + (4, 5) modifies a variable. Trace memory via id().](../resources/ch19-tuples-conceptual-qa-fig-02.png)
+**Reading the figure**
+
+- **Step 1:** The name `t1` points to the tuple `(1, 2, 3)`. `id(t1)` gives that object's identity.
+- **Step 2:** Python evaluates the right-hand side first: `t1 + (4, 5)`.
+- **Step 3:** Tuples cannot be changed, so `+` builds a brand-new tuple, `(1, 2, 3, 4, 5)`, in a new place in memory.
+- **Step 4:** The assignment moves the name `t1` to the new tuple. `id(t1)` now gives a different number.
+- **Step 5:** Does any other name still point to the old tuple `(1, 2, 3)`?
+- **Step 6:** Yes: the old tuple stays in memory, completely unchanged.
+- **Step 7:** No: nothing uses the old tuple any more, so Python frees its memory. No tuple was ever modified.
 
 **Script: tracing memory with `id()`**
 

@@ -142,20 +142,16 @@ A test that passes in both cases cannot tell a working function from a broken on
 
 #### Flow chart (Using only try/except without else)
 
-![try/except without else](../resources/ch16-pytest-010-only-try-except-no-else.png)
+![Flow chart (Using only try/except without else)](../resources/LR-ch20-pytest-raises-vs-try-except-fig-01.png)
 
-The same flow, step by step:
+**Reading the figure**
 
-```mermaid
-flowchart TD
-    A["1. Call create_user(10)"] --> B{"2. Was ValueError raised?"}
-    B -- Yes --> C["3. except ValueError: pass"]
-    C --> D["4. Test PASSES"]
-    B -- No --> E["5. except block is skipped"]
-    E --> F["6. Test still PASSES: the bug is missed"]
-```
-
-![Flow chart (Using only try/except without else)](../resources/ch20-pytest-raises-vs-try-except-fig-01.png)
+- **Step 1:** The test calls `create_user(10)` inside a `try` block. An age of 10 should raise `ValueError`.
+- **Step 2:** Was a `ValueError` raised?
+- **Step 3:** Yes: `except ValueError: pass` catches it.
+- **Step 4:** The test passes, which is correct.
+- **Step 5:** No: nothing is raised, so the `except` block is skipped.
+- **Step 6:** The test still passes, because nothing in it can fail. The bug is missed.
 
 [Back to the Table of Contents](070-ch20-pytest-raises-vs-try-except.md#table-of-contents)
 
@@ -191,20 +187,16 @@ A small improvement: instead of `assert False, "..."`, pytest provides `pytest.f
 
 #### Flow chart for try/except with else
 
-![Flow chart for try/except with else](../resources/ch16-pytest-020-try-except-with-else.png)
+![Flow chart for try/except with else](../resources/LR-ch20-pytest-raises-vs-try-except-fig-02.png)
 
-The same flow, step by step:
+**Reading the figure**
 
-```mermaid
-flowchart TD
-    A["1. Call create_user(10)"] --> B{"2. Was ValueError raised?"}
-    B -- Yes --> C["3. except ValueError: pass"]
-    C --> D["4. else is skipped: test PASSES"]
-    B -- No --> E["5. except is skipped, else runs"]
-    E --> F["6. assert False: test FAILS with a message"]
-```
-
-![Flow chart for try/except with else](../resources/ch20-pytest-raises-vs-try-except-fig-02.png)
+- **Step 1:** The test calls `create_user(10)` inside a `try` block.
+- **Step 2:** Was a `ValueError` raised?
+- **Step 3:** Yes: `except ValueError: pass` catches it.
+- **Step 4:** The `else` block runs only when no exception was raised, so it is skipped. The test passes.
+- **Step 5:** No: the `except` block is skipped and the `else` block runs.
+- **Step 6:** `else` contains `assert False, "..."`, so the test fails with a clear message. The bug is caught.
 
 [Back to the Table of Contents](070-ch20-pytest-raises-vs-try-except.md#table-of-contents)
 
@@ -223,21 +215,17 @@ def test_create_user():
 
 ### Flow chart of pytest raises
 
-![Flow chart of pytest raises](../resources/ch16-pytest-030-pytest-raises.png)
+![Flow chart of pytest raises](../resources/LR-ch20-pytest-raises-vs-try-except-fig-03.png)
 
-The same flow, step by step:
+**Reading the figure**
 
-```mermaid
-flowchart TD
-    A["1. Enter: with pytest.raises(ValueError)"] --> B["2. Call create_user(10)"]
-    B --> C{"3. Was an exception raised?"}
-    C -- No --> D["4. Test FAILS: DID NOT RAISE ValueError"]
-    C -- Yes --> E{"5. Is it a ValueError?"}
-    E -- Yes --> F["6. pytest.raises catches it: test PASSES"]
-    E -- No --> G["7. The other exception is not caught: test FAILS"]
-```
-
-![Flow chart of pytest raises](../resources/ch20-pytest-raises-vs-try-except-fig-03.png)
+- **Step 1:** The test enters the block `with pytest.raises(ValueError):`.
+- **Step 2:** Inside the block it calls `create_user(10)`.
+- **Step 3:** Was an exception raised?
+- **Step 4:** No: the test fails with `DID NOT RAISE <class 'ValueError'>`.
+- **Step 5:** Yes: is it a `ValueError`?
+- **Step 6:** Yes: `pytest.raises` catches it, and the test passes.
+- **Step 7:** No: a different exception is not caught, so it passes through and the test fails.
 
 [Back to the Table of Contents](070-ch20-pytest-raises-vs-try-except.md#table-of-contents)
 

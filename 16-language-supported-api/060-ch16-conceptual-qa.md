@@ -139,21 +139,19 @@ The table shows how 1,000 items shrink with each comparison.
 
 The flowchart shows the logic of binary search.
 
-```mermaid
-flowchart TD
-    A["1. Set low = 0 and high = last index"] --> B{"2. Is low less than or equal to high?"}
-    B -- "No" --> C["3. Target is not in the list. Stop"]
-    B -- "Yes" --> D["4. middle = low + high, divided by 2"]
-    D --> E{"5. Is item at middle equal to target?"}
-    E -- "Yes" --> F["6. Found. Return middle"]
-    E -- "No" --> G{"7. Is item at middle less than target?"}
-    G -- "Yes" --> H["8. Discard left half: low = middle + 1"]
-    G -- "No" --> I["9. Discard right half: high = middle - 1"]
-    H --> B
-    I --> B
-```
+![Answer to Q1 (b): Why binary search is O(log n)](../resources/LR-ch16-conceptual-qa-fig-01.png)
 
-![Answer to Q1 (b): Why binary search is O(log n)](../resources/ch16-conceptual-qa-fig-01.png)
+**Reading the figure**
+
+- **Step 1:** Start with the whole list: `low = 0` and `high` is the last index, `len(items) - 1`.
+- **Step 2:** Is `low <= high`? While it is, part of the list is still left to search.
+- **Step 3:** No: nothing is left to search, so the target is not in the list. Stop.
+- **Step 4:** Yes: find the middle of the part still being searched, `middle = (low + high) // 2`.
+- **Step 5:** Is the item at `middle` the target?
+- **Step 6:** Yes: the target is found. Return `middle`.
+- **Step 7:** No: is the item at `middle` smaller than the target?
+- **Step 8:** Yes: the target can only be to the right, so discard the left half with `low = middle + 1`. Go back to Step 2.
+- **Step 9:** No: the target can only be to the left, so discard the right half with `high = middle - 1`. Go back to Step 2. Each pass halves what is left, which is why binary search is O(log n).
 
 The script below counts the comparisons made by both methods, so you can see the difference for yourself.
 
@@ -299,25 +297,22 @@ For example, with `n = 5`: `4 + 3 + 2 + 1 = 10`, and the formula gives `5 × 4 /
 
 Only with the **optimised** version that includes an `is_swapped` flag. If a complete pass produces zero swaps, the list is already sorted and the outer loop exits immediately. For an already-sorted list this needs only one pass of `n - 1` comparisons, which is `O(n)`. The basic version without the flag always does all `n(n - 1)/2` comparisons, so it is always `O(n²)` regardless of input order.
 
-```mermaid
-flowchart TD
-    A["1. pass_no = 0"] --> B["2. is_swapped = False"]
-    B --> C["3. Compare each neighbouring pair in the unsorted part"]
-    C --> D{"4. Is left item bigger than right item?"}
-    D -- "Yes" --> E["5. Swap them and set is_swapped = True"]
-    D -- "No" --> F["6. Leave them as they are"]
-    E --> G{"7. Pairs left in this pass?"}
-    F --> G
-    G -- "Yes" --> C
-    G -- "No" --> H{"8. Was anything swapped in this pass?"}
-    H -- "No" --> I["9. List is sorted. Stop early"]
-    H -- "Yes" --> J["10. pass_no = pass_no + 1"]
-    J --> K{"11. Passes left?"}
-    K -- "Yes" --> B
-    K -- "No" --> I
-```
+![When O(n) is achievable](../resources/LR-ch16-conceptual-qa-fig-02.png)
 
-![When O(n) is achievable](../resources/ch16-conceptual-qa-fig-02.png)
+**Reading the figure**
+
+- **Step 1:** Start with the first pass, `pass_no = 0`. The outer loop is `for pass_no in range(n - 1)`.
+- **Step 2:** At the start of every pass, set `is_swapped = False`.
+- **Step 3:** The inner loop, `for i in range(n - pass_no - 1)`, compares the next neighbouring pair in the part that is not yet sorted.
+- **Step 4:** Is the left item bigger than the right item?
+- **Step 5:** Yes: swap the two items and set `is_swapped = True`.
+- **Step 6:** No: leave the pair as it is.
+- **Step 7:** If pairs are left in this pass, go back to Step 3.
+- **Step 8:** The pass is over. Was anything swapped during it?
+- **Step 9:** No: a whole pass with no swaps means the list is already sorted, so stop early. For a list that is sorted to begin with, this happens after one pass, which is O(n).
+- **Step 10:** Yes: move on to the next pass, `pass_no = pass_no + 1`. The largest unsorted item has now bubbled to its final place.
+- **Step 11:** If passes are left, go back to Step 2.
+- **Step 12:** No passes are left, so the list is sorted.
 
 The script below counts comparisons for the basic and optimised versions on a sorted list and on a reversed list.
 
@@ -414,21 +409,19 @@ In list terms:
 5. When you reach an item that is not bigger (or the start of the list), drop the key into the gap.
 6. Repeat from Step 2 until every item has been placed.
 
-```mermaid
-flowchart TD
-    A["1. Start with index 1"] --> B["2. key = item at index. position = index"]
-    B --> C{"3. position greater than 0 AND item on the left bigger than key?"}
-    C -- "Yes" --> D["4. Shift the left item one place right"]
-    D --> E["5. position = position - 1"]
-    E --> C
-    C -- "No" --> F["6. Place key at position"]
-    F --> G{"7. More items to place?"}
-    G -- "Yes" --> H["8. index = index + 1"]
-    H --> B
-    G -- "No" --> I["9. List is sorted"]
-```
+![Answer to Q3: The card analogy](../resources/LR-ch16-conceptual-qa-fig-03.png)
 
-![Answer to Q3: The card analogy](../resources/ch16-conceptual-qa-fig-03.png)
+**Reading the figure**
+
+- **Step 1:** Start with the item at `index = 1`. The single item at index 0 counts as a sorted hand of one card.
+- **Step 2:** Pick up that item as the `key` and remember its place: `position = index`.
+- **Step 3:** Is there an item to the left (`position > 0`), and is that item bigger than `key`? Both must be true.
+- **Step 4:** Yes: shift the bigger item one place to the right, opening a gap.
+- **Step 5:** Move one place left, `position = position - 1`, and go back to Step 3.
+- **Step 6:** No: the gap is in the right place, so drop `key` into it at `position`.
+- **Step 7:** Are there more items still to place?
+- **Step 8:** Yes: move on to the next item, `index = index + 1`, and go back to Step 2.
+- **Step 9:** No: every item has been placed, so the list is sorted.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -934,16 +927,16 @@ This makes the tree structure implicit: no node objects, no pointers, just a lis
 
 For example, the heap list `[1, 3, 2, 7, 4, 5]` represents this tree:
 
-```mermaid
-flowchart TD
-    A["index 0: value 1"] --> B["index 1: value 3"]
-    A --> C["index 2: value 2"]
-    B --> D["index 3: value 7"]
-    B --> E["index 4: value 4"]
-    C --> F["index 5: value 5"]
-```
+![How Python stores a heap](../resources/LR-ch16-conceptual-qa-fig-04.png)
 
-![How Python stores a heap](../resources/ch16-conceptual-qa-fig-04.png)
+**Reading the figure**
+
+- Index 0 holds 1, the root. In a min-heap the root is always the smallest value.
+- Index 1 holds 3, the left child of index 0, because `2 * 0 + 1 = 1`.
+- Index 2 holds 2, the right child of index 0, because `2 * 0 + 2 = 2`.
+- Index 3 holds 7, the left child of index 1 (`2 * 1 + 1 = 3`).
+- Index 4 holds 4, the right child of index 1 (`2 * 1 + 2 = 4`).
+- Index 5 holds 5, the left child of index 2 (`2 * 2 + 1 = 5`). Every parent is smaller than or equal to its children, which is the heap rule.
 
 Check the rule: 1 is smaller than 3 and 2. 3 is smaller than 7 and 4. 2 is smaller than 5. Every parent is smaller than its children, so this is a valid min-heap.
 
@@ -1227,19 +1220,19 @@ This approach needs no extra shared variables or flags, works reliably, and is e
 
 About `task_done()` and `join()`: every call to `get()` adds to the queue's count of unfinished tasks, and every call to `task_done()` reduces it. `queue.join()` waits until that count reaches zero. So `task_done()` must be called for **every** item taken from the queue, including the `None` sentinels if `join()` is called after they are added. A simple way to stay safe is the order used in the script below: first `join()` the queue to wait for the real work, then send the sentinels, then wait for the threads to finish.
 
-```mermaid
-flowchart TD
-    A["1. Main thread starts worker threads"] --> B["2. Main thread puts tasks in the queue"]
-    B --> C["3. Worker calls get and waits for an item"]
-    C --> D{"4. Is the item None?"}
-    D -- "No" --> E["5. Process the task"]
-    E --> F["6. Call task_done"]
-    F --> C
-    D -- "Yes" --> G["7. Call task_done and leave the loop"]
-    G --> H["8. Worker thread ends"]
-```
+![The None sentinel pattern](../resources/LR-ch16-conceptual-qa-fig-05.png)
 
-![The None sentinel pattern](../resources/ch16-conceptual-qa-fig-05.png)
+**Reading the figure**
+
+- **Step 1:** The main thread creates and starts the worker threads.
+- **Step 2:** The main thread puts the real tasks into the queue.
+- **Step 3:** After the tasks, it puts one `None` into the queue for each worker. `None` is the stop signal, the sentinel.
+- **Step 4:** Each worker calls `get()`, which waits until an item is available and then takes it.
+- **Step 5:** The worker checks whether the item is `None`.
+- **Step 6:** No: it is a real task, so the worker processes it.
+- **Step 7:** The worker calls `task_done()` for that item and goes back to Step 4 for the next one.
+- **Step 8:** Yes: it is the stop signal. The worker still calls `task_done()` for it, so that `queue.join()` can finish, and then leaves its loop.
+- **Step 9:** The worker thread ends.
 
 ```python
 # Step 1 - Imports
@@ -1324,16 +1317,16 @@ The stored results are kept in a **cache**, a store of things you are likely to 
 - A **cache hit** happens when the result is already in the cache and is returned immediately.
 - A **cache miss** happens when the result is not in the cache, so the function body runs and the new result is saved.
 
-```mermaid
-flowchart TD
-    A["1. Function called with some arguments"] --> B{"2. Are these arguments in the cache?"}
-    B -- "Yes: cache hit" --> C["3. Return the saved result. hits + 1"]
-    B -- "No: cache miss" --> D["4. Run the function body. misses + 1"]
-    D --> E["5. Save the result in the cache"]
-    E --> F["6. Return the result"]
-```
+![Answer to Q10: What memoisation is](../resources/LR-ch16-conceptual-qa-fig-06.png)
 
-![Answer to Q10: What memoisation is](../resources/ch16-conceptual-qa-fig-06.png)
+**Reading the figure**
+
+- **Step 1:** The memoised function is called with some arguments.
+- **Step 2:** Look up these arguments in the cache.
+- **Step 3:** Yes, a cache hit: return the saved result at once and add 1 to the hit count. The function body does not run.
+- **Step 4:** No, a cache miss: run the function body to work out the result, and add 1 to the miss count.
+- **Step 5:** Save the new result in the cache, stored against these arguments.
+- **Step 6:** Return the result. The next call with the same arguments will be a hit.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1922,16 +1915,15 @@ If you give the optional third argument, the **initializer**, `reduce()` starts 
 | 3 | `multiply(24, 5)` | 120 |
 | Result | | **120** |
 
-```mermaid
-flowchart TD
-    A["1. result = first item, 2"] --> B["2. Take the next item"]
-    B --> C["3. result = function of result and item"]
-    C --> D{"4. Items left?"}
-    D -- "Yes" --> B
-    D -- "No" --> E["5. Return result, 120"]
-```
+![Step-by-step trace for reduce(multiply, [2, 3, 4, 5])](../resources/LR-ch16-conceptual-qa-fig-07.png)
 
-![Step-by-step trace for reduce(multiply, [2, 3, 4, 5])](../resources/ch16-conceptual-qa-fig-07.png)
+**Reading the figure**
+
+- **Step 1:** No starting value is given, so `reduce` uses the first item, 2, as the starting `result`.
+- **Step 2:** Take the next item from the list: 3, then 4, then 5.
+- **Step 3:** Call the function on the running result and the item: `multiply(2, 3)` gives 6, then 24, then 120.
+- **Step 4:** If items are left, go back to Step 2.
+- **Step 5:** No items are left, so `reduce` returns the final result, 120.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -2056,18 +2048,17 @@ Use **json** by default. It is safe, readable, and accepted by almost every syst
 1. You need to save a Python-specific object that json cannot represent, such as a custom class instance, a set, or a NumPy array.
 2. The saved file will be read back only by your own code on a trusted system.
 
-```mermaid
-flowchart TD
-    A["1. Need to save data"] --> B{"2. Will another language or system read it?"}
-    B -- "Yes" --> C["3. Use json"]
-    B -- "No" --> D{"4. Can json represent the data?"}
-    D -- "Yes" --> C
-    D -- "No" --> E{"5. Is the file only for your own trusted code?"}
-    E -- "Yes" --> F["6. Use pickle"]
-    E -- "No" --> G["7. Convert the data to json-friendly types first, then use json"]
-```
+![Practical rule](../resources/LR-ch16-conceptual-qa-fig-08.png)
 
-![Practical rule](../resources/ch16-conceptual-qa-fig-08.png)
+**Reading the figure**
+
+- **Step 1:** You need to save some data to a file.
+- **Step 2:** Will a program in another language, or another system, read the file?
+- **Step 3:** Use `json`. It is safe, readable, and accepted almost everywhere. (Yes from Step 2 and Yes from Step 4 both end here.)
+- **Step 4:** No: can `json` represent the data? It cannot store sets, custom class instances or NumPy arrays directly.
+- **Step 5:** No: will the file be read only by your own code on a trusted system?
+- **Step 6:** Yes: `pickle` is acceptable. Never unpickle a file from an untrusted source, because loading it can run code.
+- **Step 7:** No: convert the data to json-friendly types first, for example a set to a list, and then use `json`.
 
 ```python
 # Step 1 - Imports
@@ -2140,20 +2131,18 @@ Here is selection sort on `[29, 10, 14, 37, 13]`. The `|` shows the boundary.
 | 3 | 14 | none needed (already in place) | `[10, 13, 14 | 37, 29]` |
 | 4 | 29 | 37 and 29 | `[10, 13, 14, 29 | 37]` |
 
-```mermaid
-flowchart TD
-    A["1. boundary = 0"] --> B["2. Scan from boundary to the end and find the smallest item"]
-    B --> C{"3. Is the smallest item already at the boundary?"}
-    C -- "No" --> D["4. Swap it into the boundary position"]
-    C -- "Yes" --> E["5. No swap needed"]
-    D --> F["6. boundary = boundary + 1"]
-    E --> F
-    F --> G{"7. Is boundary less than n - 1?"}
-    G -- "Yes" --> B
-    G -- "No" --> H["8. List is sorted"]
-```
+![Answer to Q17: The sorted and unsorted parts](../resources/LR-ch16-conceptual-qa-fig-09.png)
 
-![Answer to Q17: The sorted and unsorted parts](../resources/ch16-conceptual-qa-fig-09.png)
+**Reading the figure**
+
+- **Step 1:** Start with `boundary = 0`. Everything left of the boundary is sorted, so at first the sorted part is empty.
+- **Step 2:** Scan the unsorted part, from `boundary` to the end, and find the smallest item.
+- **Step 3:** Is that smallest item already at the `boundary` position?
+- **Step 4:** No: swap it into the `boundary` position.
+- **Step 5:** Yes: it is already in place, so no swap is needed.
+- **Step 6:** The sorted part has grown by one: `boundary = boundary + 1`.
+- **Step 7:** If `boundary < n - 1`, go back to Step 2.
+- **Step 8:** No: only one item is left in the unsorted part, and it must be the largest, so the list is sorted.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -2554,18 +2543,17 @@ When Python runs an `import` statement, it follows these steps:
 4. It stores the loaded module in `sys.modules`, so any later import is instant.
 5. It creates a name in your program that refers to the module (or to the specific names you asked for).
 
-```mermaid
-flowchart TD
-    A["1. Python reads: import collections"] --> B{"2. Is collections already in sys.modules?"}
-    B -- "Yes" --> F["5. Bind the name collections in your program"]
-    B -- "No" --> C["3. Search the folders in sys.path"]
-    C --> D{"4. Found?"}
-    D -- "No" --> G["6. Raise ModuleNotFoundError"]
-    D -- "Yes" --> E["7. Run the module code once and store it in sys.modules"]
-    E --> F
-```
+![How importing works](../resources/LR-ch16-conceptual-qa-fig-10.png)
 
-![How importing works](../resources/ch16-conceptual-qa-fig-10.png)
+**Reading the figure**
+
+- **Step 1:** Python meets the line `import collections`.
+- **Step 2:** It first checks `sys.modules`, the store of modules already loaded. Is `collections` there?
+- **Step 3:** No: search the folders listed in `sys.path`, in order.
+- **Step 4:** Was the module found?
+- **Step 5:** No: raise `ModuleNotFoundError`.
+- **Step 6:** Yes: run the module's code once, from top to bottom, and store the loaded module in `sys.modules`.
+- **Step 7:** Bind the name `collections` in your program so that it refers to the module. (Yes from Step 2 comes straight here, which is why a second import is instant.)
 
 See [the import system](https://docs.python.org/3/reference/import.html) for full details.
 

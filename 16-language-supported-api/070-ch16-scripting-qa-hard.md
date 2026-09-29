@@ -3275,7 +3275,7 @@ An item is dropped from the opposite end, the **right**. A full bounded deque al
 
 *Synthesis: Big-O Timing and Measurement*
 
-**Time `linear_search` (O(n)), `binary_search` (O(log n)), and `bubble_sort` on 500 elements (O(n²)) across sizes [500–10K] using `time.perf_counter()`. Print a comparison table and include a Mermaid flowchart of the measurement methodology.**
+**Time `linear_search` (O(n)), `binary_search` (O(log n)), and `bubble_sort` on 500 elements (O(n²)) across sizes [500–10K] using `time.perf_counter()`. Print a comparison table and include a flowchart of the measurement methodology.**
 
 ### 20.1 How It Works
 

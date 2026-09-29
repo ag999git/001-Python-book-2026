@@ -386,18 +386,18 @@ If any of these requirements is not met, the function immediately raises a `Valu
 
 The flowchart shows the order of the checks.
 
-```mermaid
-flowchart TD
-    A["1. Call create_user(username, age, email)"] --> B{"2. Is the username empty?"}
-    B -- Yes --> C["3. Raise ValueError: Username cannot be empty"]
-    B -- No --> D{"4. Is the age less than 13?"}
-    D -- Yes --> E["5. Raise ValueError: User must be at least 13 years old"]
-    D -- No --> F{"6. Does the email match the pattern?"}
-    F -- No --> G["7. Raise ValueError: Invalid email address"]
-    F -- Yes --> H["8. Return the user dictionary"]
-```
+![What the Script Does](../resources/LR-ch20-user-registration-fig-01.png)
 
-![What the Script Does](../resources/ch20-user-registration-fig-01.png)
+**Reading the figure**
+
+- **Step 1:** Call `create_user(username, age, email)`.
+- **Step 2:** First check: is the username empty?
+- **Step 3:** Yes: raise `ValueError("Username cannot be empty")`. The function stops here.
+- **Step 4:** No: second check. Is the age less than 13?
+- **Step 5:** Yes: raise `ValueError("User must be at least 13 years old")`.
+- **Step 6:** No: third check. Does the email match the email pattern?
+- **Step 7:** No: raise `ValueError("Invalid email address")`.
+- **Step 8:** Yes: all three checks passed, so return the user dictionary. Only valid data gets this far.
 
 [Back to the Table of Contents](060-ch20-user-registration.md#table-of-contents)
 
@@ -640,21 +640,20 @@ This allows us to show several pytest features, one in each test. It also lets u
 
 The flowchart below shows how `pytest.raises()` decides whether a test passes.
 
-```mermaid
-flowchart TD
-    A["1. Enter the with pytest.raises(ValueError) block"] --> B["2. Run the code inside the block"]
-    B --> C{"3. Was an exception raised?"}
-    C -- No --> D["4. Test FAILS: DID NOT RAISE"]
-    C -- Yes --> E{"5. Is it a ValueError?"}
-    E -- No --> F["6. The other exception passes through: test FAILS"]
-    E -- Yes --> G{"7. Was match= given?"}
-    G -- Yes --> H{"8. Does the message match?"}
-    H -- No --> I["9. Test FAILS: Regex pattern did not match"]
-    H -- Yes --> J["10. Exception is caught: the test carries on after the with block"]
-    G -- No --> J
-```
+![Why This Example Is Good for pytest.raises()](../resources/LR-ch20-user-registration-fig-02.png)
 
-![Why This Example Is Good for pytest.raises()](../resources/ch20-user-registration-fig-02.png)
+**Reading the figure**
+
+- **Step 1:** The test enters the block `with pytest.raises(ValueError):`.
+- **Step 2:** The code inside the block runs, for example `create_user("", 20, "a@b.com")`.
+- **Step 3:** Was an exception raised?
+- **Step 4:** No: the test fails with the message `DID NOT RAISE`, because an exception was expected.
+- **Step 5:** Yes: is it a `ValueError` (or a subclass of it)?
+- **Step 6:** No: `pytest.raises` does not catch it. The other exception passes through and the test fails.
+- **Step 7:** Yes: was a `match=` pattern given?
+- **Step 8:** Yes: does the exception's message match the pattern? `match=` uses `re.search()`.
+- **Step 9:** No: the test fails with `Regex pattern did not match`.
+- **Step 10:** The exception is caught, and the test carries on after the `with` block. (No from Step 7 comes straight here.)
 
 [Back to the Table of Contents](060-ch20-user-registration.md#table-of-contents)
 

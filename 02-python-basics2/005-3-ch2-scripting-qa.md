@@ -748,16 +748,16 @@ Updated dictionary:
 | Safe read | `student.get("course")` | Returns `None` (or your default) if the key is missing |
 | Unsafe read | `student["course"]` | Raises `KeyError` if the key is missing |
 
-```mermaid
-flowchart LR
-    A["1. You want the value for a key"] --> B{"2. Could the key be missing?"}
-    B -->|No| C["3. Use d[key]"]
-    B -->|Yes| D["4. Use d.get(key, default)"]
-    D --> E["5. Get the value, or the default if the key is missing"]
-    C --> F["6. Get the value, or KeyError if you were wrong"]
-```
+![Write a Python script to create a dictionary of student details and perform adding, updating, deleting, and safe retrieval operations.](../resources/S02-LR-ch02-3-ch2-scripting-qa-fig-02.png)
 
-![Write a Python script to create a dictionary of student details and perform adding, updating, deleting, and safe retrieval operations.](../resources/ch02-3-ch2-scripting-qa-fig-02.png)
+**Reading the figure**
+
+- **Step 1:** You want the value stored for a key in a dictionary.
+- **Step 2:** Could the key be missing?
+- **Step 3:** No, it must be there: use `d[key]`.
+- **Step 4:** You get the value. If you were wrong and the key is missing, Python raises `KeyError`, which points you straight at the problem.
+- **Step 5:** Yes, it may be missing: use `d.get(key, default)`.
+- **Step 6:** You get the value, or the default if the key is missing. Without a default, `get()` returns `None`.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1932,15 +1932,15 @@ TypeError: unhashable type: 'list'
 
 The tuple does not store the list itself. It stores a **reference** (a pointer) to it. The tuple's references can never change, but the list they point to can:
 
-```mermaid
-flowchart LR
-    T["my_tuple"] --> A["slot 0: 1"]
-    T --> B["slot 1: 2"]
-    T --> C["slot 2: reference"]
-    C --> L["list object: 3, 4, 5 (can change)"]
-```
+![Write a Python script to demonstrate that tuples can contain mutable objects like lists. Modify the internal list and observe the result.](../resources/S02-LR-ch02-3-ch2-scripting-qa-fig-04.png)
 
-![Write a Python script to demonstrate that tuples can contain mutable objects like lists. Modify the internal list and observe the result.](../resources/ch02-3-ch2-scripting-qa-fig-04.png)
+**Reading the figure**
+
+- `my_tuple` holds three slots. The tuple itself can never change.
+- Slot 0 holds the number `1`.
+- Slot 1 holds the number `2`.
+- Slot 2 does not hold the list itself. It holds a reference, a pointer, to it, and that reference can never change either.
+- The list it points to, `[3, 4]`, is mutable, so `my_tuple[2].append(5)` works and the list becomes `[3, 4, 5]`. The tuple still points to the same list; only the list changed.
 
 [Back to the Table of Contents](#table-of-contents)
 

@@ -56,17 +56,17 @@ A note on the outputs. Where a script accepts input from the keyboard, the sampl
 
 Before the questions, here is a short map of the ideas that follow. Each box is explained by one or more questions on this page.
 
-```mermaid
-flowchart LR
-    A["1. A string is a built-in type: an ordered sequence of characters"] --> B["2. Create it with single, double or triple quotes"]
-    B --> C["3. Reach one character by index, many by slicing"]
-    C --> D["4. Strings are immutable, so every operation returns a NEW string"]
-    D --> E["5. Each character is stored as a Unicode number"]
-    E --> F["6. Built-in methods do the common jobs: case, search, split, join"]
-    F --> G["7. f-strings put values neatly into text for display"]
-```
+![How Strings Fit Into Python](../resources/S17-LR-ch17-conceptual-qa-fig-01.png)
 
-![How Strings Fit Into Python](../resources/ch17-conceptual-qa-fig-01.png)
+**Reading the figure**
+
+- **Step 1:** A string, `str`, is a built-in type: an ordered sequence of characters.
+- **Step 2:** Create one with single, double or triple quotes.
+- **Step 3:** Reach one character by its index, `s[0]`, or several at once by slicing, `s[1:4]`.
+- **Step 4:** Strings are immutable: no operation changes a string; each one returns a new string.
+- **Step 5:** Each character is stored as a number from the Unicode table, its code point.
+- **Step 6:** Built-in methods do the everyday jobs: changing case, searching, splitting and joining.
+- **Step 7:** f-strings place values neatly into text for display.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -650,16 +650,16 @@ The last statement produces an `IndexError`, which is Python's way of saying tha
 
 **Diagram**
 
-```mermaid
-flowchart LR
-    A["P (0, -6)"] --> B["y (1, -5)"]
-    B --> C["t (2, -4)"]
-    C --> D["h (3, -3)"]
-    D --> E["o (4, -2)"]
-    E --> F["n (5, -1)"]
-```
+![Question 4. Positive and Negative String Indexing](../resources/S17-LR-ch17-conceptual-qa-fig-02.png)
 
-![Question 4. Positive and Negative String Indexing](../resources/ch17-conceptual-qa-fig-02.png)
+**Reading the figure**
+
+- `P` is at index 0 counting from the front, and -6 counting from the back.
+- `y` is at index 1, or -5.
+- `t` is at index 2, or -4.
+- `h` is at index 3, or -3.
+- `o` is at index 4, or -2.
+- `n` is at index 5, or -1. Any index outside 0 to 5, or -6 to -1, raises `IndexError`.
 
 **Follow-up questions**
 
@@ -848,14 +848,14 @@ The third method is worth remembering. When a program has to change many charact
 
 **Conceptual flow**
 
-```mermaid
-flowchart LR
-    A["1. Original string: Hello"] --> B["2. Call upper()"]
-    B --> C["3. New string created: HELLO"]
-    A --> D["4. Original string still Hello"]
-```
+![Question 5. String Immutability](../resources/S17-LR-ch17-conceptual-qa-fig-03.png)
 
-![Question 5. String Immutability](../resources/ch17-conceptual-qa-fig-03.png)
+**Reading the figure**
+
+- **Step 1:** Start with the string `text = "Hello"`.
+- **Step 2:** Call `text.upper()`.
+- **Step 3:** `upper()` cannot change the string, so it creates and returns a new string, "HELLO".
+- **Step 4:** The original string is still "Hello". To keep the new value, assign it: `text = text.upper()`.
 
 **Follow-up questions**
 
@@ -1893,18 +1893,16 @@ Does the message contain a banned word? False
 
 **Flowchart**
 
-```mermaid
-flowchart LR
-    A["1. Original string"] --> B{"2. Which operator?"}
-    B -->|"+"| C["3. New joined string"]
-    B -->|"*"| D["4. New repeated string"]
-    B -->|"in or not in"| E["5. True or False"]
-    C --> F["6. The original string is unchanged"]
-    D --> F
-    E --> F
-```
+![Question 9. Concatenation, Repetition and Membership](../resources/S17-LR-ch17-conceptual-qa-fig-07.png)
 
-![Question 9. Concatenation, Repetition and Membership](../resources/ch17-conceptual-qa-fig-07.png)
+**Reading the figure**
+
+- **Step 1:** Start with a string.
+- **Step 2:** Which operator is used on it?
+- **Step 3:** `+` joins two strings and gives a new, longer string.
+- **Step 4:** `*` repeats a string a number of times and gives a new string.
+- **Step 5:** `in` (or `not in`) tests whether some text appears inside the string, and gives `True` or `False`.
+- **Step 6:** In every case the original string is unchanged.
 
 **Common beginner mistakes**
 
@@ -2454,13 +2452,15 @@ The character at 9731 is: ☃
 
 **Flowchart**
 
-```mermaid
-flowchart LR
-    A["1. A character, for example A"] -->|"2. ord()"| B["3. Its code point, 65"]
-    B -->|"4. chr()"| C["5. The character again, A"]
-```
+![Question 11. ASCII, Unicode, ord() and chr()](../resources/S17-LR-ch17-conceptual-qa-fig-09.png)
 
-![Question 11. ASCII, Unicode, ord() and chr()](../resources/ch17-conceptual-qa-fig-09.png)
+**Reading the figure**
+
+- **Step 1:** Start with a character, for example "A".
+- **Step 2:** `ord("A")` looks up the character's number in the Unicode table.
+- **Step 3:** It returns the code point, 65.
+- **Step 4:** `chr(65)` goes the other way, from the number to the character.
+- **Step 5:** It returns the character again, "A". So `chr(ord(c))` always gives back `c`.
 
 **Practical applications**
 
@@ -2789,19 +2789,18 @@ In this example both sorts happen to agree. Change `"Apple"` to `"apple"` and `"
 
 **Flowchart**
 
-```mermaid
-flowchart LR
-    A["1. Compare two strings"] --> B["2. Look at the first pair of characters"]
-    B --> C{"3. Are they equal?"}
-    C -->|"No"| D["4. The one with the smaller code point is the smaller string"]
-    C -->|"Yes"| E["5. Move to the next pair of characters"]
-    E --> F{"6. Has either string ended?"}
-    F -->|"No"| C
-    F -->|"Yes, both together"| G["7. The strings are equal"]
-    F -->|"Yes, one of them"| H["8. The shorter string is the smaller one"]
-```
+![Question 12. Comparing Strings](../resources/S17-LR-ch17-conceptual-qa-fig-10.png)
 
-![Question 12. Comparing Strings](../resources/ch17-conceptual-qa-fig-10.png)
+**Reading the figure**
+
+- **Step 1:** Compare two strings, for example with `<`.
+- **Step 2:** Look at the first pair of characters, one from each string.
+- **Step 3:** Are they equal?
+- **Step 4:** No: the string whose character has the smaller code point is the smaller string. The comparison ends here. All capitals come before all small letters.
+- **Step 5:** Yes: move to the next pair of characters.
+- **Step 6:** Has either string run out of characters? If not, go back to Step 3.
+- **Step 7:** Both ended together: the strings are equal.
+- **Step 8:** Only one ended: the shorter string is the smaller one, so `"app" < "apple"`.
 
 **Common beginner mistakes**
 
@@ -3018,15 +3017,15 @@ Python evaluates the chain from left to right, handing the result of one method 
 
 **Diagram**
 
-```mermaid
-flowchart LR
-    A["1. String object with spaces and mixed case"] --> B["2. strip() removes the spaces"]
-    B --> C["3. lower() makes it all small letters"]
-    C --> D["4. replace() swaps one word for another"]
-    D --> E["5. Final string"]
-```
+![Question 13. String Methods as Object Methods](../resources/S17-LR-ch17-conceptual-qa-fig-11.png)
 
-![Question 13. String Methods as Object Methods](../resources/ch17-conceptual-qa-fig-11.png)
+**Reading the figure**
+
+- **Step 1:** Start with a string that has spaces around it and mixed case, such as `"  PyThOn  "`.
+- **Step 2:** `strip()` returns a new string without the spaces at the ends.
+- **Step 3:** `lower()` returns a new string in small letters.
+- **Step 4:** `replace("python", "java")` returns a new string with the word swapped.
+- **Step 5:** The result is the final string. Python runs the chain from left to right, so the order matters: `replace()` before `lower()` would not find "python".
 
 **Why are methods preferable to ordinary functions?**
 
@@ -3399,18 +3398,16 @@ Step 4 is one of the most frequent beginner errors. Nothing goes wrong, no error
 
 **Flowchart**
 
-```mermaid
-flowchart LR
-    A["1. Original string"] --> B["2. lower() returns a new string"]
-    A --> C["3. replace() returns a new string"]
-    A --> D["4. split() returns a list"]
-    B --> E["5. Keep the result in a variable, or it is lost"]
-    C --> E
-    D --> E
-    A --> F["6. The original object is never changed"]
-```
+![Question 14. The Common String Methods](../resources/S17-LR-ch17-conceptual-qa-fig-12.png)
 
-![Question 14. The Common String Methods](../resources/ch17-conceptual-qa-fig-12.png)
+**Reading the figure**
+
+- **Step 1:** Start with a string.
+- **Step 2:** `lower()` returns a new string.
+- **Step 3:** `replace()` returns a new string.
+- **Step 4:** `split()` returns a list of strings.
+- **Step 5:** Whatever the method, keep its result in a variable. Calling `text.upper()` on a line by itself does nothing useful: the result is lost.
+- **Step 6:** The original string object is never changed.
 
 **Choosing the appropriate method**
 
@@ -4032,15 +4029,15 @@ average=68.5
 
 **Flowchart**
 
-```mermaid
-flowchart LR
-    A["1. Variables hold the values"] --> B["2. The f prefix marks the string"]
-    B --> C["3. Python evaluates each expression in braces"]
-    C --> D["4. Any format code after the colon is applied"]
-    D --> E["5. The finished string is produced"]
-```
+![Question 16. f-Strings](../resources/S17-LR-ch17-conceptual-qa-fig-14.png)
 
-![Question 16. f-Strings](../resources/ch17-conceptual-qa-fig-14.png)
+**Reading the figure**
+
+- **Step 1:** Variables such as `name` and `marks` hold the values.
+- **Step 2:** The `f` before the opening quote marks an f-string.
+- **Step 3:** Python evaluates each expression inside braces, such as `{name}`.
+- **Step 4:** Any format code after a colon is applied, for example `{price:.2f}` shows two decimal places.
+- **Step 5:** The finished string is produced, ready to print.
 
 **Common beginner mistakes**
 
@@ -4643,19 +4640,19 @@ Understanding strings requires connecting several independent concepts. Each of 
 
 **Concept map**
 
-```mermaid
-flowchart LR
-    A["String"] --> B["Unicode, Question 11"]
-    A --> C["Indexing, Question 4"]
-    A --> D["Slicing, Question 10"]
-    A --> E["Methods, Questions 13 and 14"]
-    A --> F["Formatting, Question 16"]
-    A --> G["Traversal, Question 8"]
-    A --> H["Comparison, Question 12"]
-    A --> I["Immutability, Question 5"]
-```
+![Question 20. Strings, a Comprehensive Review](../resources/S17-LR-ch17-conceptual-qa-fig-18.png)
 
-![Question 20. Strings, a Comprehensive Review](../resources/ch17-conceptual-qa-fig-18.png)
+**Reading the figure**
+
+- A string brings together all of the ideas below.
+- Unicode: every character is a code point (Question 11).
+- Indexing: reach one character by position (Question 4).
+- Slicing: take a piece of a string (Question 10).
+- Methods: the built-in tools for common jobs (Questions 13 and 14).
+- Formatting: put values into text with f-strings (Question 16).
+- Traversal: visit the characters one by one with a loop (Question 8).
+- Comparison: strings compare character by character, by code point (Question 12).
+- Immutability: a string never changes; methods return new strings (Question 5).
 
 **How the concepts work together**
 

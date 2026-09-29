@@ -342,19 +342,15 @@ The mock did two jobs. It returned the value we chose (5), and it recorded that 
 
 ### Execution Flow of len()
 
-![Simulating __len__()](../resources/ch16-pytest-097-magicmock1.png)
+![Execution Flow of len()](../resources/LR-ch20-magicmock-fig-01.png)
 
-The same flow, step by step:
+**Reading the figure**
 
-```mermaid
-flowchart TD
-    A["1. Code calls len(fake_list)"] --> B["2. Python looks up __len__ on fake_list"]
-    B --> C["3. Python calls fake_list.__len__()"]
-    C --> D["4. MagicMock returns the configured value 5"]
-    D --> E["5. len() hands 5 back to the code"]
-```
-
-![Execution Flow of len()](../resources/ch20-magicmock-fig-01.png)
+- **Step 1:** The code calls `len(fake_list)`, where `fake_list` is a `MagicMock`.
+- **Step 2:** Python looks up the special method `__len__` on the object's type.
+- **Step 3:** Python calls `fake_list.__len__()`.
+- **Step 4:** `MagicMock` returns the value configured earlier, `fake_list.__len__.return_value = 5`.
+- **Step 5:** `len()` hands 5 back to the code, exactly as it would for a real list of five items.
 
 [Back to the Table of Contents](067-ch20-magicmock.md#table-of-contents)
 
@@ -516,21 +512,16 @@ Second loop: [10, 20, 30]
 
 ### Execution Flow of Iteration
 
-![Execution Flow](../resources/ch16-pytest-098-magicmock2-iter.png)
+![Execution Flow of Iteration](../resources/LR-ch20-magicmock-fig-02.png)
 
-The same flow, step by step:
+**Reading the figure**
 
-```mermaid
-flowchart TD
-    A["1. The for loop starts"] --> B["2. Python calls data.__iter__()"]
-    B --> C["3. MagicMock makes an iterator from the list 10, 20, 30"]
-    C --> D{"4. Is there another item?"}
-    D -- Yes --> E["5. Put the next item in 'item' and run the loop body"]
-    E --> D
-    D -- No --> F["6. The loop ends"]
-```
-
-![Execution Flow of Iteration](../resources/ch20-magicmock-fig-02.png)
+- **Step 1:** The `for item in data:` loop starts, where `data` is a `MagicMock`.
+- **Step 2:** Python calls `data.__iter__()` to get an iterator.
+- **Step 3:** `MagicMock` turns the configured list, `[10, 20, 30]`, into an iterator.
+- **Step 4:** Does the iterator have another item?
+- **Step 5:** Yes: put the next item in `item`, run the loop body, and go back to Step 4.
+- **Step 6:** No: the iterator is used up, so the loop ends.
 
 [Back to the Table of Contents](067-ch20-magicmock.md#table-of-contents)
 
@@ -701,21 +692,17 @@ Step 3 matters. In `with fake_file as f`, the name `f` receives whatever `__ente
 
 ### Context Manager Flow
 
-![Simulating Context Manager](../resources/ch16-pytest-099-magicmock3.png)
+![Context Manager Flow](../resources/LR-ch20-magicmock-fig-03.png)
 
-The same flow, step by step:
+**Reading the figure**
 
-```mermaid
-flowchart TD
-    A["1. Python reaches: with fake_file as f"] --> B["2. Python calls fake_file.__enter__()"]
-    B --> C["3. __enter__ returns fake_file, which is stored in f"]
-    C --> D["4. The block runs: f.read() returns 'Hello'"]
-    D --> E["5. The block ends"]
-    E --> F["6. Python calls fake_file.__exit__(None, None, None)"]
-    F --> G["7. The program continues after the with block"]
-```
-
-![Context Manager Flow](../resources/ch20-magicmock-fig-03.png)
+- **Step 1:** Python reaches the line `with fake_file as f:`.
+- **Step 2:** Python calls `fake_file.__enter__()`.
+- **Step 3:** `__enter__` has been configured to return `fake_file` itself, so that object is stored in `f`.
+- **Step 4:** The block runs. `f.read()` returns the configured value, `'Hello'`.
+- **Step 5:** The block ends.
+- **Step 6:** Python calls `fake_file.__exit__(None, None, None)`. The three `None` values mean no exception happened in the block.
+- **Step 7:** The program continues after the `with` block.
 
 For mocking the built-in `open()` function itself, `unittest.mock` provides a ready-made helper called `mock_open()`. It is used in the pytest tests later on this page.
 

@@ -608,8 +608,6 @@ Notice that the text "Biscoe" was written out in full twice. That repeated, unco
 
 Put side by side, the difference is exactly what makes `category` smaller: Flowchart 1 wrote the word "Biscoe" out in full, twice. Flowchart 2 wrote the number `0` twice and paid for the word "Biscoe" only once, inside the shared lookup table. Multiply that saving across 163 Biscoe rows instead of 2, and you get the ~86% reduction shown in the table above.
 
-*(Both diagrams are written in Mermaid, the same text-based diagram language used earlier on this page. You can paste either code block into [mermaid.live](https://mermaid.live) or, in draw.io / diagrams.net, into **Extras → Edit Diagram**, to view or edit them visually.)*
-
 </details>
 
 ---

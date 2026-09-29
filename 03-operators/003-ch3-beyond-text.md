@@ -482,16 +482,16 @@ In the Venn diagrams below, the shaded part is the result of each operator.
 
 **Which operator do I need?**
 
-```mermaid
-flowchart LR
-    A["1. Start: two sets A and B"] --> B{"2. Which items do you want?"}
-    B -- "In both sets" --> C["3. Intersection: A & B"]
-    B -- "In either set, or both" --> D["4. Union: A | B"]
-    B -- "In A but not in B" --> E["5. Difference: A - B"]
-    B -- "In exactly one of them" --> F["6. Symmetric difference: A ^ B"]
-```
+![The Four Set Operators at a Glance](../resources/S03-LR-ch3-beyond-text-fig-02.png)
 
-![The Four Set Operators at a Glance](../resources/ch3-beyond-text-fig-02.png)
+**Reading the figure**
+
+- **Step 1:** Start with two sets, A and B.
+- **Step 2:** Decide which items you want in the result.
+- **Step 3:** Items that are in both sets: use intersection, `A & B`.
+- **Step 4:** Items that are in either set, or in both: use union, `A | B`.
+- **Step 5:** Items that are in A but not in B: use difference, `A - B`. The order matters: `B - A` gives a different answer.
+- **Step 6:** Items that are in exactly one of the two sets, but not in both: use symmetric difference, `A ^ B`.
 
 In the chart, "and-sign" means `&`, "pipe" means `|` and "caret" means `^`.
 

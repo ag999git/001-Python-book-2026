@@ -72,7 +72,7 @@ Each question is printed exactly as it appears in the book. Below it you will fi
 5. **Pattern Explanation**: which pattern is used and how it works.
 6. **Follow-up questions**: small extra questions, with answers, to test your understanding.
 
-Some answers also include a flowchart drawn with [Mermaid](https://mermaid.js.org/), which GitHub displays as a diagram.
+Some answers also include a flowchart.
 
 **Tip:** Type each script yourself rather than copying it. Then change one thing (add a class, change a value, remove a line) and predict the new output before you run it.
 
@@ -790,18 +790,18 @@ Step 3: Client using the adapter:
 - The line "Adapter received XML" appears twice because `get_json()` is called twice: once directly in Step 3, and once inside `show_report()`.
 - The marks come out as the text `"91"`, because everything read from XML is text. The client could convert it with `int()` if it needed a number.
 
-**Mermaid flowchart**
+**Flowchart**
 
-```mermaid
-flowchart LR
-    A["1. Client calls get_json on the adapter"] --> B["2. Adapter calls request_xml on the legacy object"]
-    B --> C["3. Legacy object returns XML text"]
-    C --> D["4. Adapter reads the XML into a dictionary"]
-    D --> E["5. Adapter converts the dictionary to JSON"]
-    E --> F["6. Client receives JSON and uses it"]
-```
+![Q8. Write an Adapter pattern script that converts a legacy incompatible .requestxml() output method style into a client-expected .getjson() format.](../resources/S21-LR-ch21-scriptsqa-fig-02.png)
 
-![Q8. Write an Adapter pattern script that converts a legacy incompatible .requestxml() output method style into a client-expected .getjson() format.](../resources/ch21-scriptsqa-fig-02.png)
+**Reading the figure**
+
+- **Step 1:** The client calls `get_json()` on the adapter. It only knows about JSON.
+- **Step 2:** The adapter calls `request_xml()` on the old, legacy object.
+- **Step 3:** The legacy object returns its data as XML text.
+- **Step 4:** The adapter reads the XML into a Python dictionary.
+- **Step 5:** The adapter converts the dictionary to JSON text.
+- **Step 6:** The client receives JSON and turns it back into a dictionary with `json.loads()`. It never learns that XML was involved.
 
 **Pattern Explanation:**
 
@@ -1175,19 +1175,19 @@ Station: new temperature 28°C
 - After `detach(wall)`, only the phone receives the 28°C update.
 - `_notify_all()` starts with an underscore to show that it is meant for use inside the class only. Client code changes the data through `set_temperature()`, and notification happens automatically.
 
-**Mermaid flowchart**
+**Flowchart**
 
-```mermaid
-flowchart LR
-    A["1. Observers call attach on the station"] --> B["2. Station adds them to its observer list"]
-    B --> C["3. Client calls set_temperature"]
-    C --> D["4. Station stores the new value"]
-    D --> E["5. Station calls _notify_all"]
-    E --> F["6. update is called on every observer in the list"]
-    F --> G["7. Each display prints the new temperature"]
-```
+![Q12. Build an architectural event listener tracking routine matching an Observer workflow by linking a WeatherStation subject update with registered display units.](../resources/S21-LR-ch21-scriptsqa-fig-04.png)
 
-![Q12. Build an architectural event listener tracking routine matching an Observer workflow by linking a WeatherStation subject update with registered display units.](../resources/ch21-scriptsqa-fig-04.png)
+**Reading the figure**
+
+- **Step 1:** Each display calls `attach()` on the weather station to register itself.
+- **Step 2:** The station adds each one to its list of observers.
+- **Step 3:** The client changes the data by calling `set_temperature()`.
+- **Step 4:** The station stores the new value.
+- **Step 5:** The station calls `_notify_all()` automatically. The underscore shows it is meant for use inside the class only.
+- **Step 6:** `_notify_all()` calls `update()` on every observer in the list.
+- **Step 7:** Each display prints the new temperature. After `detach(wall)`, only the phone would receive the next update.
 
 **Pattern Explanation:**
 

@@ -374,16 +374,16 @@ Multiply out the brackets as usual, then replace `j × j` by -1. For `z * w = (3
 6. Add the imaginary parts: 6j + 20j = 26j.
 7. Answer: 7 + 26j, which matches Python's `(7+26j)`.
 
-```mermaid
-flowchart TD
-    A["1. Start: (a + bj) x (c + dj)"] --> B["2. Multiply out the brackets: ac + adj + bcj + bdj squared"]
-    B --> C["3. Replace j squared by -1: bdj squared becomes -bd"]
-    C --> D["4. Collect the real parts: ac - bd"]
-    D --> E["5. Collect the imaginary parts: ad + bc"]
-    E --> F["6. Answer: (ac - bd) + (ad + bc)j"]
-```
+![How Multiplication Works by Hand](../resources/LR-ch02-complex-numbers-basics-fig-01.png)
 
-![How Multiplication Works by Hand](../resources/ch02-complex-numbers-basics-fig-01.png)
+**Reading the figure**
+
+- **Step 1:** Start with two complex numbers, `(a + bj) × (c + dj)`. For example `(3 + 4j) × (5 + 2j)`.
+- **Step 2:** Multiply out the brackets, each part by each part: `ac + adj + bcj + bdj²`.
+- **Step 3:** Because `j² = -1`, the last term `bdj²` becomes `-bd`.
+- **Step 4:** Collect the real parts: `ac - bd`. In the example, `15 - 8 = 7`.
+- **Step 5:** Collect the imaginary parts: `ad + bc`. In the example, `6 + 20 = 26`.
+- **Step 6:** The answer is `(ac - bd) + (ad + bc)j`, here `7 + 26j`, which matches Python's `(7+26j)`.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -397,18 +397,17 @@ We cannot divide by a complex number directly. The trick is to multiply the top 
 4. Divide each part by 29: 23/29 = 0.7931... and 14/29 = 0.4827...
 5. Answer: about 0.793 + 0.483j, which matches Python's result.
 
-```mermaid
-flowchart TD
-    A["1. Start: top divided by bottom"] --> B["2. Find the conjugate of the bottom number"]
-    B --> C["3. Multiply the top by the conjugate"]
-    B --> D["4. Multiply the bottom by the conjugate"]
-    D --> E["5. The bottom becomes a real number: c squared + d squared"]
-    C --> F["6. Divide the real and imaginary parts of the top by that number"]
-    E --> F
-    F --> G["7. Answer as a complex number"]
-```
+![How Division Works by Hand](../resources/LR-ch02-complex-numbers-basics-fig-02.png)
 
-![How Division Works by Hand](../resources/ch02-complex-numbers-basics-fig-02.png)
+**Reading the figure**
+
+- **Step 1:** Start with one complex number divided by another, for example `(3 + 4j) / (5 + 2j)`.
+- **Step 2:** Find the conjugate of the bottom number by changing the sign of its imaginary part: `5 - 2j`.
+- **Step 3:** Multiply the top by the conjugate. Here that gives `23 + 14j`.
+- **Step 4:** Multiply the bottom by the conjugate as well, so the value of the fraction does not change.
+- **Step 5:** The bottom becomes a real number, `c² + d²`: here `25 + 4 = 29`. The `j` has gone.
+- **Step 6:** Divide the real part and the imaginary part of the top by that number: `23/29` and `14/29`.
+- **Step 7:** The answer is a complex number, about `0.793 + 0.483j`, which matches Python's result.
 
 Steps 3 and 4 can be done in either order. They meet again at step 6.
 

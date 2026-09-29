@@ -141,15 +141,16 @@ Number of cities: 3
 
 The rule to remember: whenever you need to start with nothing and build up, use the explicit constructor `set()` rather than the ambiguous literal `{}`.
 
-```mermaid
-flowchart TD
-    A["Step 1: x = {}"] --> B["Step 2: Python makes an empty dict"]
-    C["Step 3: cities = set()"] --> D["Step 4: Python makes an empty set"]
-    D --> E["Step 5: cities.add() three times"]
-    E --> F["Step 6: Still a set, now with 3 elements"]
-```
+![Q1. Write script: (a) x = {} — print its type. (b) Create empty set correctly. (c) Add "Delhi", "Mumbai", "Pune" to it. (d) Print type before and after adding.](../resources/LR-ch19-sets-scripting-qa-fig-01.png)
 
-![Q1. Write script: (a) x = {} — print its type. (b) Create empty set correctly. (c) Add "Delhi", "Mumbai", "Pune" to it. (d) Print type before and after adding.](../resources/ch19-sets-scripting-qa-fig-01.png)
+**Reading the figure**
+
+- **Step 1:** Write `x = {}`.
+- **Step 2:** Python makes an empty dictionary, not a set: `type(x)` prints `<class 'dict'>`.
+- **Step 3:** Write `cities = set()` instead.
+- **Step 4:** Python makes an empty set: `type(cities)` prints `<class 'set'>`.
+- **Step 5:** Add three cities, one at a time, with `cities.add()`.
+- **Step 6:** It is still a set, now with 3 elements. To start empty and build up, always use `set()`, not `{}`.
 
 **Try this next**
 
@@ -842,17 +843,17 @@ How to choose between them:
 - Use **`.update()`** only when you really want to merge in **every** element of another collection. Be especially careful with strings: they can be looped over in a way that surprises many beginners.
 - If you want `.update()` to add a whole word, wrap it in a list: `s.update(["bc"])`.
 
-```mermaid
-flowchart TD
-    A["Step 1: Start with {a}"] --> B{"Step 2: Which method?"}
-    B -- "add(bc)" --> C["Step 3: Insert bc as ONE element"]
-    C --> D["Step 4: Result: a, bc"]
-    B -- "update(bc)" --> E["Step 5: Loop over the string: b, then c"]
-    E --> F["Step 6: Insert each character"]
-    F --> G["Step 7: Result: a, b, c"]
-```
+![Q9. Script: (a) s1={"a"}, do s1.add("bc"); print. (b) s2={"a"}, do s2.update("bc"); print. Explain difference in a comment.](../resources/LR-ch19-sets-scripting-qa-fig-04.png)
 
-![Q9. Script: (a) s1={"a"}, do s1.add("bc"); print. (b) s2={"a"}, do s2.update("bc"); print. Explain difference in a comment.](../resources/ch19-sets-scripting-qa-fig-04.png)
+**Reading the figure**
+
+- **Step 1:** Start with a set holding one element, `{"a"}`.
+- **Step 2:** Which method is used?
+- **Step 3:** `s1.add("bc")` inserts the whole string "bc" as one element.
+- **Step 4:** The result is `{'a', 'bc'}`: two elements.
+- **Step 5:** `s2.update("bc")` treats the string as a collection and loops over it: "b", then "c".
+- **Step 6:** It inserts each character as a separate element.
+- **Step 7:** The result is `{'a', 'b', 'c'}`: three elements. To add a whole word with `update()`, wrap it in a list: `s.update(["bc"])`.
 
 **Try this next**
 
@@ -1216,16 +1217,16 @@ Final set (odd numbers only): {1, 3, 5, 7}
 
 The general pattern, "loop over a copy, change the original", is the standard fix whenever you need to filter or trim a set (or a dictionary) in place while looping over it.
 
-```mermaid
-flowchart TD
-    A["Step 1: Loop to remove even numbers"] --> B{"Step 2: What does the loop run over?"}
-    B -- "nums itself" --> C["Step 3: remove() changes the size mid-loop"]
-    C --> D["Step 4: RuntimeError, set left half-changed"]
-    B -- "nums.copy()" --> E["Step 5: remove() changes only the original"]
-    E --> F["Step 6: Loop finishes. nums = {1, 3, 5, 7}"]
-```
+![Q13. nums = {1,2,3,4,5,6,7,8}. Script: (a) try removing even numbers while looping directly over nums — catch the resulting error. (b) fix using .copy(), print final set.](../resources/LR-ch19-sets-scripting-qa-fig-06.png)
 
-![Q13. nums = {1,2,3,4,5,6,7,8}. Script: (a) try removing even numbers while looping directly over nums — catch the resulting error. (b) fix using .copy(), print final set.](../resources/ch19-sets-scripting-qa-fig-06.png)
+**Reading the figure**
+
+- **Step 1:** Loop over the numbers and remove the even ones.
+- **Step 2:** What does the loop run over?
+- **Step 3:** `for n in nums:` loops over the set itself, so `nums.remove(n)` changes its size in the middle of the loop.
+- **Step 4:** Python raises `RuntimeError: Set changed size during iteration`. The error comes after 2 has already been removed, so the set is left half-changed.
+- **Step 5:** `for n in nums.copy():` loops over a separate copy, so `remove()` changes only the original.
+- **Step 6:** The loop finishes safely, and `nums` is `{1, 3, 5, 7}`.
 
 **Try this next**
 

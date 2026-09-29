@@ -23,17 +23,17 @@ Every program on this page was run on Python 3.11, and every output block is the
 
 **The tools used on this page**
 
-```mermaid
-flowchart LR
-    A["1. Make a string: quotes, triple quotes, str()"] --> B["2. Measure and test it: len(), in, not in"]
-    B --> C["3. Reach into it: index, slice, for, while"]
-    C --> D["4. Clean it: strip(), lower(), replace()"]
-    D --> E["5. Check it: isalpha(), isdigit(), startswith(), endswith()"]
-    E --> F["6. Break it up or put it together: split(), join(), +, *"]
-    F --> G["7. Show the result: print(), f-strings"]
-```
+![Strings: Scripting Questions and Answers](../resources/S17-LR-ch17-scripting-qa-fig-01.png)
 
-![Strings: Scripting Questions and Answers](../resources/ch17-scripting-qa-fig-01.png)
+**Reading the figure**
+
+- **Step 1:** Make a string with quotes or triple quotes, or convert a value with `str()`.
+- **Step 2:** Measure and test it with `len()`, `in` and `not in`.
+- **Step 3:** Reach into it by index and slice, or visit each character with `for` or `while`.
+- **Step 4:** Clean it with `strip()`, `lower()` and `replace()`.
+- **Step 5:** Check it with `isalpha()`, `isdigit()`, `startswith()` and `endswith()`.
+- **Step 6:** Break it up with `split()`, or put pieces together with `join()`, `+` and `*`.
+- **Step 7:** Show the result with `print()` and f-strings.
 
 ## Table of Contents
 
@@ -697,25 +697,22 @@ The counter ends at `-1`. That is one step past the first character, and it is e
 
 **The two loops side by side**
 
-```mermaid
-flowchart LR
-    A["1. Start with the word"] --> B{"2. Which direction?"}
-    B -->|"Forward"| C["3. for character in word"]
-    C --> D["4. Python hands over the next character"]
-    D --> E["5. Print it"]
-    E --> F{"6. Any characters left?"}
-    F -->|"Yes"| D
-    F -->|"No"| M["12. Done"]
-    B -->|"Backward"| G["7. Set the counter to len(word) - 1"]
-    G --> H{"8. Is the counter still 0 or more?"}
-    H -->|"Yes"| I["9. Print the character at the counter"]
-    I --> J["10. Take 1 off the counter"]
-    J --> H
-    H -->|"No"| K["11. The counter has passed the first character"]
-    K --> M
-```
+![Question 5. Forward Traversal and Backward Traversal](../resources/S17-LR-ch17-scripting-qa-fig-04.png)
 
-![Question 5. Forward Traversal and Backward Traversal](../resources/ch17-scripting-qa-fig-04.png)
+**Reading the figure**
+
+- **Step 1:** Start with a word, for example "Python".
+- **Step 2:** Which direction do you want to go?
+- **Step 3:** Forward: write `for character in word:`.
+- **Step 4:** Python hands over the next character each time round the loop. No counter is needed.
+- **Step 5:** Print the character.
+- **Step 6:** If characters are left, go back to Step 4. If not, go to Step 12.
+- **Step 7:** Backward: set a counter to the last index, `len(word) - 1`, which is 5 for "Python".
+- **Step 8:** Is the counter still 0 or more?
+- **Step 9:** Yes: print the character at that index, `word[counter]`.
+- **Step 10:** Take 1 off the counter and go back to Step 8.
+- **Step 11:** No: the counter is -1, so it has passed the first character and the loop stops.
+- **Step 12:** Done.
 
 **Design Pattern Explanation**
 
@@ -1250,13 +1247,15 @@ chr(ord('A')) gives: A
 
 **The circle of the two functions**
 
-```mermaid
-flowchart LR
-    A["1. A character, 'A'"] -->|"2. ord() reads its number"| B["3. Its code point, 65"]
-    B -->|"4. chr() reads the number back"| C["5. The character again, 'A'"]
-```
+![Question 9. From Character to Number and Back](../resources/S17-LR-ch17-scripting-qa-fig-05.png)
 
-![Question 9. From Character to Number and Back](../resources/ch17-scripting-qa-fig-05.png)
+**Reading the figure**
+
+- **Step 1:** Start with a character, `'A'`.
+- **Step 2:** `ord('A')` reads its number from the Unicode table.
+- **Step 3:** The number, its code point, is 65. The first 128 code points are the same as the old ASCII table.
+- **Step 4:** `chr(65)` turns the number back into a character.
+- **Step 5:** The result is `'A'` again: `chr(ord('A'))` gives `A`. The two functions undo each other.
 
 **Design Pattern Explanation**
 
@@ -1378,19 +1377,18 @@ The last line catches most beginners. In a dictionary, "apple" comes before "Ban
 
 **Flowchart**
 
-```mermaid
-flowchart LR
-    A["1. Compare two strings"] --> B["2. Look at the characters in the same position"]
-    B --> C{"3. Are they the same?"}
-    C -->|"No"| D["4. The smaller code point wins, and the comparison ends"]
-    C -->|"Yes"| E["5. Move to the next position"]
-    E --> F{"6. Has either string run out?"}
-    F -->|"No"| B
-    F -->|"Both at once"| G["7. The strings are equal"]
-    F -->|"One of them"| H["8. The shorter string is the smaller one"]
-```
+![Question 10. Comparing Two Strings, and the Tie-Breaker](../resources/S17-LR-ch17-scripting-qa-fig-06.png)
 
-![Question 10. Comparing Two Strings, and the Tie-Breaker](../resources/ch17-scripting-qa-fig-06.png)
+**Reading the figure**
+
+- **Step 1:** Compare two strings.
+- **Step 2:** Look at the characters in the same position in each string, starting with the first.
+- **Step 3:** Are they the same?
+- **Step 4:** No: the string whose character has the smaller code point is the smaller string, and the comparison ends.
+- **Step 5:** Yes: move to the next position.
+- **Step 6:** Has either string run out of characters? If not, go back to Step 2.
+- **Step 7:** Both ran out at once: the strings are equal.
+- **Step 8:** Only one ran out: the shorter string is the smaller one, so "Book" is less than "Bookcase".
 
 **Design Pattern Explanation**
 
@@ -1918,13 +1916,15 @@ Second item: banana
 
 **The two methods are mirror images**
 
-```mermaid
-flowchart LR
-    A["1. One string: apple,banana,orange,grape"] -->|"2. split(',')"| B["3. A list of four strings"]
-    B -->|"4. '-'.join(list)"| C["5. One string again: apple-banana-orange-grape"]
-```
+![Question 14. Splitting a Line and Joining It Back](../resources/S17-LR-ch17-scripting-qa-fig-08.png)
 
-![Question 14. Splitting a Line and Joining It Back](../resources/ch17-scripting-qa-fig-08.png)
+**Reading the figure**
+
+- **Step 1:** Start with one string: "apple,banana,orange,grape".
+- **Step 2:** `split(',')` cuts the string at every comma.
+- **Step 3:** The result is a list of four strings: `['apple', 'banana', 'orange', 'grape']`. You can now reach an item by position, such as `[1]` for "banana".
+- **Step 4:** `'-'.join(the_list)` goes the other way: it joins the list's items with `-` between them.
+- **Step 5:** The result is one string again: "apple-banana-orange-grape". `split()` and `join()` are mirror images.
 
 Note which object each method belongs to. `split()` is called on the string that is being cut up. `join()` is called on the separator, and the list is passed to it. Beginners often write `parsed_list.join("-")`, which does not work, because a list has no `join()` method.
 

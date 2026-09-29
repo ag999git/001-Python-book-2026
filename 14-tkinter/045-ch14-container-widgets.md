@@ -51,7 +51,7 @@ Each member of the container family has its own specialized options and methods,
 | `ttk.PanedWindow` | A container split into two or more resizable sections with a draggable divider. | You want the user to be able to manually resize two areas of the screen relative to each other, such as a file browser next to a preview pane. |
 | `tk.Toplevel` | A brand-new, independent window, separate from the main window. | You need a genuinely separate window — a dialog box, a pop-up form, or a secondary tool window. |
 
-The following diagram gives the same guidance visually, as a simple decision flow. It is written in plain Mermaid flowchart syntax so it can also be opened and edited in draw.io.
+The following diagram gives the same guidance visually, as a simple decision flow.
 
 ![Flowchart](../resources/ch14-tkinter-September-2026-container-family-001.png)
 

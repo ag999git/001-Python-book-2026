@@ -136,20 +136,19 @@ Matrix multiplication only works when the sizes fit together:
 - For **matrix @ vector**, the number of **columns in the matrix** must equal the number of **elements in the vector**.
 - The answer has the rows of the first matrix and the columns of the second. A (2, 3) matrix `@` a (3, 2) matrix gives a (2, 2) matrix.
 
-```mermaid
-flowchart TD
-    A["1. Start: A @ B"] --> B{"2. Columns of A equal rows of B?"}
-    B -- No --> C["3. Python raises a ValueError. Stop."]
-    B -- Yes --> D["4. Pick row i of A and column j of B"]
-    D --> E["5. Multiply matching pairs"]
-    E --> F["6. Add the products"]
-    F --> G["7. Write the total in cell i, j of the answer"]
-    G --> H{"8. Any cells left?"}
-    H -- Yes --> D
-    H -- No --> I["9. Answer is ready"]
-```
+![How Matrix Multiplication Works](../resources/LR-ch3-beyond-text-fig-01.png)
 
-![How Matrix Multiplication Works](../resources/ch3-beyond-text-fig-01.png)
+**Reading the figure**
+
+- **Step 1:** Start with the matrix product `A @ B`.
+- **Step 2:** Check the shapes: is the number of columns in A equal to the number of rows in B?
+- **Step 3:** No: the shapes do not fit, so NumPy raises a `ValueError` and stops.
+- **Step 4:** Yes: pick row `i` of A and column `j` of B.
+- **Step 5:** Multiply the matching pairs: the first item of the row with the first item of the column, the second with the second, and so on.
+- **Step 6:** Add all those products together.
+- **Step 7:** Write the total in cell `(i, j)` of the answer.
+- **Step 8:** If any cells of the answer are still empty, go back to Step 4 for the next row and column.
+- **Step 9:** No cells are left, so the answer is ready. A (2, 3) matrix `@` a (3, 2) matrix gives a (2, 2) answer.
 
 [Back to the Table of Contents](#table-of-contents)
 

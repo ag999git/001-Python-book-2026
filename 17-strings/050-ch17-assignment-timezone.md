@@ -446,17 +446,17 @@ Follow these logical steps:
 6. Print the new object and its `tzinfo` to prove that it is now aware.
 7. Print the original object again to show that it was not changed.
 
-```mermaid
-flowchart LR
-    A["Step 1: Import datetime and ZoneInfo"] --> B["Step 2: naive_dt = datetime.now"]
-    B --> C["Step 3: Print naive_dt and its tzinfo, which is None"]
-    C --> D["Step 4: kolkata_tz = ZoneInfo Asia/Kolkata"]
-    D --> E["Step 5: aware_dt = naive_dt.replace with tzinfo = kolkata_tz"]
-    E --> F["Step 6: Print aware_dt, its tzinfo and offset +05:30"]
-    F --> G["Step 7: Print naive_dt again: still naive"]
-```
+![Solution Approach for Question 1](../resources/S17-LR-ch17-assignment-timezone-fig-02.png)
 
-![Solution Approach for Question 1](../resources/ch17-assignment-timezone-fig-02.png)
+**Reading the figure**
+
+- **Step 1:** Import `datetime` from the `datetime` module and `ZoneInfo` from `zoneinfo`.
+- **Step 2:** `datetime.now()` with no argument gives a naive object: the current clock reading with no zone.
+- **Step 3:** Print it and its `tzinfo` to show that `tzinfo` is `None`.
+- **Step 4:** Create a zone object for India, `ZoneInfo("Asia/Kolkata")`.
+- **Step 5:** `.replace(tzinfo=kolkata_tz)` returns a new, aware object with the same clock reading and the Kolkata label.
+- **Step 6:** Print the aware object, its `tzinfo` and its offset, `+05:30`, to prove that it is now aware.
+- **Step 7:** Print the original `naive_dt` again: it is unchanged and still naive, because `replace()` made a new object.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -684,16 +684,16 @@ Python raises `TypeError: can't subtract offset-naive and offset-aware datetimes
 5. Outside the function, call it and store the result in a variable.
 6. Print the value, its `tzinfo` and its offset to confirm that it is aware and set to UTC.
 
-```mermaid
-flowchart LR
-    A["Step 1: Import datetime and ZoneInfo"] --> B["Step 2: def get_current_utc with no parameters"]
-    B --> C["Step 3: utc_timestamp = datetime.now with ZoneInfo UTC"]
-    C --> D["Step 4: return utc_timestamp"]
-    D --> E["Step 5: current_utc_time = get_current_utc"]
-    E --> F["Step 6: Print value, tzinfo UTC and offset 0:00:00"]
-```
+![Solution Approach for Question 2](../resources/S17-LR-ch17-assignment-timezone-fig-04.png)
 
-![Solution Approach for Question 2](../resources/ch17-assignment-timezone-fig-04.png)
+**Reading the figure**
+
+- **Step 1:** Import `datetime` and `ZoneInfo`.
+- **Step 2:** Define the function `get_current_utc()`. It needs no parameters.
+- **Step 3:** Inside it, `datetime.now(ZoneInfo("UTC"))` gets the current time as an aware UTC object.
+- **Step 4:** Return that object to the caller.
+- **Step 5:** Outside the function, call it and store the result: `current_utc_time = get_current_utc()`.
+- **Step 6:** Print the value, its `tzinfo`, which is UTC, and its offset, `0:00:00`, to confirm that it is aware and set to UTC.
 
 [Back to the Table of Contents](#table-of-contents)
 

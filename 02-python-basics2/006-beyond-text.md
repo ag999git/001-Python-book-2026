@@ -386,19 +386,18 @@ hello v0.1.0
 | Works with `requirements.txt` | Yes | Yes, through `uv pip` and `uv export` |
 | Best for | Learning, quick installs, systems where you cannot add new tools | New projects, teams, anything where speed and repeatable setups matter |
 
-```mermaid
-flowchart LR
-    A["1. You need to install Python packages"] --> B{"2. Are you allowed to install new tools on this computer?"}
-    B -->|No| C["3. Use pip inside a venv virtual environment"]
-    B -->|Yes| D{"4. Is it a project you will keep or share?"}
-    D -->|No, a quick experiment| E["5. pip in a venv, or uv pip install"]
-    D -->|Yes| F["6. Use uv: uv init, uv add, uv run"]
-    C --> G["7. Record the packages in requirements.txt"]
-    E --> G
-    F --> H["8. uv records them in pyproject.toml and uv.lock"]
-```
+![Comparison Table: pip vs uv](../resources/S02-LR-ch02-beyond-text-fig-03.png)
 
-![Comparison Table: pip vs uv](../resources/ch02-beyond-text-fig-03.png)
+**Reading the figure**
+
+- **Step 1:** You need to install some Python packages.
+- **Step 2:** Are you allowed to install new tools, such as uv, on this computer?
+- **Step 3:** No: use pip, which comes with Python, inside a venv virtual environment.
+- **Step 4:** Yes: is this a project you will keep or share with others?
+- **Step 5:** No, it is a quick experiment: pip in a venv is fine, or `uv pip install`, which works like pip but faster.
+- **Step 6:** Yes: use uv's project commands, `uv init`, `uv add` and `uv run`.
+- **Step 7:** With pip, record the packages yourself in `requirements.txt` so the setup can be repeated.
+- **Step 8:** uv records the packages for you, in `pyproject.toml` and, with exact versions, in `uv.lock`.
 
 [Back to the Table of Contents](#table-of-contents)
 

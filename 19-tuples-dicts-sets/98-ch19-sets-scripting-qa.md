@@ -385,19 +385,17 @@ Total scores: 9 | unique scores: 6
 - Because `85`, `90` and `78` each appear twice across the three rows, both ways end with the same **6** unique scores out of 9.
 - **Step 4**'s equality check confirms that the comprehension is not just shorter to type; it behaves exactly the same as the explicit loop.
 
-```mermaid
-flowchart LR
-    A["Step 1: Start with an empty set"] --> B{"Step 2: Outer loop - another row?"}
-    B -- No --> G["Step 7: Done. 6 unique scores"]
-    B -- Yes --> C["Step 3: Take the next row, e.g. [78, 85, 90]"]
-    C --> D{"Step 4: Inner loop - another score in this row?"}
-    D -- No --> B
-    D -- Yes --> E["Step 5: Take the next score"]
-    E --> F["Step 6: Add it to the set. A repeat is ignored"]
-    F --> D
-```
+![Q4. examscores = [[78,85,90],[85,92,78],[60,90,100]]. Script: (a) nested set comprehension to get unique scores. (b) same result using explicit nested for loop. (c) confirm both are equal.](../resources/S19-LR-ch19-sets-scripting-qa-fig-02.png)
 
-![Q4. examscores = [[78,85,90],[85,92,78],[60,90,100]]. Script: (a) nested set comprehension to get unique scores. (b) same result using explicit nested for loop. (c) confirm both are equal.](../resources/ch19-sets-scripting-qa-fig-02.png)
+**Reading the figure**
+
+- **Step 1:** Start with an empty set.
+- **Step 2:** Outer loop, `for row in examscores`: is there another row?
+- **Step 3:** Yes: take the next row, for example `[78, 85, 90]`.
+- **Step 4:** Inner loop, `for score in row`: is there another score in this row? If not, go back to Step 2.
+- **Step 5:** Yes: take the next score.
+- **Step 6:** Add it to the set. A score that is already there is ignored. Then go back to Step 4.
+- **Step 7:** No rows are left: the set holds 6 unique scores out of 9. The comprehension and the explicit loops give exactly the same set.
 
 **Try this next**
 
@@ -568,16 +566,15 @@ The printed order of `{10, (1, 2), 20}` may differ on your computer. That is nor
 - **Step 3** supplies the fix. `tuple([1, 2])` converts the mutable list into an immutable tuple with the same values. A tuple of hashable elements is itself hashable, so `.add()` now succeeds.
 - **General tip:** whenever you get "unhashable type: 'list'", converting the list to a tuple is almost always the right first thing to try, **provided** the list's own contents are all hashable too (see [Q7](#q7)).
 
-```mermaid
-flowchart LR
-    A["Step 1: my_set.add(something)"] --> B{"Step 2: Is it hashable?"}
-    B -- "No, e.g. a list" --> C["Step 3: TypeError. The set is unchanged"]
-    C --> D["Step 4: Convert: tuple([1, 2])"]
-    D --> A
-    B -- "Yes, e.g. a tuple" --> E["Step 5: Added to the set"]
-```
+![Q6. Script: (a) try adding a list [1,2] as a set element, catch the error. (b) fix it by converting to tuple, add successfully. Print set after each step.](../resources/S19-LR-ch19-sets-scripting-qa-fig-03.png)
 
-![Q6. Script: (a) try adding a list [1,2] as a set element, catch the error. (b) fix it by converting to tuple, add successfully. Print set after each step.](../resources/ch19-sets-scripting-qa-fig-03.png)
+**Reading the figure**
+
+- **Step 1:** Call `my_set.add(something)`.
+- **Step 2:** Is the value hashable?
+- **Step 3:** No, for example a list `[1, 2]`: Python raises `TypeError: unhashable type: 'list'`, and the set is unchanged.
+- **Step 4:** Fix it by converting the list to a tuple, `tuple([1, 2])`, then call `add()` again.
+- **Step 5:** Yes, for example the tuple `(1, 2)`: it is added to the set.
 
 **Try this next**
 
@@ -1027,15 +1024,14 @@ The pattern worth remembering:
 - `.pop()` is for removing items one at a time when you do not care which one, but it must be protected against an empty set.
 - `.clear()` is for wiping everything at once, and never needs protecting.
 
-```mermaid
-flowchart LR
-    A["Step 1: Call nums.pop()"] --> B{"Step 2: Is the set empty?"}
-    B -- No --> C["Step 3: Remove some element and return it"]
-    C --> A
-    B -- Yes --> D["Step 4: Raise KeyError: pop from an empty set"]
-```
+![Q11. nums = {1,2,3}. Script: (a) .pop() twice, print each removed item. (b) .pop() on the now-single-item set, then again on the resulting empty set — catch the error. (c) .clear() and print final set.](../resources/S19-LR-ch19-sets-scripting-qa-fig-05.png)
 
-![Q11. nums = {1,2,3}. Script: (a) .pop() twice, print each removed item. (b) .pop() on the now-single-item set, then again on the resulting empty set — catch the error. (c) .clear() and print final set.](../resources/ch19-sets-scripting-qa-fig-05.png)
+**Reading the figure**
+
+- **Step 1:** Call `nums.pop()`.
+- **Step 2:** Is the set empty?
+- **Step 3:** No: remove some element, you cannot choose which, and return it. Calling `pop()` again repeats from Step 1.
+- **Step 4:** Yes: raise `KeyError: 'pop from an empty set'`. Protect `pop()` with `if nums:`. `clear()`, by contrast, is always safe.
 
 **Try this next**
 
@@ -1665,17 +1661,17 @@ This exercise reinforces the chapter's main comparison:
 | Set | No | No | No | 3 |
 | Dict | No (keys are unique) | Yes (insertion order) | Yes | 3 |
 
-```mermaid
-flowchart LR
-    A["Step 1: data = Amit, Amit, Sneha, Ravi"] --> B["Step 2: list(data)"]
-    A --> C["Step 3: set(data)"]
-    A --> D["Step 4: name: 1 for each name"]
-    B --> E["Step 5: 4 items, repeat kept, order kept"]
-    C --> F["Step 6: 3 items, repeat dropped, no order"]
-    D --> G["Step 7: 3 keys, repeat dropped, order kept, each with a value"]
-```
+![Q18. Same data ["Amit","Amit","Sneha","Ravi"]. Script: store it as (a) a list, (b) a set, (c) a dict (using names as keys, value=1). Print all three and comment on what changed in each.](../resources/S19-LR-ch19-sets-scripting-qa-fig-07.png)
 
-![Q18. Same data ["Amit","Amit","Sneha","Ravi"]. Script: store it as (a) a list, (b) a set, (c) a dict (using names as keys, value=1). Print all three and comment on what changed in each.](../resources/ch19-sets-scripting-qa-fig-07.png)
+**Reading the figure**
+
+- **Step 1:** Start with the same data: `["Amit", "Amit", "Sneha", "Ravi"]`.
+- **Step 2:** Store it as a list, `list(data)`.
+- **Step 3:** Store it as a set, `set(data)`.
+- **Step 4:** Store it as a dictionary, using each name as a key with the value 1.
+- **Step 5:** The list has 4 items: the repeated "Amit" is kept, and the order is kept.
+- **Step 6:** The set has 3 items: the repeat is dropped, and there is no order.
+- **Step 7:** The dictionary has 3 keys: the repeat is dropped, the insertion order is kept, and each name carries a value.
 
 **Try this next**
 

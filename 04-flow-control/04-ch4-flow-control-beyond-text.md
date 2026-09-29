@@ -177,18 +177,17 @@ Error caught: Insufficient funds
 
 The flowchart below shows the path through `find_treasure()`. Notice that no arrow ever leads into box 6, the dead line.
 
-```mermaid
-flowchart TD
-    T1["1. Take the next item from the list"] --> T2{"2. Is the item Gold?"}
-    T2 -- "No" --> T3["3. Print Checking: item"]
-    T3 --> T1
-    T2 -- "Yes" --> T4["4. Print Found the Gold!"]
-    T4 --> T5["5. break: leave the loop"]
-    T5 -. "never runs" .-> T6["6. Dead line after break: never reached"]
-    T5 --> T7["7. Function ends"]
-```
+![Example Script: How Dead Code Creeps In](../resources/LR-ch4-flow-control-beyond-text-fig-01.png)
 
-![Example Script: How Dead Code Creeps In](../resources/ch4-flow-control-beyond-text-fig-01.png)
+**Reading the figure**
+
+- **Step 1:** `find_treasure()` takes the next item from the list.
+- **Step 2:** Is the item "Gold"?
+- **Step 3:** No: print "Checking: item" and go back to Step 1.
+- **Step 4:** Yes: print "Found the Gold!".
+- **Step 5:** `break` leaves the loop at once.
+- **Step 6:** The line written after `break`, inside the loop, is dead code: no path ever leads to it, shown by the dashed arrow.
+- **Step 7:** The function ends. "Silver" is never checked, because the loop stopped at "Gold".
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -344,20 +343,19 @@ The solution follows the four-step logic of the assignment exactly:
 3. **Handle** the boundary condition: `except StopIteration` catches the signal that the list has run out.
 4. **Terminate** the process: print "Loop Finished" and `break` out of the `while True` loop.
 
-```mermaid
-flowchart TD
-    S1["1. Initialize: color_cursor = iter(colors)"] --> S2["2. Start while True loop"]
-    S2 --> S3["3. Attempt: try next(color_cursor)"]
-    S3 --> S4{"4. Was an item returned?"}
-    S4 -- "Yes" --> S5["5. Print Processing color"]
-    S5 --> S3
-    S4 -- "No: StopIteration raised" --> S6["6. Handle: except StopIteration"]
-    S6 --> S7["7. Print Loop Finished"]
-    S7 --> S8["8. Terminate: break"]
-    S8 --> S9["9. Program continues normally"]
-```
+![Solution Script](../resources/LR-ch4-flow-control-beyond-text-fig-02.png)
 
-![Solution Script](../resources/ch4-flow-control-beyond-text-fig-02.png)
+**Reading the figure**
+
+- **Step 1:** Initialise: `color_cursor = iter(colors)` creates an iterator over the list of colours.
+- **Step 2:** Start an endless `while True` loop.
+- **Step 3:** Attempt: inside `try`, call `next(color_cursor)`.
+- **Step 4:** Was an item returned?
+- **Step 5:** Yes: print "Processing" with the colour, and go back to Step 3.
+- **Step 6:** No: `next()` raised `StopIteration`, the signal that the list has run out. `except StopIteration` catches it.
+- **Step 7:** Print "Loop Finished".
+- **Step 8:** Terminate: `break` leaves the `while True` loop.
+- **Step 9:** The program continues normally after the loop.
 
 ```python
 # --- BEYOND TEXT: MANUAL ITERATION ---

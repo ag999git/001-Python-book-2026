@@ -1009,14 +1009,14 @@ Why use `patch()` instead of simply writing `requests.get = Mock(...)`? A direct
 
 The test does not contact the internet:
 
-```mermaid
-flowchart LR
-    A["1. Test calls get_price"] --> B["2. get_price calls requests.get"]
-    B --> C["3. The Mock answers, not the internet"]
-    C --> D["4. The test checks the result"]
-```
+![Write a pytest example that uses a mock object instead of calling a real external service.](../resources/S20-LR-ch20-scripting-qa-fig-04.png)
 
-![Write a pytest example that uses a mock object instead of calling a real external service.](../resources/ch20-scripting-qa-fig-04.png)
+**Reading the figure**
+
+- **Step 1:** The test calls `get_price()` inside a `with patch("payment.requests.get", ...)` block.
+- **Step 2:** `get_price()` calls `requests.get()` as usual, without knowing that anything has changed.
+- **Step 3:** `patch()` has replaced `requests.get` with a `Mock`, so the `Mock` answers with the fake response set up in the test. The internet is never contacted.
+- **Step 4:** The test checks the result. When the `with` block ends, `patch()` puts the real `requests.get` back.
 
 Mocking helps create:
 

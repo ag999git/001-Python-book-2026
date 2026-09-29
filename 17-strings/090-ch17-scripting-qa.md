@@ -237,16 +237,16 @@ The original is untouched: Data
 
 **What the `+=` really does**
 
-```mermaid
-flowchart TD
-    A["1. base_container points to an empty string"] --> B["2. The line base_container += 'Data' runs"]
-    B --> C["3. Python builds a NEW string, 'Data'"]
-    C --> D["4. The name base_container is pointed at the new string"]
-    D --> E["5. The old empty string is left behind and cleared away"]
-    A --> F["6. Nothing was changed inside the old string"]
-```
+![Question 2. An Empty String, Concatenation and the Immutability Rule](../resources/LR-ch17-scripting-qa-fig-02.png)
 
-![Question 2. An Empty String, Concatenation and the Immutability Rule](../resources/ch17-scripting-qa-fig-02.png)
+**Reading the figure**
+
+- **Step 1:** The name `base_container` points to an empty string, `''`.
+- **Step 2:** The line `base_container += 'Data'` runs.
+- **Step 3:** Strings are immutable, so Python builds a brand-new string, `'Data'`.
+- **Step 4:** The name `base_container` is pointed at the new string.
+- **Step 5:** The old empty string is left behind, and Python clears it away when nothing uses it.
+- **Step 6:** Nothing was changed inside the old string at any point. `+=` on a string always makes a new object.
 
 **Design Pattern Explanation**
 
@@ -552,18 +552,17 @@ If you run these lines inside some editors or notebook windows, the `\r` and `\b
 
 **How Python reads a backslash**
 
-```mermaid
-flowchart TD
-    A["1. Python reads the characters of the literal"] --> B{"2. Is there an r before the opening quote?"}
-    B -->|"No"| C["3. A backslash joins the next character"]
-    C --> D["4. The pair is stored as one special character"]
-    B -->|"Yes"| E["5. The backslash is stored as an ordinary character"]
-    E --> F["6. The next character is stored as itself"]
-    D --> G["7. The finished string is ready"]
-    F --> G
-```
+![Question 4. Escape Sequences and the Raw String Prefix](../resources/LR-ch17-scripting-qa-fig-03.png)
 
-![Question 4. Escape Sequences and the Raw String Prefix](../resources/ch17-scripting-qa-fig-03.png)
+**Reading the figure**
+
+- **Step 1:** Python reads the characters of the string literal.
+- **Step 2:** Is there an `r` before the opening quote?
+- **Step 3:** No: a backslash joins the character after it.
+- **Step 4:** The pair is stored as one special character. `"\t"` holds 1 character, a tab.
+- **Step 5:** Yes: it is a raw string, so the backslash is stored as an ordinary character.
+- **Step 6:** The next character is stored as itself. `r"\t"` holds 2 characters, a backslash and a `t`.
+- **Step 7:** The finished string is ready.
 
 **Design Pattern Explanation**
 
@@ -1671,18 +1670,18 @@ The last line shows the danger. The slice quietly returned the full stop at the 
 
 **Choosing between the two methods**
 
-```mermaid
-flowchart TD
-    A["1. A position in the text is needed"] --> B{"2. Might the text be missing?"}
-    B -->|"Yes, that is normal"| C["3. Use find()"]
-    C --> D["4. Test the result against -1"]
-    D --> E["5. Take the other path if it is -1"]
-    B -->|"No, it must be present"| F["6. Use index()"]
-    F --> G["7. Wrap it in try and except ValueError"]
-    G --> H["8. Report the fault if it is raised"]
-```
+![Question 12. find() and index(), and What Each Does on Failure](../resources/LR-ch17-scripting-qa-fig-07.png)
 
-![Question 12. find() and index(), and What Each Does on Failure](../resources/ch17-scripting-qa-fig-07.png)
+**Reading the figure**
+
+- **Step 1:** Your program needs the position of some text inside a string.
+- **Step 2:** Might the text be missing, as a normal part of the job?
+- **Step 3:** Yes, that is normal: use `find()`, which returns -1 when the text is not found.
+- **Step 4:** Always test the result against -1 before using it. `-1` used as a position quietly means the last character.
+- **Step 5:** If it is -1, take the other path in your program.
+- **Step 6:** No, it must be present: use `index()`, which raises `ValueError` when the text is not found.
+- **Step 7:** Wrap the call in `try` and `except ValueError`.
+- **Step 8:** If the error is raised, report the fault, because something that should be there is missing.
 
 **Design Pattern Explanation**
 
@@ -2695,18 +2694,17 @@ The third and fourth lines are worth a thought. A digit is not a small letter, a
 
 **The decision in a diagram**
 
-```mermaid
-flowchart TD
-    A["1. Take the string"] --> B["2. Read the character at index 0"]
-    B --> C{"3. Is it a small letter?"}
-    C -->|"Yes"| D["4. Build an upper-case copy of the whole string"]
-    D --> E["5. Keep it as the result"]
-    C -->|"No"| F["6. Keep the text as it is"]
-    F --> G["7. Print the result"]
-    E --> G
-```
+![Question 19. A Decision Taken on the First Character](../resources/LR-ch17-scripting-qa-fig-09.png)
 
-![Question 19. A Decision Taken on the First Character](../resources/ch17-scripting-qa-fig-09.png)
+**Reading the figure**
+
+- **Step 1:** Take the string.
+- **Step 2:** Read its first character, `text[0]`.
+- **Step 3:** Is it a small letter? `text[0].islower()` checks this.
+- **Step 4:** No: a capital, a digit or a space is not a small letter, so keep the text as it is.
+- **Step 5:** Yes: build an upper-case copy of the whole string with `text.upper()`.
+- **Step 6:** Keep that copy as the result.
+- **Step 7:** Print the result.
 
 **Design Pattern Explanation**
 
@@ -2887,18 +2885,17 @@ In one line:         Year 2026 Is True
 | 4 | `True` | `True` | `'Year 2026 Is True '` |
 | After `strip()` | | | `'Year 2026 Is True'` |
 
-```mermaid
-flowchart TD
-    A["1. Start with an empty string"] --> B["2. Take the next item from the list"]
-    B --> C["3. Convert it with str()"]
-    C --> D["4. Add it, and a space, to the collected string"]
-    D --> E{"5. Any items left?"}
-    E -->|"Yes"| B
-    E -->|"No"| F["6. strip() removes the space at the end"]
-    F --> G["7. Print the finished sentence"]
-```
+![Question 20. Building One Sentence From a List of Mixed Values](../resources/LR-ch17-scripting-qa-fig-10.png)
 
-![Question 20. Building One Sentence From a List of Mixed Values](../resources/ch17-scripting-qa-fig-10.png)
+**Reading the figure**
+
+- **Step 1:** Start with an empty string.
+- **Step 2:** Take the next item from the list, which mixes strings, numbers and Booleans.
+- **Step 3:** Convert it to text with `str()`, because `+` cannot join a string to a number.
+- **Step 4:** Add it, followed by a space, to the collected string.
+- **Step 5:** If items are left, go back to Step 2.
+- **Step 6:** No: `strip()` removes the extra space at the end.
+- **Step 7:** Print the finished sentence: `'Year 2026 Is True'`.
 
 **Design Pattern Explanation**
 

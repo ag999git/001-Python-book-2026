@@ -570,16 +570,16 @@ Same object as before? True
 
 Compare this with questions 1 and 7. The list keeps its ID when changed, but the integer and the string got new IDs.
 
-```mermaid
-flowchart TD
-    A["1. Change an object, for example add 1 or append an item"] --> B{"2. Is the object mutable?"}
-    B -->|Yes, a list| C["3. Python changes the same object in place"]
-    C --> D["4. id() is the same before and after"]
-    B -->|No, an int or str| E["5. Python creates a new object"]
-    E --> F["6. id() is different after the change"]
-```
+![Write a Python script that demonstrates mutability of lists using the id() function.](../resources/LR-ch02-3-ch2-scripting-qa-fig-01.png)
 
-![Write a Python script that demonstrates mutability of lists using the id() function.](../resources/ch02-3-ch2-scripting-qa-fig-01.png)
+**Reading the figure**
+
+- **Step 1:** Try to change an object: add 1 to a number, or append an item to a list.
+- **Step 2:** Is the object mutable, meaning it can be changed after it is created?
+- **Step 3:** Yes, a list: Python changes the same object in place.
+- **Step 4:** `id()` gives the same value before and after the change.
+- **Step 5:** No, an `int` or a `str`: Python creates a new object holding the new value, and the name is tied to it.
+- **Step 6:** `id()` gives a different value after the change.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1323,17 +1323,16 @@ Enter your age: 25
 Next year your age will be: 26
 ```
 
-```mermaid
-flowchart TD
-    A["1. Ask the user for their age with input()"] --> B["2. Receive the answer as a string"]
-    B --> C{"3. Does the text contain only digits?"}
-    C -->|No| D["4. Print a helpful message"]
-    D --> A
-    C -->|Yes| E["5. Convert the text with int()"]
-    E --> F["6. Do the arithmetic and print the result"]
-```
+![Write a Python script that accepts age input from the user and converts it into an integer before using it in arithmetic.](../resources/LR-ch02-3-ch2-scripting-qa-fig-03.png)
 
-![Write a Python script that accepts age input from the user and converts it into an integer before using it in arithmetic.](../resources/ch02-3-ch2-scripting-qa-fig-03.png)
+**Reading the figure**
+
+- **Step 1:** Ask the user for their age with `input()`.
+- **Step 2:** `input()` always returns a string, even if the user types a number.
+- **Step 3:** Does the text contain only digits? `text.strip().isdigit()` checks this, after removing any spaces.
+- **Step 4:** No: print a helpful message and go back to Step 1.
+- **Step 5:** Yes: convert the text to a whole number with `int()`.
+- **Step 6:** Do the arithmetic, for example add 1, and print the result: "Next year your age will be: 26".
 
 [Back to the Table of Contents](#table-of-contents)
 

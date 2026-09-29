@@ -70,17 +70,17 @@ All the commands on this page are typed in a **terminal** (Command Prompt, Power
 
 What happens when you type `pip install requests`:
 
-```mermaid
-flowchart TD
-    A["1. You type pip install requests"] --> B["2. pip asks PyPI which versions of requests exist"]
-    B --> C["3. It picks the newest version that works with your Python"]
-    C --> D["4. It finds the packages that requests itself needs, its dependencies"]
-    D --> E["5. It downloads everything, usually as ready-made wheel files"]
-    E --> F["6. It installs them into the Python environment that pip belongs to"]
-    F --> G["7. You can now write import requests in your programs"]
-```
+![What is pip?](../resources/LR-ch02-beyond-text-fig-01.png)
 
-![What is pip?](../resources/ch02-beyond-text-fig-01.png)
+**Reading the figure**
+
+- **Step 1:** You type `pip install requests` in the terminal.
+- **Step 2:** pip asks PyPI, the Python Package Index, which versions of `requests` exist.
+- **Step 3:** It picks the newest version that works with your version of Python.
+- **Step 4:** It finds the other packages that `requests` itself needs, its dependencies.
+- **Step 5:** It downloads everything, usually as ready-made wheel files (`.whl`).
+- **Step 6:** It installs them into the Python environment that this pip belongs to, such as your active venv.
+- **Step 7:** You can now write `import requests` in your programs.
 
 Step 6 is important: `pip` installs into **one particular Python**. If your computer has more than one Python, or you use virtual environments (section 1.3), always check which one you are installing into.
 
@@ -334,16 +334,16 @@ hello v0.1.0
     └── urllib3 v2.8.0
 ```
 
-```mermaid
-flowchart TD
-    A["1. uv init creates the project and pyproject.toml"] --> B["2. uv add records a package in pyproject.toml and uv.lock"]
-    B --> C["3. uv run creates or updates .venv and runs your code"]
-    C --> D["4. Share the project with pyproject.toml and uv.lock, but not .venv"]
-    D --> E["5. A teammate runs uv sync or uv run"]
-    E --> F["6. uv builds the same environment from uv.lock"]
-```
+![A Complete uv Project, Step by Step](../resources/LR-ch02-beyond-text-fig-02.png)
 
-![A Complete uv Project, Step by Step](../resources/ch02-beyond-text-fig-02.png)
+**Reading the figure**
+
+- **Step 1:** `uv init` creates the project folder and its `pyproject.toml` file.
+- **Step 2:** `uv add requests` installs a package and records it in `pyproject.toml`, with the exact versions in `uv.lock`.
+- **Step 3:** `uv run` creates or updates the `.venv` folder if needed, then runs your code in it.
+- **Step 4:** Share the project with `pyproject.toml` and `uv.lock`, but not the `.venv` folder, which is large and specific to your computer.
+- **Step 5:** A teammate runs `uv sync`, or simply `uv run`.
+- **Step 6:** uv builds exactly the same environment from `uv.lock`, so the code behaves the same on both computers.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -442,17 +442,17 @@ No broken requirements found.
 
 The second command prints nothing on the screen, because its output went into the file. The file `requirements.txt` now contains exactly the five lines shown by the first command.
 
-```mermaid
-flowchart TD
-    A["1. You create and activate a venv"] --> B["2. You install the packages your project needs"]
-    B --> C["3. pip freeze saves the list to requirements.txt"]
-    C --> D["4. You share your code together with requirements.txt"]
-    D --> E["5. Your friend creates and activates their own venv"]
-    E --> F["6. pip install -r requirements.txt installs the same versions"]
-    F --> G["7. Your code runs the same way on both computers"]
-```
+![Common Commands](../resources/LR-ch02-beyond-text-fig-04.png)
 
-![Common Commands](../resources/ch02-beyond-text-fig-04.png)
+**Reading the figure**
+
+- **Step 1:** You create a virtual environment and activate it.
+- **Step 2:** You install the packages your project needs with pip.
+- **Step 3:** `pip freeze > requirements.txt` saves the exact list of installed packages and versions to a file.
+- **Step 4:** You share your code together with `requirements.txt`.
+- **Step 5:** Your friend creates and activates their own venv on their computer.
+- **Step 6:** `pip install -r requirements.txt` installs exactly the same versions there.
+- **Step 7:** Your code runs the same way on both computers.
 
 [Back to the Table of Contents](#table-of-contents)
 

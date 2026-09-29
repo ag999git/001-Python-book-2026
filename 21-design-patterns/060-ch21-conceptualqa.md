@@ -416,19 +416,19 @@ HTMLReportApp created HTMLReport
 
 Both forms share the same core idea: client code does not create the concrete object itself. Read more at [Refactoring Guru: Factory Method](https://refactoring.guru/design-patterns/factory-method).
 
-**Mermaid flowchart of the simple factory script**
+**Flowchart of the simple factory script**
 
-```mermaid
-flowchart TD
-    A["1. Client asks factory for a report type"] --> B["2. Factory looks up the type in its dictionary"]
-    B --> C{"3. Is the type known?"}
-    C -- Yes --> D["4. Factory creates the matching object"]
-    D --> E["5. Object is returned to the client"]
-    E --> F["6. Client calls generate on the object"]
-    C -- No --> G["7. Factory raises ValueError"]
-```
+![Q3. Explain the Factory Method Pattern. What problem does it solve? How does it improve software compared to directly creating objects?](../resources/LR-ch21-conceptualqa-fig-01.png)
 
-![Q3. Explain the Factory Method Pattern. What problem does it solve? How does it improve software compared to directly creating objects?](../resources/ch21-conceptualqa-fig-01.png)
+**Reading the figure**
+
+- **Step 1:** The client asks the factory for a report of a given type, for example `"pdf"`. It never names the concrete class itself.
+- **Step 2:** The factory looks up that type in its dictionary of known report classes.
+- **Step 3:** Is the type known?
+- **Step 4:** No: the factory raises `ValueError`, so a mistake in the type name is reported at once.
+- **Step 5:** Yes: the factory creates an object of the matching class.
+- **Step 6:** The object is returned to the client.
+- **Step 7:** The client calls `generate()` on it, without knowing or caring which concrete class it got.
 
 **Advantages**
 
@@ -1651,19 +1651,18 @@ Guest tries to view an image:
 - The first `show()` loads the image. The second `show()` reuses it, so "Loading" appears only once.
 - The guest is stopped by the proxy, so `secret.png` is never loaded at all.
 
-**Mermaid flowchart of the script**
+**Flowchart of the script**
 
-```mermaid
-flowchart TD
-    A["1. Client calls show on the proxy"] --> B{"2. Is the user a member?"}
-    B -- No --> C["3. Print Access denied and stop"]
-    B -- Yes --> D{"4. Is the real image already loaded?"}
-    D -- No --> E["5. Create RealImage and load it from disk"]
-    E --> F["6. Call show on the real image"]
-    D -- Yes --> F
-```
+![Q12. Explain the Proxy Pattern. Why is it used? Compare it with directly accessing an object.](../resources/LR-ch21-conceptualqa-fig-02.png)
 
-![Q12. Explain the Proxy Pattern. Why is it used? Compare it with directly accessing an object.](../resources/ch21-conceptualqa-fig-02.png)
+**Reading the figure**
+
+- **Step 1:** The client calls `show()` on the proxy, exactly as it would on a real image.
+- **Step 2:** Protection: the proxy first checks whether the user is a member.
+- **Step 3:** No: print "Access denied" and stop. The real image is never loaded.
+- **Step 4:** Yes: lazy loading. Has the real image already been loaded?
+- **Step 5:** No: create the `RealImage` object now, which loads the file from disk. This happens only once.
+- **Step 6:** Call `show()` on the real image. (Yes from Step 4 comes straight here, so the second `show()` reuses the image and "Loading" appears only once.)
 
 Read more at [Refactoring Guru: Proxy](https://refactoring.guru/design-patterns/proxy).
 
@@ -2085,22 +2084,21 @@ After running the queue: 'Hello!!'
 - Undo works in **reverse order**, because `history.pop()` removes the most recent command first. A list used this way is called a **stack** ([stack](https://en.wikipedia.org/wiki/Stack_(abstract_data_type))).
 - In Step 6 the two commands are created first and run later. This is the idea behind task queues.
 
-**Mermaid flowchart of the undo process**
+**Flowchart of the undo process**
 
-```mermaid
-flowchart TD
-    A["1. User performs an action"] --> B["2. A command object is created"]
-    B --> C["3. Invoker calls execute on the command"]
-    C --> D["4. Command is pushed onto the history list"]
-    D --> E{"5. Does the user press Undo?"}
-    E -- No --> A
-    E -- Yes --> F{"6. Is the history empty?"}
-    F -- Yes --> G["7. Nothing to undo"]
-    F -- No --> H["8. Pop the last command"]
-    H --> I["9. Call undo on that command"]
-```
+![Q15. Explain the Command Pattern. How does it help in implementing undo operations, menus and task queues?](../resources/LR-ch21-conceptualqa-fig-04.png)
 
-![Q15. Explain the Command Pattern. How does it help in implementing undo operations, menus and task queues?](../resources/ch21-conceptualqa-fig-04.png)
+**Reading the figure**
+
+- **Step 1:** The user performs an action.
+- **Step 2:** The action is wrapped in a command object, which knows how to do it and how to undo it.
+- **Step 3:** The invoker calls `execute()` on the command.
+- **Step 4:** The invoker pushes the command onto its history list.
+- **Step 5:** Does the user press Undo? If not, go back to Step 1 for the next action.
+- **Step 6:** Yes: is the history list empty?
+- **Step 7:** Yes: there is nothing to undo.
+- **Step 8:** No: `history.pop()` removes the most recent command. The list is used as a stack, so undo works in reverse order.
+- **Step 9:** Call `undo()` on that command, which reverses its effect.
 
 Read more at [Refactoring Guru: Command](https://refactoring.guru/design-patterns/command).
 

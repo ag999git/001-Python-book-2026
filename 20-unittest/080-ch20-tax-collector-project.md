@@ -425,27 +425,21 @@ How `pytest.approx()` decides:
 
 ## 9. Flowchart: Parametrized Testing and Execution
 
-![Flowchart — Parametrized Testing + Execution](../resources/ch16-pytest-040-project-tax-collector.png)
+![Project: The "Micro-Precision" Tax Calculator (Using Parameterized Testing)](../resources/LR-ch20-tax-collector-project-fig-01.png)
 
-The same flow, step by step:
+**Reading the figure**
 
-```mermaid
-flowchart TD
-    A["1. pytest collects test_tax_values"] --> B["2. Read the parametrize list: 5 tuples"]
-    B --> C["3. Create 5 separate test cases"]
-    C --> D["4. Take the next test case"]
-    D --> E["5. Put the tuple values into price and expected"]
-    E --> F["6. Call calculate_tax(price)"]
-    F --> G{"7. Does the result equal approx(expected)?"}
-    G -- Yes --> H["8. Mark this case PASSED"]
-    G -- No --> I["9. Mark this case FAILED and record the details"]
-    H --> J{"10. More test cases?"}
-    I --> J
-    J -- Yes --> D
-    J -- No --> K["11. Print the summary"]
-```
-
-![Project: The "Micro-Precision" Tax Calculator (Using Parameterized Testing)](../resources/ch20-tax-collector-project-fig-01.png)
+- **Step 1:** pytest collects the test function `test_tax_values`.
+- **Step 2:** It reads the `@pytest.mark.parametrize` list, which holds 5 tuples.
+- **Step 3:** It creates 5 separate test cases, one for each tuple. Each one passes or fails on its own.
+- **Step 4:** Take the next test case.
+- **Step 5:** Put that tuple's values into the parameters `price` and `expected`.
+- **Step 6:** Call `calculate_tax(price)`.
+- **Step 7:** Does the result equal `pytest.approx(expected)`? `approx` allows a tiny floating-point difference.
+- **Step 8:** Yes: mark this case PASSED.
+- **Step 9:** No: mark this case FAILED and record the details, including the values that were compared.
+- **Step 10:** If more test cases are left, go back to Step 4.
+- **Step 11:** No: print the summary of all 5 cases.
 
 Notice that step 9 does not stop the run. It records the failure and moves on to the next case. The next section explains why this matters.
 

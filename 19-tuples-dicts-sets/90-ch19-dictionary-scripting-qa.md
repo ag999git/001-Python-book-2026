@@ -139,14 +139,14 @@ fruit_colors['grape'] -> KeyError: 'grape'
 | `fruit_colors.get(key)` | `'yellow'` | `None` |
 | `fruit_colors.get(key, "Unknown")` | `'yellow'` | `'Unknown'` |
 
-```mermaid
-flowchart LR
-    A["Step 1: fruit_colors.get(key, Unknown)"] --> B{"Step 2: Is key in the dictionary?"}
-    B -- Yes --> C["Step 3: Return the stored colour"]
-    B -- No --> D["Step 4: Return the default, Unknown. No error"]
-```
+![Q1. Create dict of 3 fruits→colours. Print colour of "banana" (safe, no error). Also try missing key "grape", default "Unknown".](../resources/S19-LR-ch19-dictionary-scripting-qa-fig-01.png)
 
-![Q1. Create dict of 3 fruits→colours. Print colour of "banana" (safe, no error). Also try missing key "grape", default "Unknown".](../resources/ch19-dictionary-scripting-qa-fig-01.png)
+**Reading the figure**
+
+- **Step 1:** Call `fruit_colors.get(key, "Unknown")`.
+- **Step 2:** Is the key in the dictionary?
+- **Step 3:** Yes: return the stored colour, for example `'yellow'`.
+- **Step 4:** No: return the default, "Unknown", with no error. Without a default, `get()` would return `None`, and `fruit_colors[key]` would raise `KeyError`.
 
 **Try this next**
 
@@ -367,16 +367,15 @@ Eraser : ₹5
 - An **f-string** is a string with the letter `f` before the opening quote. Anything inside curly braces `{}` is replaced by its value. See the [Python tutorial on f-strings](https://docs.python.org/3/tutorial/inputoutput.html#formatted-string-literals).
 - The rupee sign `₹` is an ordinary character in a Python string. If your console cannot show it, you can write `Rs.` instead.
 
-```mermaid
-flowchart LR
-    A["Step 1: cart.items() provides the pairs"] --> B{"Step 2: Is there another pair?"}
-    B -- Yes --> C["Step 3: Unpack the pair into item and price"]
-    C --> D["Step 4: Print item : price with the rupee sign"]
-    D --> B
-    B -- No --> E["Step 5: The loop ends"]
-```
+![Q4. Given dict of item→price, print each as "item : ₹price" using the traversal method that gives both key and value directly.](../resources/S19-LR-ch19-dictionary-scripting-qa-fig-02.png)
 
-![Q4. Given dict of item→price, print each as "item : ₹price" using the traversal method that gives both key and value directly.](../resources/ch19-dictionary-scripting-qa-fig-02.png)
+**Reading the figure**
+
+- **Step 1:** `cart.items()` hands out the `(key, value)` pairs of the cart, one per pass.
+- **Step 2:** Is there another pair?
+- **Step 3:** Yes: unpack it into the two loop variables, for example `item = "Pen"` and `price = 10`. No second lookup such as `cart[item]` is needed.
+- **Step 4:** Print the line with an f-string, such as `Pen : ₹10`, then go back to Step 2.
+- **Step 5:** No pairs are left, so the loop ends.
 
 **Try this next**
 
@@ -556,18 +555,16 @@ RuntimeError: dictionary changed size during iteration
 
 The loop keeps track of its place inside the dictionary. Deleting an entry changes the dictionary's size, and Python stops the loop rather than risk skipping or repeating entries.
 
-```mermaid
-flowchart LR
-    A["Step 1: Make a snapshot: list(marks.keys())"] --> B{"Step 2: Another name in the snapshot?"}
-    B -- No --> F["Step 6: Done. Print marks"]
-    B -- Yes --> C{"Step 3: Are this student's marks below 40?"}
-    C -- No --> B
-    C -- Yes --> D["Step 4: del marks[student] changes only the dictionary"]
-    D --> E["Step 5: The snapshot is unchanged, so the loop carries on safely"]
-    E --> B
-```
+![Q6. Given dict of student→marks, remove all students scoring below 40. Must not raise RuntimeError.](../resources/S19-LR-ch19-dictionary-scripting-qa-fig-03.png)
 
-![Q6. Given dict of student→marks, remove all students scoring below 40. Must not raise RuntimeError.](../resources/ch19-dictionary-scripting-qa-fig-03.png)
+**Reading the figure**
+
+- **Step 1:** Make a snapshot of the keys, `list(marks.keys())`, and loop over it instead of over the dictionary.
+- **Step 2:** Is there another name in the snapshot?
+- **Step 3:** Yes: are this student's marks below 40? If not, go back to Step 2.
+- **Step 4:** Yes: delete the entry from the real dictionary, `del marks[student]`.
+- **Step 5:** The snapshot list is not affected by the deletion, so the loop carries on safely. Looping over `marks` itself would raise `RuntimeError: dictionary changed size during iteration`.
+- **Step 6:** No names are left: print `marks`, which now holds only the students with 40 or more.
 
 **Try this next**
 
@@ -792,15 +789,15 @@ hi       (str  ) -> True
 - This matches the chapter's rules on hashability.
 - In the `print()` line, `:<8` and `:<5` pad the text with spaces to a fixed width, so the columns line up. They do not affect the result.
 
-```mermaid
-flowchart LR
-    A["Step 1: is_valid_key(k) is called"] --> B["Step 2: Try hash(k)"]
-    B --> C{"Step 3: Did Python raise TypeError?"}
-    C -- No --> D["Step 4: k is hashable. Return True"]
-    C -- Yes --> E["Step 5: k is unhashable. Return False"]
-```
+![Q9. Write isvalidkey(k) returning True/False if k can be used as a dict key. Test on 5, "hi", (1,2), [1,2], {1:2}.](../resources/S19-LR-ch19-dictionary-scripting-qa-fig-04.png)
 
-![Q9. Write isvalidkey(k) returning True/False if k can be used as a dict key. Test on 5, "hi", (1,2), [1,2], {1:2}.](../resources/ch19-dictionary-scripting-qa-fig-04.png)
+**Reading the figure**
+
+- **Step 1:** `is_valid_key(k)` is called with a value, such as `5` or `[1, 2]`.
+- **Step 2:** Inside a `try` block, try `hash(k)`.
+- **Step 3:** Did Python raise `TypeError`?
+- **Step 4:** No: `k` is hashable, so it can be a dictionary key. Return `True`. This happens for `5`, `"hi"` and `(1, 2)`.
+- **Step 5:** Yes: the `except TypeError` block runs. `k` is unhashable, so return `False`. This happens for `[1, 2]` and `{1: 2}`.
 
 **Try this next**
 
@@ -969,18 +966,16 @@ February is unchanged: {'Notebook': 70, 'Eraser': 30}
 | `"Notebook"` | 50 | 70 | 70 (overwritten) |
 | `"Eraser"` | (not present) | 30 | 30 (added) |
 
-```mermaid
-flowchart LR
-    A["Step 1: Take the next key from feb_sales"] --> B{"Step 2: Is the key already in jan_sales?"}
-    B -- Yes --> C["Step 3: Overwrite the value in jan_sales"]
-    B -- No --> D["Step 4: Add the key and value to jan_sales"]
-    C --> E{"Step 5: More keys in feb_sales?"}
-    D --> E
-    E -- Yes --> A
-    E -- No --> F["Step 6: Done. update() returns None"]
-```
+![Q11. Two dicts: Jan sales and Feb sales by product. Merge Feb into Jan with update() (overlaps must update, not add duplicates).](../resources/S19-LR-ch19-dictionary-scripting-qa-fig-05.png)
 
-![Q11. Two dicts: Jan sales and Feb sales by product. Merge Feb into Jan with update() (overlaps must update, not add duplicates).](../resources/ch19-dictionary-scripting-qa-fig-05.png)
+**Reading the figure**
+
+- **Step 1:** `jan_sales.update(feb_sales)` takes the next key from `feb_sales`.
+- **Step 2:** Is that key already in `jan_sales`?
+- **Step 3:** Yes: its value is overwritten with the February value, as "Notebook" goes from 50 to 70.
+- **Step 4:** No: the key and value are added, as "Eraser" is. Keys only in `jan_sales`, such as "Pen", are kept.
+- **Step 5:** If more keys are left in `feb_sales`, go back to Step 1.
+- **Step 6:** Done. `jan_sales` itself has changed, and `update()` returns `None`, not the merged dictionary.
 
 **Try this next**
 
@@ -1234,16 +1229,16 @@ Same list object? True
 | `settings_copy["recent_scores"].append(30)` | Change a shared list in place | **Yes** |
 | `settings_copy["recent_scores"] = [99]` | Replace the list with a new one | No |
 
-```mermaid
-flowchart LR
-    A["Step 1: settings.copy() makes a new outer dictionary"] --> B["Step 2: Both theme keys point to the string light"]
-    A --> C["Step 3: Both recent_scores keys point to ONE shared list"]
-    B --> D["Step 4: copy theme = dark: only the copy's key is moved. Original safe"]
-    C --> E["Step 5: append(30) changes the shared list itself"]
-    E --> F["Step 6: The original sees [10, 20, 30] too"]
-```
+![Q14. Given dict of settings, copy() it, change one value in the copy -- prove original unaffected. Add a nested list value; mutate it via the copy -- show original is affected (shallow copy).](../resources/S19-LR-ch19-dictionary-scripting-qa-fig-07.png)
 
-![Q14. Given dict of settings, copy() it, change one value in the copy -- prove original unaffected. Add a nested list value; mutate it via the copy -- show original is affected (shallow copy).](../resources/ch19-dictionary-scripting-qa-fig-07.png)
+**Reading the figure**
+
+- **Step 1:** `settings_copy = settings.copy()` makes a new outer dictionary.
+- **Step 2:** Both "theme" keys point to the same string, "light".
+- **Step 3:** Both "recent_scores" keys point to one shared list.
+- **Step 4:** `settings_copy["theme"] = "dark"` only moves the copy's key to a new string. The original still says "light".
+- **Step 5:** `settings_copy["recent_scores"].append(30)` changes the shared list itself.
+- **Step 6:** So the original sees the change as well: its list is now `[10, 20, 30]`.
 
 **Try this next**
 
@@ -1502,15 +1497,15 @@ Dictionary: {'Ann': 90, 'Bob': 85, 'Cid': 78}
 | 1 | `"Bob"` | `85` | `('Bob', 85)` |
 | 2 | `"Cid"` | `78` | `('Cid', 78)` |
 
-```mermaid
-flowchart LR
-    A["Step 1: names and marks lists"] --> B["Step 2: zip pairs items by position"]
-    B --> C["Step 3: Pairs (Ann, 90), (Bob, 85), (Cid, 78)"]
-    C --> D["Step 4: dict() turns each pair into key: value"]
-    D --> E["Step 5: {Ann: 90, Bob: 85, Cid: 78}"]
-```
+![Q17. Two separate lists — names, marks (same order). Combine into one dictionary using zip() and dict().](../resources/S19-LR-ch19-dictionary-scripting-qa-fig-09.png)
 
-![Q17. Two separate lists — names, marks (same order). Combine into one dictionary using zip() and dict().](../resources/ch19-dictionary-scripting-qa-fig-09.png)
+**Reading the figure**
+
+- **Step 1:** Start with two lists of the same length: `names` and `marks`.
+- **Step 2:** `zip(names, marks)` pairs the items by position: first with first, second with second.
+- **Step 3:** The pairs are `("Ann", 90)`, `("Bob", 85)` and `("Cid", 78)`.
+- **Step 4:** `dict()` turns each pair into a `key: value` entry.
+- **Step 5:** The result is `{'Ann': 90, 'Bob': 85, 'Cid': 78}`.
 
 **Try this next**
 

@@ -1,6 +1,7 @@
 
 
 
+
 # Complex Numbers in Python: An Advanced Guide
 
 Python provides **built-in support** for complex numbers. In many programming languages, complex numbers come from a separate library that you must add. Python includes a full complex number type, `complex`, in the core language, so it is ready to use without any import.
@@ -776,17 +777,17 @@ sorted(nums, key=abs) -> [(1+1j), 2j, (3+4j), (-6+0j)]
 
 In Step 5, the magnitudes of `3+4j`, `1+1j`, `-6+0j` and `2j` are 5, about 1.414, 6 and 2. So the sorted order is `1+1j`, `2j`, `3+4j`, `-6+0j`.
 
-```mermaid
-flowchart LR
-    A["1. You want to compare complex numbers a and b"] --> B{"2. What do you need to know?"}
-    B -->|Equal or not| C{"3. Are a and b results of calculations?"}
-    C -->|No| D["4. Use a == b"]
-    C -->|Yes| E["5. Use cmath.isclose(a, b)"]
-    B -->|Which is bigger| F["6. Choose a rule, for example the magnitude"]
-    F --> G["7. Compare abs(a) and abs(b), or sort with key=abs"]
-```
+![Comparison of Complex Numbers](../resources/S02-LR-ch02-complex-numbers-advanced-fig-02.png)
 
-![Comparison of Complex Numbers](../resources/ch02-complex-numbers-advanced-fig-02.png)
+**Reading the figure**
+
+- **Step 1:** You want to compare two complex numbers, `a` and `b`.
+- **Step 2:** What do you need to know: whether they are equal, or which one is bigger?
+- **Step 3:** Equal or not: were `a` and `b` produced by calculations?
+- **Step 4:** No, they were typed in exactly: `a == b` is safe.
+- **Step 5:** Yes: tiny rounding errors are likely, so use `cmath.isclose(a, b)`, adding `abs_tol` when a value may be close to 0.
+- **Step 6:** Which is bigger: complex numbers have no natural order, so first choose a rule, usually the magnitude, the distance from 0.
+- **Step 7:** Compare `abs(a)` and `abs(b)`, or sort a list with `sorted(nums, key=abs)`.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1506,6 +1507,7 @@ Distances: 2.236068 2.236068 2.236068
 The results are rounded to 6 decimal places to hide tiny float errors. Turning (2, 1) by 90 degrees gives (-1, 2), and all three points are the same distance, √5 ≈ 2.236, from the origin.
 
 [Back to the Table of Contents](#table-of-contents)
+
 
 
 

@@ -1112,17 +1112,16 @@ Are both the same string? True
 
 **Flowchart**
 
-```mermaid
-flowchart TD
-    A["1. Python reads the string character by character"] --> B{"2. Is the character a backslash?"}
-    B -->|"No"| C["3. Store the character as it is"]
-    B -->|"Yes"| D["4. Read the next character too"]
-    D --> E["5. Store the single special character they stand for"]
-    C --> F["6. Move to the next character"]
-    E --> F
-```
+![Question 6. Escape Sequences](../resources/LR-ch17-conceptual-qa-fig-04.png)
 
-![Question 6. Escape Sequences](../resources/ch17-conceptual-qa-fig-04.png)
+**Reading the figure**
+
+- **Step 1:** Python reads the string literal one character at a time.
+- **Step 2:** Is the character a backslash, `\`?
+- **Step 3:** No: store the character as it is.
+- **Step 4:** Yes: read the next character as well.
+- **Step 5:** Store the single special character the pair stands for. `\n` becomes one newline character, and `\t` one tab.
+- **Step 6:** Move on to the next character.
 
 **Common beginner mistakes**
 
@@ -1293,16 +1292,15 @@ Regular expressions are the most common use of all. There the backslash has its 
 
 **Diagram**
 
-```mermaid
-flowchart TD
-    A["1. Python meets a backslash inside a string"] --> B{"2. Does the literal have an r prefix?"}
-    B -->|"Yes"| C["3. Keep the backslash as an ordinary character"]
-    B -->|"No"| D["4. Read the next character and form an escape sequence"]
-    C --> E["5. Continue with the rest of the string"]
-    D --> E
-```
+![Question 7. Raw Strings](../resources/LR-ch17-conceptual-qa-fig-05.png)
 
-![Question 7. Raw Strings](../resources/ch17-conceptual-qa-fig-05.png)
+**Reading the figure**
+
+- **Step 1:** Python meets a backslash inside a string literal.
+- **Step 2:** Does the literal have an `r` prefix, as in `r"C:\new"`?
+- **Step 3:** Yes: it is a raw string, so the backslash is kept as an ordinary character.
+- **Step 4:** No: Python reads the next character and forms an escape sequence, so `\n` becomes a newline.
+- **Step 5:** Python continues with the rest of the string.
 
 **One limitation worth knowing**
 
@@ -1548,25 +1546,22 @@ Both loops give 3. The `for` loop is shorter, so it is the better choice here.
 
 **Flowchart**
 
-```mermaid
-flowchart TD
-    A["1. Start"] --> B["2. Get the string"]
-    B --> C{"3. Which traversal method?"}
-    C -->|"for"| D["4. The loop hands over the next character"]
-    D --> E["5. Process the character"]
-    E --> F{"6. Any characters left?"}
-    F -->|"Yes"| D
-    F -->|"No"| L["12. End"]
-    C -->|"while"| G["7. Set the index to 0"]
-    G --> H["8. Read the character at the index"]
-    H --> I["9. Process the character"]
-    I --> J["10. Add 1 to the index"]
-    J --> K{"11. Index still less than the length?"}
-    K -->|"Yes"| H
-    K -->|"No"| L
-```
+![Question 8. Traversing a String With for and while](../resources/LR-ch17-conceptual-qa-fig-06.png)
 
-![Question 8. Traversing a String With for and while](../resources/ch17-conceptual-qa-fig-06.png)
+**Reading the figure**
+
+- **Step 1:** Start.
+- **Step 2:** Get the string to traverse.
+- **Step 3:** Which traversal method is used?
+- **Step 4:** `for`: the loop itself hands over the next character. No index is needed.
+- **Step 5:** Process the character, for example count it.
+- **Step 6:** If characters are left, go back to Step 4. If not, go to Step 12.
+- **Step 7:** `while`: set the index to 0 yourself.
+- **Step 8:** Read the character at the index, `text[i]`.
+- **Step 9:** Process the character.
+- **Step 10:** Add 1 to the index. Forgetting this line makes the loop run for ever.
+- **Step 11:** Is the index still less than `len(text)`? If so, go back to Step 8. If not, go to Step 12.
+- **Step 12:** End. Both loops give the same result, and the `for` loop is shorter.
 
 **Common beginner mistakes**
 
@@ -2097,16 +2092,15 @@ For `text[2:9:2]` Python
 
 **Flowchart**
 
-```mermaid
-flowchart TD
-    A["1. Go to the start index"] --> B["2. Copy the character"]
-    B --> C["3. Move forward by the step"]
-    C --> D{"4. Has the stop index been reached?"}
-    D -->|"No"| B
-    D -->|"Yes"| E["5. Return the new string"]
-```
+![Question 10. String Slicing](../resources/LR-ch17-conceptual-qa-fig-08.png)
 
-![Question 10. String Slicing](../resources/ch17-conceptual-qa-fig-08.png)
+**Reading the figure**
+
+- **Step 1:** Go to the start index of the slice.
+- **Step 2:** Copy the character at that position into the new string.
+- **Step 3:** Move forward by the step, for example two positions for `[::2]`.
+- **Step 4:** Has the stop index been reached or passed? If not, go back to Step 2. The character at the stop index itself is never copied.
+- **Step 5:** Yes: return the new string. The original string is not changed.
 
 **Examples**
 
@@ -3679,15 +3673,15 @@ Validation therefore improves program reliability. Note the order of the steps: 
 
 **Flowchart**
 
-```mermaid
-flowchart TD
-    A["1. Read the input as text"] --> B["2. Apply the matching is method"]
-    B --> C{"3. Did it return True?"}
-    C -->|"Yes"| D["4. Convert and process the value"]
-    C -->|"No"| E["5. Show an error message and ask again"]
-```
+![Question 15. The is Family of Methods](../resources/LR-ch17-conceptual-qa-fig-13.png)
 
-![Question 15. The is Family of Methods](../resources/ch17-conceptual-qa-fig-13.png)
+**Reading the figure**
+
+- **Step 1:** Read the input as text. `input()` always returns a string.
+- **Step 2:** Apply the matching `is` method, for example `text.isdigit()` for a whole number.
+- **Step 3:** Did it return `True`?
+- **Step 4:** Yes: the text is valid, so it is now safe to convert it, for example with `int()`, and process it.
+- **Step 5:** No: show an error message and ask again, going back to Step 1. Test first, convert second.
 
 **Comparison table**
 
@@ -4246,19 +4240,18 @@ For a word of 5 letters that means 2 comparisons instead of 5. For a sentence of
 
 **Flowchart**
 
-```mermaid
-flowchart TD
-    A["1. Start with the string"] --> B["2. Set i to 0 and assume palindrome"]
-    B --> C["3. Compare the character at i with the one at the matching place from the end"]
-    C --> D{"4. Are they equal?"}
-    D -->|"No"| E["5. Not a palindrome, stop"]
-    D -->|"Yes"| F["6. Add 1 to i"]
-    F --> G{"7. Has i reached half the length?"}
-    G -->|"No"| C
-    G -->|"Yes"| H["8. Palindrome"]
-```
+![Question 17. Palindrome Using Indexing](../resources/LR-ch17-conceptual-qa-fig-15.png)
 
-![Question 17. Palindrome Using Indexing](../resources/ch17-conceptual-qa-fig-15.png)
+**Reading the figure**
+
+- **Step 1:** Start with the string to test.
+- **Step 2:** Set `i` to 0 and assume, for now, that the string is a palindrome.
+- **Step 3:** Compare the character at `i` with the one at the matching place from the end, `text[-(i + 1)]`.
+- **Step 4:** Are they equal?
+- **Step 5:** No: one mismatch is enough. It is not a palindrome, so stop.
+- **Step 6:** Yes: add 1 to `i`.
+- **Step 7:** Has `i` reached half the length, `len(text) // 2`? If not, go back to Step 3.
+- **Step 8:** Yes: every pair matched, so it is a palindrome. Only `n // 2` comparisons were needed.
 
 **Advantages**
 
@@ -4429,17 +4422,16 @@ Are they equal? False
 
 **Diagram**
 
-```mermaid
-flowchart TD
-    A["1. Original string"] --> B["2. Build the reverse with a slice, step -1"]
-    B --> C["3. Reversed string"]
-    A --> D{"4. Is the original equal to the reverse?"}
-    C --> D
-    D -->|"Yes"| E["5. Palindrome"]
-    D -->|"No"| F["6. Not a palindrome"]
-```
+![Question 18. Palindrome Using Slicing](../resources/LR-ch17-conceptual-qa-fig-16.png)
 
-![Question 18. Palindrome Using Slicing](../resources/ch17-conceptual-qa-fig-16.png)
+**Reading the figure**
+
+- **Step 1:** Start with the original string.
+- **Step 2:** Build its reverse with the slice `text[::-1]`, which uses a step of -1.
+- **Step 3:** This gives the reversed string, a new string object.
+- **Step 4:** Compare the two: `text == text[::-1]`.
+- **Step 5:** Yes: they are equal, so it is a palindrome.
+- **Step 6:** No: it is not a palindrome.
 
 **Advantages**
 
@@ -4617,18 +4609,18 @@ After mastering the algorithm, they should learn the slicing approach to appreci
 
 **Diagram**
 
-```mermaid
-flowchart TD
-    A["1. A palindrome check is needed"] --> B{"2. What is the purpose?"}
-    B -->|"Learning the algorithm"| C["3. Use the indexing method"]
-    C --> D["4. Work through the comparisons by hand"]
-    D --> E["5. Understand loops and indexes"]
-    B -->|"Writing working code"| F["6. Use the slicing method"]
-    F --> G["7. One line, easy to read"]
-    G --> H["8. Add a cleaning step if needed"]
-```
+![Question 19. Comparing the Two Palindrome Methods](../resources/LR-ch17-conceptual-qa-fig-17.png)
 
-![Question 19. Comparing the Two Palindrome Methods](../resources/ch17-conceptual-qa-fig-17.png)
+**Reading the figure**
+
+- **Step 1:** A palindrome check is needed.
+- **Step 2:** What is the purpose?
+- **Step 3:** Learning the algorithm: use the indexing method.
+- **Step 4:** Work through the comparisons by hand, one pair at a time.
+- **Step 5:** This builds understanding of loops, indexes and conditions, and works in any language.
+- **Step 6:** Writing working code: use the slicing method.
+- **Step 7:** It is one line, `text == text[::-1]`, and easy to read.
+- **Step 8:** Add a cleaning step if needed, for example lower-casing and removing spaces, before comparing.
 
 **Key points**
 

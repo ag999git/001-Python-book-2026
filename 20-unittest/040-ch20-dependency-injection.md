@@ -634,21 +634,21 @@ In short, dependency injection lets each test do just one job: **check** somethi
 
 The flowchart below shows what happens for `test_injection`. The order of events is the same for every test in the file.
 
-```mermaid
-flowchart TD
-    A["1. pytest collects test_injection"] --> B["2. pytest reads its parameter name: db"]
-    B --> C["3. pytest searches for a fixture named db"]
-    C --> D{"4. Fixture found?"}
-    D -- No --> E["5. Report ERROR: fixture 'db' not found"]
-    D -- Yes --> F["6. pytest calls the db() fixture function"]
-    F --> G["7. Inside the fixture: Database() object is created"]
-    G --> H["8. Fixture returns the Database object"]
-    H --> I["9. pytest calls test_injection and passes the object in as db"]
-    I --> J["10. Test code runs: type(db) and the isinstance check"]
-    J --> K["11. Test completes: PASSED or FAILED"]
-```
+![Flow for EACH test (testinjection / testconnect / teststate)](../resources/LR-ch20-dependency-injection-fig-01.png)
 
-![Flow for EACH test (testinjection / testconnect / teststate)](../resources/ch20-dependency-injection-fig-01.png)
+**Reading the figure**
+
+- **Step 1:** pytest collects the test function `test_injection`.
+- **Step 2:** It reads the test's parameter name, `db`.
+- **Step 3:** It searches for a fixture with that exact name.
+- **Step 4:** Was a fixture named `db` found?
+- **Step 5:** No: pytest reports an error, `fixture 'db' not found`, and the test does not run.
+- **Step 6:** Yes: pytest calls the fixture function `db()`.
+- **Step 7:** Inside the fixture, a `Database()` object is created.
+- **Step 8:** The fixture returns the `Database` object.
+- **Step 9:** pytest calls `test_injection` and passes that object in as the argument `db`. This is dependency injection.
+- **Step 10:** The test body runs: it checks `type(db)` and `isinstance(db, Database)`.
+- **Step 11:** The test completes, as PASSED or FAILED.
 
 In words:
 
@@ -696,35 +696,35 @@ The key row is step 4. Because the fixture has the default **function scope**, i
 
 ### For test_connect(db)
 
-```mermaid
-flowchart TD
-    A["1. pytest sees the db parameter"] --> B["2. Find the db fixture"]
-    B --> C["3. Call db()"]
-    C --> D["4. Create a new Database object"]
-    D --> E["5. Return the Database object"]
-    E --> F["6. Inject it into test_connect(db)"]
-    F --> G["7. Run db.connect()"]
-    G --> H["8. Check: assert result == 'connected'"]
-```
+![For testconnect(db)](../resources/LR-ch20-dependency-injection-fig-02.png)
 
-![For testconnect(db)](../resources/ch20-dependency-injection-fig-02.png)
+**Reading the figure**
+
+- **Step 1:** pytest sees that `test_connect` has a parameter called `db`.
+- **Step 2:** It finds the fixture named `db`.
+- **Step 3:** It calls `db()`.
+- **Step 4:** The fixture creates a new `Database` object. With the default function scope, this happens once for each test.
+- **Step 5:** The fixture returns the object.
+- **Step 6:** pytest injects it into `test_connect(db)`.
+- **Step 7:** The test runs `db.connect()`.
+- **Step 8:** The test checks `assert result == 'connected'`.
 
 [Back to the Table of Contents](040-ch20-dependency-injection.md#table-of-contents)
 
 ### For test_state(db)
 
-```mermaid
-flowchart TD
-    A["1. pytest sees the db parameter"] --> B["2. Find the db fixture"]
-    B --> C["3. Call db()"]
-    C --> D["4. Create a new Database object"]
-    D --> E["5. Return the Database object"]
-    E --> F["6. Inject it into test_state(db)"]
-    F --> G["7. Run db.new_flag = 'set in test_state'"]
-    G --> H["8. Check: assert db.new_flag == 'set in test_state'"]
-```
+![For teststate(db)](../resources/LR-ch20-dependency-injection-fig-03.png)
 
-![For teststate(db)](../resources/ch20-dependency-injection-fig-03.png)
+**Reading the figure**
+
+- **Step 1:** pytest sees that `test_state` has a parameter called `db`.
+- **Step 2:** It finds the fixture named `db`.
+- **Step 3:** It calls `db()`.
+- **Step 4:** The fixture creates another new `Database` object, not the one `test_connect` used.
+- **Step 5:** The fixture returns the object.
+- **Step 6:** pytest injects it into `test_state(db)`.
+- **Step 7:** The test adds an attribute: `db.new_flag = 'set in test_state'`.
+- **Step 8:** The test checks `assert db.new_flag == 'set in test_state'`. Because the object is new, this flag will not be present in the next test.
 
 [Back to the Table of Contents](040-ch20-dependency-injection.md#table-of-contents)
 

@@ -239,21 +239,20 @@ The table below shows how the data changes at each stage.
 
 ### 3.2 Flowchart of the solution
 
-```mermaid
-flowchart TD
-    A["1. Start"] --> B["2. Import namedtuple from collections"]
-    B --> C["3. Create Student class with fields name, age, course"]
-    C --> D["4. Create record s1 = Student Anita, 20, Python"]
-    D --> E["5a. Get field names using s1._fields"]
-    D --> F["5b. Get values by treating s1 as a tuple"]
-    E --> G["6. Pair names with values using zip"]
-    F --> G
-    G --> H["7. Build dictionary using dict"]
-    H --> I["8. Print the dictionary"]
-    I --> J["9. End"]
-```
+![Exercise: Convert a NamedTuple into a Dictionary](../resources/LR-ch16-namedtuple2dict-fig-01.png)
 
-![Exercise: Convert a NamedTuple into a Dictionary](../resources/ch16-namedtuple2dict-fig-01.png)
+**Reading the figure**
+
+- **Step 1:** Start the program.
+- **Step 2:** Import `namedtuple` from the `collections` module.
+- **Step 3:** Create the class `Student` with the three fields `name`, `age` and `course`.
+- **Step 4:** Create one record, `s1 = Student('Anita', 20, 'Python')`.
+- **Step 5a:** Get the field names from `s1._fields`: `('name', 'age', 'course')`.
+- **Step 5b:** At the same time, get the values by treating `s1` as an ordinary tuple: `('Anita', 20, 'Python')`. Steps 5a and 5b feed Step 6 side by side.
+- **Step 6:** `zip(s1._fields, s1)` pairs each name with its value: `('name', 'Anita')`, `('age', 20)`, `('course', 'Python')`.
+- **Step 7:** `dict()` turns those pairs into a dictionary, with the names as keys.
+- **Step 8:** Print the dictionary: `{'name': 'Anita', 'age': 20, 'course': 'Python'}`.
+- **Step 9:** End the program.
 
 Steps 5a and 5b happen side by side. Both feed into Step 6, where `zip()` joins them.
 
@@ -528,22 +527,21 @@ The conversion in Step 5 is exactly the same line we used for one student. The o
 
 ### 4.2 Flowchart of the extension task
 
-```mermaid
-flowchart TD
-    A["1. Start"] --> B["2. Import namedtuple and create Student class"]
-    B --> C["3. Create records s1 for Anita and s2 for Rahul"]
-    C --> D["4. Store records in list: students = s1, s2"]
-    D --> E["5. Create empty list student_dicts"]
-    E --> F{"6. Any record left in students?"}
-    F -- "Yes" --> G["7. Take the next record"]
-    G --> H["8. Convert record to dictionary using dict and zip"]
-    H --> I["9. Append dictionary to student_dicts"]
-    I --> F
-    F -- "No" --> J["10. Print student_dicts"]
-    J --> K["11. End"]
-```
+![Optional Extension Task](../resources/LR-ch16-namedtuple2dict-fig-02.png)
 
-![Optional Extension Task](../resources/ch16-namedtuple2dict-fig-02.png)
+**Reading the figure**
+
+- **Step 1:** Start the program.
+- **Step 2:** Import `namedtuple` from `collections` and create the class `Student`.
+- **Step 3:** Create two records: `s1` for Anita and `s2` for Rahul.
+- **Step 4:** Put the records in a list, `students = [s1, s2]`.
+- **Step 5:** Create an empty list, `student_dicts`, to collect the results.
+- **Step 6:** The `for` loop checks whether any record in `students` has not been processed yet.
+- **Step 7:** Yes: take the next record from the list.
+- **Step 8:** Convert it to a dictionary with exactly the same line used for one student, `dict(zip(record._fields, record))`.
+- **Step 9:** Append that dictionary to `student_dicts`, then go back to Step 6.
+- **Step 10:** No records are left, so print `student_dicts`, a list of two dictionaries.
+- **Step 11:** End the program.
 
 Steps 7, 8 and 9 form the loop. After Step 9 the program goes back to Step 6 and checks whether another record is waiting. When no record is left, it moves on to Step 10.
 

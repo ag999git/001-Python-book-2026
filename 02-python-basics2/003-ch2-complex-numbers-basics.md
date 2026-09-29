@@ -655,17 +655,17 @@ abs(z1) > abs(z2) -> True
 
 If you need to know which of two complex numbers is "bigger", decide what you mean. Usually it is the distance from 0, so compare `abs()` values, as in Step 4.
 
-```mermaid
-flowchart LR
-    A["1. You apply an operation to complex numbers"] --> B{"2. Which operation?"}
-    B -->|Arithmetic| C["3. Add, subtract, multiply, divide, power: allowed, gives a complex number"]
-    B -->|Equality| D["4. Equal or not equal: allowed, gives True or False"]
-    B -->|Rounding down| E["5. Floor division, remainder, divmod: TypeError"]
-    B -->|Ordering| F["6. Less than or greater than: TypeError, no natural order"]
-    F --> G["7. To compare sizes, compare abs(z1) and abs(z2)"]
-```
+![Unsupported Operations (Error Examples)](../resources/S02-LR-ch02-complex-numbers-basics-fig-03.png)
 
-![Unsupported Operations (Error Examples)](../resources/ch02-complex-numbers-basics-fig-03.png)
+**Reading the figure**
+
+- **Step 1:** You apply an operation to two complex numbers, `z1` and `z2`.
+- **Step 2:** Which kind of operation is it?
+- **Step 3:** Arithmetic, `+`, `-`, `*`, `/` and `**`, is allowed and gives a complex number.
+- **Step 4:** Equality, `==` and `!=`, is allowed and gives `True` or `False`.
+- **Step 5:** Rounding-down operations, `//`, `%` and `divmod()`, raise `TypeError`, because "rounding down" has no meaning for a point on a plane.
+- **Step 6:** Ordering, `<` and `>`, raises `TypeError`, because complex numbers have no natural order.
+- **Step 7:** If you need to know which is "bigger", decide what you mean. Usually it is the distance from 0, so compare `abs(z1)` and `abs(z2)`.
 
 [Back to the Table of Contents](#table-of-contents)
 

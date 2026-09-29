@@ -200,16 +200,16 @@ Flag:  True | type: <class 'bool'>
 - **Tuple unpacking.** When you put several variable names on the left side of `=`, Python takes the items of the tuple and gives them to the variables **in order**. The first item goes to the first name, the second to the second, and so on.
 - The number of names must equal the number of items. If they do not match, Python raises a `ValueError`.
 
-```mermaid
-flowchart LR
-    A["Step 1: Values Data, 2026, True"] --> B["Step 2: Packed into one tuple"]
-    B --> C["Step 3: Unpacked in order"]
-    C --> D["Step 4: label = Data"]
-    C --> E["Step 5: year = 2026"]
-    C --> F["Step 6: flag = True"]
-```
+![Q2. Write a script that puts three values ("Data", 2026, True) into one tuple. Then, unpack those values into three separate variables and print them.](../resources/S19-LR-ch19-tuples-scripting-qa-fig-01.png)
 
-![Q2. Write a script that puts three values ("Data", 2026, True) into one tuple. Then, unpack those values into three separate variables and print them.](../resources/ch19-tuples-scripting-qa-fig-01.png)
+**Reading the figure**
+
+- **Step 1:** Start with three values of different types: a string, a whole number and a Boolean.
+- **Step 2:** Packing: `packed_data = "Data", 2026, True` groups them into one tuple. Brackets are optional.
+- **Step 3:** Unpacking: `label, year, flag = packed_data` hands the items to the names in order. The number of names must equal the number of items.
+- **Step 4:** The first item goes to `label`.
+- **Step 5:** The second item goes to `year`.
+- **Step 6:** The third item goes to `flag`.
 
 **Try this next**
 
@@ -456,15 +456,15 @@ Same object as before? False
 - What happens to the old tuple `(10, 20, 30)`? If no other variable refers to it, Python frees its memory automatically.
 - You can only join a tuple to another tuple. That is why the script uses `(40,)` with a comma. Writing `my_tuple + 40` or `my_tuple + (40)` raises `TypeError: can only concatenate tuple (not "int") to tuple`.
 
-```mermaid
-flowchart LR
-    A["Step 1: my_tuple points to (10, 20, 30)"] --> B["Step 2: Python evaluates my_tuple + (40,)"]
-    B --> C["Step 3: A new tuple (10, 20, 30, 40) is built at a new memory address"]
-    C --> D["Step 4: The name my_tuple now points to the new tuple"]
-    D --> E["Step 5: The old tuple is unchanged, and is freed if nothing else uses it"]
-```
+![Q5. Write a script that adds the number 40 to the end of the tuple (10, 20, 30) using the + operator. Print the tuple and its memory ID before and after the change.](../resources/S19-LR-ch19-tuples-scripting-qa-fig-03.png)
 
-![Q5. Write a script that adds the number 40 to the end of the tuple (10, 20, 30) using the + operator. Print the tuple and its memory ID before and after the change.](../resources/ch19-tuples-scripting-qa-fig-03.png)
+**Reading the figure**
+
+- **Step 1:** The name `my_tuple` points to the tuple `(10, 20, 30)`.
+- **Step 2:** Python evaluates `my_tuple + (40,)`. The comma in `(40,)` makes it a tuple; `my_tuple + 40` would raise `TypeError`.
+- **Step 3:** A new tuple, `(10, 20, 30, 40)`, is built at a new memory address.
+- **Step 4:** The `=` moves the name `my_tuple` to the new tuple. `id()` before and after gives two different numbers.
+- **Step 5:** The old tuple is not changed. If nothing else refers to it, Python frees its memory automatically.
 
 **Try this next**
 
@@ -751,15 +751,15 @@ Type of rest_of_items: <class 'list'>
 - Only one starred name is allowed in a single assignment. If nothing is left over, the starred name gets an empty list `[]`.
 - Extended unpacking was added to Python by [PEP 3132](https://peps.python.org/pep-3132/). (A PEP is a document that proposes a new feature for Python.)
 
-```mermaid
-flowchart LR
-    A["Step 1: data = (10, 20, 30, 40, 50)"] --> B["Step 2: Normal name first_item takes the first item"]
-    B --> C["Step 3: first_item = 10"]
-    C --> D["Step 4: Starred name collects every item that is left"]
-    D --> E["Step 5: rest_of_items = [20, 30, 40, 50], always a list"]
-```
+![Q9. Write a script to unpack the tuple (10, 20, 30, 40, 50). Capture the first item in a normal variable, and use the  operator to collect the rest of the items.](../resources/S19-LR-ch19-tuples-scripting-qa-fig-04.png)
 
-![Q9. Write a script to unpack the tuple (10, 20, 30, 40, 50). Capture the first item in a normal variable, and use the  operator to collect the rest of the items.](../resources/ch19-tuples-scripting-qa-fig-04.png)
+**Reading the figure**
+
+- **Step 1:** Start with `data = (10, 20, 30, 40, 50)` and write `first_item, *rest_of_items = data`.
+- **Step 2:** The normal name, `first_item`, takes the first item.
+- **Step 3:** So `first_item` is 10.
+- **Step 4:** The starred name, `*rest_of_items`, collects every item that is left.
+- **Step 5:** `rest_of_items` is `[20, 30, 40, 50]`: always a list, even though the data came from a tuple. If nothing is left over, it is an empty list.
 
 **Try this next**
 
@@ -994,14 +994,14 @@ bool(0):    False
 - So `(0,)` is `True`, because it holds one item, while the number `0` on its own is `False`. The last two lines of the output show this difference.
 - Values that count as `False` are often called **falsy**, and values that count as `True` are called **truthy**. See [Python docs: Truth value testing](https://docs.python.org/3/library/stdtypes.html#truth-value-testing).
 
-```mermaid
-flowchart LR
-    A["Step 1: A tuple is used in an if statement"] --> B{"Step 2: Does the tuple have any items?"}
-    B -- "No, it is empty" --> C["Step 3: It counts as False, so the else branch runs"]
-    B -- "Yes, one or more" --> D["Step 4: It counts as True, so the if branch runs. The values inside are not checked"]
-```
+![Q12. Write a script that tests an empty tuple () and a single-item tuple (0,) inside an if statement to check if Python sees them as True or False.](../resources/S19-LR-ch19-tuples-scripting-qa-fig-05.png)
 
-![Q12. Write a script that tests an empty tuple () and a single-item tuple (0,) inside an if statement to check if Python sees them as True or False.](../resources/ch19-tuples-scripting-qa-fig-05.png)
+**Reading the figure**
+
+- **Step 1:** A tuple is used as the condition of an `if` statement.
+- **Step 2:** Does the tuple have any items at all?
+- **Step 3:** No, it is empty: it counts as `False`, so the `else` branch runs.
+- **Step 4:** Yes, one or more: it counts as `True`, so the `if` branch runs. The values inside are not checked, so `(0,)` is `True` even though `0` on its own is `False`.
 
 | Tuple | Number of items | Counts as |
 | --- | --- | --- |
@@ -1165,16 +1165,16 @@ After swap:  t1 = (2, 'Beta') | t2 = (1, 'Alpha')
 - Note that the tuples themselves are not changed. Only the names `t1` and `t2` are moved to point to each other's tuple. This works for any values, not only tuples.
 - (For two or three names, standard Python is clever enough to swap the values directly without building the hidden tuple. The result is exactly the same.)
 
-```mermaid
-flowchart LR
-    A["Step 1: t1 = (1, Alpha), t2 = (2, Beta)"] --> B["Step 2: Read the right side t2, t1"]
-    B --> C["Step 3: Pack into a hidden tuple"]
-    C --> D["Step 4: Unpack: first item goes to t1"]
-    D --> E["Step 5: Unpack: second item goes to t2"]
-    E --> F["Step 6: t1 = (2, Beta), t2 = (1, Alpha)"]
-```
+![Q14. Write a script that swaps the values of two tuple variables t1 and t2 in a single line without using any temporary storage variables.](../resources/S19-LR-ch19-tuples-scripting-qa-fig-07.png)
 
-![Q14. Write a script that swaps the values of two tuple variables t1 and t2 in a single line without using any temporary storage variables.](../resources/ch19-tuples-scripting-qa-fig-07.png)
+**Reading the figure**
+
+- **Step 1:** Start with `t1 = (1, "Alpha")` and `t2 = (2, "Beta")`.
+- **Step 2:** For `t1, t2 = t2, t1`, Python reads the right side first, before anything is assigned.
+- **Step 3:** It packs the two values into a hidden tuple.
+- **Step 4:** Unpacking: the first item goes to `t1`.
+- **Step 5:** The second item goes to `t2`.
+- **Step 6:** Now `t1` is `(2, "Beta")` and `t2` is `(1, "Alpha")`. The tuples themselves did not change; only the names moved.
 
 **Try this next**
 
@@ -1415,14 +1415,14 @@ It helps to picture the nested tuple as a small grid, with the first index as th
 | **Row `[0]`** | 1 | 2 |
 | **Row `[1]`** | **3** | 4 |
 
-```mermaid
-flowchart LR
-    A["Step 1: nested_data = ((1, 2), (3, 4))"] --> B["Step 2: [1] picks the inner tuple (3, 4)"]
-    B --> C["Step 3: [0] picks its first item"]
-    C --> D["Step 4: Result is 3"]
-```
+![Q17. Write a script to extract the number 3 out of the nested data tuple ((1, 2), (3, 4)) using index brackets.](../resources/S19-LR-ch19-tuples-scripting-qa-fig-08.png)
 
-![Q17. Write a script to extract the number 3 out of the nested data tuple ((1, 2), (3, 4)) using index brackets.](../resources/ch19-tuples-scripting-qa-fig-08.png)
+**Reading the figure**
+
+- **Step 1:** Start with `nested_data = ((1, 2), (3, 4))`, a tuple of two rows.
+- **Step 2:** `nested_data[1]` picks the second row, `(3, 4)`.
+- **Step 3:** `[0]` then picks the first item of that row.
+- **Step 4:** The result, `nested_data[1][0]`, is 3.
 
 **Try this next**
 
@@ -1503,15 +1503,15 @@ Min: 10 | Max: 30 | Total sum: 60
 - The line in triple quotes inside the function is a **docstring**. It describes what the function does. You can see it by running `help(analyze_sequence)`.
 - `min()`, `max()` and `sum()` are built-in functions that work on any tuple or list of numbers.
 
-```mermaid
-flowchart LR
-    A["Step 1: Call analyze_sequence((10, 20, 30))"] --> B["Step 2: Work out min = 10, max = 30, sum = 60"]
-    B --> C["Step 3: return packs them into one tuple (10, 30, 60)"]
-    C --> D["Step 4: The tuple is sent back to the caller"]
-    D --> E["Step 5: Unpack: low = 10, high = 30, total = 60"]
-```
+![Q18. Write a function that takes a tuple and returns its minimum value, maximum value, and total sum all at once. Call the function with the tuple (10, 20, 30) and unpack the results.](../resources/S19-LR-ch19-tuples-scripting-qa-fig-09.png)
 
-![Q18. Write a function that takes a tuple and returns its minimum value, maximum value, and total sum all at once. Call the function with the tuple (10, 20, 30) and unpack the results.](../resources/ch19-tuples-scripting-qa-fig-09.png)
+**Reading the figure**
+
+- **Step 1:** Call `analyze_sequence((10, 20, 30))`.
+- **Step 2:** Inside, `min()`, `max()` and `sum()` work out 10, 30 and 60.
+- **Step 3:** The `return` line lists the three values with commas, which packs them into one tuple, `(10, 30, 60)`.
+- **Step 4:** That single tuple is sent back to the caller. A function always returns one object.
+- **Step 5:** `low, high, total = analyze_sequence(...)` unpacks it into three variables. With only two names, Python would raise `ValueError`.
 
 **Try this next**
 
@@ -1579,17 +1579,16 @@ Student name: Bob | Exam grade: 92
 - This saves you from pulling the items out by index yourself, as in `pair[0]` and `pair[1]`. The loop is shorter and much easier to read.
 - The loop variables can have any names. `name` and `score` are chosen because they describe the data.
 
-```mermaid
-flowchart LR
-    A["Step 1: grades.items() provides the pairs"] --> B{"Step 2: Is there another pair?"}
-    B -- Yes --> C["Step 3: Take the next pair, for example (Alice, 85)"]
-    C --> D["Step 4: Unpack it: name = Alice, score = 85"]
-    D --> E["Step 5: Run the print line"]
-    E --> B
-    B -- No --> F["Step 6: The loop ends"]
-```
+![Q19. Write a script that loops through the dictionary items {"Alice": 85, "Bob": 92} and automatically unpacks the keys and values during each pass of the loop.](../resources/S19-LR-ch19-tuples-scripting-qa-fig-10.png)
 
-![Q19. Write a script that loops through the dictionary items {"Alice": 85, "Bob": 92} and automatically unpacks the keys and values during each pass of the loop.](../resources/ch19-tuples-scripting-qa-fig-10.png)
+**Reading the figure**
+
+- **Step 1:** `grades.items()` provides the key-value pairs of the dictionary as tuples.
+- **Step 2:** Is there another pair?
+- **Step 3:** Yes: take the next pair, for example `("Alice", 85)`.
+- **Step 4:** Because two names follow `for`, Python unpacks the pair: `name = "Alice"` and `score = 85`. No `pair[0]` or `pair[1]` is needed.
+- **Step 5:** Run the `print` line, then go back to Step 2.
+- **Step 6:** No pairs are left, so the loop ends.
 
 **Try this next**
 
@@ -1665,16 +1664,16 @@ Handled error message: Not Found
 - Python runs only the **first** case that matches, then leaves the `match` statement.
 - **Line `case _:`** uses the wildcard `_`, which matches anything. It is a good habit to include it as the last case, so that unexpected values do not pass by silently.
 
-```mermaid
-flowchart LR
-    A["Step 1: status = (404, Not Found)"] --> B{"Step 2: case (200, message) - two items and first item 200?"}
-    B -- Yes --> C["Step 3: Print the success message"]
-    B -- No --> D{"Step 4: case (404, message) - two items and first item 404?"}
-    D -- Yes --> E["Step 5: message = Not Found, print the error message"]
-    D -- No --> F["Step 6: case _ matches anything, print Unknown status"]
-```
+![Q20. Write a script that uses a match-case statement to check the tuple variable status = (404, "Not Found") and print a custom message based on its contents.](../resources/S19-LR-ch19-tuples-scripting-qa-fig-11.png)
 
-![Q20. Write a script that uses a match-case statement to check the tuple variable status = (404, "Not Found") and print a custom message based on its contents.](../resources/ch19-tuples-scripting-qa-fig-11.png)
+**Reading the figure**
+
+- **Step 1:** The value to test is `status = (404, "Not Found")`.
+- **Step 2:** First case, `case (200, message)`: does `status` have two items, and is the first one 200?
+- **Step 3:** Yes: print the success message. (Here the answer is No, because 404 is not 200.)
+- **Step 4:** Second case, `case (404, message)`: two items, and the first one 404?
+- **Step 5:** Yes: the second item is captured, so `message = "Not Found"`, and the error message is printed. Python runs only the first matching case.
+- **Step 6:** No: `case _:` is the wildcard. It matches anything, so "Unknown status" is printed.
 
 Read more in the [Python tutorial on match statements](https://docs.python.org/3/tutorial/controlflow.html#match-statements).
 

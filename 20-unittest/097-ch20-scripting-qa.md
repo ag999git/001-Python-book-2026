@@ -322,15 +322,15 @@ PASSED
 
 Expected execution order:
 
-```mermaid
-flowchart TD
-    A["1. Fixture setup: create Database and connect (once)"] --> B["2. test_one"]
-    B --> C["3. test_two (same object)"]
-    C --> D["4. test_three (same object)"]
-    D --> E["5. Fixture teardown (once)"]
-```
+![Modify the fixture example to use session scope so that the object is created only once for all tests.](../resources/LR-ch20-scripting-qa-fig-01.png)
 
-![Modify the fixture example to use session scope so that the object is created only once for all tests.](../resources/ch20-scripting-qa-fig-01.png)
+**Reading the figure**
+
+- **Step 1:** The session-scoped fixture runs its setup once: it creates the `Database` object and connects it.
+- **Step 2:** `test_one` runs with that object.
+- **Step 3:** `test_two` runs with the same object. It is not created again.
+- **Step 4:** `test_three` runs with the same object.
+- **Step 5:** After the last test, the fixture's teardown runs once.
 
 The setup and teardown happen only once. In the output, `[FIXTURE] session setup` and `[FIXTURE] session teardown` each appear a single time, even though there are three tests.
 
@@ -398,16 +398,16 @@ The line `<class 'test_injection.User'>` proves that the parameter `user` holds 
 
 Flow:
 
-```mermaid
-flowchart TD
-    A["1. pytest collects test_user_injection(user)"] --> B["2. Search for a fixture named user"]
-    B --> C["3. Call user()"]
-    C --> D["4. A User object is returned"]
-    D --> E["5. The object is placed into the test parameter user"]
-    E --> F["6. The test body runs"]
-```
+![Write a pytest script demonstrating dependency injection. Show how pytest injects a fixture object into a test function parameter.](../resources/LR-ch20-scripting-qa-fig-02.png)
 
-![Write a pytest script demonstrating dependency injection. Show how pytest injects a fixture object into a test function parameter.](../resources/ch20-scripting-qa-fig-02.png)
+**Reading the figure**
+
+- **Step 1:** pytest collects the test function `test_user_injection(user)`, which has one parameter, `user`.
+- **Step 2:** It searches for a fixture named `user`, the same name as the parameter.
+- **Step 3:** It calls the fixture function `user()`.
+- **Step 4:** The fixture returns a `User` object.
+- **Step 5:** pytest places that object into the test's parameter `user`. The test never creates it itself.
+- **Step 6:** The test body runs and can use `user` straight away.
 
 Note that steps 2 to 5 all happen **before** the first line of the test runs. That is why `[FIXTURE] creating User object` is printed before `[TEST] received object`.
 
@@ -887,15 +887,15 @@ PASSED
 
 Execution flow:
 
-```mermaid
-flowchart TD
-    A["1. Fixture setup: create and start the Resource"] --> B["2. yield sends the object to the test"]
-    B --> C["3. The test runs"]
-    C --> D["4. The fixture continues after yield"]
-    D --> E["5. Teardown: stop the Resource"]
-```
+![Write a pytest fixture using yield to perform setup and teardown operations.](../resources/LR-ch20-scripting-qa-fig-03.png)
 
-![Write a pytest fixture using yield to perform setup and teardown operations.](../resources/ch20-scripting-qa-fig-03.png)
+**Reading the figure**
+
+- **Step 1:** The fixture's setup runs: it creates the `Resource` and starts it.
+- **Step 2:** `yield` sends the object to the test, and the fixture pauses.
+- **Step 3:** The test runs using the resource.
+- **Step 4:** When the test has finished, the fixture continues from the line after `yield`.
+- **Step 5:** The teardown stops the `Resource`. This part runs even if the test failed.
 
 **Important:**
 
@@ -1129,14 +1129,16 @@ from conftest import calculator
 
 Pytest looks for the fixture itself:
 
-```mermaid
-flowchart TD
-    A["1. test_add asks for calculator"] --> B{"2. Is it defined in test_calculator.py?"}
-    B -- No --> C{"3. Is it defined in conftest.py in this folder?"}
-    C -- Yes --> D["4. Run the fixture and inject the object"]
-```
+![Create a conftest.py file containing a fixture and use it in a test file without importing it.](../resources/LR-ch20-scripting-qa-fig-05.png)
 
-![Create a conftest.py file containing a fixture and use it in a test file without importing it.](../resources/ch20-scripting-qa-fig-05.png)
+**Reading the figure**
+
+- **Step 1:** The test `test_add` has a parameter named `calculator`, so it asks for that fixture.
+- **Step 2:** Is the fixture defined in the test file itself, `test_calculator.py`?
+- **Step 3:** No: is it defined in a `conftest.py` in the same folder?
+- **Step 4:** Yes: pytest runs the fixture from `conftest.py` and injects the object into the test. No `from conftest import calculator` is needed.
+- **Step 5:** Yes at Step 2: pytest would use the fixture from the test file instead. (In this example the answer is No.)
+- **Step 6:** No at Step 3: pytest keeps searching `conftest.py` files in parent folders, then pytest's own and plugin fixtures.
 
 Any other test file in this folder, or in a folder inside it, could use the `calculator` fixture in the same way.
 
@@ -1380,14 +1382,14 @@ PASSED
 
 Both tests pass. But look at why `test_status` passes: it receives the **same** `User` object that `test_login` changed.
 
-```mermaid
-flowchart TD
-    A["1. test_login sets logged_in = True"] --> B["2. The same object goes to test_status"]
-    B --> C["3. The changed value is still there"]
-    C --> D["4. test_status passes, but only because test_login ran first"]
-```
+![Demonstrate the shared state problem with a session-scoped fixture.](../resources/LR-ch20-scripting-qa-fig-06.png)
 
-![Demonstrate the shared state problem with a session-scoped fixture.](../resources/ch20-scripting-qa-fig-06.png)
+**Reading the figure**
+
+- **Step 1:** `test_login` changes the shared `User` object: `logged_in = True`.
+- **Step 2:** The fixture has session scope, so `test_status` receives the same object, not a new one.
+- **Step 3:** The change made by `test_login` is still there.
+- **Step 4:** `test_status` passes, but only because `test_login` ran first. Run it alone and it would fail. This hidden dependency is the shared state problem.
 
 Now run `test_status` **on its own**:
 
@@ -1522,18 +1524,18 @@ PASSED
 
 Flow:
 
-```mermaid
-flowchart TD
-    A["1. Run the test"] --> B["2. Run the code inside the with block"]
-    B --> C{"3. Was a ValueError raised?"}
-    C -- Yes --> D{"4. Does the message contain 'cannot divide'?"}
-    D -- Yes --> E["5. PASS"]
-    D -- No --> F["6. FAIL: message does not match"]
-    C -- No exception --> G["7. FAIL: DID NOT RAISE"]
-    C -- A different exception --> H["8. FAIL: that exception is reported"]
-```
+![Test exceptions and floating point values using pytest tools.](../resources/LR-ch20-scripting-qa-fig-07.png)
 
-![Test exceptions and floating point values using pytest tools.](../resources/ch20-scripting-qa-fig-07.png)
+**Reading the figure**
+
+- **Step 1:** Run the test.
+- **Step 2:** Run the code inside the block `with pytest.raises(ValueError, match="cannot divide"):`.
+- **Step 3:** What was raised inside the block?
+- **Step 4:** A `ValueError`: does its message contain "cannot divide"?
+- **Step 5:** Yes: the test passes.
+- **Step 6:** No: the test fails, because the message does not match.
+- **Step 7:** Nothing was raised: the test fails with `DID NOT RAISE`.
+- **Step 8:** A different exception was raised: it is not caught, so the test fails and that exception is reported.
 
 **Part B: Testing floating-point values**
 
@@ -1853,19 +1855,19 @@ PASSED
 
 Execution:
 
-```mermaid
-flowchart TD
-    A["1. Parameter set 1: admin, True"] --> B["2. Fixture creates a new LoginSystem"]
-    B --> C["3. Test runs with admin"]
-    C --> D["4. Parameter set 2: guest, False"]
-    D --> E["5. Fixture creates another new LoginSystem"]
-    E --> F["6. Test runs with guest"]
-    F --> G["7. Parameter set 3: abc, False"]
-    G --> H["8. Fixture creates another new LoginSystem"]
-    H --> I["9. Test runs with abc"]
-```
+![Combine parameterized testing and fixtures to test multiple cases.](../resources/LR-ch20-scripting-qa-fig-08.png)
 
-![Combine parameterized testing and fixtures to test multiple cases.](../resources/ch20-scripting-qa-fig-08.png)
+**Reading the figure**
+
+- **Step 1:** pytest takes the first parameter set: username `admin`, expected result `True`.
+- **Step 2:** The function-scoped fixture creates a new `LoginSystem` for this test.
+- **Step 3:** The test runs with `admin`.
+- **Step 4:** pytest takes the second parameter set: `guest`, `False`.
+- **Step 5:** The fixture creates another new `LoginSystem`. Each parameter set is a separate test, so it gets a fresh object.
+- **Step 6:** The test runs with `guest`.
+- **Step 7:** pytest takes the third parameter set: `abc`, `False`.
+- **Step 8:** The fixture creates another new `LoginSystem`.
+- **Step 9:** The test runs with `abc`. The fixture has run three times in all.
 
 Note that the fixture runs **three times**, once for each parameter set, as the output shows. Each parameter set is a separate test, and a function-scoped fixture is created fresh for every test. If you wanted one shared `LoginSystem`, you would give the fixture a wider scope, such as `scope="module"`.
 

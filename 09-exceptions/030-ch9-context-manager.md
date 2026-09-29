@@ -376,7 +376,7 @@ __enter__() -> error raised -> __exit__() -> ValueError suppressed -> program co
 __enter__() -> error raised -> __exit__() -> error is NOT suppressed -> program may stop
 ```
 
-The same three cases, as a flowchart (plain Mermaid `flowchart TD` syntax, which should import cleanly into [draw.io](https://app.diagrams.net/)):
+The same three cases, as a flowchart:
 
 ![Flowchart](../resources/ch-9-exceptions-august-2026-context-manager-project.png)
 

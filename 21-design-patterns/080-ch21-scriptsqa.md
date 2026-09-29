@@ -172,19 +172,18 @@ Step 4: Theme read through config2: dark
 - The settings dictionary is created inside the `if` block, so it is set up only on the first call. If it were placed in an `__init__` method instead, `__init__` would run on **every** call to `AppConfig()` and would reset the settings each time. This is a common beginner mistake with Singletons.
 - `config1 is config2` is `True`, and both names have the same `id()`. They are two labels on one object.
 
-**Mermaid flowchart**
+**Flowchart**
 
-```mermaid
-flowchart TD
-    A["1. Client calls AppConfig"] --> B["2. Python calls __new__"]
-    B --> C{"3. Is _instance None?"}
-    C -- Yes --> D["4. Create one real object and store it in _instance"]
-    D --> E["5. Return _instance"]
-    C -- No --> E
-    E --> F["6. Every caller receives the same object"]
-```
+![Q1. Write a script implementing a basic Singleton pattern to maintain a single configuration reference. Verify if two instances point to the exact same memory object.](../resources/LR-ch21-scriptsqa-fig-01.png)
 
-![Q1. Write a script implementing a basic Singleton pattern to maintain a single configuration reference. Verify if two instances point to the exact same memory object.](../resources/ch21-scriptsqa-fig-01.png)
+**Reading the figure**
+
+- **Step 1:** The client calls `AppConfig()`.
+- **Step 2:** Python calls the class's `__new__` method, which decides what object to hand back.
+- **Step 3:** Is the class attribute `_instance` still `None`?
+- **Step 4:** Yes: this is the first call. Create the one real object, set up its settings, and store it in `_instance`.
+- **Step 5:** Return `_instance`. (No from Step 3 comes straight here: the object already exists.)
+- **Step 6:** Every caller receives the same object, so `config1 is config2` is `True`.
 
 **Pattern Explanation:**
 
@@ -1069,19 +1068,18 @@ Second display():
 - On the first `display()`, the proxy creates `_RealImage`, which prints the "LOADING" message. On the second call, the stored object is reused and no loading happens.
 - The leading underscore in `_RealImage` is a Python convention meaning "internal, do not use directly". Client code is expected to use `ImageProxy` instead ([PEP 8: naming conventions](https://peps.python.org/pep-0008/#descriptive-naming-styles)).
 
-**Mermaid flowchart**
+**Flowchart**
 
-```mermaid
-flowchart TD
-    A["1. Client creates ImageProxy"] --> B["2. Proxy stores only the file name"]
-    B --> C["3. Client calls display"]
-    C --> D{"4. Is the real image loaded?"}
-    D -- No --> E["5. Create _RealImage and load it"]
-    E --> F["6. Call display on the real image"]
-    D -- Yes --> F
-```
+![Q11. Implement a lazy-loading proxy pattern class (ImageProxy) that defers actual instantiation of an expensive internal RealImage object until .display() is invoked.](../resources/LR-ch21-scriptsqa-fig-03.png)
 
-![Q11. Implement a lazy-loading proxy pattern class (ImageProxy) that defers actual instantiation of an expensive internal RealImage object until .display() is invoked.](../resources/ch21-scriptsqa-fig-03.png)
+**Reading the figure**
+
+- **Step 1:** The client creates an `ImageProxy` for a file.
+- **Step 2:** The proxy stores only the file name. Nothing is loaded yet.
+- **Step 3:** The client calls `display()`.
+- **Step 4:** Has the real image been loaded yet?
+- **Step 5:** No: create `_RealImage` now, which prints the "LOADING" message. This happens only on the first call.
+- **Step 6:** Call `display()` on the real image. (Yes from Step 4 comes straight here, so the second call reuses the stored object.)
 
 **Pattern Explanation:**
 
@@ -1423,22 +1421,21 @@ Step 5: After second undo: OFF
 | Invoker | `RemoteControl` | Runs commands and remembers them |
 | Client | The code in Steps 4 and 5 | Creates commands and gives them to the invoker |
 
-**Mermaid flowchart**
+**Flowchart**
 
-```mermaid
-flowchart TD
-    A["1. Client creates a command for the light"] --> B["2. Remote runs execute on the command"]
-    B --> C["3. Command tells the light what to do"]
-    C --> D["4. Remote pushes the command onto history"]
-    D --> E{"5. Undo pressed?"}
-    E -- No --> A
-    E -- Yes --> F{"6. Is history empty?"}
-    F -- Yes --> G["7. Print Nothing to undo"]
-    F -- No --> H["8. Pop the last command"]
-    H --> I["9. Call undo on it"]
-```
+![Q14. Implement an undoable transaction command routing pipeline using the descriptive Command Pattern framework mapping action targets against a Light resource receptor.](../resources/LR-ch21-scriptsqa-fig-05.png)
 
-![Q14. Implement an undoable transaction command routing pipeline using the descriptive Command Pattern framework mapping action targets against a Light resource receptor.](../resources/ch21-scriptsqa-fig-05.png)
+**Reading the figure**
+
+- **Step 1:** The client creates a command object for the light, for example "turn on".
+- **Step 2:** The remote control, the invoker, runs `execute()` on the command.
+- **Step 3:** The command tells the light, the receiver, what to do.
+- **Step 4:** The remote pushes the command onto its `history` list.
+- **Step 5:** Is Undo pressed? If not, go back to Step 1 for the next command.
+- **Step 6:** Yes: is `history` empty?
+- **Step 7:** Yes: print "Nothing to undo".
+- **Step 8:** No: pop the last command off `history`, the most recent one.
+- **Step 9:** Call `undo()` on it, which reverses what it did.
 
 **Pattern Explanation:**
 
@@ -1541,20 +1538,19 @@ Step 6: 'B' in collection -> True
 - Python's rules say an iterator should have **both** `__next__()` and `__iter__()` (returning itself). With `__iter__()` added, a `CustomIterator` can also be used directly in a `for` loop ([iterator types](https://docs.python.org/3/library/stdtypes.html#iterator-types)).
 - Once the collection follows these rules, other tools work with it for free: `list()`, the `in` operator, `sum()`, `sorted()` and many more.
 
-**Mermaid flowchart**
+**Flowchart**
 
-```mermaid
-flowchart TD
-    A["1. for loop calls iter on the collection"] --> B["2. Collection returns a new CustomIterator"]
-    B --> C["3. Loop calls next on the iterator"]
-    C --> D{"4. Is _index past the last item?"}
-    D -- No --> E["5. Return the item and add 1 to _index"]
-    E --> F["6. Loop body runs with the item"]
-    F --> C
-    D -- Yes --> G["7. Raise StopIteration and the loop ends"]
-```
+![Q15. Write a custom sequence traversal loop pattern using the traditional Iterator architecture by defining sequential steps inside CustomIterator and CustomCollection.](../resources/LR-ch21-scriptsqa-fig-06.png)
 
-![Q15. Write a custom sequence traversal loop pattern using the traditional Iterator architecture by defining sequential steps inside CustomIterator and CustomCollection.](../resources/ch21-scriptsqa-fig-06.png)
+**Reading the figure**
+
+- **Step 1:** The `for` loop calls `iter()` on the collection.
+- **Step 2:** The collection's `__iter__()` returns a new `CustomIterator`, starting at `_index = 0`.
+- **Step 3:** The loop calls `next()` on the iterator, which runs its `__next__()` method.
+- **Step 4:** Is `_index` past the last item?
+- **Step 5:** No: return the item at `_index`, and add 1 to `_index`.
+- **Step 6:** The loop body runs with that item, then goes back to Step 3.
+- **Step 7:** Yes: `__next__()` raises `StopIteration`, and the `for` loop ends quietly.
 
 **Pattern Explanation:**
 
@@ -1767,19 +1763,19 @@ finally:
 
 The `with` statement writes all of this for you, and you cannot forget the cleanup step.
 
-**Mermaid flowchart**
+**Flowchart**
 
-```mermaid
-flowchart TD
-    A["1. with statement starts"] --> B["2. Python calls __enter__ and the connection opens"]
-    B --> C["3. Code inside the with block runs"]
-    C --> D{"4. Did an error occur?"}
-    D -- No --> E["5. __exit__ runs and closes the connection normally"]
-    D -- Yes --> F["6. __exit__ runs and closes the connection"]
-    F --> G["7. __exit__ returns False, so the error reaches the caller"]
-```
+![Q17. Develop an elegant Pythonic native alternative to resource management workflows by configuring a class utilizing Context Manager protocols.](../resources/LR-ch21-scriptsqa-fig-07.png)
 
-![Q17. Develop an elegant Pythonic native alternative to resource management workflows by configuring a class utilizing Context Manager protocols.](../resources/ch21-scriptsqa-fig-07.png)
+**Reading the figure**
+
+- **Step 1:** The `with` statement starts.
+- **Step 2:** Python calls `__enter__`, which opens the connection.
+- **Step 3:** The code inside the `with` block runs.
+- **Step 4:** Did an error occur inside the block?
+- **Step 5:** No: `__exit__` runs and closes the connection normally.
+- **Step 6:** Yes: `__exit__` still runs and closes the connection. You cannot forget the cleanup.
+- **Step 7:** `__exit__` returns `False`, which means "do not hide the error", so the exception carries on to the caller.
 
 **Pattern Explanation:**
 

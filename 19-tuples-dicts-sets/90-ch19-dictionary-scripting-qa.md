@@ -1131,20 +1131,18 @@ Final: {'Fruit': ['Apple', 'Mango'], 'Veg': ['Carrot', 'Peas']}
 - `setdefault(category, [])` does both jobs in one call. It **inserts** the key with an empty list if the key is absent, and then **returns** the list stored for that key. The returned list is then immediately used by `.append(item)`.
 - The key point is that `setdefault()` returns the **actual list stored in the dictionary**, not a copy. So appending to what it returns changes the dictionary.
 
-```mermaid
-flowchart TD
-    A["Step 1: Take the next (category, item) pair"] --> B{"Step 2: Is category already a key?"}
-    B -- No --> C["Step 3: setdefault stores category with a new empty list"]
-    B -- Yes --> D["Step 4: setdefault leaves the dictionary as it is"]
-    C --> E["Step 5: setdefault returns the list stored for category"]
-    D --> E
-    E --> F["Step 6: append(item) adds the item to that list"]
-    F --> G{"Step 7: More pairs?"}
-    G -- Yes --> A
-    G -- No --> H["Step 8: Print grouped"]
-```
+![Q13. Empty dict category→list. Given list of (category, item) tuples, group items under categories using setdefault() — no manual if key in dict check.](../resources/LR-ch19-dictionary-scripting-qa-fig-06.png)
 
-![Q13. Empty dict category→list. Given list of (category, item) tuples, group items under categories using setdefault() — no manual if key in dict check.](../resources/ch19-dictionary-scripting-qa-fig-06.png)
+**Reading the figure**
+
+- **Step 1:** Take the next `(category, item)` pair from the list.
+- **Step 2:** `grouped.setdefault(category, [])` first checks: is `category` already a key?
+- **Step 3:** No: it stores `category` with a new empty list.
+- **Step 4:** Yes: it leaves the dictionary as it is.
+- **Step 5:** Either way, it returns the actual list stored for `category`, not a copy.
+- **Step 6:** `.append(item)` adds the item to that list, so the dictionary itself changes.
+- **Step 7:** If more pairs are left, go back to Step 1.
+- **Step 8:** No: print `grouped`, with each category and its list of items.
 
 **Try this next**
 
@@ -1414,17 +1412,16 @@ print(freq)
 
 The same pattern continues for `s`, `i`, `p`, `p` and `i`, giving the final result.
 
-```mermaid
-flowchart TD
-    A["Step 1: Start with an empty dictionary freq"] --> B["Step 2: Take the next character ch"]
-    B --> C["Step 3: current = freq.get(ch, 0)"]
-    C --> D["Step 4: freq[ch] = current + 1"]
-    D --> E{"Step 5: More characters?"}
-    E -- Yes --> B
-    E -- No --> F["Step 6: Print freq"]
-```
+![Q16. Count frequency of each character in "mississippi" using a dictionary, no library. Use get() with default 0.](../resources/LR-ch19-dictionary-scripting-qa-fig-08.png)
 
-![Q16. Count frequency of each character in "mississippi" using a dictionary, no library. Use get() with default 0.](../resources/ch19-dictionary-scripting-qa-fig-08.png)
+**Reading the figure**
+
+- **Step 1:** Start with an empty dictionary, `freq = {}`.
+- **Step 2:** Take the next character `ch` from "mississippi".
+- **Step 3:** `freq.get(ch, 0)` returns the count so far, or 0 if this character has not been seen yet. No `if` is needed.
+- **Step 4:** Store the new count: `freq[ch] = current + 1`.
+- **Step 5:** If more characters are left, go back to Step 2.
+- **Step 6:** No: print `freq`, which is `{'m': 1, 'i': 4, 's': 4, 'p': 2}`.
 
 **Try this next**
 

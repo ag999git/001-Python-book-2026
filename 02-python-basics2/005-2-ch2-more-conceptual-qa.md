@@ -180,16 +180,16 @@ hello! | same object: False
 TypeError: 'tuple' object does not support item assignment
 ```
 
-```mermaid
-flowchart LR
-    A["1. You change a value, for example add an item"] --> B{"2. Is the object mutable?"}
-    B -->|Yes| C["3. Python changes the same object in place"]
-    C --> D["4. id() stays the same, and every name pointing to it sees the change"]
-    B -->|No| E["5. Python creates a new object with the new value"]
-    E --> F["6. The name now points to the new object, and id() changes"]
-```
+![What is the difference between mutable and immutable objects in Python?](../resources/S02-LR-ch02-2-ch2-more-conceptual-qa-fig-01.png)
 
-![What is the difference between mutable and immutable objects in Python?](../resources/ch02-2-ch2-more-conceptual-qa-fig-01.png)
+**Reading the figure**
+
+- **Step 1:** You change a value, for example append an item to a list or add `"!"` to a string.
+- **Step 2:** Is the object mutable, meaning it can be changed after it is created?
+- **Step 3:** Yes, as with a list: Python changes the same object in place.
+- **Step 4:** `id()` stays the same, and every name that points to the object sees the change.
+- **Step 5:** No, as with a string or a number: Python creates a new object holding the new value.
+- **Step 6:** The name is moved to the new object, so `id()` changes. A tuple cannot be changed at all: trying raises `TypeError`.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1031,16 +1031,16 @@ None -> False
 
 Notice that `[0]` and `"0"` are **true**. They are not empty: one holds a zero and the other holds the character "0".
 
-```mermaid
-flowchart LR
-    A["1. Python needs to know if x is true or false"] --> B{"2. Does x define its own truth rule, __bool__?"}
-    B -->|Yes| C["3. Use that rule, for example 0 is False"]
-    B -->|No| D{"4. Does x have a length, __len__?"}
-    D -->|Yes| E["5. Length 0 means False, otherwise True"]
-    D -->|No| F["6. True"]
-```
+![Why are empty containers considered False in Boolean contexts?](../resources/S02-LR-ch02-2-ch2-more-conceptual-qa-fig-04.png)
 
-![Why are empty containers considered False in Boolean contexts?](../resources/ch02-2-ch2-more-conceptual-qa-fig-04.png)
+**Reading the figure**
+
+- **Step 1:** Python needs to know whether `x` counts as true or false, for example in `if x:`.
+- **Step 2:** Does `x` define its own truth rule, a `__bool__` method?
+- **Step 3:** Yes: use that rule. Numbers use it: `0` and `0.0` are `False`, any other number is `True`. `None` is always `False`.
+- **Step 4:** No: does `x` have a length, a `__len__` method?
+- **Step 5:** Yes: a length of 0 means `False`, anything else means `True`. So `[]` and `""` are false, but `[0]` and `"0"` are true.
+- **Step 6:** No: an object with neither rule counts as `True`.
 
 [Back to the Table of Contents](#table-of-contents)
 

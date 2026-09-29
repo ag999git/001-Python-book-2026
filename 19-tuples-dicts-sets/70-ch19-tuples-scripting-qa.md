@@ -276,16 +276,16 @@ Tuple after:  (10, 20, 30)
 - Behind the scenes, a list has a special method (named `__setitem__`) that lets Python replace an item. A tuple simply does not have this method, so Python has no way to carry out the change.
 - **About `try` and `except`:** Without them, the error would stop the program at once. The `try` block runs the risky line. If a `TypeError` happens, Python jumps to the `except` block, stores the error in the variable `error`, and carries on. This lets us print the message and then prove, in Step 4, that the tuple is unchanged.
 
-```mermaid
-flowchart TD
-    A["Step 1: Create numbers = (10, 20, 30)"] --> B["Step 2: Try numbers[0] = 99"]
-    B --> C{"Step 3: Can a tuple item be replaced?"}
-    C -- No --> D["Step 4: Python raises TypeError"]
-    D --> E["Step 5: except block catches it and prints the message"]
-    E --> F["Step 6: The tuple is still (10, 20, 30)"]
-```
+![Q3. Write a script that shows you cannot change a tuple element. Try to change the first item of a tuple and print the error message.](../resources/LR-ch19-tuples-scripting-qa-fig-02.png)
 
-![Q3. Write a script that shows you cannot change a tuple element. Try to change the first item of a tuple and print the error message.](../resources/ch19-tuples-scripting-qa-fig-02.png)
+**Reading the figure**
+
+- **Step 1:** Create the tuple `numbers = (10, 20, 30)`.
+- **Step 2:** Inside a `try` block, try to replace the first item: `numbers[0] = 99`.
+- **Step 3:** A list has a special method, `__setitem__`, that lets Python replace an item. A tuple has no such method, so the change cannot be made.
+- **Step 4:** Python raises `TypeError: 'tuple' object does not support item assignment`.
+- **Step 5:** The `except TypeError as error:` block catches it and prints the message, so the program carries on.
+- **Step 6:** Printing `numbers` shows it is still `(10, 20, 30)`.
 
 **Try this next**
 
@@ -1077,17 +1077,16 @@ Orange is not available
 - The opposite test is `not in`, used in Step 4.
 - The comparison is exact. Upper and lower case matter, so `"apple" in fruits` is `False`.
 
-```mermaid
-flowchart TD
-    A["Step 1: Look for Orange in the tuple"] --> B["Step 2: Take the next item"]
-    B --> C{"Step 3: Is it equal to Orange?"}
-    C -- Yes --> D["Step 4: Stop and return True"]
-    C -- No --> E{"Step 5: Are there more items?"}
-    E -- Yes --> B
-    E -- No --> F["Step 6: Return False"]
-```
+![Q13. Write a script that uses the in operator to check if the item "Apple" exists inside the tuple ("Apple", "Banana", "Cherry"). Then check for "Orange".](../resources/LR-ch19-tuples-scripting-qa-fig-06.png)
 
-![Q13. Write a script that uses the in operator to check if the item "Apple" exists inside the tuple ("Apple", "Banana", "Cherry"). Then check for "Orange".](../resources/ch19-tuples-scripting-qa-fig-06.png)
+**Reading the figure**
+
+- **Step 1:** Evaluate `"Orange" in fruits`, where `fruits = ("Apple", "Banana", "Cherry")`.
+- **Step 2:** Python takes the next item of the tuple, from left to right.
+- **Step 3:** Is it equal to "Orange"? The comparison is exact, so upper and lower case matter.
+- **Step 4:** Yes: stop at once and return `True`. (For "Apple" this happens on the first item.)
+- **Step 5:** No: are there more items? If so, go back to Step 2.
+- **Step 6:** No items are left, so return `False`. For "Orange" every item is checked and the answer is `False`.
 
 **Try this next**
 

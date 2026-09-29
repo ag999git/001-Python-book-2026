@@ -108,16 +108,16 @@ There is one exception to the comma rule. An **empty tuple** is written as a pai
 4. If there is a comma, Python creates a tuple.
 5. If there is no comma, the brackets only group the value. The value keeps its own type, such as `int` or `str`.
 
-```mermaid
-flowchart LR
-    A["Step 1: Python reads the value on the right of ="] --> B{"Step 2: Is it an empty pair of brackets ( ) ?"}
-    B -- Yes --> C["Step 3: An empty tuple is created"]
-    B -- No --> D{"Step 4: Is there at least one comma?"}
-    D -- Yes --> E["Step 5: A tuple is created"]
-    D -- No --> F["Step 6: The brackets only group the value. It keeps its own type, for example int"]
-```
+![Q1. Define syntactic criteria for tuples. Why does x = (5) fail to produce a tuple?](../resources/S19-LR-ch19-tuples-conceptual-qa-fig-01.png)
 
-![Q1. Define syntactic criteria for tuples. Why does x = (5) fail to produce a tuple?](../resources/ch19-tuples-conceptual-qa-fig-01.png)
+**Reading the figure**
+
+- **Step 1:** Python reads the value on the right of `=`.
+- **Step 2:** Is it just an empty pair of brackets, `()`?
+- **Step 3:** Yes: an empty tuple is created.
+- **Step 4:** No: is there at least one comma at the top level? The comma, not the brackets, makes a tuple.
+- **Step 5:** Yes: a tuple is created, so `x = (5,)` and even `x = 5,` are tuples.
+- **Step 6:** No: the brackets only group the value, like brackets in arithmetic. So `x = (5)` is simply the `int` 5.
 
 **Script: the comma makes the tuple**
 
@@ -762,17 +762,17 @@ In Python 3.14 and later the first message also tells you how many items there w
 
 **How unpacking works, step by step**
 
-```mermaid
-flowchart LR
-    A["Step 1: Python evaluates the right-hand side, for example (10, 20, 30)"] --> B["Step 2: Count the items on the right"]
-    B --> C["Step 3: Count the variables on the left"]
-    C --> D{"Step 4: Are the two counts equal?"}
-    D -- Yes --> E["Step 5: Assign items to variables in order: first to first, second to second"]
-    D -- "No, too many items" --> F["Step 6: ValueError - too many values to unpack"]
-    D -- "No, too few items" --> G["Step 7: ValueError - not enough values to unpack"]
-```
+![Q8. Detail tuple packing vs. unpacking. What happens during structural mismatches?](../resources/S19-LR-ch19-tuples-conceptual-qa-fig-03.png)
 
-![Q8. Detail tuple packing vs. unpacking. What happens during structural mismatches?](../resources/ch19-tuples-conceptual-qa-fig-03.png)
+**Reading the figure**
+
+- **Step 1:** Python evaluates the right-hand side first, for example `(10, 20, 30)`.
+- **Step 2:** It counts the items on the right.
+- **Step 3:** It counts the variables on the left.
+- **Step 4:** Are the two counts equal?
+- **Step 5:** Yes: the items are assigned in order, the first item to the first name, the second to the second, and so on.
+- **Step 6:** More items than names, as in `a, b = (10, 20, 30)`: `ValueError: too many values to unpack (expected 2)`.
+- **Step 7:** Fewer items than names, as in `a, b, c = (10, 20)`: `ValueError: not enough values to unpack (expected 3, got 2)`.
 
 **Summary table**
 
@@ -1210,19 +1210,19 @@ Notice that the first line, `invalid_key = (1, [2, 3])`, works without any probl
 
 **How Python checks a key, step by step**
 
-```mermaid
-flowchart LR
-    A["Step 1: Python is asked to use an object as a dictionary key"] --> B{"Step 2: Is the object a tuple?"}
-    B -- No --> C{"Step 3: Is the object itself hashable? For example int or str"}
-    C -- Yes --> D["Step 4: The key is accepted"]
-    C -- No --> E["Step 5: TypeError - unhashable type"]
-    B -- Yes --> F["Step 6: Python checks each item inside the tuple, one by one"]
-    F --> G{"Step 7: Is every item hashable?"}
-    G -- Yes --> H["Step 8: The tuple is accepted as a key"]
-    G -- No --> I["Step 9: TypeError - unhashable type: list"]
-```
+![Q13. State requirements for dictionary keys. Can a tuple containing a list be a key?](../resources/S19-LR-ch19-tuples-conceptual-qa-fig-04.png)
 
-![Q13. State requirements for dictionary keys. Can a tuple containing a list be a key?](../resources/ch19-tuples-conceptual-qa-fig-04.png)
+**Reading the figure**
+
+- **Step 1:** Python is asked to use an object as a dictionary key.
+- **Step 2:** Is the object a tuple?
+- **Step 3:** No: is the object itself hashable? Immutable types such as `int` and `str` are.
+- **Step 4:** Yes: the key is accepted.
+- **Step 5:** No: a mutable object such as a list raises `TypeError: unhashable type`.
+- **Step 6:** Yes, it is a tuple: Python checks each item inside it, one by one.
+- **Step 7:** Is every item hashable?
+- **Step 8:** Yes: the tuple is accepted as a key, for example `(1, 2)`.
+- **Step 9:** No: one item, such as the list in `(1, [2, 3])`, cannot be hashed, so `TypeError: unhashable type: 'list'` is raised. Creating that tuple was fine; only using it as a key fails.
 
 In this chart, the "not a tuple" branch uses steps 3 to 5, and the "tuple" branch uses steps 6 to 9. Note that the check in Step 6 goes all the way down. A tuple inside a tuple is checked item by item as well.
 
@@ -1405,16 +1405,16 @@ a, b = b, a
 
 Step 1 is the key. Because both values are read *before* anything is assigned, neither value is lost.
 
-```mermaid
-flowchart LR
-    A["Step 1: Start with a = 5, b = 10"] --> B["Step 2: Read the right side b, a to get 10 and 5"]
-    B --> C["Step 3: Pack them into a hidden tuple (10, 5)"]
-    C --> D["Step 4: Unpack: a gets 10"]
-    D --> E["Step 5: Unpack: b gets 5"]
-    E --> F["Step 6: Result: a = 10, b = 5"]
-```
+![Q15. Explain Pythonic variable swapping via a, b = b, a without temporary storage.](../resources/S19-LR-ch19-tuples-conceptual-qa-fig-05.png)
 
-![Q15. Explain Pythonic variable swapping via a, b = b, a without temporary storage.](../resources/ch19-tuples-conceptual-qa-fig-05.png)
+**Reading the figure**
+
+- **Step 1:** Start with `a = 5` and `b = 10`.
+- **Step 2:** For `a, b = b, a`, Python reads the right side first and gets the values 10 and 5. Nothing is assigned yet, so neither value can be lost.
+- **Step 3:** Packing: the two values are packed into a hidden, temporary tuple, `(10, 5)`.
+- **Step 4:** Unpacking: the first item, 10, goes to `a`.
+- **Step 5:** The second item, 5, goes to `b`.
+- **Step 6:** The swap is complete, `a = 10` and `b = 5`, without a temporary variable of your own.
 
 A technical note for the curious: for two or three names, CPython is clever enough to skip building a real tuple and swaps the values directly. The result is exactly the same, so it is still correct to think of it as packing and unpacking.
 
@@ -1481,18 +1481,17 @@ On each turn of the loop, Python takes the next tuple and unpacks it straight in
 5. The loop goes back to Step 2 for the next pair.
 6. When no pairs are left, the loop ends.
 
-```mermaid
-flowchart LR
-    A["Step 1: d.items() provides the key-value pairs"] --> B{"Step 2: Is there another pair?"}
-    B -- Yes --> C["Step 3: Take the next pair, for example ('apple', 40)"]
-    C --> D["Step 4: Unpack: key = 'apple'"]
-    D --> E["Step 5: Unpack: value = 40"]
-    E --> F["Step 6: Run the loop body using key and value"]
-    F --> B
-    B -- No --> G["Step 7: The loop ends"]
-```
+![Q16. How does loop unpacking operate on dict.items() collections? Detail the steps.](../resources/S19-LR-ch19-tuples-conceptual-qa-fig-06.png)
 
-![Q16. How does loop unpacking operate on dict.items() collections? Detail the steps.](../resources/ch19-tuples-conceptual-qa-fig-06.png)
+**Reading the figure**
+
+- **Step 1:** In `for key, value in d.items():`, `d.items()` provides the key-value pairs, each one a tuple.
+- **Step 2:** Is there another pair?
+- **Step 3:** Yes: take the next pair, for example `('apple', 40)`.
+- **Step 4:** Unpack it: the first item goes to `key`, so `key = 'apple'`.
+- **Step 5:** The second item goes to `value`, so `value = 40`.
+- **Step 6:** Run the loop body using `key` and `value`, then go back to Step 2.
+- **Step 7:** No pairs are left, so the loop ends.
 
 This built-in unpacking means you do not need to write `pair[0]` and `pair[1]` inside the loop. Your loops become shorter, cleaner and much easier to read.
 
@@ -1576,19 +1575,17 @@ For each `case`, from top to bottom, Python checks the following:
 
 In the example, the first case fails at Step 3 (`404` is not `200`). The second case passes all the checks, so `msg` becomes `"Not Found"` and the program prints `Error Alert: Not Found`.
 
-```mermaid
-flowchart LR
-    A["Step 1: Take the next case pattern, from top to bottom"] --> B{"Step 2: Is the value a sequence of the right length?"}
-    B -- No --> F{"Step 6: Are there more case patterns?"}
-    B -- Yes --> C{"Step 3: Do the fixed values match, for example 404?"}
-    C -- No --> F
-    C -- Yes --> D["Step 4: Store the other items in the capture names, for example msg"]
-    D --> E["Step 5: Run this case's code and leave the match"]
-    F -- Yes --> A
-    F -- No --> G["Step 7: No match - nothing runs, unless case _ is present"]
-```
+![Q17. Explain structural pattern matching (match-case) on tuples. Detail the flow.](../resources/S19-LR-ch19-tuples-conceptual-qa-fig-07.png)
 
-![Q17. Explain structural pattern matching (match-case) on tuples. Detail the flow.](../resources/ch19-tuples-conceptual-qa-fig-07.png)
+**Reading the figure**
+
+- **Step 1:** Take the next `case` pattern, working from top to bottom.
+- **Step 2:** Is the value a sequence of the right length? `case (404, msg)` needs a sequence of exactly two items.
+- **Step 3:** Yes: do the fixed values match? In `case (404, msg)` the first item must be `404`.
+- **Step 4:** Yes: store the other items in the capture names. A plain name such as `msg` matches anything, so `msg` becomes `"Not Found"`.
+- **Step 5:** Run this case's code and leave the `match` statement. Later cases are not checked.
+- **Step 6:** A check failed: are there more `case` patterns? If so, go back to Step 1.
+- **Step 7:** No case matched, so nothing runs, unless there is a final `case _:`, which catches everything that is left.
 
 **Script: matching HTTP status tuples**
 
@@ -1673,14 +1670,14 @@ It helps to picture the nested tuple as a small table, where the first index is 
 | **Row `t[0]` = `(1, 2)`** | `t[0][0]` = 1 | `t[0][1]` = 2 |
 | **Row `t[1]` = `(3, 4)`** | `t[1][0]` = **3** | `t[1][1]` = 4 |
 
-```mermaid
-flowchart LR
-    A["Step 1: Start with t = ((1, 2), (3, 4))"] --> B["Step 2: t[1] picks the second inner tuple (3, 4)"]
-    B --> C["Step 3: [0] picks its first item"]
-    C --> D["Step 4: Result is 3"]
-```
+![Q18. Explain nested tuple indexing. How do you extract 3 from ((1, 2), (3, 4))?](../resources/S19-LR-ch19-tuples-conceptual-qa-fig-08.png)
 
-![Q18. Explain nested tuple indexing. How do you extract 3 from ((1, 2), (3, 4))?](../resources/ch19-tuples-conceptual-qa-fig-08.png)
+**Reading the figure**
+
+- **Step 1:** Start with the nested tuple `t = ((1, 2), (3, 4))`.
+- **Step 2:** The first index picks the inner tuple: `t[1]` is `(3, 4)`.
+- **Step 3:** The second index picks an item from that inner tuple: `[0]` is its first item.
+- **Step 4:** So `t[1][0]` is 3. Read the brackets from left to right: row first, then position.
 
 **Script: nested indexing**
 
@@ -1852,17 +1849,16 @@ new_t = t[:2] + t[3:]
 print(new_t)  # Output: ('a', 'b', 'd')
 ```
 
-```mermaid
-flowchart LR
-    A["Step 1: Start with t = ('a', 'b', 'c', 'd') and remove position 2"] --> B["Step 2: Slice before it: t[:2] gives ('a', 'b')"]
-    A --> C["Step 3: Slice after it: t[3:] gives ('d',)"]
-    B --> D["Step 4: Join the two slices with +"]
-    C --> D
-    D --> E["Step 5: New tuple ('a', 'b', 'd')"]
-    A --> F["Step 6: The original t is still ('a', 'b', 'c', 'd')"]
-```
+![Q20. Detail how to simulate element removal from an immutable tuple using slicing.](../resources/S19-LR-ch19-tuples-conceptual-qa-fig-09.png)
 
-![Q20. Detail how to simulate element removal from an immutable tuple using slicing.](../resources/ch19-tuples-conceptual-qa-fig-09.png)
+**Reading the figure**
+
+- **Step 1:** Start with `t = ('a', 'b', 'c', 'd')`. You want to "remove" the item at position 2, `'c'`, but a tuple cannot be changed.
+- **Step 2:** Slice the part before it: `t[:2]` is `('a', 'b')`.
+- **Step 3:** Slice the part after it: `t[3:]` is `('d',)`.
+- **Step 4:** Join the two slices with `+`: `new_t = t[:2] + t[3:]`.
+- **Step 5:** The result is a new tuple, `('a', 'b', 'd')`.
+- **Step 6:** The original `t` is still `('a', 'b', 'c', 'd')`.
 
 This approach keeps the original tuple `t` completely safe and unchanged in memory. Any other part of the program that uses `t` will not be affected.
 

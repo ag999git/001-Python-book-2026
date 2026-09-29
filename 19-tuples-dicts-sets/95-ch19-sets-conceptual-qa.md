@@ -609,19 +609,17 @@ for row in matrix:            # outer loop, read first
 
 This "left to right = outer to inner" rule is the single most useful trick for reading any nested comprehension, list or set, that you will meet later in the book.
 
-```mermaid
-flowchart TD
-    A["Step 1: Start with an empty set"] --> B{"Step 2: Outer loop - another row in matrix?"}
-    B -- No --> G["Step 7: Return the finished set"]
-    B -- Yes --> C["Step 3: Take the next row"]
-    C --> D{"Step 4: Inner loop - another value in this row?"}
-    D -- No --> B
-    D -- Yes --> E["Step 5: Take the next value"]
-    E --> F["Step 6: Add value to the set. A duplicate is ignored"]
-    F --> D
-```
+![Q7. Set comprehension — (a) syntax vs list comprehension (b) what "nested set comprehension" means and (c) how do you read the for clauses in one?](../resources/LR-ch19-sets-conceptual-qa-fig-03.png)
 
-![Q7. Set comprehension — (a) syntax vs list comprehension (b) what "nested set comprehension" means and (c) how do you read the for clauses in one?](../resources/ch19-sets-conceptual-qa-fig-03.png)
+**Reading the figure**
+
+- **Step 1:** Start with an empty set.
+- **Step 2:** Outer loop, the first `for` in the comprehension: is there another row in `matrix`?
+- **Step 3:** Yes: take the next row.
+- **Step 4:** Inner loop, the second `for`: is there another value in this row? If not, go back to Step 2 for the next row.
+- **Step 5:** Yes: take the next value.
+- **Step 6:** Add the value to the set. A value that is already there is ignored, so each value appears once. Then go back to Step 4.
+- **Step 7:** No rows are left, so return the finished set.
 
 **Script: set comprehensions**
 
@@ -1345,16 +1343,16 @@ Two other safe ways are often even simpler, because they build the result withou
 
 This "loop over a copy, change the original" pattern is not special to sets. The same technique is used with dictionaries (see [Q14 on the dictionaries page](80-ch19-dictionary-conceptual-qa.md#q14)) and with lists. Lists are actually more dangerous: they do not raise an error, but quietly **skip** items, as the script below shows. So it is worth learning this as a general Python habit, not as a set-only rule.
 
-```mermaid
-flowchart TD
-    A["Step 1: You want to remove some elements inside a loop"] --> B{"Step 2: What is the loop running over?"}
-    B -- "The set itself" --> C["Step 3: remove() changes its size"]
-    C --> D["Step 4: RuntimeError: Set changed size during iteration"]
-    B -- "numbers.copy()" --> E["Step 5: remove() changes only the original"]
-    E --> F["Step 6: The loop finishes safely"]
-```
+![Q15. Modifying a set while iterating over it — (a) what happens and why (b) the correct fix](../resources/LR-ch19-sets-conceptual-qa-fig-07.png)
 
-![Q15. Modifying a set while iterating over it — (a) what happens and why (b) the correct fix](../resources/ch19-sets-conceptual-qa-fig-07.png)
+**Reading the figure**
+
+- **Step 1:** You want to remove some elements from a set while looping over it.
+- **Step 2:** What is the loop running over?
+- **Step 3:** The set itself, `for n in numbers:`. Then `numbers.remove(n)` changes the size of the set being looped over.
+- **Step 4:** Python stops with `RuntimeError: Set changed size during iteration`.
+- **Step 5:** A copy, `for n in numbers.copy():`. Then `remove()` changes only the original set, not the copy being looped over.
+- **Step 6:** The loop finishes safely.
 
 **Script: the error, the fixes, and the list surprise**
 
@@ -1723,17 +1721,17 @@ So "subset" allows equality and "proper subset" does not. This matches the every
 | Proper superset | `A > B` | (none) | `False` | `False` |
 | Disjoint | (none) | `A.isdisjoint(B)` | `False` | `False` |
 
-```mermaid
-flowchart TD
-    A["Step 1: Compare set A with set B"] --> B{"Step 2: Is every element of A also in B?"}
-    B -- No --> C["Step 3: A is not a subset of B"]
-    B -- Yes --> D["Step 4: A is a subset of B, so A <= B"]
-    D --> E{"Step 5: Does B have at least one element that A lacks?"}
-    E -- Yes --> F["Step 6: A is also a proper subset, so A < B"]
-    E -- No --> G["Step 7: A equals B. A <= B is True but A < B is False"]
-```
+![Q19. Subset, proper subset, superset, and disjoint — (a) define each (b) exact distinction between subset and proper subset?](../resources/LR-ch19-sets-conceptual-qa-fig-08.png)
 
-![Q19. Subset, proper subset, superset, and disjoint — (a) define each (b) exact distinction between subset and proper subset?](../resources/ch19-sets-conceptual-qa-fig-08.png)
+**Reading the figure**
+
+- **Step 1:** Compare set A with set B.
+- **Step 2:** Is every element of A also in B?
+- **Step 3:** No: A is not a subset of B, so `A <= B` is `False`.
+- **Step 4:** Yes: A is a subset of B, so `A <= B` (or `A.issubset(B)`) is `True`.
+- **Step 5:** Does B have at least one element that A does not have?
+- **Step 6:** Yes: A is also a proper subset, so `A < B` is `True`.
+- **Step 7:** No: the two sets are equal. `A <= B` is `True`, but `A < B` is `False`. That is the exact difference between subset and proper subset.
 
 **Script: subset, superset and disjoint**
 

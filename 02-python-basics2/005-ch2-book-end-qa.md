@@ -415,18 +415,18 @@ Big int:      12345678901234567890
 As a float:   12345678901234567168
 ```
 
-```mermaid
-flowchart LR
-    A["1. A value must change type"] --> B{"2. Who asks for the change?"}
-    B -->|Python, in mixed arithmetic| C["3. Implicit casting"]
-    C --> D["4. Always narrow to wide, for example int to float: no data lost"]
-    B -->|The programmer| E["5. Explicit casting with int(), float() or str()"]
-    E --> F{"6. Is the new type wider or narrower?"}
-    F -->|Wider| G["7. Wide casting, for example float(5): no data lost"]
-    F -->|Narrower| H["8. Narrow casting, for example int(9.78): data may be lost"]
-```
+![e.6 All the Examples in One Script](../resources/S02-LR-ch02-book-end-qa-fig-01.png)
 
-![e.6 All the Examples in One Script](../resources/ch02-book-end-qa-fig-01.png)
+**Reading the figure**
+
+- **Step 1:** A value must change from one type to another.
+- **Step 2:** Who asks for the change?
+- **Step 3:** Python itself, in mixed arithmetic such as `3 + 1.5`: this is implicit casting.
+- **Step 4:** Implicit casting always goes from narrow to wide, for example `int` to `float`, so no data is lost.
+- **Step 5:** The programmer, on purpose: this is explicit casting, with `int()`, `float()` or `str()`.
+- **Step 6:** Is the new type wider or narrower than the old one?
+- **Step 7:** Wider: for example `float(5)` gives `5.0`, and no data is lost.
+- **Step 8:** Narrower: for example `int(9.78)` gives `9`, and the fraction is lost. A very large `int` turned into a `float` can lose digits too.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -784,19 +784,19 @@ KeyError: 0
 TypeError: 'set' object is not subscriptable
 ```
 
-```mermaid
-flowchart LR
-    A["Python containers"] --> B["Sequenced: ordered, access by position"]
-    A --> C["Non-sequenced: no access by position"]
-    B --> B1["list: mutable"]
-    B --> B2["tuple: immutable"]
-    B --> B3["str: immutable, characters only"]
-    B --> B4["range: immutable, numbers only"]
-    C --> C1["dict: access by key, remembers insertion order"]
-    C --> C2["set: no order, unique items"]
-```
+![j.2 Non-sequenced Containers](../resources/S02-LR-ch02-book-end-qa-fig-03.png)
 
-![j.2 Non-sequenced Containers](../resources/ch02-book-end-qa-fig-03.png)
+**Reading the figure**
+
+- Python's built-in containers fall into two groups.
+- Sequenced containers keep their items in order, and you reach an item by its position, `x[0]`.
+- Non-sequenced containers do not allow access by position.
+- `list`: a sequence you can change.
+- `tuple`: a sequence you cannot change.
+- `str`: a sequence you cannot change, holding characters only.
+- `range`: a sequence you cannot change, holding numbers only.
+- `dict`: items are reached by key, and it remembers the order in which keys were added, but `d[0]` looks for the key `0`, not the first item.
+- `set`: no order and no duplicates, so `s[0]` raises `TypeError`.
 
 [Back to the Table of Contents](#table-of-contents)
 

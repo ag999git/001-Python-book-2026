@@ -47,7 +47,13 @@ Getting this distinction right matters immediately and practically: opening an i
 ## Deciding which mode to use
 
 
-![Flowchart](../resources/ch-10-august-2026-text-vs-binary.png)
+![Flowchart](../resources/S10-LR-ch-10-august-2026-text-vs-binary.png)
+
+**Reading the figure**
+
+- **Step 1:** Is the file meant to be read as human-language text?
+- **Step 2:** Yes (logs, configuration files, source code, CSV): open it in text mode, `"r"`, `"w"` or `"a"`, with an encoding such as `encoding="utf-8"`.
+- **Step 3:** No (images, audio, video, executables): open it in binary mode, `"rb"`, `"wb"` or `"ab"`.
 
 
 A simple rule of thumb: if you'd expect to be able to open the file in a plain text editor and read something meaningful, it's a text file. If opening it in a text editor would show you a screen full of unreadable symbols, it's binary.
@@ -94,9 +100,15 @@ with open("data.bin", "rb") as f:
 ```python
 # Trying to open a genuinely binary file in TEXT mode usually raises
 # an error, because the raw bytes often can't be decoded as valid
-# text under the assumed encoding:
+# text under the assumed encoding. (The four bytes in data.bin above
+# happen to be valid UTF-8, so here we use the first bytes of a real
+# PNG image instead -- the byte 0x89 is never valid at the start of
+# a UTF-8 character.)
+with open("image_like.bin", "wb") as f:
+    f.write(b"\x89PNG\r\n\x1a\n")
+
 try:
-    with open("data.bin", "r", encoding="utf-8") as f:
+    with open("image_like.bin", "r", encoding="utf-8") as f:
         content = f.read()
 except UnicodeDecodeError as e:
     print("Cannot read binary data as text:", e)

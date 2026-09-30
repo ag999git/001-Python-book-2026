@@ -58,7 +58,13 @@ File handling matters in essentially every real Python program beyond the smalle
 
 ## The file lifecycle, visualized
 
-![Flowchart](../resources/ch-10-file-handling-1.png)
+![Flowchart](../resources/S10-LR-ch-10-file-handling-1.png)
+
+**Reading the figure**
+
+- **Step 1:** Open the file with `open()`, choosing the right mode and encoding.
+- **Step 2:** Use the file object to read or write data.
+- **Step 3:** Close the file with `close()` to release it. A `with` block does this automatically, even if an error occurs in Step 2.
 
 
 

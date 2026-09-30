@@ -156,4 +156,13 @@ print("Loaded Student:", loaded_student.name, loaded_student.marks) # Output: Lo
 
 The following diagram shows the flow of execution in JSON vs pickling
 
-![Flowchart](../.gitbook/assets/ch10-files-json-pickle.png)
+![Flowchart](../resources/S10-LR-ch10-files-json-pickle.png)
+
+**Reading the figure**
+
+- **Step 1:** The script creates a dictionary `data` and an object of the custom class `Student`.
+- **Step 2:** JSON serialization: `json.dumps(data)` turns the dictionary into a JSON string.
+- **Step 3:** JSON deserialization: `json.loads()` turns the string back into a dictionary.
+- **Step 4:** Pickle serialization: `pickle.dump(data, f)` writes the dictionary to `data.pkl` in binary form.
+- **Step 5:** Pickle deserialization: `pickle.load(f)` reads it back as a dictionary.
+- **Step 6:** Comparing the two: JSON cannot store the `Student` object directly (it needs `student.__dict__`), while pickle stores and reloads the object itself, but must never be used on untrusted files.

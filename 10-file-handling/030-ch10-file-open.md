@@ -95,7 +95,15 @@ with open("research_demo.txt", mode="r", encoding="utf-8") as f:
     print("Remaining lines:", f.readlines())   # -> ['Line 2: Python File Handling\n']
 ```
 
-![Flowchart](../resources/ch-10-file-object-behavior-2.png)
+![Flowchart](../resources/S10-LR-ch-10-file-object-behavior-2.png)
+
+**Reading the figure**
+
+- **Step 1:** When the file is opened for reading, the pointer is at position 0; `tell()` returns 0.
+- **Step 2:** `f.read(10)` returns `"Line 1: He"` and moves the pointer forward to 10.
+- **Step 3:** `f.seek(0)` moves the pointer back to the start of the file.
+- **Step 4:** `f.readline()` reads the first line, including its newline, and moves the pointer to the start of line 2.
+- **Step 5:** `f.readlines()` reads all the remaining lines into a list: `['Line 2: Python File Handling\n']`.
 
 
 
@@ -160,7 +168,7 @@ These five examples are intentionally left as comments — they demonstrate real
 
 # ERROR 4: Wrong mode for the operation you're trying to do
 # f = open("research_demo.txt", "r")   # Opened for READING only.
-# f.write("Hello")   # Fails -- writing isn't allowed in read-only mode.
+# f.write("Hello")   # io.UnsupportedOperation: not writable -- writing isn't allowed in read-only mode.
 
 # ERROR 5: Forgetting to add a newline between writes
 # with open("file.txt", "w") as f:
@@ -202,7 +210,18 @@ with open("research_demo.txt", "r", encoding="utf-8") as f:
 
 ## Deciding which exception to expect
 
-![Flowchart](../resources/ch-10-file-object-behavior.png)
+![Flowchart](../resources/S10-LR-ch-10-file-object-behavior.png)
+
+**Reading the figure**
+
+- **Step 1:** Your code opens a file and reads from it.
+- **Step 2:** Does the file exist at the given path?
+- **Step 3:** No: `open()` raises `FileNotFoundError`.
+- **Step 4:** Yes: does your program have permission to open it in this mode?
+- **Step 5:** No: `open()` raises `PermissionError`.
+- **Step 6:** Yes: when reading in text mode, can the file's bytes be decoded with the chosen encoding?
+- **Step 7:** No (for example a file containing `é` read with `encoding="ascii"`): reading raises `UnicodeDecodeError`.
+- **Step 8:** Yes: no error, and the program proceeds normally.
 
 
 

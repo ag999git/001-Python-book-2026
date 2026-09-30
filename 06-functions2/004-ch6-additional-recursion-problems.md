@@ -9,7 +9,7 @@ Here, that idea is applied to five classic problems: computing powers, checking 
 
 ## 1. Recursive Function to Compute $a^b$
 
-A natural example of recursion is computing $a^{b}$, where $a$ (the base) and $b$ (a non-negative integer exponent).
+A natural example of recursion is computing $a^{b}$, where $a$ is the base and $b$ is a non-negative integer exponent.
 
 For example:
 
@@ -224,6 +224,17 @@ print(f"GCD(17, 5)  = {gcd_recursive(17, 5)}")    # 1  (co-prime numbers)
 The diagram below illustrates Euclid's Algorithm for computing $\gcd(48, 18)$, with numbered blocks so you can follow the flow step by step.
 
 ![GCD recursion flowchart](../resources/ch-6-functions2-gcd-recursion.png)
+
+![GCD recursion flowchart](../resources/S06-LR-ch-6-functions2-gcd-recursion.png)
+
+**Reading the figure**
+
+- **Step 1:** Start with the two numbers whose GCD you want, for example `gcd(48, 18)`.
+- **Step 2:** Is `b == 0`? This is the base-case check. Here `b` is 18, so the answer is No.
+- **Step 3:** No: compute the remainder `r = a % b`. Here `48 % 18 = 12`.
+- **Step 4:** Call the function again with `b` and the remainder: `gcd(18, 12)`.
+- **Step 5:** Each new call goes back to Step 2 with a smaller pair: `gcd(18, 12)`, then `gcd(12, 6)`, then `gcd(6, 0)`.
+- **Step 6:** Yes, `b == 0`: the base case is reached, and `a` is the GCD. `gcd(6, 0)` returns 6, and this value is passed back through every earlier call.
 
 **What each block in the flowchart does**
 

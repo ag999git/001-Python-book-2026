@@ -27,7 +27,7 @@ By the end of this page you should be able to:
 | `reduce` | Applies a function cumulatively to the items of an iterable, reducing it to a single value | Totals, running products, combining a list into one result |
 | `total_ordering` | Fills in the missing comparison methods (`<`, `<=`, `>`, `>=`) for a class, given just two | Making custom objects sortable without writing every comparison by hand |
 
-This chapter focuses only on `wraps`, since it's the one you'll use every single time you write a decorator.
+This page focuses only on `wraps`, since it's the one you'll use every single time you write a decorator.
 
 ---
 
@@ -160,12 +160,23 @@ bark()
 | `help(bark)` | Shows generic wrapper info | Shows the real `bark` documentation |
 
 
-### Diagram shows situation without and with using functools
+### Diagram: the situation without and with `functools.wraps`
 
 
 
 
-![Diagram shows situation without and with using functools](../.gitbook/assets/ch-6-using-functools.png)
+![Diagram shows situation without and with using functools](../resources/ch-6-using-functools.png)
+
+![Diagram shows situation without and with using functools](../resources/S06-LR-ch-6-using-functools.png)
+
+**Reading the figure**
+
+- Top row, without `functools.wraps`: the original `bark()` has the name `'bark'` and the docstring `'Make Sound'`.
+- The decorator replaces it with `wrapper`, whose own name is `'wrapper'` and whose docstring is `None`.
+- Result: `bark.__name__` gives `'wrapper'` and `bark.__doc__` gives `None`. The function has lost its identity.
+- Bottom row, with `functools.wraps`: the same original `bark()`.
+- `@functools.wraps(func)` reads the original function's name, docstring and other metadata.
+- It copies them onto `wrapper`, so `bark.__name__` is `'bark'` and `bark.__doc__` is `'Make Sound'`.
 
 ---
 

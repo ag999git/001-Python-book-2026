@@ -14,6 +14,18 @@ The diagram below shows the flow of control as a generator function runs, pauses
 
 ![StopIteration Diagram](../resources/ch6-generators-stopiteration.png)
 
+![StopIteration Diagram](../resources/S06-LR-ch6-generators-stopiteration.png)
+
+**Reading the figure**
+
+- **Step 1:** `gen = simple_generator()` only creates a generator object. None of the function's code runs yet.
+- **Step 2:** The first `next(gen)` starts the body from its first line.
+- **Step 3:** The code runs until it reaches a `yield`, or until the body ends.
+- **Step 4:** No `yield` is left and the body ends: Python raises `StopIteration`. With `next()` you see the exception; a `for` loop catches it and simply stops.
+- **Step 5:** Yes: the value after `yield` is handed to the caller, and the generator pauses.
+- **Step 6:** The generator waits, with all its local variables frozen, until the next `next()` call.
+- **Step 7:** `next()` is called again: the code resumes on the line after that `yield` and runs on, back to Step 3.
+
 ### Script Demonstrating `StopIteration`
 
 ```python

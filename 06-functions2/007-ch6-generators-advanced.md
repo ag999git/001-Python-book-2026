@@ -14,6 +14,8 @@ The diagram below shows the flow of control as a generator function runs, pauses
 
 ![StopIteration Diagram](../resources/ch6-generators-stopiteration.png)
 
+**Another way of looking at same diagram**
+
 ![StopIteration Diagram](../resources/S06-LR-ch6-generators-stopiteration.png)
 
 **Reading the figure**

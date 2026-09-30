@@ -142,7 +142,14 @@ $x$ of dimension $n \times 1$.
   $m \times 1$.
 
 
-![Flowchart](../resources/ch-11-numpy-august-2026-vector-matrices-02.png)
+![Flowchart](../resources/S11-LR-ch-11-numpy-august-2026-vector-matrices-02.png)
+
+**Reading the figure**
+
+- **Step 1:** The matrix `M` has shape `(m, n)`: m rows and n columns.
+- **Step 2:** The vector `x` has shape `(n, 1)`: its n rows match M's n columns, which is what makes the multiplication possible.
+- **Step 3:** `M @ x` multiplies them.
+- **Step 4:** The result `y` has shape `(m, 1)`.
 
 
 
@@ -311,11 +318,6 @@ instead). If you want a tidier printout, wrap the result in
 ### Rotation by 90 degrees
 
 ![Rotation by 90 degrees](../resources/ch11-rotation-90-matrix-vector.png)
-
-> **Note:** the "Reflection on X-axis" image link had a small Markdown
-> syntax error in the original (`![...[(url)` instead of `![...](url)`),
-> which would have prevented that image from displaying. It's corrected
-> above.
 
 ---
 

@@ -130,12 +130,34 @@ Before diving into the detailed rules, look at this decision process. Every
 time you write `A + B` in NumPy, this is effectively the logic the engine
 runs through.
 
-![Broadcasting Decision Tree](../resources/ch11-broadcast-rule-flowchart.png)
+![Broadcasting Decision Tree](../resources/S11-LR-ch11-broadcast-rule-flowchart.png)
+
+**Reading the figure**
+
+- **Step 1:** Start with `A + B` and look at the two shapes, `A.shape` and `B.shape`.
+- **Step 2:** Do both shapes have the same number of dimensions?
+- **Step 3:** No: Rule 1, pad the shorter shape with 1s on the left until the lengths match.
+- **Step 4:** Line the two shapes up from the right-hand end.
+- **Step 5:** Take the next pair of dimensions, working from right to left: are they equal? If they are, simply move on to the next pair.
+- **Step 6:** Not equal: is one of the two dimensions exactly 1?
+- **Step 7:** No: Rule 3, the shapes are incompatible, and NumPy raises `ValueError: operands could not be broadcast together`.
+- **Step 8:** Yes: Rule 2, that dimension of size 1 will be stretched (virtually, without copying) to match the other; then check the next pair (back to Step 5).
+- **Step 9:** When every pair has passed the check: Rule 4, the operation is carried out using the virtually stretched shapes.
 
 
 Here's the same logic as a different flowchart:
 
-![Flowchart](../resources/ch-11-numpy-august-2026-broadcasting1.png)
+![Flowchart](../resources/S11-LR-ch-11-numpy-august-2026-broadcasting1.png)
+
+**Reading the figure**
+
+- **Step 1:** Compare the shapes of the two arrays, A and B.
+- **Step 2:** Do they have the same number of dimensions?
+- **Step 3:** No: pad the shorter shape with 1s on the left.
+- **Step 4:** Compare the two shapes dimension by dimension, starting from the right.
+- **Step 5:** Is every pair of dimensions either equal, or does one of the two equal 1?
+- **Step 6:** No, some pair mismatches: NumPy raises `ValueError`, the shapes cannot be broadcast.
+- **Step 7:** Yes: every dimension of size 1 is stretched to match the other, and the operation proceeds on the matched shape.
 
 ---
 
@@ -172,7 +194,15 @@ runs out of dimensions on B's side, so it pads B with a `1` at the front.
 
 Both shapes now match exactly, so the arithmetic operation can proceed.
 
-![Flowchart](../resources/ch-11-numpy-august-2026-broadcasting2.png)
+![Flowchart](../resources/S11-LR-ch-11-numpy-august-2026-broadcasting2.png)
+
+**Reading the figure**
+
+- **Step 1:** Array A has shape `(8, 1, 6, 1)`: 4 dimensions.
+- **Step 2:** Array B has shape `(7, 1, 5)`: only 3 dimensions.
+- **Step 3:** Rule 1: B is padded with a 1 on the left, becoming `(1, 7, 1, 5)`.
+- **Step 4:** Rule 2: every dimension of size 1 is stretched to match the other array (`1` against `8`, `1` against `7`, `1` against `6`, `1` against `5`).
+- **Step 5:** Both shapes are now `(8, 7, 6, 5)`, so the operation can proceed.
 
 ### The following figure shows the steps in broadcasting of Array A shape `(8, 1, 6, 1)` and Array B shape `(7, 1, 5)`
 

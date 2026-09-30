@@ -43,7 +43,18 @@ can also use this page as a quick lookup later, not just a first read.
 >   [NumPy random sampling guide](https://numpy.org/doc/stable/reference/random/index.html).
 
 
-![Flowchart](../resources/ch-11-numpy-august-2026-numpy-array-creation-beginner-to-advanced.png)
+![Flowchart](../resources/S11-LR-ch-11-numpy-august-2026-numpy-array-creation-beginner-to-advanced.png)
+
+**Reading the figure**
+
+- Start by asking what you already have; the answer points to the right family of functions.
+- Beginner: you already have a Python list or other data: `np.array()` or `np.asarray()`.
+- Beginner: you know only the shape you want: `np.zeros()`, `np.ones()` or `np.full()`.
+- Beginner: you want a counting sequence: `np.arange()` or `np.linspace()`.
+- Intermediate: you want the same shape as another array: `np.zeros_like()`, `np.ones_like()` or `np.full_like()`.
+- Intermediate: you want a matrix or a grid: `np.eye()`, `np.identity()`, `np.diag()` or `np.meshgrid()`.
+- Advanced: you want random data: `np.random.rand()`, `randint()`, `randn()`, `choice()` or `uniform()`.
+- Advanced: the values come from a formula of their positions, or from an iterator: `np.fromfunction()` or `np.fromiter()`.
 
 
 ---
@@ -641,7 +652,20 @@ print("np.random.uniform():->\n", h)
 The tree below groups every array-creation tool by *what kind of input it
 starts from* — useful as a "which function do I actually want?" lookup.
 
-![Flowchart](../resources/ch-11-numpy-august-2026-numpy-array-creation-complete-map.png)
+![Flowchart](../resources/S11-LR-ch-11-numpy-august-2026-numpy-array-creation-complete-map.png)
+
+**Reading the figure**
+
+- NumPy's array-creation functions fall into nine groups, depending on what you start from.
+- From existing data: `array`, `asarray`, `asanyarray`, `fromiter`, `fromfunction`, `frombuffer`, `loadtxt`, `genfromtxt`.
+- Basic arrays of a given shape: `zeros`, `ones`, `full`, `empty`.
+- Template-based arrays, copying another array's shape: `zeros_like`, `ones_like`, `full_like`, `empty_like`.
+- Sequences: `arange`, `linspace`, `logspace`, `geomspace`.
+- Matrix and diagonal arrays: `eye`, `identity`, `diag`, `diagflat`, `tri`, `tril`, `triu`.
+- Grid and coordinate arrays: `meshgrid`, `indices`, `mgrid`, `ogrid`.
+- Random arrays: `rand`, `randn`, `randint`, `random`, `random_sample`, `choice`, `uniform`, `normal`.
+- Structured and special arrays: `copy`, `tile`, `repeat`.
+- From files: `load` reads arrays saved in `.npy` or `.npz` files, and `fromfile` reads raw binary data. (`savez` and `savez_compressed` are the partners of `load`: they write arrays to a file rather than create new arrays.)
 
 
 
@@ -710,9 +734,7 @@ NumPy Array Creation
 │   ├── repeat
 │
 └── File / External Data Arrays
-    ├── load
-    ├── savez
-    ├── savez_compressed
+    ├── load       (reads files written by save / savez / savez_compressed)
     ├── fromfile
 ```
 

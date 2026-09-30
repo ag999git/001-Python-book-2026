@@ -45,7 +45,15 @@ Understand how:
 - functions $Z = f(X, Y)$ create surfaces
 - Matplotlib visualizes them
 
-![Flowchart](../resources/ch-11-numpy-august-2026-3D-surface.png)
+![Flowchart](../resources/S11-LR-ch-11-numpy-august-2026-3D-surface.png)
+
+**Reading the figure**
+
+- **Step 1:** `np.linspace()` creates evenly spaced x values, for example from -5 to 5.
+- **Step 2:** `np.linspace()` does the same for the y values.
+- **Step 3:** `np.meshgrid()` expands the two 1D lists into two 2D grids, `X` and `Y`, covering every (x, y) pair.
+- **Step 4:** A formula computes the height at every grid point: `Z = f(X, Y)`, with the same shape as `X` and `Y`.
+- **Step 5:** Matplotlib's `plot_surface(X, Y, Z)` draws the 3D surface.
 
 
 
@@ -296,7 +304,16 @@ Derived from $Z^2 = X^2 + Y^2$
 
 ### Flowchart of the process
 
-![Flowchart](../resources/ch11-numpy-flowchart-matplotlib.png)
+![Flowchart](../resources/S11-LR-ch11-numpy-flowchart-matplotlib.png)
+
+**Reading the figure**
+
+- **Step 1:** `np.linspace()` creates the x and y values over a symmetric range.
+- **Step 2:** `np.meshgrid()` turns them into the grids `X` and `Y`, used for both surfaces.
+- **Step 3:** Surface 1: `Z = X + Y`.
+- **Step 4:** Plotted in its own figure, this gives a flat, tilted plane.
+- **Step 5:** Surface 2: `Z = np.sqrt(X**2 + Y**2)`.
+- **Step 6:** Plotted in a second figure, this gives a cone.
 
 ---
 

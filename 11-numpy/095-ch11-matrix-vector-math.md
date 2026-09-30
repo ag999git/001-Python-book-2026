@@ -12,8 +12,8 @@ robotics, machine learning, and much of scientific computing — anywhere a
 program needs to rotate an image, resize a shape, or transform coordinates
 from one system into another.
 
-This resource disucsses in brief the mathematics behind vector-matrix multiplication. 
-I addition it also provides numPy scripts (with detailed explanations) to show how vectr-matrix multiplication is actually implemented in NumPy. Note that these aren't just abstract formulas: they
+This resource discusses in brief the mathematics behind vector-matrix multiplication. 
+In addition, it provides NumPy scripts (with detailed explanations) to show how vector-matrix multiplication is actually implemented in NumPy. Note that these aren't just abstract formulas: they
 are exactly what `matrix @ vector` computes in a single line of Python.
 
 > **Glossary of terms**
@@ -37,7 +37,16 @@ are exactly what `matrix @ vector` computes in a single line of Python.
 
 
 
-![Flowchart](../resources/ch-11-numpy-august-2026-vector-matrices-01.png)
+![Flowchart](../resources/S11-LR-ch-11-numpy-august-2026-vector-matrices-01.png)
+
+**Reading the figure**
+
+- Start with a vector `x`.
+- Multiply it by a matrix `M` to get `y = M x`. What happens to `x` depends on `M`.
+- Uniform scaling: every axis is stretched by the same factor.
+- Non-uniform scaling: each axis is stretched by its own factor.
+- Reflection: the vector is flipped across an axis or a line.
+- Rotation: the vector is turned through an angle.
 
 
 
@@ -70,7 +79,16 @@ converting a row into a column.
 
 ### The following flowchart shows the various common transformations a matrix can apply to a vector
 
-![Flowchart](../resources/ch11-matrix-vector-maths.png)
+![Flowchart](../resources/S11-LR-ch11-matrix-vector-maths.png)
+
+**Reading the figure**
+
+- Start with the input vector `x`.
+- Multiply it by the matrix `M`.
+- The result is the transformed vector `y = M x`.
+- A scaling matrix changes the vector's length.
+- A rotation matrix changes its direction but keeps its length.
+- A reflection matrix mirrors it across an axis, reversing its orientation.
 
 ### Turning this into NumPy code
 

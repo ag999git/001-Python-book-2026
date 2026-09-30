@@ -72,7 +72,15 @@ sequence of arrays that all share the *same* shape, and joins them along a
   now have a "page number" dimension that simply didn't exist before.
 
 
-![Flowchart](../resources/ch-11-numpy-august-2026-combining-arrays-into-new-dimensions-2.png)
+![Flowchart](../resources/S11-LR-ch-11-numpy-august-2026-combining-arrays-into-new-dimensions-2.png)
+
+**Reading the figure**
+
+- Start with two 2D arrays of the same shape, `(2, 2)`.
+- `np.vstack()` and `np.hstack()` join them within the dimensions they already have.
+- So the result is still 2D: `(4, 2)` with `vstack`, `(2, 4)` with `hstack`.
+- `np.stack()` places them along a brand-new axis instead.
+- So the result gains a dimension: shape `(2, 2, 2)`.
 
 
 
@@ -205,7 +213,13 @@ np.stack((a, b), axis=1)
 
 ### Visual intuition
 
-![Flowchart](../resources/ch-11-numpy-august-2026-combining-arrays-into-new-dimensions-3.png)
+![Flowchart](../resources/S11-LR-ch-11-numpy-august-2026-combining-arrays-into-new-dimensions-3.png)
+
+**Reading the figure**
+
+- Start with two 1D arrays, `a = [1, 2, 3]` and `b = [4, 5, 6]`.
+- `np.stack((a, b), axis=0)` puts the new axis first, so `a` and `b` become the rows: `[[1, 2, 3], [4, 5, 6]]`, shape `(2, 3)`.
+- `np.stack((a, b), axis=1)` puts the new axis second, so `a` and `b` become the columns: `[[1, 4], [2, 5], [3, 6]]`, shape `(3, 2)`.
 
 ---
 
@@ -341,12 +355,28 @@ The following flowchart visualizes the script above and shows the three
 possible ways `np.stack()` was used:
 
 
-![Diagram](../resources/ch11-np-stack.png)
+![Diagram](../resources/S11-LR-ch11-np-stack.png)
+
+**Reading the figure**
+
+- `class_a` holds the marks of 2 students in 2 subjects (Math, Science): shape `(2, 2)`.
+- `class_b` has the same shape.
+- `np.stack()` combines them along a new axis; the `axis` argument decides where that new axis goes.
+- `axis=0`: shape `(2, 2, 2)` read as `[Class, Student, Subject]`, so `result[0]` is everything about Class A.
+- `axis=1`: read as `[Student, Class, Subject]`, so `result[0]` is Student 0 in both classes.
+- `axis=-1`: read as `[Student, Subject, Class]`, so `result[0, 0]` compares Student 0's Math mark class by class, `[80, 95]`.
 
 
 
 ## Another flowchart
-![Flowchart](../resources/ch-11-numpy-august-2026-combining-arrays-into-new-dimensions-1.png)
+![Flowchart](../resources/S11-LR-ch-11-numpy-august-2026-combining-arrays-into-new-dimensions-1.png)
+
+**Reading the figure**
+
+- Both classes have shape `(2, 2)`, read as `[Student, Subject]`.
+- Stacking with `axis=0` inserts the new "Class" axis first.
+- Stacking with `axis=1` inserts it in the middle, after "Student".
+- Stacking with `axis=-1` adds it last. All three results have the same shape and the same numbers; only the meaning of each index changes.
 
 ---
 

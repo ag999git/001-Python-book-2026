@@ -62,8 +62,8 @@ To understand:
 > **Note:** questions 2 and 3 in the printed book both ask "What do the
 > three indices represent?" — that repetition is preserved above exactly
 > as printed, rather than silently corrected, since the original questions
-> can't be changed. Question 4 below treats it as a single question and
-> answers it once.
+> can't be changed. The answers below treat questions 2 and 3 as a single
+> question and answer it once.
 
 ### Suggested answers:
 
@@ -109,7 +109,14 @@ summing a `(2, 2, 2)` array along `axis=0` leaves you with a `(2, 2)`
 result: one dimension has been removed, and the other two survive
 unchanged.
 
-![Flowchart](../resources/ch-11-numpy-august-2026-3D-arrays-axis-ops.png)
+![Flowchart](../resources/S11-LR-ch-11-numpy-august-2026-3D-arrays-axis-ops.png)
+
+**Reading the figure**
+
+- Start from the 3D array `arr = [[[1, 2], [3, 4]], [[5, 6], [7, 8]]]`, shape `(2, 2, 2)`.
+- `arr.sum(axis=0)` adds the two layers together position by position: `[[1+5, 2+6], [3+7, 4+8]]` = `[[6, 8], [10, 12]]`. The layer axis disappears, leaving shape `(2, 2)`.
+- `arr.sum(axis=1)` adds the rows inside each layer: `[[1+3, 2+4], [5+7, 6+8]]` = `[[4, 6], [12, 14]]`, shape `(2, 2)`.
+- `arr.sum(axis=2)` adds the columns inside each row: `[[1+2, 3+4], [5+6, 7+8]]` = `[[3, 7], [11, 15]]`, shape `(2, 2)`.
 
 ---
 
@@ -145,7 +152,13 @@ Layer 1:
  [7 8]]
 ```
 
-![Flowchart](../resources/ch-11-numpy-august-2026-3D-arrays-2.png)
+![Flowchart](../resources/S11-LR-ch-11-numpy-august-2026-3D-arrays-2.png)
+
+**Reading the figure**
+
+- The 3D array `arr` has shape `(2, 2, 2)`: 2 layers, each with 2 rows of 2 columns.
+- Layer 0, `arr[0]`, is the 2D array `[[1, 2], [3, 4]]`.
+- Layer 1, `arr[1]`, is the 2D array `[[5, 6], [7, 8]]`.
 
 
 

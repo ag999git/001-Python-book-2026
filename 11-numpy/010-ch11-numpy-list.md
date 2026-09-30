@@ -58,7 +58,18 @@ at once, instead of one item at a time.
 Neither one is "better" in every situation — they're suited to different
 jobs, which is exactly what this chapter's script demonstrates.
 
-![Flowchart](../resources/ch-11-numpy-august-2026-numpy-array-vs-list.png)
+![Flowchart](../resources/S11-LR-ch-11-numpy-august-2026-numpy-array-vs-list.png)
+
+**Reading the figure**
+
+- **Step 1:** Import `numpy` (as `np`) and `sys`, which measures how much memory an object uses.
+- **Step 2:** Create a Python list, `list(range(1000))`, and a NumPy array, `np.arange(1000)`, holding the same values.
+- **Step 3:** Compare the memory each one uses: `sys.getsizeof()` for the list, `.nbytes` for the array.
+- **Step 4:** Put numbers, text and `True`/`False` into a list and into an array: the list keeps each type, while the array converts everything to one common type.
+- **Step 5:** Double every number: the list needs a loop or comprehension, `[x * 2 for x in numbers_list]`; the array does it in one step, `numbers_array * 2` (vectorization).
+- **Step 6:** Add, subtract, multiply and divide two arrays element by element.
+- **Step 7:** Use NumPy's built-in statistics functions: `sum`, `mean`, `min`, `max` and `std`.
+- **Step 8:** Print everything so the results can be compared side by side.
 
 ---
 

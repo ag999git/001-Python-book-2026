@@ -38,7 +38,7 @@ data has; the other doesn't.
 - **`np.concatenate()` is the foundation** — you control the axis manually.
 - **`np.hstack()` and `np.vstack()` are shortcuts** built on top of it.
 - **`hstack` = horizontal (joins along columns); `vstack` = vertical (joins along rows).**
-- **For 1D arrays specifically, `vstack()` adds a new dimension, while `hstack()` does not.** This last point is worthg noting .
+- **For 1D arrays specifically, `vstack()` adds a new dimension, while `hstack()` does not.** This last point is worth noting.
 
 ---
 
@@ -80,7 +80,13 @@ For `y`:
   A 1D array has no `axis=1` to speak of — this single fact is the root
   cause of the different behaviour you're about to see.
 
-![Flowchart](../resources/ch-11-numpy-august-2026-hstack-vstack.png)
+![Flowchart](../resources/S11-LR-ch-11-numpy-august-2026-hstack-vstack.png)
+
+**Reading the figure**
+
+- `x = np.array([1, 2])` is a 1D array of shape `(2,)`.
+- `y = np.array([3, 4])` is also 1D, shape `(2,)`.
+- A 1D array has only one axis, `axis=0`; there is no row or column yet.
 
 
 
@@ -130,7 +136,14 @@ axis = 0
 
 > For 1D arrays, **`hstack()` is identical to `concatenate(axis=0)`.**
 
-![Flowchart](../resources/ch-11-numpy-august-2026-hstack-vstack--2.png)
+![Flowchart](../resources/S11-LR-ch-11-numpy-august-2026-hstack-vstack--2.png)
+
+**Reading the figure**
+
+- **Step 1:** Start with `x = [1, 2]`.
+- **Step 2:** And `y = [3, 4]`.
+- **Step 3:** `np.hstack((x, y))`, like `np.concatenate((x, y), axis=0)`, joins the two arrays end to end along their only axis.
+- **Step 4:** The result is still flat: `[1, 2, 3, 4]`, shape `(4,)`.
 
 
 
@@ -170,7 +183,16 @@ most important detail in this whole chapter, because it's exactly what
 
 **Shape:** `(2, 2)` — a genuine 2D matrix now, with 2 rows and 2 columns.
 
-![Flowchart](../resources/ch-11-numpy-august-2026-hstack-vstack--3.png)
+![Flowchart](../resources/S11-LR-ch-11-numpy-august-2026-hstack-vstack--3.png)
+
+**Reading the figure**
+
+- **Step 1:** `x` starts as a 1D array of shape `(2,)`.
+- **Step 2:** `vstack()` first silently turns it into a row vector `[[1, 2]]`, shape `(1, 2)`.
+- **Step 3:** `y` is also 1D, shape `(2,)`.
+- **Step 4:** It is turned into the row vector `[[3, 4]]`, shape `(1, 2)`.
+- **Step 5:** The two rows are stacked along `axis=0`, one below the other.
+- **Step 6:** The result is a 2D matrix `[[1, 2], [3, 4]]`, shape `(2, 2)`.
 
 
 

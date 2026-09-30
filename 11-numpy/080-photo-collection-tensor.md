@@ -127,7 +127,15 @@ possible.
 | `3` | RGB channels |
 
 
-![Flowchart](../resources/ch-11-numpy-august-2026-organizing-photo-collection-1.png)
+![Flowchart](../resources/S11-LR-ch-11-numpy-august-2026-organizing-photo-collection-1.png)
+
+**Reading the figure**
+
+- **Step 1:** The whole dataset is a 6D tensor of shape `(C, K, N, H, W, 3)`.
+- **Step 2:** Taking one collection (fixing the first index) leaves `(K, N, H, W, 3)`.
+- **Step 3:** One category inside it is `(N, H, W, 3)`: N images.
+- **Step 4:** One image is `(H, W, 3)`: height × width pixels.
+- **Step 5:** One pixel is three numbers, `[R, G, B]`.
 
 ---
 
@@ -192,7 +200,20 @@ Dataset
 
 Here's the same folder structure as flowchart:
 
-![Flowchart](../resources/ch-11-numpy-august-2026-organizing-photo-collection-2.png)
+![Flowchart](../resources/S11-LR-ch-11-numpy-august-2026-organizing-photo-collection-2.png)
+
+**Reading the figure**
+
+- The dataset is the whole photo archive.
+- Collection 1, Wildlife.
+- Collection 2, Family.
+- Collection 3, Urban. Three collections, so `C = 3`.
+- Wildlife's first category, Safari, holds images such as `lion_01` and `elephant_02`.
+- Wildlife's second category, Night Watch. Each collection has two categories, so `K = 2`.
+- Family: Wedding.
+- Family: Birthday.
+- Urban: Architecture.
+- Urban: Street Life.
 
 
 
@@ -238,7 +259,7 @@ generated — only how they're organized once generated.
 
 ---
 
-### 7(B) How five 5D tensors become one 6D tensor
+### 7(B) How several 5D tensors (here, three) become one 6D tensor
 
 Real datasets are often built up step by step, rather than all at once.
 Here's exactly how that happens for this photo archive:
@@ -269,7 +290,15 @@ dataset = np.stack(collection_list, axis=0)
 `np.stack()` takes each item in the list and gives it a position along a
 **brand-new axis**, then combines everything into one single array.
 
-![Flowchart](../resources/ch-11-numpy-august-2026-organizing-photo-collection-3.png)
+![Flowchart](../resources/S11-LR-ch-11-numpy-august-2026-organizing-photo-collection-3.png)
+
+**Reading the figure**
+
+- The first collection is a 5D array of shape `(K, N, H, W, CH)`.
+- The second collection has exactly the same shape.
+- So does the third; together they sit in an ordinary Python list, `collection_list`.
+- `np.stack(collection_list, axis=0)` adds a new first axis, using each item's position in the list.
+- The result, `dataset`, is one 6D array of shape `(C, K, N, H, W, CH)`, and `dataset[i]` gives back collection `i`.
 
 
 

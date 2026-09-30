@@ -88,7 +88,15 @@ matrix multiplication or geometric transformations — the same numbers,
 arranged the "wrong" way, can produce a completely different (or invalid)
 calculation.
 
-![Flowchart](../resources/ch-11-numpy-august-2026-row-vs-column-vector.png)
+![Flowchart](../resources/S11-LR-ch-11-numpy-august-2026-row-vs-column-vector.png)
+
+**Reading the figure**
+
+- The same three values, `3`, `5` and `7`, can be arranged in two ways.
+- As a row vector, shape `(1, 3)`: one row and three columns, `[[3, 5, 7]]`.
+- As a column vector, shape `(3, 1)`: three rows and one column, `[[3], [5], [7]]`.
+- Row vectors suit a single record, such as one row of a dataset.
+- Column vectors suit points and vectors that go through matrix multiplication and transformations.
 
 ---
 
@@ -204,7 +212,7 @@ In linear algebra, common geometric transformations — including:
 - rotation,
 - scaling,
 - projection, and
-- translation
+- translation (which needs one extra coordinate, called *homogeneous coordinates*, before it can be written as a matrix product)
 
 are conventionally written as:
 
@@ -221,7 +229,13 @@ where:
 - `y` is the resulting column vector, after the transformation has been applied.
 
 
-![Flowchart](../resources/ch-11-numpy-august-2026-row-vs-column-vector-2.png)
+![Flowchart](../resources/S11-LR-ch-11-numpy-august-2026-row-vs-column-vector-2.png)
+
+**Reading the figure**
+
+- **Step 1:** The point to be transformed is written as a column vector `x`, for example shape `(2, 1)`.
+- **Step 2:** The transformation matrix `M`, for example a 2 × 2 rotation or scaling matrix, is multiplied with it: `M @ x`.
+- **Step 3:** The result `y = M @ x` is again a column vector: the new, transformed point.
 
 
 
@@ -396,7 +410,15 @@ transformed,"** the way you'd think of a point moving through space. When
 in doubt, and especially when working with transformation matrices, the
 column vector is the safer, more conventional default.
 
-![Flowchart](../resources/ch-11-numpy-august-2026-row-vs-column-vector-3.png)
+![Flowchart](../resources/S11-LR-ch-11-numpy-august-2026-row-vs-column-vector-3.png)
+
+**Reading the figure**
+
+- **Step 1:** Do you need to multiply the vector by a transformation matrix, as in `y = M @ x`?
+- **Step 2:** Yes: use a column vector, following the standard linear-algebra convention.
+- **Step 3:** No: does the vector represent one record of a dataset, or one input example for a model?
+- **Step 4:** Yes: use a row vector, like one row of a spreadsheet.
+- **Step 5:** No: a column vector is usually the safer default.
 
 
 ---

@@ -288,22 +288,12 @@ Display all images neatly
 | 6 | Reconstruct | Approximate image |
 
 
-Key Concepts Students Must Understand
-1. Image = Matrix
+### Key concepts students must understand
 
-Each pixel is a number
-
-2. SVD = Decomposition
-
-Break matrix into meaningful parts
-
-3. Compression = Information Reduction
-
-Keep only important features
-
-4. Trade-off
-
-  
+1. **Image = Matrix** — each pixel is a number.
+2. **SVD = Decomposition** — break the matrix into meaningful parts.
+3. **Compression = Information Reduction** — keep only the important features.
+4. **Trade-off** — the value of `k` decides the balance:
 
 | k value | Result |
 | --- | --- |
@@ -313,7 +303,17 @@ Keep only important features
 
 #### SVD Image Compression Flow chart
 
-![SVD Image Compression Flow Chart](../resources/ch11-svd-image-compression-2.png)
+![SVD Image Compression Flow Chart](../resources/S11-LR-ch11-svd-image-compression-2.png)
+
+**Reading the figure**
+
+- **Step 1:** Download the image and open it with Pillow (`Image.open()`).
+- **Step 2:** Convert it to grayscale with `img.convert('L')`, so each pixel is one number.
+- **Step 3:** Turn it into a NumPy matrix.
+- **Step 4:** Decompose the matrix with `np.linalg.svd(img_mat, full_matrices=False)`, giving `U`, `S` and `Vt`.
+- **Step 5:** Keep only the top `k` singular values (here `k = int(len(S) / 20)`).
+- **Step 6:** Rebuild an approximate image from `U[:, :k]`, `np.diag(S[:k])` and `Vt[:k, :]`.
+- **Step 7:** Show the original, the grayscale version and the compressed version side by side.
 
 
 

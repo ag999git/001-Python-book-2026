@@ -70,7 +70,13 @@ This means:
 - Only the **magnitude changes**, by a factor of $\lambda$.
 
 
-![Flowchart](../resources/ch-11-numpy-august-2026-eigen-decomposition.png)
+![Flowchart](../resources/S11-LR-ch-11-numpy-august-2026-eigen-decomposition.png)
+
+**Reading the figure**
+
+- **Step 1:** Start with a non-zero vector `v`.
+- **Step 2:** Multiply it by the square matrix `A`.
+- **Step 3:** If `v` is an eigenvector of `A`, the result is `λv`: the same direction as `v`, only its length is scaled by the eigenvalue `λ`.
 
 
 **Beginner tip:** this is precisely what makes $\vec{v}$ special — for
@@ -153,7 +159,16 @@ $$A = Q \Lambda Q^{-1}$$
 
 
 
-![Flowchart](../resources/ch-11-numpy-august-2026-eigen-decomposition-02.png)
+![Flowchart](../resources/S11-LR-ch-11-numpy-august-2026-eigen-decomposition-02.png)
+
+**Reading the figure**
+
+- **Step 1:** Start with a square matrix `A` of shape `(n, n)`.
+- **Step 2:** Find its eigenvalues `λ₁, λ₂, ..., λₙ`.
+- **Step 3:** Arrange them on the diagonal of the matrix `Λ` (Lambda), with zeros elsewhere.
+- **Step 4:** Find the matching eigenvectors `v₁, v₂, ..., vₙ`.
+- **Step 5:** Arrange them as the columns of the matrix `Q`.
+- **Step 6:** If `Q` is invertible, the matrix can be rebuilt as `A = Q Λ Q⁻¹`.
 
 
 

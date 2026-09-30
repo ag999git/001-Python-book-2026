@@ -142,12 +142,21 @@ a = np.random.rand(3)   # And this runs SECOND
 
 print(a)
 print(b)
-# The VALUES stored in 'a' and 'b' are now DIFFERENT from the previous
-# example -- even though the seed is identical, simply swapping which
-# line runs first changes which numbers end up in which variable.
+# The two sets of numbers have now SWAPPED places compared with the
+# previous example: 'b' now holds the first three numbers of the
+# sequence, and 'a' the next three -- even though the seed is identical,
+# simply swapping which line runs first changes which numbers end up in
+# which variable.
 ```
 
-![Flowchart](../resources/ch-11-numpy-august-2026-prng1.png)
+![Flowchart](../resources/S11-LR-ch-11-numpy-august-2026-prng1.png)
+
+**Reading the figure**
+
+- **Step 1:** `np.random.seed(0)` seeds the one hidden, global generator that every `np.random.*` function in the program shares.
+- **Step 2:** The first call takes the first three numbers of the sequence.
+- **Step 3:** The global generator does not reset; it carries on from where the first call stopped.
+- **Step 4:** The second call takes the next three numbers. So the values each variable gets depend on the order of the calls.
 
 
 
@@ -182,7 +191,16 @@ print(b_next)
 # completely unaffected by anything happening to the other generator.
 ```
 
-![Flowchart](../resources/ch-11-numpy-august-2026-prng2.png)
+![Flowchart](../resources/S11-LR-ch-11-numpy-august-2026-prng2.png)
+
+**Reading the figure**
+
+- `rng1` is an independent generator, created with seed 0.
+- Its first call returns the first three numbers of its own sequence.
+- Its second call continues its own sequence.
+- `rng2` is a separate generator, also created with seed 0.
+- Its first call returns the same three numbers as `rng1`'s first call.
+- Its second call matches `rng1`'s second call. Each generator keeps its own place, so nothing done with one can affect the other.
 
 
 

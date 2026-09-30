@@ -161,6 +161,8 @@ End of script.
 
 ![Figure: How del works](../resources/ch07-oop-del.png)
 
+
+
 ![Figure: How del works](../resources/S07-LR-ch07-oop-del.png)
 
 **Reading the figure**
@@ -179,6 +181,9 @@ Overriding `__del__()` in your own class does **not** give you control over memo
 
 
 ![Flowchart](../resources/ch-7-august-2026-del-diagram.png)
+
+**Another flowchart of the same process**
+
 
 ![Flowchart](../resources/S07-LR-ch-7-august-2026-del-diagram.png)
 

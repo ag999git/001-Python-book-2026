@@ -103,7 +103,7 @@ The readings, 10 per row:
 50-59: [51.4 48.8 59.8 42.  44.2 43.2 53.1 45.1 49.3 44.9]
 ```
 
-![Line plot of 200 readings with a sharp dip and a gap](../resources/ch15-qa2-q1-anomalies.png)
+![Line plot of 60 readings with a sharp dip and a gap](../resources/ch15-qa2-q1-anomalies.png)
 
 **Finding the problems, step by step:**
 
@@ -297,7 +297,17 @@ Inside the Figure sit one or more **Axes** objects (usually stored in `ax`). An 
 
 Everything that is drawn, from lines and bars to text, is called an **Artist**. Lines are `Line2D` artists, bars are `Rectangle` artists (a kind of patch), and labels are `Text` artists. See [Anatomy of a figure (Matplotlib)](https://matplotlib.org/stable/gallery/showcase/anatomy.html).
 
-![How a Figure, its Axes and the objects inside them fit together](../resources/ch-15-fig-21-anatomy-of-a-figure.png)
+![How a Figure, its Axes and the objects inside them fit together](../resources/S15-LR-ch-15-fig-21-anatomy-of-a-figure.png)
+
+**Reading the figure**
+
+- The Figure is the outer frame, the whole window or image.
+- A Figure holds one or more Axes; each Axes is one plotting area.
+- A second Axes is another plotting area in the same Figure.
+- Each Axes has an x-axis, with its ticks, tick labels and axis label.
+- It also has a y-axis, with its ticks, tick labels and axis label.
+- The things drawn inside it are artists: lines, bars, markers and text.
+- Each Axes also has its own title, grid and legend.
 
 Axes 2 contains the same kinds of parts (x-axis, y-axis, artists, title) as Axes 1.
 
@@ -627,7 +637,7 @@ Matplotlib reads the string by looking for:
 - a marker character, such as `'o'` (circle), `'s'` (square), `'^'` (triangle)
 - a line style, such as `'-'` (solid), `'--'` (dashed), `':'` (dotted)
 
-Format strings come from MATLAB and are handy for quick test plots. They are not deprecated, so they still work fully in current Matplotlib. Their limitation is that they cover only these basic choices. They cannot set a hex color code such as `'#FF5733'`, a line width, a marker fill color, a marker size or transparency. For those you use **keyword arguments** such as `color='#FF5733'`, `marker='o'`, `linestyle='-'`, `linewidth=3` and `markerfacecolor='white'`. Keyword arguments are clearer to read, so they are preferred in finished code. The two can also be combined: `ax.plot(x, y, 'bs--', linewidth=1)`.
+Format strings come from MATLAB and are handy for quick test plots. They are not deprecated, so they still work fully in current Matplotlib. Their limitation is that they cover only these basic choices. They cannot combine a hex color code such as `'#FF5733'` with a marker or line style, and they cannot set a line width, a marker fill color, a marker size or transparency. For those you use **keyword arguments** such as `color='#FF5733'`, `marker='o'`, `linestyle='-'`, `linewidth=3` and `markerfacecolor='white'`. Keyword arguments are clearer to read, so they are preferred in finished code. The two can also be combined: `ax.plot(x, y, 'bs--', linewidth=1)`.
 
 See the "Format Strings" section of [matplotlib.pyplot.plot](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.plot.html).
 
@@ -673,7 +683,7 @@ Keyword version -> color: #FF5733 linewidth: 3.0 marker face: white
 | Setting | Format string | Keyword argument |
 | --- | --- | --- |
 | Basic color | `'r'` | `color='red'` |
-| Any color, e.g. hex code | Not possible | `color='#FF5733'` |
+| Any color, e.g. hex code | Only if the format string is the colour alone (`'#FF5733'`) | `color='#FF5733'` |
 | Marker shape | `'o'` | `marker='o'` |
 | Line style | `'--'` | `linestyle='--'` |
 | Line width | Not possible | `linewidth=3` |
@@ -704,7 +714,16 @@ Unlike a bar chart, which draws heights that you supply, `ax.hist()` works out t
 
 "Sorting" here means placing each value into the right bin, not arranging the values in order. The counting is done by NumPy's `histogram()` function. See [matplotlib.axes.Axes.hist](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.hist.html) and [numpy.histogram](https://numpy.org/doc/stable/reference/generated/numpy.histogram.html).
 
-![The six things ax.hist() does for you](../resources/ch-15-fig-22-what-hist-does.png)
+![The six things ax.hist() does for you](../resources/S15-LR-ch-15-fig-22-what-hist-does.png)
+
+**Reading the figure**
+
+- **Step 1:** `ax.hist()` reads the raw values.
+- **Step 2:** It finds the minimum and the maximum.
+- **Step 3:** It splits that range into equal bins (10 by default).
+- **Step 4:** It places each value in its bin and counts them.
+- **Step 5:** It draws one bar per bin, with no gaps between bars.
+- **Step 6:** It returns three things: the counts, the bin edges and the bar objects.
 
 ```python
 # Description: Demonstrates how ax.hist() places values into bins and counts them
@@ -914,14 +933,14 @@ Lines drawn in total: 3
 Legend text  : ['Revenue', 'Costs']
 ```
 
-**A note on the colour line.** On Matplotlib 3.10 and later you will see the two colours printed as triples of decimal numbers instead of as text:
+**A note on the colour line.** Depending on how a line's colour was set, `get_color()` can also return the colour as a triple of decimal numbers instead of text, for example:
 
 ```text
 Colors       : [(0.12156862745098039, 0.4666666666666667, 0.7058823529411765),
                 (1.0, 0.4980392156862745, 0.054901960784313725)]
 ```
 
-These are the same two colours. `#1f77b4` is simply the hexadecimal way of writing red 0.1216, green 0.4667, blue 0.7059, and `#ff7f0e` is the same for the second colour. Newer versions of Matplotlib store the default colour cycle as numbers, so `get_color()` hands back numbers. If you prefer the short hexadecimal form, convert it:
+These are the same two colours. `#1f77b4` is simply the hexadecimal way of writing red 0.1216, green 0.4667, blue 0.7059, and `#ff7f0e` is the same for the second colour. In that case `get_color()` hands back numbers. If you prefer the short hexadecimal form, convert it:
 
 ```python
 # Add this import at the top of the script, then use this line
@@ -934,7 +953,16 @@ Written that way, the output reads `Colors       : ['#1f77b4', '#ff7f0e']` on ev
 
 ![Plot with a legend showing only the labelled lines](../resources/ch15-qa2-q12-legend.png)
 
-![What ax.legend() does behind the scenes](../resources/ch-15-fig-23-how-a-legend-is-built.png)
+![What ax.legend() does behind the scenes](../resources/S15-LR-ch-15-fig-23-how-a-legend-is-built.png)
+
+**Reading the figure**
+
+- **Step 1:** Plot the lines, giving some of them a `label=`.
+- **Step 2:** Call `ax.legend()`.
+- **Step 3:** Matplotlib collects every artist on the axes that has a label.
+- **Step 4:** Lines without a label are skipped.
+- **Step 5:** For each labelled line it draws a short sample of the line beside its label.
+- **Step 6:** It places the legend box, using `loc` (`"best"` by default).
 
 **Follow-up question:** How can you give a line a label but still keep it out of the legend?
 
@@ -1258,7 +1286,16 @@ To choose each color, Matplotlib follows two steps:
 
 In this way a table of raw numbers becomes a picture of color intensities, called a **heat map**. See [Heat map (Wikipedia)](https://en.wikipedia.org/wiki/Heat_map), [Colormap normalization (Matplotlib)](https://matplotlib.org/stable/users/explain/colors/colormapnorms.html) and [Choosing colormaps (Matplotlib)](https://matplotlib.org/stable/users/explain/colors/colormaps.html).
 
-![How a number in a matrix becomes a coloured square](../resources/ch-15-fig-24-how-imshow-colours-a-matrix.png)
+![How a number in a matrix becomes a coloured square](../resources/S15-LR-ch-15-fig-24-how-imshow-colours-a-matrix.png)
+
+**Reading the figure**
+
+- **Step 1:** Start with a matrix of values in rows and columns.
+- **Step 2:** `imshow()` finds the smallest and the largest value (unless `vmin`/`vmax` are given).
+- **Step 3:** It rescales every value to a number between 0 and 1.
+- **Step 4:** It looks that number up in the colormap to get a colour.
+- **Step 5:** It draws one coloured square per cell; row 0 is at the top by default.
+- **Step 6:** `plt.colorbar()` adds a colour bar as the key.
 
 ```python
 # Step 1 - Import the libraries
@@ -1495,7 +1532,7 @@ ax[1, 1] is ax.flat[3]? True
 
 **Why `ax[3]` fails:** in a 2-D array, a single number selects a **row**. There are only rows 0 and 1, so asking for row 3 raises `IndexError: index 3 is out of bounds for axis 0 with size 2`. To count the panels one after another as 0, 1, 2, 3, use `ax.flat[3]` or `ax.flatten()[3]`. The output confirms that `ax.flat[3]` is the same panel as `ax[1, 1]`.
 
-The error line in the original example was kept inside comments so that the script would not stop. In this version it is placed inside `try` and `except`, which catches the error, prints its message and lets the script carry on.
+The error line is placed inside `try` and `except`, which catches the error, prints its message and lets the script carry on instead of stopping.
 
 **Follow-up question:** What does `ax[1]` give in a 2 × 2 grid?
 
@@ -1710,7 +1747,17 @@ The fix is to free each figure's memory at the end of every loop pass by calling
 | `plt.close("all")` | Every open figure |
 | `plt.get_fignums()` | Closes nothing; it lists the numbers of the open figures, which is useful for checking |
 
-![Why a figure must be closed each time round a loop that saves many plots](../resources/ch-15-fig-25-closing-figures-in-a-loop.png)
+![Why a figure must be closed each time round a loop that saves many plots](../resources/S15-LR-ch-15-fig-25-closing-figures-in-a-loop.png)
+
+**Reading the figure**
+
+- **Step 1:** Start the loop that makes many plots.
+- **Step 2:** Create a new figure.
+- **Step 3:** Draw the plot on it.
+- **Step 4:** Save the figure to a file.
+- **Step 5:** Close it with `plt.close(fig)`, which frees the memory it was using; without this, every figure stays open.
+- **Step 6:** Are there more plots to make? If so, go round again.
+- **Step 7:** No: the loop finishes.
 
 ```python
 # =====================================================================
@@ -1731,7 +1778,7 @@ The fix is to free each figure's memory at the end of every loop pass by calling
 #
 # after saving or displaying each figure.
 #
-# The original example made 1000 plots. Here NUMBER_OF_PLOTS is set to 50
+# NUMBER_OF_PLOTS is set to 50 here
 # so that the script runs quickly and does not fill your folder with files.
 # Change it to 1000 to see the full batch.
 # =====================================================================
@@ -2047,7 +2094,7 @@ Main     rows [1, 2]  columns [1, 2]
 
 ![Dashboard layout made with subplot2grid](../resources/ch15-qa2-q20-subplot2grid.png)
 
-The printed rows and columns match the table above. For example, the Main panel uses rows 1 and 2 and columns 1 and 2. A `figsize` of 10 × 7 inches was added at the start so that the three panels have enough room.
+The printed rows and columns match the table above. For example, the Main panel uses rows 1 and 2 and columns 1 and 2. The `figsize` of 10 × 7 inches set at the start gives the three panels enough room.
 
 **Follow-up question:** How would you change the layout so that the sidebar is on the right and the main panel on the left?
 

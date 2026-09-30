@@ -74,7 +74,17 @@ See [Level of measurement (Wikipedia)](https://en.wikipedia.org/wiki/Level_of_me
 
 **How to choose a plot, step by step**
 
-![Four common goals and the plot that suits each one](../resources/ch-15-fig-18-plot-choice-by-goal.png)
+![Four common goals and the plot that suits each one](../resources/S15-LR-ch-15-fig-18-plot-choice-by-goal.png)
+
+**Reading the figure**
+
+- Identify each variable you want to show.
+- Decide the data type of each one (nominal, ordinal, interval or ratio).
+- Decide what the graph must show: the goal.
+- To compare categories: a bar chart.
+- To show change over time: a line plot.
+- To show the spread of one numeric variable: a histogram, box plot or violin plot.
+- To show the relationship between two numeric variables: a scatter plot.
 
 **Example of a wrong choice:** joining the sales figures of Apples, Bananas and Mangoes with a line suggests that sales "rise" or "fall" from one fruit to the next. Fruits are nominal categories with no order, so this trend is false. A bar chart shows the same numbers honestly.
 
@@ -209,7 +219,14 @@ Yes. Python accepts any valid name as an alias, and you would then write `graph.
 
 The workflow consists of four stages: import the plotting library, prepare the data, create the plot, and display the result. Data is usually stored in lists, NumPy arrays, or pandas objects. Functions such as `plt.plot()` create the graphical representation. Finally, `plt.show()` renders the graph, which means it draws the graph and displays it on the screen. Following this sequence ensures a predictable and organized plotting process.
 
-![The four steps every Matplotlib script needs](../resources/ch-15-fig-19-minimal-script-steps.png)
+![The four steps every Matplotlib script needs](../resources/S15-LR-ch-15-fig-19-minimal-script-steps.png)
+
+**Reading the figure**
+
+- **Step 1:** Import the plotting library: `import matplotlib.pyplot as plt`.
+- **Step 2:** Prepare the data, for example two lists of x and y values.
+- **Step 3:** Create the plot, for example with `plt.plot(x, y)`.
+- **Step 4:** Display the result with `plt.show()`.
 
 **The four steps as a script**
 
@@ -590,7 +607,15 @@ It is written as an option inside `ax.plot()` (Layer 2), but its purpose is to s
 
 Some chart elements depend on the plotted data. A legend, for example, can only list lines or bars that already exist, so it must be added after the data is plotted. Titles, axis labels and grids do not strictly need the data first, because they belong to the plot area rather than to the lines. Still, adding them after plotting keeps the script in a clear, natural order: first draw, then explain. All of these elements must be added before `plt.show()`, because `plt.show()` is the step that displays the finished chart. In a normal script the program waits at `plt.show()` until the window is closed, and changes made after that are not seen in the window. Following the order `Plot → Customize → Show` reduces confusion and prevents missing elements.
 
-![The five steps that turn a bare plot into a finished figure](../resources/ch-15-fig-20-polishing-a-figure.png)
+![The five steps that turn a bare plot into a finished figure](../resources/S15-LR-ch-15-fig-20-polishing-a-figure.png)
+
+**Reading the figure**
+
+- **Step 1:** Plot the data, giving each series a `label=`.
+- **Step 2:** Add the title and the axis labels.
+- **Step 3:** Add the legend (which uses the labels) and the grid.
+- **Step 4:** Save the figure with `savefig()` if you need a file; do this before `show()`.
+- **Step 5:** Show the figure.
 
 ```python
 # Step 1 - Import pyplot

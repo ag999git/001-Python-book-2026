@@ -155,7 +155,19 @@ So a single variable can belong to both systems at once. For example, the number
 
 Nominal and ordinal data are called **qualitative** or **categorical** data, because they describe qualities or categories. Interval and ratio data are called **quantitative** or **numeric** data, because they describe amounts.
 
-![How the six kinds of data are related to one another](../resources/ch-15-fig-01-data-classification.png)
+![How the six kinds of data are related to one another](../resources/S15-LR-ch-15-fig-01-data-classification.png)
+
+**Reading the figure**
+
+- All data falls into two broad families.
+- Qualitative (categorical) data describes a quality, such as a colour or a grade.
+- Quantitative (numeric) data describes an amount that can be measured or counted.
+- Nominal: categories that only name things, with no natural order (colours, cities).
+- Ordinal: categories with a natural order, but the gaps between them are not equal (small, medium, large).
+- Interval: numbers with equal gaps but no true zero (temperature in °C).
+- Ratio: numbers with equal gaps and a true zero, so ratios make sense (height, price).
+- Discrete: numbers that are counted, whole steps only (number of children).
+- Continuous: numbers that are measured and can take any value in a range (weight, time).
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -324,7 +336,21 @@ Notes on the table:
 
 When you meet a new column in a dataset, ask the questions in the flowchart below, in order.
 
-![The questions to ask, in order, to find the type of a variable](../resources/ch-15-fig-02-identify-data-type.png)
+![The questions to ask, in order, to find the type of a variable](../resources/S15-LR-ch-15-fig-02-identify-data-type.png)
+
+**Reading the figure**
+
+- **Step 1:** Take one variable (one column of your data).
+- **Step 2:** Do its values measure or count an amount?
+- **Step 3:** No, it is categorical: do the categories have a natural order?
+- **Step 4:** Yes: ordinal data (small, medium, large).
+- **Step 5:** No: nominal data (colours, cities).
+- **Step 6:** Yes, it is numeric: does zero mean "none of the quantity"?
+- **Step 7:** Yes: ratio data, such as height or price.
+- **Step 8:** No: interval data, such as temperature in °C.
+- **Step 9:** For any numeric data (ratio or interval), also ask: are the values counted, or measured?
+- **Step 10:** Counted in whole steps: discrete.
+- **Step 11:** Measured, so any value in a range is possible: continuous.
 
 **A common trap:** some columns contain numbers that are really labels. PIN codes, roll numbers and jersey numbers are written as digits, but adding or averaging them makes no sense. They are **nominal** data. Always ask what the number *means*, not just whether it looks like a number.
 
@@ -408,7 +434,18 @@ This section answers the first part of the research question: *how do we systema
 4. **Match the question and the data types to a plot** using the flowchart below.
 5. **Check the plot for honesty.** Look at the axis scale, the order of the categories, the number of bins and the number of slices. Ask whether a reader could misread the picture.
 
-![Matching the question you want answered to a type of plot](../resources/ch-15-fig-03-choosing-a-plot.png)
+![Matching the question you want answered to a type of plot](../resources/S15-LR-ch-15-fig-03-choosing-a-plot.png)
+
+**Reading the figure**
+
+- Start from the question the plot has to answer.
+- To compare categories, use a bar chart.
+- To show change over time, use a line plot or an area plot.
+- To show the spread of one numeric variable, use a histogram.
+- To show the relationship between two numeric variables, use a scatter plot.
+- To show parts of a whole, use a pie chart if there are five slices or fewer; otherwise a bar chart is easier to read.
+- To compare one numeric variable across several groups, use a box plot or a violin plot.
+- To show values arranged in a grid of rows and columns, use a heatmap.
 
 The table below links the data types to the flowchart.
 
@@ -570,7 +607,18 @@ The script draws four plots in one figure. Each plot matches one kind of data:
 | Bottom-left | Histogram | `total_bill` | Continuous ratio | How are the bill amounts spread out? |
 | Bottom-right | Scatter plot | `total_bill`, `tip` | Ratio and ratio | Do bigger bills get bigger tips? |
 
-![The eight steps of the script that draws four plots for four types of data](../resources/ch-15-fig-04-four-plots-script-steps.png)
+![The eight steps of the script that draws four plots for four types of data](../resources/S15-LR-ch-15-fig-04-four-plots-script-steps.png)
+
+**Reading the figure**
+
+- **Step 1:** Import pandas, seaborn and matplotlib.
+- **Step 2:** Load the tips dataset: 244 restaurant bills.
+- **Step 3:** Create a figure with a 2 × 2 grid of axes.
+- **Step 4:** Ordinal data: a line plot of the average bill at lunch and at dinner.
+- **Step 5:** Nominal data: a bar chart of the number of tables served on each day.
+- **Step 6:** Continuous ratio data: a histogram showing the spread of the total bill.
+- **Step 7:** Two ratio variables: a scatter plot of the bill against the tip.
+- **Step 8:** Tidy the layout, save the figure and show it.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1169,7 +1217,17 @@ The columns of the penguins dataset are:
 
 A box plot squeezes all the values of a group into a small picture built from five numbers, plus any outliers.
 
-![The parts of a box plot, from the highest value down to the lowest](../resources/ch-15-fig-05-box-plot-anatomy.png)
+![The parts of a box plot, from the highest value down to the lowest](../resources/S15-LR-ch-15-fig-05-box-plot-anatomy.png)
+
+**Reading the figure**
+
+- Dots above the upper whisker are high outliers: more than 1.5 × IQR above the box.
+- The upper whisker ends at the largest value that is not an outlier.
+- The top of the box is Q3, the third quartile: 75 per cent of the values lie below it.
+- The line inside the box is the median, the middle value.
+- The bottom of the box is Q1, the first quartile: 25 per cent of the values lie below it.
+- The lower whisker ends at the smallest value that is not an outlier.
+- Dots below the lower whisker are low outliers: more than 1.5 × IQR below the box.
 
 | Part of the plot | Name | Meaning |
 | --- | --- | --- |
@@ -1661,7 +1719,15 @@ A histogram of these marks would have three touching bars of heights 2, 5 and 3.
 
 The script below uses the real-world `tips` dataset from Seaborn to show how the continuous ratio variable `total_bill` is distributed across a restaurant's transactions.
 
-![How Matplotlib turns a list of raw values into a histogram](../resources/ch-15-fig-06-how-a-histogram-is-built.png)
+![How Matplotlib turns a list of raw values into a histogram](../resources/S15-LR-ch-15-fig-06-how-a-histogram-is-built.png)
+
+**Reading the figure**
+
+- **Step 1:** Matplotlib reads the 244 values of `total_bill`.
+- **Step 2:** It finds the smallest and the largest bill.
+- **Step 3:** Because of `bins=15`, it divides that range into 15 intervals of equal width.
+- **Step 4:** It counts how many bills fall into each interval.
+- **Step 5:** It draws one bar per interval, touching its neighbours, with the height equal to the count.
 
 [Back to the Table of Contents](#table-of-contents)
 

@@ -183,7 +183,16 @@ The graph often looks like the body of a musical violin. The density curve is dr
 
 ### Step-by-Step Process
 
-![From Histogram to Violin Plot](../resources/ch15-matplotlib-violin-steps-in-making.png)
+![From Histogram to Violin Plot](../resources/S15-LR-ch15-matplotlib-violin-steps-in-making.png)
+
+**Reading the figure**
+
+- **Step 1:** Start with the raw data: 100 exam scores.
+- **Step 2:** A histogram shows how often scores fall into each range.
+- **Step 3:** Smoothing the bars gives a continuous density curve.
+- **Step 4:** Mirroring the curve about a centre line gives the symmetrical violin shape.
+- **Step 5:** Box-plot elements are added inside: the median and the quartiles.
+- **Step 6:** The finished violin plot shows both the shape of the data and its summary numbers.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -200,7 +209,16 @@ The graph often looks like the body of a musical violin. The density curve is dr
 
 The same process as a flowchart:
 
-![A violin plot is a smoothed histogram, mirrored and given summary lines](../resources/ch-15-fig-11-how-a-violin-plot-is-built.png)
+![A violin plot is a smoothed histogram, mirrored and given summary lines](../resources/S15-LR-ch-15-fig-11-how-a-violin-plot-is-built.png)
+
+**Reading the figure**
+
+- **Step 1:** Collect the data, for example a set of exam scores.
+- **Step 2:** Draw a histogram of it.
+- **Step 3:** Smooth the bars into a continuous density curve.
+- **Step 4:** Mirror the curve about a centre line, giving the violin shape.
+- **Step 5:** Add the median, mean and quartile lines.
+- **Step 6:** The result is the finished violin plot: a smoothed histogram, mirrored, with summary lines.
 
 **A note on Step 3:** Matplotlib does not actually draw a histogram first. It builds the smooth curve directly from the data using kernel density estimation. Thinking of the curve as a "smoothed histogram" is still a helpful way to understand what it shows.
 
@@ -245,7 +263,18 @@ Choose based on your goal.
 
 The flowchart below turns these choices into questions. The numbers show the order in which to ask them.
 
-![Choosing between a histogram, a box plot, a violin plot and a strip plot](../resources/ch-15-fig-12-which-distribution-plot.png)
+![Choosing between a histogram, a box plot, a violin plot and a strip plot](../resources/S15-LR-ch-15-fig-12-which-distribution-plot.png)
+
+**Reading the figure**
+
+- **Step 1:** Start from what you need to see in the distribution.
+- **Step 2:** Do you need the exact number of values in each range?
+- **Step 3:** Yes: use a histogram.
+- **Step 4:** No: do you need the shape of the distribution, or how many peaks it has?
+- **Step 5:** No, only the summary numbers: use a box plot.
+- **Step 6:** Yes: does each group have more than about 10 values?
+- **Step 7:** Yes: use a violin plot.
+- **Step 8:** No: use a strip plot, which shows every single point.
 
 A **strip plot** simply draws every data point as a dot along a line. It is the best choice when there are only a few values. See [seaborn.stripplot](https://seaborn.pydata.org/generated/seaborn.stripplot.html).
 
@@ -392,7 +421,18 @@ A few terms used in the script:
 
 The flow of the script:
 
-![The eight steps of the single violin plot script](../resources/ch-15-fig-13-violin-script-steps.png)
+![The eight steps of the single violin plot script](../resources/S15-LR-ch-15-fig-13-violin-script-steps.png)
+
+**Reading the figure**
+
+- **Step 1:** Import NumPy and Matplotlib.
+- **Step 2:** Create 100 normally distributed scores and add 3 outliers.
+- **Step 3:** Calculate the mean, the median, Q1 and Q3.
+- **Step 4:** Create the figure and the axes.
+- **Step 5:** Draw the violin plot, with options such as `showmeans` and `showmedians`.
+- **Step 6:** Colour the violin body and its lines.
+- **Step 7:** Add the title, axis labels, a grid and a legend.
+- **Step 8:** Display the plot.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -788,7 +828,18 @@ The script below draws all three plots, one above the other, using the same 100 
 
 **Note on Matplotlib versions:** the script uses `orientation="horizontal"` to lay the box plot and violin plot on their sides. This option was added in Matplotlib 3.10. If you have an older version and get an error, replace `orientation="horizontal"` with `vert=False`. In Matplotlib 3.10 and later, `vert` still works but is being phased out.
 
-![The eight steps of the script that shows one dataset as a histogram, a box plot and a violin plot](../resources/ch-15-fig-14-three-views-script-steps.png)
+![The eight steps of the script that shows one dataset as a histogram, a box plot and a violin plot](../resources/S15-LR-ch-15-fig-14-three-views-script-steps.png)
+
+**Reading the figure**
+
+- **Step 1:** Import NumPy and Matplotlib.
+- **Step 2:** Build two classes, one with scores around 50 and one around 80, and combine them into one bimodal dataset.
+- **Step 3:** Calculate the quartiles and count how many scores fall into three bands.
+- **Step 4:** Create three panels stacked vertically, sharing one score axis.
+- **Step 5:** Top panel: a histogram with the quartile lines marked.
+- **Step 6:** Middle panel: a box plot of the same data.
+- **Step 7:** Bottom panel: a violin plot, which shows the two peaks the box plot hides.
+- **Step 8:** Add the overall title, print the summary and display the figure.
 
 [Back to the Table of Contents](#table-of-contents)
 

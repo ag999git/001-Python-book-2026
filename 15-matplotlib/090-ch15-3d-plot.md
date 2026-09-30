@@ -114,7 +114,14 @@ Thus, Matplotlib plotting methods can be broadly divided into three categories:
 2. **Plots that work in both 2D and 3D**
 3. **Plots specifically designed for 3D visualization**
 
-![Which Matplotlib methods work in two dimensions, in both, or only in three](../resources/ch-15-fig-32-which-methods-work-in-3d.png)
+![Which Matplotlib methods work in two dimensions, in both, or only in three](../resources/S15-LR-ch-15-fig-32-which-methods-work-in-3d.png)
+
+**Reading the figure**
+
+- Matplotlib's plotting methods fall into three groups.
+- These work only on ordinary 2D axes: `pie()`, `boxplot()`, `violinplot()`, `imshow()` and `hist()`.
+- These work on both 2D axes and 3D axes (with an extra z argument in 3D): `plot()`, `scatter()`, `bar()`, `stem()`, `contour()` and `text()`.
+- These exist only on 3D axes: `plot_surface()`, `plot_wireframe()`, `plot_trisurf()` and `voxels()`.
 
 The following sections discuss these three categories.
 
@@ -502,7 +509,17 @@ This is explained fully in the section [Understanding np.meshgrid()](#understand
 
 ### Surface Plot Workflow
 
-![Two one-dimensional lists become two grids, and those grids give Z](../resources/ch-15-fig-33-how-meshgrid-works.png)
+![Two one-dimensional lists become two grids, and those grids give Z](../resources/S15-LR-ch-15-fig-33-how-meshgrid-works.png)
+
+**Reading the figure**
+
+- Make the one-dimensional x values.
+- Make the one-dimensional y values.
+- Pass both to `np.meshgrid(x, y)`.
+- It returns the `X` grid: the x values repeated down every row.
+- And the `Y` grid: the y values repeated across every column.
+- Calculate `Z` from `X` and `Y`, giving one height for every point of the grid.
+- Draw the result with `ax.plot_surface(X, Y, Z)`.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1159,7 +1176,17 @@ A **helix** may be thought of as a circle that gradually rises in height, like a
 
 The circle is made with the functions cosine and sine. For an angle `t`, the point `(r × cos(t), r × sin(t))` lies on a circle of radius `r`. As `t` grows, the point travels around the circle. See [Unit circle (Wikipedia)](https://en.wikipedia.org/wiki/Unit_circle).
 
-![The seven steps of the 3D helix script](../resources/ch-15-fig-34-helix-script-steps.png)
+![The seven steps of the 3D helix script](../resources/S15-LR-ch-15-fig-34-helix-script-steps.png)
+
+**Reading the figure**
+
+- **Step 1:** Create a figure with 3D axes, `projection="3d"`.
+- **Step 2:** Make 1000 angle values `t` from 0 to 20π (ten full turns).
+- **Step 3:** `x = r * cos(t)` and `y = r * sin(t)`, with `r = 5`, trace a circle.
+- **Step 4:** `z` rises evenly from 0 to 10, lifting the circle into a spiral.
+- **Step 5:** Print the shapes of the arrays and some statistics.
+- **Step 6:** `ax.plot(x, y, z)` draws the helix.
+- **Step 7:** Add the axis labels and title, and show the figure.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1526,7 +1553,19 @@ Lowest z = 0.007, highest z = 18.0
 
 ### Workflow of Script 3
 
-![The nine steps that draw a coloured surface with its colour bar](../resources/ch-15-fig-35-surface-with-a-colormap.png)
+![The nine steps that draw a coloured surface with its colour bar](../resources/S15-LR-ch-15-fig-35-surface-with-a-colormap.png)
+
+**Reading the figure**
+
+- **Step 1:** Make the one-dimensional x values.
+- **Step 2:** Make the one-dimensional y values.
+- **Step 3:** Pass them to `np.meshgrid()`.
+- **Step 4:** Receive the `X` grid.
+- **Step 5:** Receive the `Y` grid.
+- **Step 6:** Calculate `Z` at every grid point.
+- **Step 7:** Draw the surface with `ax.plot_surface(X, Y, Z, ...)`.
+- **Step 8:** Colour it with a colormap, `cmap=`.
+- **Step 9:** Add a colour bar with `fig.colorbar()` so the colours can be read as values.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1625,7 +1664,7 @@ ax[1].plot_wireframe(
     cstride=2
 )
 
-print("Wireframe lines drawn along each direction:", len(range(0, 50, 2)))
+print("Wireframe lines drawn along each direction:", len(range(0, 50, 2)) + 1)   # rows 0, 2, ..., 48 plus the last row, 49
 
 ax[1].set_title("Wireframe Plot")
 ax[1].set_xlabel("X-axis")
@@ -1655,7 +1694,7 @@ plt.show()
 
 ```text
 Grid size: (50, 50) = 2500 points
-Wireframe lines drawn along each direction: 25
+Wireframe lines drawn along each direction: 26
 Left view : elev = 25  azim = 45
 Right view: elev = 25  azim = 45
 ```
@@ -1669,7 +1708,7 @@ Right view: elev = 25  azim = 45
 **Reading the output:**
 
 1. The grid has 50 × 50 = 2,500 points, the same as in Script 3.
-2. With `rstride=2` and `cstride=2`, a line is drawn for every second row and every second column, so 25 lines run in each direction instead of 50. This keeps the wireframe from looking too crowded.
+2. With `rstride=2` and `cstride=2`, a line is drawn for every second row and every second column (Matplotlib also always draws the last one), so 26 lines run in each direction instead of 50. This keeps the wireframe from looking too crowded.
 3. Both plots use the same viewing angle (elev = 25, azim = 45), so they can be compared directly.
 
 [Back to the Table of Contents](#table-of-contents)
@@ -1695,7 +1734,7 @@ What happens to the wireframe if you change `rstride=2, cstride=2` to `rstride=5
 <details>
 <summary>Show answer</summary>
 
-Only every fifth row and column is drawn, so there are 10 lines in each direction instead of 25. The mesh becomes much more open and faster to draw, but the curved shape looks less smooth. The surface plot on the left is not affected.
+Only every fifth row and column (plus the last one) is drawn, so there are 11 lines in each direction instead of 26. The mesh becomes much more open and faster to draw, but the curved shape looks less smooth. The surface plot on the left is not affected.
 
 </details>
 

@@ -697,7 +697,20 @@ A **heat map** is a grid of colored cells in which the color shows the size of e
 
 The flowchart below shows how to decide which kind of data you have and which method to use.
 
-![Deciding whether your data is coordinate data or grid data, and which method to use](../resources/ch-15-fig-07-coordinate-or-grid-data.png)
+![Deciding whether your data is coordinate data or grid data, and which method to use](../resources/S15-LR-ch-15-fig-07-coordinate-or-grid-data.png)
+
+**Reading the figure**
+
+- **Step 1:** Look at how the values in your data are arranged.
+- **Step 2:** Is each reading a pair of x and y values?
+- **Step 3:** Yes: it is coordinate data.
+- **Step 4:** No: are the values arranged in rows and columns?
+- **Step 5:** No: reorganise the data first, for example with `pivot`.
+- **Step 6:** Yes (or once reorganised): it is grid, or matrix, data.
+- **Step 7:** For grid data: should each value become a coloured cell, or should the graph show lines of equal value?
+- **Step 8:** For coordinate data: a trend or change over time uses `plot()`; separate points or a relationship use `scatter()`.
+- **Step 9:** Each value as a coloured cell: `imshow()`.
+- **Step 10:** Lines, or filled bands, of equal value: `contour()` or `contourf()`.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1284,7 +1297,17 @@ print(B)
 
 #### Flowchart: Matrix Slicing
 
-![Writing a matrix slice, one decision at a time](../resources/ch-15-fig-08-matrix-slicing-steps.png)
+![Writing a matrix slice, one decision at a time](../resources/S15-LR-ch-15-fig-08-matrix-slicing-steps.png)
+
+**Reading the figure**
+
+- **Step 1:** Start with a two-dimensional NumPy matrix.
+- **Step 2:** Decide which rows you need: the first one and the last one.
+- **Step 3:** The row part of the slice is `row_start:row_end`, where `row_end` is the last row index plus 1 (the end is excluded).
+- **Step 4:** Do you need every column?
+- **Step 5:** No: the column part is `col_start:col_end`, again with the end one past the last column you want.
+- **Step 6:** Write the slice as `matrix[row part, column part]`; if all columns are needed, the column part is just a single colon, `:`.
+- **Step 7:** Print the result and check that its `.shape` is what you expected.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1497,7 +1520,17 @@ A[::2, ::2] =
 
 The six tasks follow one path. The flights data starts as a long table, is reshaped into a matrix, is sliced, and is then plotted in two different ways.
 
-![The six tasks of the flights script, and how the two routes meet again at the comparison](../resources/ch-15-fig-09-flights-script-tasks.png)
+![The six tasks of the flights script, and how the two routes meet again at the comparison](../resources/S15-LR-ch-15-fig-09-flights-script-tasks.png)
+
+**Reading the figure**
+
+- Task 1: load the seaborn flights table, 144 rows of year, month and passengers.
+- Grid route, task 2: pivot it into a 12 × 12 matrix of years by months.
+- Task 3: convert the matrix to a NumPy array and slice out the years 1952 to 1958.
+- Task 4: plot the sliced matrix as grid data with `imshow()` and `contourf()`.
+- Coordinate route, task 5: pick one year and treat its 12 months as coordinate data.
+- Task 6: draw that year as a line plot and a scatter plot.
+- The two routes meet again: compare what each kind of graph shows.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1692,7 +1725,13 @@ It must first be converted into:
 
 The pandas method `pivot()` does this. It takes one column for the row labels, one column for the column labels, and one column for the values that fill the cells. See [pandas DataFrame.pivot](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.pivot.html).
 
-![A long table becomes a matrix when it is pivoted](../resources/ch-15-fig-10-pivot-long-to-matrix.png)
+![A long table becomes a matrix when it is pivoted](../resources/S15-LR-ch-15-fig-10-pivot-long-to-matrix.png)
+
+**Reading the figure**
+
+- **Step 1:** The long table has one row per observation: `year`, `month` and `passengers`, 144 rows in all.
+- **Step 2:** `pivot` makes each year a row label, each month a column label, and fills the cells with the passenger counts.
+- **Step 3:** The result is a matrix of 12 rows (years) by 12 columns (months), ready for `imshow()` or `contourf()`.
 
 The small table below shows what `pivot()` does with the first two months of 1949 and 1950.
 

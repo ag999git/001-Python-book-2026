@@ -187,7 +187,17 @@ All the scripts on this page use the OOP style.
 
 This script draws six sample values as a stem plot with blue stems, red markers and a black baseline. The plotting code is short, so extra `print()` statements have been added to show the data and the parts that `ax.stem()` creates.
 
-![The seven steps of the basic stem plot script](../resources/ch-15-fig-15-stem-plot-script-steps.png)
+![The seven steps of the basic stem plot script](../resources/S15-LR-ch-15-fig-15-stem-plot-script-steps.png)
+
+**Reading the figure**
+
+- **Step 1:** Import `matplotlib.pyplot`.
+- **Step 2:** Prepare the lists of x values and y values.
+- **Step 3:** Create the figure and the plot area (axes).
+- **Step 4:** Draw the stem plot with `ax.stem()`, choosing the line, marker and baseline styles.
+- **Step 5:** Add the title and the axis labels.
+- **Step 6:** Add a grid.
+- **Step 7:** Display the graph.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -459,7 +469,17 @@ Examples:
 
 The flowchart below helps you decide. Follow the numbers.
 
-![When a stem plot is the right choice, and when it is not](../resources/ch-15-fig-16-when-to-use-a-stem-plot.png)
+![When a stem plot is the right choice, and when it is not](../resources/S15-LR-ch-15-fig-16-when-to-use-a-stem-plot.png)
+
+**Reading the figure**
+
+- **Step 1:** You have a sequence of values, such as samples or readings.
+- **Step 2:** Is each separate value important, rather than the overall trend?
+- **Step 3:** No, the trend matters most: use a line plot.
+- **Step 4:** Yes: are there more than about 50 values? If so, the stems crowd together, so a line plot is again better.
+- **Step 5:** No: does the distance of each value from a baseline, such as zero, matter?
+- **Step 6:** Yes: use a stem plot.
+- **Step 7:** No: use a scatter plot.
 
 The figure of about 50 values is only a rough guide. The real test is whether the stems can still be told apart on the screen.
 
@@ -525,7 +545,18 @@ This is Script 2 on this page.
 
 `plt.subplots(3, 1)` creates a figure with 3 rows and 1 column of plot areas, stacked one above the other. See [matplotlib.pyplot.subplots](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.subplots.html).
 
-![The eight steps of the script that compares a scatter plot, a stem plot and a line plot](../resources/ch-15-fig-17-three-panel-script-steps.png)
+![The eight steps of the script that compares a scatter plot, a stem plot and a line plot](../resources/S15-LR-ch-15-fig-17-three-panel-script-steps.png)
+
+**Reading the figure**
+
+- **Step 1:** Import `matplotlib.pyplot`.
+- **Step 2:** Prepare one set of x and y values, used by all three panels.
+- **Step 3:** Create three panels stacked vertically.
+- **Step 4:** Top panel: the data as a scatter plot.
+- **Step 5:** Middle panel: the same data as a stem plot.
+- **Step 6:** Bottom panel: the same data as a line plot.
+- **Step 7:** Adjust the spacing so that titles and labels do not overlap.
+- **Step 8:** Display the graphs.
 
 [Back to the Table of Contents](#table-of-contents)
 

@@ -22,7 +22,16 @@ Writing plotting scripts is a good way to practise many basic Python skills at t
 
 **The basic pattern that every script follows:**
 
-![The skeleton that every script in this chapter follows](../resources/ch-15-fig-26-script-skeleton.png)
+![The skeleton that every script in this chapter follows](../resources/S15-LR-ch-15-fig-26-script-skeleton.png)
+
+**Reading the figure**
+
+- **Step 1:** Import Matplotlib and any other libraries the script needs.
+- **Step 2:** Prepare the data.
+- **Step 3:** Create the plot.
+- **Step 4:** Add the title, labels, legend and grid.
+- **Step 5:** Save the figure if you need a file.
+- **Step 6:** Show the figure.
 
 ## Table of Contents
 
@@ -762,7 +771,18 @@ Series plotted x = [0, 1, 2, 3, 4], y = [10, 15, 20, 25, 30]
 
 **How data reaches the finished graph:**
 
-![A list, a NumPy array and a pandas Series all reach ax.plot() the same way](../resources/ch-15-fig-27-list-array-series.png)
+![A list, a NumPy array and a pandas Series all reach ax.plot() the same way](../resources/S15-LR-ch-15-fig-27-list-array-series.png)
+
+**Reading the figure**
+
+- Choose the form of the input data.
+- It can be an ordinary Python list.
+- It can be a NumPy array.
+- It can be a pandas Series.
+- `ax.plot()` accepts all three in the same way and draws the line.
+- Add the title of each subplot.
+- Add the axis labels and the grid.
+- The finished figure has three subplots that look the same.
 
 **Follow-up question:** If the Series were created as `pd.Series([10, 15, 20, 25, 30], index=[2020, 2021, 2022, 2023, 2024])`, what would the third subplot show on its x-axis?
 
@@ -1167,7 +1187,17 @@ A combined chart uses bars for one variable and a line for another. The bars sho
 
 Sales (120 to 260) are much larger than profit (15 to 45). If both are drawn on the same y-axis, the profit line is squashed near the bottom of the chart and its changes are hard to see. So the script draws the profit line on a **second y-axis** created with `twinx()`. The two charts share the same months along the bottom, but each has its own scale: sales on the left and profit on the right. See [matplotlib.axes.Axes.twinx](https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.twinx.html).
 
-![The seven steps that put two different scales on one chart](../resources/ch-15-fig-28-twinx-steps.png)
+![The seven steps that put two different scales on one chart](../resources/S15-LR-ch-15-fig-28-twinx-steps.png)
+
+**Reading the figure**
+
+- **Step 1:** Create the figure and the first axes, for sales.
+- **Step 2:** Draw the sales as bars on the first axes.
+- **Step 3:** `ax.twinx()` creates a second axes that shares the x-axis but has its own y-axis on the right.
+- **Step 4:** Draw the profit as a line on the twin axes.
+- **Step 5:** Label both y-axes.
+- **Step 6:** Each axes has its own legend, so combine their handles and labels into one legend.
+- **Step 7:** Add the grid and show the chart.
 
 ```python
 # ==========================================================
@@ -1495,7 +1525,17 @@ plt.show()
 
 A bar chart compares amounts across separate categories, here the college departments. **Data labels** are numbers written on or above each bar so that the reader does not have to estimate the value from the axis. `plt.bar()` returns a container of bar objects. Looping over it gives the position and height of each bar, which tells us where to place its label. See [matplotlib.pyplot.bar](https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.bar.html).
 
-![The loop that writes a value above each bar](../resources/ch-15-fig-29-labelling-every-bar.png)
+![The loop that writes a value above each bar](../resources/S15-LR-ch-15-fig-29-labelling-every-bar.png)
+
+**Reading the figure**
+
+- **Step 1:** Prepare the department names and the book counts.
+- **Step 2:** Draw the bars and keep them in a variable, `bars = ax.bar(...)`.
+- **Step 3:** Take the next bar from `bars`.
+- **Step 4:** Find its centre, `bar.get_x() + bar.get_width() / 2`, and its height, `bar.get_height()`.
+- **Step 5:** Write the height as text just above the bar with `ax.text()`.
+- **Step 6:** Are there any bars left? If so, take the next one.
+- **Step 7:** No: add the title, labels, grid and legend, then show the chart.
 
 ```python
 # ==========================================================
@@ -1931,7 +1971,7 @@ It could be removed by starting the edges at 40, and the counts of the other bin
 
 A scatter plot draws one dot per student, with study hours along the x-axis and marks along the y-axis. The pattern of the dots shows the **trend**: if they rise from left to right, more study goes with higher marks, which is a **positive correlation**. An **outlier** is a dot that lies far from the trend.
 
-In the original data all ten points lie almost on a straight line, so there is nothing to find. The script therefore adds two students who do not fit the pattern. It then fits a trend line with `np.polyfit()`, measures the **correlation coefficient** with `np.corrcoef()`, and marks any student more than 20 marks away from the trend line as a possible outlier. See [numpy.polyfit](https://numpy.org/doc/stable/reference/generated/numpy.polyfit.html), [numpy.corrcoef](https://numpy.org/doc/stable/reference/generated/numpy.corrcoef.html) and [Outlier (Wikipedia)](https://en.wikipedia.org/wiki/Outlier).
+If only ten students who follow the usual pattern were used, all the points would lie almost on a straight line, and there would be nothing to find. The script therefore adds two students who do not fit the pattern. It then fits a trend line with `np.polyfit()`, measures the **correlation coefficient** with `np.corrcoef()`, and marks any student more than 20 marks away from the trend line as a possible outlier. See [numpy.polyfit](https://numpy.org/doc/stable/reference/generated/numpy.polyfit.html), [numpy.corrcoef](https://numpy.org/doc/stable/reference/generated/numpy.corrcoef.html) and [Outlier (Wikipedia)](https://en.wikipedia.org/wiki/Outlier).
 
 ```python
 # ==========================================================
@@ -2439,7 +2479,16 @@ A **surface** gives a height z for every point (x, y). To draw it, we need z val
 
 Since x² + y² is the squared distance from the centre, every point at the same distance from (0, 0) has the same z. That is why both plots show **rings**. The rings get closer together further out, because x² + y² grows faster and faster, so the sine wave goes up and down more quickly.
 
-![contour() and contourf() draw the same grid in two different ways](../resources/ch-15-fig-30-contour-and-contourf.png)
+![contour() and contourf() draw the same grid in two different ways](../resources/S15-LR-ch-15-fig-30-contour-and-contourf.png)
+
+**Reading the figure**
+
+- Make 200 x-values and 200 y-values with `np.linspace()`.
+- `np.meshgrid()` turns them into a 200 × 200 grid of points.
+- Calculate `z` at every point of the grid.
+- `contour()` draws lines joining points of equal `z`, like the contour lines on a map.
+- `contourf()` fills the bands between those levels with colour.
+- Add the labels and the colour bar, then show the figure.
 
 ```python
 # ==========================================================
@@ -2909,7 +2958,7 @@ Default background color again   : [1.0, 1.0, 1.0]
 | Good for | Reports and printed documents | Slides and screens in dark rooms |
 | Printing | Prints well | Uses a lot of ink; usually not suitable |
 
-**Follow-up question:** The original version of this script used `plt.style.use("dark_background")`. If you then added a third graph at the end of the script, what style would it have?
+**Follow-up question:** Suppose the second graph had been made after `plt.style.use("dark_background")` instead of inside a `with` block. If you then added a third graph at the end of the script, what style would it have?
 
 <details>
 <summary>Show answer</summary>
@@ -2932,7 +2981,17 @@ It would still have the dark_background style, because `plt.style.use()` changes
 | PDF | Vector: drawn with shapes, sharp at any size | Printing and reports |
 | SVG | Vector | Web pages, and editing in drawing programs |
 
-![Saving a figure in three formats and checking that each file really exists](../resources/ch-15-fig-31-saving-and-checking-files.png)
+![Saving a figure in three formats and checking that each file really exists](../resources/S15-LR-ch-15-fig-31-saving-and-checking-files.png)
+
+**Reading the figure**
+
+- **Step 1:** Create the graph and add its labels.
+- **Step 2:** Save it three times, as PNG, PDF and SVG, with `savefig()`.
+- **Step 3:** For each file, check with `os.path.exists()` and `os.path.getsize()` that it exists and is not empty.
+- **Step 4:** Were all three files saved correctly?
+- **Step 5:** Yes: print the success message.
+- **Step 6:** No: print a warning naming the problem.
+- **Step 7:** Show the graph.
 
 ```python
 # ==========================================================
@@ -3065,7 +3124,7 @@ Files saved successfully.
 4. `all(...)` is True only if every file exists, so the success message appears only when all three were saved.
 5. `plt.show()` displays the graph last.
 
-The files are saved in the folder from which the script is run. The original version printed "Files saved successfully." without checking; the checks here make that message trustworthy.
+The files are saved in the folder from which the script is run. The message "Files saved successfully." is printed only after the checks pass, so it can be trusted.
 
 **Follow-up question:** How would you save the files into a folder called `charts` instead of the current folder?
 

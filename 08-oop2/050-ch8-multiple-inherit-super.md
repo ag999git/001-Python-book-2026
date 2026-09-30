@@ -40,6 +40,17 @@ A very common shape in multiple inheritance looks like this: two classes (`Walke
 
 ![Flowchart](../resources/ch-8-august-2026-11-diamond-structure.png)
 
+**Another view of the same diagram**
+
+![Flowchart](../resources/S08-LR-ch-8-august-2026-11-diamond-structure.png)
+
+**Reading the figure**
+
+- `Pet` is the shared base class.
+- `Walker` inherits from `Pet`: one side of the diamond.
+- `Swimmer` also inherits from `Pet`: the other side of the diamond.
+- `Dog` inherits from both `Walker` and `Swimmer`, closing the diamond. `Pet` is reachable by two paths, but thanks to the MRO its `__init__()` runs only once.
+
 
 The shape gives this pattern its name: `Pet` sits at the top, `Walker` and `Swimmer` form the two "sides," and `Dog` sits at the bottom — a diamond. The natural question this raises: **when `Dog` is created, does `Pet.__init__` run once, or twice (once via each side)?** The rules below explain exactly how Python guarantees it only ever runs once.
 
@@ -277,7 +288,14 @@ print(Dog2.__mro__)
 
 ## Constructor flow for `Dog1`, visualized
 
-![Flowchart](../resources/ch-8-august-2026-dog1-constructor.png)
+![Flowchart](../resources/S08-LR-ch-8-august-2026-dog1-constructor.png)
+
+**Reading the figure**
+
+- **Step 1:** `d1 = Dog1()` runs `Dog1.__init__()`, which prints "Dog1 constructor" and calls `super().__init__()`.
+- **Step 2:** Next in `Dog1`'s MRO is `Walker`: it prints "Walker constructor" and calls `super().__init__()`.
+- **Step 3:** Next in the MRO is `Swimmer`, not `Pet`: it prints "Swimmer constructor" and calls `super().__init__()`.
+- **Step 4:** Last comes `Pet`, which prints "Pet constructor". It runs only once, even though both `Walker` and `Swimmer` inherit from it.
 
 
 
@@ -286,7 +304,14 @@ print(Dog2.__mro__)
 
 ## Method flow for `Dog1.action()`, visualized
 
-![Flowchart](../resources/ch-8-august-2026-11-dog1-action.png)
+![Flowchart](../resources/S08-LR-ch-8-august-2026-11-dog1-action.png)
+
+**Reading the figure**
+
+- **Step 1:** `d1.action()` runs `Dog1.action()`, which prints "Dog1 action" and calls `super().action()`.
+- **Step 2:** Next in the MRO is `Walker.action()`, which prints "Walking..." and calls `super().action()`.
+- **Step 3:** Next is `Swimmer.action()`, which prints "Swimming..." and calls `super().action()`.
+- **Step 4:** Last is `Pet.action()`, which prints "Pet action" and ends the chain. Each class runs exactly once.
 
 
 
@@ -297,9 +322,20 @@ Each class contributes its message exactly once, in MRO order — **no duplicati
 
 ## Flow chart (Alternate)
 
-\*\*The following diagram shows how the MRO works for `__init__()` and `super()`
+**The following diagram shows how the MRO works for `__init__()` and `super()`**
 
-![Diagram](../.gitbook/assets/ch8-multiple-inherit-super2.png)
+![Diagram](../resources/S08-LR-ch8-multiple-inherit-super2.png)
+
+**Reading the figure**
+
+- Top row: `Dog1` lists `Walker` first, so its `__init__()` and `action()` pass the call on to `Walker` through `super()`.
+- `Walker` prints its message and calls `super()`, which in `Dog1`'s MRO leads to `Swimmer`.
+- `Swimmer` prints its message and calls `super()`, which leads to `Pet`.
+- `Pet` prints its message and ends the chain. MRO: `Dog1`, `Walker`, `Swimmer`, `Pet`, `object`.
+- Bottom row: `Dog2` lists `Swimmer` first, so its `super()` calls go to `Swimmer` first.
+- `Swimmer` passes the call on to `Walker`.
+- `Walker` passes the call on to `Pet`.
+- `Pet` ends the chain. MRO: `Dog2`, `Swimmer`, `Walker`, `Pet`, `object`, the mirror image of `Dog1`'s.
 
 
 ## Quick recap

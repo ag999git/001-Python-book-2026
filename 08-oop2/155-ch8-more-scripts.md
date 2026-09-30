@@ -155,7 +155,14 @@ d1.action()   # -> Walking...
 d2.action()   # -> Swimming...
 ```
 
-![Flowchart](../resources/ch-8-august-2026-scripting-question-II-q7.png)
+![Flowchart](../resources/S08-LR-ch-8-august-2026-scripting-question-II-q7.png)
+
+**Reading the figure**
+
+- `Dog1` lists `Walker` first...
+- ...so `d1.action()` finds `Walker.action()` first and prints "Walking...".
+- `Dog2` lists `Swimmer` first...
+- ...so `d2.action()` finds `Swimmer.action()` first and prints "Swimming...".
 
 
 
@@ -255,7 +262,14 @@ print(f"RobotDog MRO: {RobotDog.__mro__}")
 # but the actual method-lookup chain (__mro__) is completely unaffected by it.
 ```
 
-![Flowchart](../resources/ch-8-august-2026-scripting-question-II-q11.png)
+![Flowchart](../resources/S08-LR-ch-8-august-2026-scripting-question-II-q11.png)
+
+**Reading the figure**
+
+- `Pet` is an abstract base class.
+- `RobotDog` does not inherit from `Pet`; `Pet.register(RobotDog)` (dashed arrow) makes it a virtual subclass.
+- Because of the registration, `isinstance(r, Pet)` is `True`.
+- But `RobotDog.__mro__` is just `RobotDog`, `object`: `Pet` is not in the method-lookup chain, and `RobotDog` inherits no code from it.
 
 
 
@@ -463,10 +477,10 @@ except TypeError as e:
 
 - These twenty scripts round out the practical side of this chapter's review material — covering the same core patterns as the earlier script-questions page, plus three genuinely new additions: **virtual subclasses** (Q11), **class decorators for registration** (Q19), and a direct demonstration of the **ABC instantiation guard** (Q20).
 - **Question 7 and Question 11 are worth comparing side by side**: Q7 shows how parent *order* changes real method resolution in genuine multiple inheritance; Q11 shows a case where a class (`RobotDog`) passes an `isinstance()` check *without* being part of the MRO at all — two very different ways a class can be related to another.
-- **Question 18 is a good one to run yourself and experiment with**: try removing the `__hash__` method entirely (or making it return a different value for equal objects) and see how the `len(cards)` result changes — a hands-on way to feel why the `__eq__`/`__hash__` consistency rule actually matters.
+- **Question 18 is a good one to run yourself and experiment with**: try making `__hash__` return a different value for equal objects (for example `return id(self)`) and see how the `len(cards)` result changes to 2; or remove `__hash__` entirely, and Python makes `IDCard` unhashable, so building the set raises a `TypeError` — a hands-on way to feel why the `__eq__`/`__hash__` consistency rule actually matters.
 - As with the earlier review pages, every question above links back to the specific chapter page where that concept was originally introduced with full explanation — worth revisiting if any single script still feels unclear.
 
-Working through all fifty items across the three review pages in this chapter (the two "Conceptual Questions" pages plus the two "Scripting" pages) is a solid, complete checkpoint on everything Chapters 7 and 8 have covered about Python's object-oriented programming model.
+Working through all one hundred items across the four review pages in this chapter (the two "Conceptual Questions" pages plus the two "Scripting" pages) is a solid, complete checkpoint on everything Chapters 7 and 8 have covered about Python's object-oriented programming model.
 
 
 

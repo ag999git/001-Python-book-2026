@@ -15,7 +15,7 @@ This kind of assignment is genuinely representative of real Python OOP work: pro
 - **Multiple inheritance** — when a class inherits from more than one parent class at once (here, `Dog` inherits from both `Animal` and `Friendly`).
 - **Polymorphism** — the ability to call the *same* method name on different types of objects, and have each one respond in its own way. ([Python docs: Polymorphism overview](https://docs.python.org/3/tutorial/classes.html))
 - **Dynamic binding** — Python deciding *which* version of an overridden method to actually run, at the moment the method is called, based on the real type of the object — not decided in advance.
-- **MRO (Method Resolution Order)** — covered in more depth on the previous page, "Implicit Inheritance from `object`."
+- **MRO (Method Resolution Order)** — covered in more depth on the Chapter 7 page, "Implicit Inheritance from `object`."
 
 ---
 
@@ -78,9 +78,19 @@ The assignment has `Cat` inherit from `Animal` only, while `Dog` inherits from b
 
 ![Flowchart](../resources/ch8-inheritene-august2026-animal-management-system.png)
 
+**Another view of the same diagram**
+
+![Flowchart](../resources/S08-LR-ch8-inheritene-august2026-animal-management-system.png)
+
+**Reading the figure**
+
+- `object` is the root class: `Animal` and `Friendly` both inherit from it implicitly.
+- `Animal` is the abstract base class. It provides `walk()` and declares the abstract method `speak()`.
+- `Friendly` is a separate, unrelated parent class that provides `nature()`.
+- `Cat` inherits from `Animal` only (single inheritance).
+- `Dog` has two arrows coming in, from `Animal` and from `Friendly`: this is multiple inheritance. Its MRO is `Dog`, `Animal`, `Friendly`, `object`.
 
 
-*(This diagram uses plain `graph TD` syntax with simple boxes and arrows only — no subgraphs, no styled/labeled edges, no special characters in labels — so it should paste cleanly into draw.io via Extras → Edit Diagram.)*
 
 Notice `Dog` has **two** arrows pointing into it — one from `Animal`, one from `Friendly` — this is exactly what multiple inheritance looks like: a single class combining behaviour from two separate parents at once.
 
@@ -88,7 +98,7 @@ Notice `Dog` has **two** arrows pointing into it — one from `Animal`, one from
 
 ## SOLUTION
 
-The script below implements every requirement from Part A and Part B, with comments added at each step explaining what's happening and why. (One small fix from the original: the code comment inside `Dog.speak()` was cut off mid-sentence in the source file — it's completed below.)
+The script below implements every requirement from Part A and Part B, with comments added at each step explaining what's happening and why. 
 
 ```python
 from abc import ABC, abstractmethod
@@ -254,11 +264,18 @@ The table below maps every requirement from Part A/B to the specific tool used, 
 
 ---
 
-### The following flowchart shows the parent and the derived classes
+### The following diagram shows the parent and the derived classes
 
 It also shows the attributes and methods of each class.
 
-![Diagram](../.gitbook/assets/ch8-inheritence-cat-dog.png)
+![Diagram](../resources/S08-LR-ch8-inheritence-cat-dog.png)
+
+**Reading the figure**
+
+- `Animal` (the abstract base class) has the public attribute `name` and the private attribute `__secret`. Its methods are `__init__(name)`, the concrete `walk()` and the abstract `speak()`.
+- `Friendly` has no attributes and one concrete method, `nature()`.
+- `Cat` inherits from `Animal` only. It gets `name`, `__secret`, `__init__()` and `walk()` from `Animal`, and provides its own `speak()`.
+- `Dog` inherits from both `Animal` and `Friendly`. It adds `color`, its own `__init__(name, color)` (which calls `super().__init__(name)`), its own `speak()` and `show_secret()`, and inherits `walk()` from `Animal` and `nature()` from `Friendly`.
 
 
 

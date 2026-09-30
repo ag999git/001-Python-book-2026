@@ -76,7 +76,15 @@ The MRO is the exact, predictable order Python follows when searching for a meth
 **C3 Linearization** is the specific algorithm Python actually uses to calculate the MRO. It guarantees two things: a child class is always checked *before* any of its parents, and multiple parents are checked in the exact order they were listed. This matters because a simpler, older-style "pure depth-first" search (used by Python 2's old-style classes) could accidentally check a shared grandparent class *before* fully finishing the second parent — visiting an ancestor too early, out of order. C3 Linearization fixes this by strictly guaranteeing "child before parent, left parent before right parent" at every single step.
 
 
-![Flowchart](../resources/ch-8-august-2026-conceptual-question-II-10.png)
+![Flowchart](../resources/S08-LR-ch-8-august-2026-conceptual-question-II-10.png)
+
+**Reading the figure**
+
+- **Step 1:** C3 linearization puts the class itself first: `Dog`.
+- **Step 2:** Then its parents, in the order they are listed: first `Walker`...
+- **Step 3:** ...then `Swimmer`.
+- **Step 4:** Only then the shared grandparent `Pet`, after both of its children. A plain depth-first search would wrongly visit `Pet` straight after `Walker`.
+- **Step 5:** Finally `object`. The MRO is `Dog`, `Walker`, `Swimmer`, `Pet`, `object`.
 
 
 With C3 Linearization, `Dog`'s MRO is `Dog → Walker → Swimmer → Pet → object` — `Pet` (the shared grandparent) is correctly checked *last*, only after both `Walker` and `Swimmer` have had their turn, exactly as the earlier "Diamond Problem" chapter page demonstrated with real code.
@@ -176,7 +184,13 @@ a = Airplane()
 print(isinstance(a, Flyer))          # -> True
 ```
 
-![Flowchart](../resources/ch-8-august-2026-conceptual-question-II-22.png)
+![Flowchart](../resources/S08-LR-ch-8-august-2026-conceptual-question-II-22.png)
+
+**Reading the figure**
+
+- A parent class, typically an abstract base class.
+- A real subclass is written `class Child(Parent):`. It inherits the parent's code and passes `isinstance()` and `issubclass()` checks.
+- A virtual subclass is registered with `Parent.register(Other)` (dashed arrow). It passes `isinstance()` and `issubclass()` checks but inherits no code, and the parent does not appear in its MRO.
 
 
 
@@ -220,7 +234,14 @@ reg["car1"] = "Toyota"   # calls __setitem__ automatically
 print(reg["car1"])       # -> Toyota  (calls __getitem__ automatically)
 ```
 
-![Flowchart](../resources/ch-8-august-2026-conceptual-question-II-25.png)
+![Flowchart](../resources/S08-LR-ch-8-august-2026-conceptual-question-II-25.png)
+
+**Reading the figure**
+
+- **Step 1:** Writing: `reg["car1"] = "Toyota"` uses square brackets on the left of `=`.
+- **Step 2:** Python turns this into `reg.__setitem__("car1", "Toyota")`, which stores the value in `reg._data`.
+- **Step 3:** Reading: `reg["car1"]` uses square brackets in an expression.
+- **Step 4:** Python turns this into `reg.__getitem__("car1")`, which returns `"Toyota"`.
 
 
 
@@ -229,7 +250,7 @@ print(reg["car1"])       # -> Toyota  (calls __getitem__ automatically)
 
 **26. What is a Namespace, in the context of object identity?**
 
-A namespace is a dictionary-like structure mapping variable names to the objects (technically, the `id()`s of the objects — see the earlier chapter page, "Proving That `self` Is Just the Object Itself") they refer to. Because each namespace is separate, two completely different parts of a program can use the exact same variable name to mean two completely different things, without any conflict — this is a big part of what makes Python code modular.
+A namespace is a dictionary-like structure mapping variable names to references to the objects they refer to (each object's identity can be seen with `id()` — see the earlier chapter page, "Proving That `self` Is Just the Object Itself"). Because each namespace is separate, two completely different parts of a program can use the exact same variable name to mean two completely different things, without any conflict — this is a big part of what makes Python code modular.
 
 ---
 

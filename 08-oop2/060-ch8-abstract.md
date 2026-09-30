@@ -53,7 +53,16 @@ The script below defines `Dog(Walker)` and `Fish(Swimmer)` as single-inheritance
 
 ## Visualizing the hierarchy
 
-![Flowchart](../resources/ch-8-august-2026-ABC-pet-abstract-base-class.png)
+![Flowchart](../resources/S08-LR-ch-8-august-2026-ABC-pet-abstract-base-class.png)
+
+**Reading the figure**
+
+- `Pet` is the abstract base class: every usable subclass must implement `speak()` and `move()`.
+- `Walker` inherits from `Pet` and provides a `move()` that prints "Walking...".
+- `Swimmer` inherits from `Pet` and provides a `move()` that prints "Swimming...".
+- `Dog` inherits from `Walker` only (single inheritance).
+- `Amphibian` inherits from both `Walker` and `Swimmer`: the same diamond shape as on the previous page.
+- `Fish` inherits from `Swimmer` only (single inheritance).
 
 
 

@@ -147,7 +147,14 @@ They're **built into Python itself** — no import is needed. Internally, `prope
 
 </details>
 
-![Flowchart](../resources/ch-8-august-2026-property-decorator.png)
+![Flowchart](../resources/S08-LR-ch-8-august-2026-property-decorator.png)
+
+**Reading the figure**
+
+- `@property` turns `age` into a property object, which holds up to three functions.
+- `fget` is the getter: reading `p.age` calls it, and it returns `self._age`.
+- `fset` is the setter, attached with `@age.setter`: `p.age = value` calls it; it rejects negative values and stores the rest in `self._age`.
+- `fdel` is the deleter. It is optional and is `None` here, because no deleter was defined.
 
 
 
@@ -208,14 +215,11 @@ The "don't" above warns against writing `self.age = value` inside the setter. As
 class Pet:
     def __init__(self, name, age):
         self.name = name
-        # Step 1: Notice we assign to self._age here, NOT self.age --
-        # this deliberately bypasses the property's setter during
-        # initial construction... actually, in Python, assigning to
-        # self._age directly is a plain, ordinary attribute assignment
-        # (there's no property named "_age"), while self.age = age
-        # WOULD go through the property setter below. Either works
-        # here since the value is already valid, but going through
-        # self._age keeps this line simple and explicit.
+        # Step 1: Notice we assign to self._age here, NOT self.age.
+        # Assigning to self._age is a plain, ordinary attribute
+        # assignment, so it does NOT go through the property's setter
+        # below. Writing self.age = age instead WOULD go through the
+        # setter, and would also validate the starting age.
         self._age = age
 
     # ------------------------------------------------------------

@@ -154,7 +154,7 @@ c.draw()   # -> Drawing a circle
 
 **8. Write a script showing "Cooperative Inheritance" where a child method calls `super().speak()` and then adds its own text.**
 
-Unlike Question 7, this one *builds on* the parent's logic rather than replacing it — see the earlier "30 Conceptual Questions" page, Q15 and Q24, for the "Cooperative Is-A" pattern this demonstrates.
+Unlike Question 7, this one *builds on* the parent's logic rather than replacing it — see the earlier "30 Conceptual Questions" page, Q24, and the "30 More Conceptual Questions" page, Q15, for the "Cooperative Is-A" pattern this demonstrates.
 
 ```python
 class Person:
@@ -196,7 +196,12 @@ pc = Computer("MyPC", "Intel")
 print(f"{pc.name} has an {pc.processor.brand} CPU")   # -> MyPC has an Intel CPU
 ```
 
-![Flowchart](../resources/ch-8-august-2026-scripting-question-09.png)
+![Flowchart](../resources/S08-LR-ch-8-august-2026-scripting-question-09.png)
+
+**Reading the figure**
+
+- A `Computer` object stores its `name` and a `processor` attribute.
+- The `CPU` object is created inside `Computer.__init__()` and stored as `self.processor`: composition, a strong Has-A relationship.
 
 ---
 
@@ -261,7 +266,14 @@ print(D.__mro__)
 # separate paths (via B and via C).
 ```
 
-![Flowchart](../resources/ch-8-august-2026-scripting-question-12.png)
+![Flowchart](../resources/S08-LR-ch-8-august-2026-scripting-question-12.png)
+
+**Reading the figure**
+
+- `A` is the shared base class.
+- `B` inherits from `A`.
+- `C` also inherits from `A`.
+- `D` inherits from both `B` and `C`: the diamond. Its MRO is `D`, `B`, `C`, `A`, `object`, so `A` appears only once, at the end.
 
 ---
 
@@ -403,7 +415,13 @@ b.attack()   # -> Attacking!
 # this is hierarchical inheritance: one parent, multiple independent children.
 ```
 
-![Flowchart](../resources/ch-8-august-2026-scripting-question-19.png)
+![Flowchart](../resources/S08-LR-ch-8-august-2026-scripting-question-19.png)
+
+**Reading the figure**
+
+- `Weapon` is the single parent class and defines `attack()`.
+- `Sword` inherits from `Weapon` and reuses `attack()` unchanged.
+- `Bow` also inherits from `Weapon`. One parent, several children: hierarchical inheritance.
 
 
 ---

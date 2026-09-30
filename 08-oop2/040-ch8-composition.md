@@ -8,7 +8,7 @@ This page is the hands-on companion to the previous page, "Has-A Relationships: 
 
 Working through this assignment is a good test of whether the conceptual distinctions from the previous page have actually "clicked": by the end, you should be able to look at any two related classes in your own code and confidently say which of the three Has-A relationships (or whether an Is-A relationship) best describes them — and explain *why*, not just recite the definition.
 
-*(If any of the terms Composition, Aggregation, or Dependency are unfamiliar, the previous chapter page covers each in depth before this assignment builds on them.)*
+*(If any of the terms Composition, Aggregation, or Dependency are unfamiliar, the previous page covers each in depth before this assignment builds on them.)*
 
 ---
 
@@ -89,7 +89,15 @@ Part G asks you to share one `Toy` between two `Dog`s. As a natural extension: *
 
 ## Visualizing the relationships
 
-![Flowchart](../resources/ch-8-august-2026-11-building-composition-aggregation-dependency.png)
+![Flowchart](../resources/S08-LR-ch-8-august-2026-11-building-composition-aggregation-dependency.png)
+
+**Reading the figure**
+
+- `Pet` is the base class.
+- `Dog` inherits from `Pet` (an Is-A relationship).
+- Composition: `Dog` creates its own `Collar` inside `__init__()`, so the collar belongs to that one dog.
+- Aggregation: the toy `t1` is created outside the dog and passed in; `Dog` stores it as `self.toy`, but does not own it.
+- Dependency (dashed arrow): the toy `t2` is passed to `play_with_toy()`, used for that one call and never stored.
 
 
 ## ANSWER (Solution)
@@ -274,7 +282,14 @@ print(d1.name, "collar is d2's collar?", d1.collar is d2.collar)   # -> True
 
 ## The following diagram shows the relationships between the classes for the above script
 
-![Diagram](../.gitbook/assets/ch8-composition.png)
+![Diagram](../resources/S08-LR-ch8-composition.png)
+
+**Reading the figure**
+
+- `Pet` has the attribute `name` and the method `__init__()`.
+- `Dog` inherits from `Pet`. It has `name` (inherited), `collar` (composition) and `toy` (aggregation), and the methods `__init__()`, `show_details()` and `play_with_toy()`.
+- `Collar` has the attribute `color` and the methods `__init__()` and `show()`. `Dog` creates it internally: strong composition.
+- `Toy` has the attribute `name` and the methods `__init__()` and `play()`. `Dog` stores one toy (aggregation) and uses another only inside `play_with_toy()` (dependency).
 
 ---
 

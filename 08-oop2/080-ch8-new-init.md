@@ -49,7 +49,16 @@ Object creation in Python is a **two-step process**, not one:
 
 ## Flow of execution, visualized
 
-![Flowchart](../resources/ch-8-august-2026-new-vs-init.png)
+![Flowchart](../resources/S08-LR-ch-8-august-2026-new-vs-init.png)
+
+**Reading the figure**
+
+- **Step 1:** Writing `Pet()` starts the two-step process of creating an object.
+- **Step 2:** `__new__(cls)` runs first. Normally it calls `super().__new__(cls)` to create a new, empty object and returns it.
+- **Step 3:** Did `__new__()` return an instance of `Pet` (or of a subclass)?
+- **Step 4:** No, for example it returned `None`: `__init__()` is skipped entirely, and `p` is whatever `__new__()` returned.
+- **Step 5:** Yes: `__init__(self)` runs, with `self` being the object that `__new__()` returned, and sets up its attributes.
+- **Step 6:** You receive the created and initialised object.
 
 
 ---

@@ -31,7 +31,14 @@ Not all Has-A relationships behave the same way, though. They differ along four 
 
 These four questions are exactly what distinguish the three kinds of Has-A relationship covered below: **Composition**, **Aggregation**, and **Dependency**, ordered from strongest to weakest.
 
-![Flowchart](../resources/ch-8-august-2026-3-types-of-has-a-relationship.png)
+![Flowchart](../resources/S08-LR-ch-8-august-2026-3-types-of-has-a-relationship.png)
+
+**Reading the figure**
+
+- A Has-A relationship means one object is built using, or works with, another object. There are three kinds, from strongest to weakest.
+- Composition (strong): the `Dog` creates and owns its `Collar`; the collar lives and dies with the dog.
+- Aggregation (weak): the `Dog` stores a `Toy` that was created outside it; the toy can be shared and outlives the dog.
+- Dependency (very weak): the `Dog` only uses a `Toy` briefly, inside one method call, and never stores it.
 
 
 

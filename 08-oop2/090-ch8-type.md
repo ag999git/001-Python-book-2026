@@ -31,7 +31,13 @@ There are two levels of "creation" happening in every Python program, whether yo
 1. **Metaclass → creates → Class** (e.g., `type` creates `Dog`)
 2. **Class → creates → Object** (e.g., `Dog` creates `dog`)
 
-![Flowchart](../resources/ch-8-august-2026-metaclass-part1.png)
+![Flowchart](../resources/S08-LR-ch-8-august-2026-metaclass-part1.png)
+
+**Reading the figure**
+
+- `type` is Python's built-in metaclass: it creates classes.
+- `Dog` is a class created by `type`, whether you write `class Dog:` or call `type("Dog", (), {...})` yourself.
+- `dog = Dog()` is an object created by the class `Dog`.
 
 
 ---
@@ -134,7 +140,21 @@ print(dog_instance.speak())   # -> Woof!
 
 ## Diagram showing the flow of execution of above script
 
-![Diagram](../.gitbook/assets/ch-8-type-explain.png)
+![Diagram](../resources/S08-LR-ch-8-type-explain.png)
+
+**Reading the figure**
+
+- **Step 1:** `Dog = type("Dog", (), {"sound": "Woof"})` creates a class named `Dog` with no explicit parents and one class attribute.
+- **Step 2:** `print(Dog.sound)` prints `Woof`.
+- **Step 3:** `dict_attributes = {"sound": "Woof", "breed": "Labrador"}` holds two attributes.
+- **Step 4:** `type("Dog", (), dict_attributes)` creates a new `Dog` class with both attributes.
+- **Step 5:** `Dog.sound` and `Dog.breed` print `Woof` and `Labrador`.
+- **Step 6:** An ordinary function `speak(self)` is defined outside any class; it returns `self.sound` followed by `"!"`.
+- **Step 7:** `dict_methods = {"speak": speak}` puts the function in a dictionary, ready to become a method.
+- **Step 8:** `dict_merged = {**dict_attributes, **dict_methods}` combines attributes and method into one dictionary, because `type()` takes a single dictionary.
+- **Step 9:** `type("Dog", (), dict_merged)` creates the final `Dog` class with both attributes and the `speak()` method.
+- **Step 10:** `dog_instance = Dog()` creates an object from this class, exactly as with a normal class.
+- **Step 11:** `dog_instance.speak()` returns `Woof!`.
 
 ### What this script demonstrates
 

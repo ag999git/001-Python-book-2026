@@ -8,7 +8,7 @@ This page is a research/project assignment for Chapter 8 that steps a little out
 This is a genuinely useful, real-world pattern — it's how many frameworks and plugin systems let you "register" new components (new pet types here, but the same idea applies to new game characters, new payment methods, new file format handlers, and so on) without the core system needing to know about every specific type in advance.
 
 **A few terms used throughout, explained simply, with links for more detail:**
-- **Class registry pattern** — a design pattern where classes are stored in a lookup structure (often a dictionary) so they can be found and used by name at runtime. ([Wikipedia: Registry pattern](https://en.wikipedia.org/wiki/Service_locator_pattern))
+- **Class registry pattern** — a design pattern where classes are stored in a lookup structure (often a dictionary) so they can be found and used by name at runtime. (A closely related pattern: [Wikipedia: Service locator pattern](https://en.wikipedia.org/wiki/Service_locator_pattern))
 - **`@classmethod`** — a method that receives the *class itself* (conventionally named `cls`) as its first argument, rather than a specific object (`self`). This is what lets `PetRegistryManual.register(...)` be called directly on the class, without ever creating a `PetRegistryManual` object. ([Python docs: `classmethod`](https://docs.python.org/3/library/functions.html#classmethod))
 - **Closure** — a function defined inside another function, which "remembers" variables from the outer function even after the outer function has finished running. This is what makes the decorator-based approach below work (covered in more depth on the earlier chapter page, "Using `functools.wraps` in Decorators").
 - **`__init_subclass__`** — a special hook method that Python calls automatically every time a new subclass of a class is defined — not when an *object* is created, but the moment the *class itself* is defined. ([Python docs: `__init_subclass__`](https://docs.python.org/3/reference/datamodel.html#object.__init_subclass__))
@@ -68,7 +68,14 @@ They differ only in *when* and *how* that storing happens.
 | **3. Automatic Registration** | The base class itself automatically tracks every subclass that's ever created, with no extra code needed on each subclass | Best for large systems and frameworks, where you can't rely on every contributor remembering to register their own classes |
 
 
-![Flowchart](../resources/ch-8-august-2026-3-approaches-to-class-registration.png)
+![Flowchart](../resources/S08-LR-ch-8-august-2026-3-approaches-to-class-registration.png)
+
+**Reading the figure**
+
+- The goal of all three approaches: store classes so they can be looked up and used by name while the program runs.
+- Approach 1, manual registration: you call `register()` yourself for each class, which is easy to forget.
+- Approach 2, decorator registration: `@PetRegistryDecorator.register("name")` registers the class the moment it is defined.
+- Approach 3, automatic registration: the base class's `__init_subclass__()` registers every subclass, with no extra code on the subclass.
 
 
 

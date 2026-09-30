@@ -65,7 +65,13 @@ This pattern is genuinely useful — see Question 26 below for a specific real-w
 
 Transitivity means inheritance "passes through" multiple levels automatically: if Class `B` inherits from Class `A`, and Class `C` inherits from Class `B`, then Class `C` automatically possesses everything Class `A` provides too, even though `C` never mentions `A` directly.
 
-![Flowchart](../resources/ch-8-august-2026-conceptual-question-6.png)
+![Flowchart](../resources/S08-LR-ch-8-august-2026-conceptual-question-6.png)
+
+**Reading the figure**
+
+- Class `A` defines some attributes and methods.
+- Class `B` inherits from `A`, so it has everything `A` has.
+- Class `C` inherits from `B`, so it also has everything `A` has, even though it never names `A`: this is transitivity.
 
 
 
@@ -111,14 +117,22 @@ By default, it returns a string containing the class name and the object's memor
 
 **13. What is the "Depth-First, Left-to-Right" rule?**
 
-It's the basic logic Python's MRO calculation uses when resolving multiple inheritance: Python fully searches the leftmost parent (and that parent's *entire* ancestry) before moving on to the next parent listed to its right.
+It's the simple rule of thumb behind Python's MRO: Python searches the class itself first, then its parents from left to right, following each parent's own ancestors before moving on to the next parent. There is one important exception, which Python 3 handles with the C3 linearization algorithm: **a shared ancestor is searched only once, and only after every class that inherits from it.** So for `class Dog(Walker, Swimmer):`, where both parents inherit from `Pet`, the order is `Dog → Walker → Swimmer → Pet → object`, not `Dog → Walker → Pet → Swimmer`. (A pure depth-first search, used by Python 2's old-style classes, would have visited `Pet` too early; see Question 10 on the "30 More Conceptual Questions" page.)
 
 
-![Flowchart](../resources/ch-8-august-2026-conceptual-question-13.png)
+![Flowchart](../resources/S08-LR-ch-8-august-2026-conceptual-question-13.png)
+
+**Reading the figure**
+
+- **Step 1:** For `class Dog(Walker, Swimmer):`, where `Walker` and `Swimmer` both inherit from `Pet`, Python first looks in `Dog` itself.
+- **Step 2:** Not found: it looks in `Walker`, the first parent listed (left to right).
+- **Step 3:** Not found: it looks in `Swimmer` next, not in `Walker`'s parent `Pet`, because `Pet` is also a parent of `Swimmer` and must wait until `Swimmer` has been searched.
+- **Step 4:** Not found: now it looks in `Pet`, the shared parent, only once.
+- **Step 5:** Last comes `object`. The full MRO is `Dog`, `Walker`, `Swimmer`, `Pet`, `object`.
 
 
 
-This is exactly why `class Dog1(Walker, Swimmer):` and `class Dog2(Swimmer, Walker):` — covered in the earlier diamond-problem page — end up with genuinely different, mirror-image MROs: Python simply reads the parent list left to right, and follows each one's full chain before continuing to the next name.
+This is exactly why `class Dog1(Walker, Swimmer):` and `class Dog2(Swimmer, Walker):` — covered in the earlier diamond-problem page — end up with genuinely different, mirror-image MROs: Python reads the parent list left to right, and holds back the shared `Pet` until both `Walker` and `Swimmer` have been searched.
 
 ---
 
@@ -193,7 +207,13 @@ A chain of inheritance where a class is derived from another *derived* class —
 
 A structure where a single parent class serves as the base for *multiple* different, independent subclasses — for example, `Pet` being the shared parent for both `Dog` and `Cat`, as seen throughout this chapter's `Pet`/`Dog`/`Cat` examples.
 
-![Flowchart](../resources/ch-8-august-2026-conceptual-question-23.png)
+![Flowchart](../resources/S08-LR-ch-8-august-2026-conceptual-question-23.png)
+
+**Reading the figure**
+
+- `Pet` is the single parent class.
+- `Dog` inherits from `Pet`.
+- `Cat` also inherits from `Pet`. One parent with several independent children is hierarchical inheritance.
 
 
 
@@ -225,7 +245,7 @@ The parent's constructor is never called at all, and any attributes the parent's
 
 **28. How does Python link variable names to objects internally?**
 
-Python identifies every object with a unique `id()` (its memory address — see the earlier chapter page, "Proving That `self` Is Just the Object Itself," for a hands-on demonstration), and a namespace dictionary maps each variable name to the `id()` of the object it currently refers to.
+A namespace is a dictionary-like mapping from each variable name to a **reference** to the object it currently refers to. Every object has a unique identity, which `id()` shows (in CPython, its memory address — see the earlier chapter page, "Proving That `self` Is Just the Object Itself," for a hands-on demonstration). Two names that refer to the same object therefore have the same `id()`.
 
 ---
 

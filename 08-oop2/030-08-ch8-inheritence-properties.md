@@ -14,7 +14,7 @@ This is worth working through carefully, because these eleven properties aren't 
 - **C3 Linearization** — the specific algorithm Python actually uses internally to calculate the MRO (Method Resolution Order) for classes with multiple inheritance. You don't need to know the algorithm's details to use Python — just that `.__mro__` shows you its result. ([Python docs: MRO](https://docs.python.org/3/library/stdtypes.html#class.__mro__))
 - **Object lifecycle** — the sequence an object goes through from creation (`__init__` running) through use, to eventual cleanup (see the earlier chapter page on `del` and `__del__()`).
 
-*(Several of these terms — `super()`, MRO, encapsulation, polymorphism, dynamic binding — are also covered in the two earlier Chapter 8 pages on the Animal Management System and implicit inheritance from `object`; this page assumes familiarity with both.)*
+*(Several of these terms — `super()`, MRO, encapsulation, polymorphism, dynamic binding — are also covered in the earlier Animal Management System page and the Chapter 7 page on implicit inheritance from `object`; this page assumes familiarity with both.)*
 
 ---
 
@@ -50,7 +50,14 @@ The assignment demonstrates *single-level* inheritance (`Pet → Dog`, `Pet → 
 
 ## Visualizing the hierarchy
 
-![Flowchart](../resources/ch-8-august-2026-11-properties-of-inheritence.png)
+![Flowchart](../resources/S08-LR-ch-8-august-2026-11-properties-of-inheritence.png)
+
+**Reading the figure**
+
+- `object` is the root class that `Pet` inherits from implicitly.
+- `Pet` is the base class, with the attributes `name` and `__secret` and the methods `walk()`, `speak()` and `show_secret()`.
+- `Dog` inherits from `Pet`, adds the attribute `color`, and overrides both `speak()` and `walk()` (its `walk()` also calls `super().walk()`).
+- `Cat` inherits from `Pet` and overrides only `speak()`. Each child has only one parent: this is single inheritance.
 
 Unlike the earlier Animal Management System assignment, `Dog` and `Cat` each have **only one** parent here (`Pet`) — this is single inheritance, not multiple inheritance, which is why the MRO for both classes will be shorter and simpler.
 
@@ -137,7 +144,7 @@ d = Dog("Tommy", "Black")
 c = Cat("Kitty")
 
 # --- 1. Code Reuse ---
-d.walk()   # -> Dog walks like a dog, THEN Tommy is walking (Pet method)
+d.walk()   # -> Tommy walks like a dog, THEN Tommy is walking (Pet method)
 c.walk()   # -> Kitty is walking (Pet method) -- Cat reuses Pet's walk() untouched
 
 # --- 2. Overriding ---
@@ -184,8 +191,8 @@ print(d.color)   # -> Black
 ### Expected output
 
 ```text
-Pet constructor called
 Dog constructor called
+Pet constructor called
 Pet constructor called
 Tommy walks like a dog
 Tommy is walking (Pet method)
@@ -205,7 +212,7 @@ Cat MRO: (<class '__main__.Cat'>, <class '__main__.Pet'>, <class 'object'>)
 Black
 ```
 
-Notice the very first two lines: `"Pet constructor called"` prints for **both** `d = Dog(...)` and `c = Cat(...)` — proof that every `Pet` subclass, whether or not it defines its own `__init__`, always ends up running `Pet.__init__` somewhere in the process (directly for `Cat`, via `super()` for `Dog`).
+Notice the first three lines: `"Pet constructor called"` prints **twice** — once for `d = Dog(...)` (after `"Dog constructor called"`, because `Dog.__init__` prints its message before calling `super().__init__()`) and once for `c = Cat(...)` — proof that every `Pet` subclass, whether or not it defines its own `__init__`, always ends up running `Pet.__init__` somewhere in the process (directly for `Cat`, via `super()` for `Dog`).
 
 ---
 

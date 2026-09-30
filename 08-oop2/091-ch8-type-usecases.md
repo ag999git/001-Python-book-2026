@@ -52,7 +52,15 @@ class Cat(metaclass=PetMeta):
 # Output: TypeError: Cat must implement speak()
 ```
 
-![Flowchart](../resources/ch-8-august-2026-using-metaclasses-advanced.png)
+![Flowchart](../resources/S08-LR-ch-8-august-2026-using-metaclasses-advanced.png)
+
+**Reading the figure**
+
+- **Step 1:** Python reaches a class statement that names `PetMeta` as its metaclass, for example `class Cat(metaclass=PetMeta):`.
+- **Step 2:** Before the class exists, Python calls `PetMeta.__new__()` with the class name, its bases and its dictionary `dct`.
+- **Step 3:** Does `dct` contain the key `"speak"`, that is, did the class body define `speak()`?
+- **Step 4:** Yes (as for `Dog`): `super().__new__()` builds the class normally.
+- **Step 5:** No (as for `Cat`): `PetMeta` raises `TypeError: Cat must implement speak()`, and the class is never created.
 
 
 ---

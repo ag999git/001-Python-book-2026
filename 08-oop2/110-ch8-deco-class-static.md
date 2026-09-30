@@ -63,7 +63,14 @@ The assignment's `create_from_string()` factory method assumes the input string 
 | Static | *(none — plain parameters only)* | A general utility function, logically grouped with the class | `is_valid_age()` |
 
 
-![Flowchart](../resources/ch-8-august-2026-instance-methods-class-methods-etc.png)
+![Flowchart](../resources/S08-LR-ch-8-august-2026-instance-methods-class-methods-etc.png)
+
+**Reading the figure**
+
+- The `Pet` class has three kinds of methods.
+- The instance method `show()` receives `self` and works on one object's own data.
+- The class method `create_from_string()` receives `cls` and builds a new `Pet` from a string such as `"Bruno-3"`: a factory method.
+- The static method `is_valid_age()` receives neither `self` nor `cls`; it is a utility function kept inside the class.
 
 
 

@@ -37,7 +37,14 @@ The original exercise checks `__str__` specifically. As a natural extension: **i
 
 ## Understanding the check, visually
 
-![Flowchart](../resources/ch8-august-2026-multiple-inherit-inspecting-built-in.png)
+![Flowchart](../resources/S08-LR-ch8-august-2026-multiple-inherit-inspecting-built-in.png)
+
+**Reading the figure**
+
+- **Step 1:** The `object` class defines the basic methods every class starts with, such as `__str__`, `__init__` and `__repr__` (`dir(object)` lists them all).
+- **Step 2:** `class Pet: pass` creates a class that defines no methods of its own.
+- **Step 3:** When you ask for `Pet.__str__`, Python does not find it in `Pet`, so it follows the MRO up to `object` and finds it there.
+- **Step 4:** `Pet.__str__ is object.__str__` is `True`: `Pet` uses the very same method object as `object`, not a copy of it.
 
 
 

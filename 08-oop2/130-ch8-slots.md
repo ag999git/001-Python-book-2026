@@ -80,7 +80,16 @@ Step 6 compares `sys.getsizeof()` for a single `PetNormal` object against a sing
 | Flexibility | High | Low |
 
 
-![Flowchart](../resources/ch-8-august-2026-pet-slots-project.png)
+![Flowchart](../resources/S08-LR-ch-8-august-2026-pet-slots-project.png)
+
+**Reading the figure**
+
+- `p1` is an object of the ordinary class `PetNormal`.
+- Like every ordinary object, it has its own `__dict__`.
+- So new attributes can be added at any time: `p1.color = "Brown"` works.
+- `p2` is an object of `PetSlots`, which declares `__slots__ = ['name', 'age']`.
+- It has no `__dict__`; only `name` and `age` can be stored, in a smaller fixed structure.
+- So `p2.color = "Black"` fails with `AttributeError`.
 
 ---
 

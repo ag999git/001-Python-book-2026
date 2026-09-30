@@ -108,7 +108,16 @@ print("Modified name:->", d.name)
 ```
 
 
-![Flowchart](../resources/ch-8-august-2026-namespaces-and-legb-rules--corrected-2.png)
+![Flowchart](../resources/S08-LR-ch-8-august-2026-namespaces-and-legb-rules--corrected-2.png)
+
+**Reading the figure**
+
+- **Step 1:** Your code reads an attribute of the object `d`, for example `d.name` or `d.species`.
+- **Step 2:** Python first looks in the instance's own namespace, `d.__dict__` (here `{'name': ..., 'color': ...}`).
+- **Step 3:** Found: that value is used. `d.name` comes from the instance.
+- **Step 4:** Not found: Python looks in the class's namespace, `Dog.__dict__` (and then in its parent classes).
+- **Step 5:** Found: that value is used. `d.species` comes from the class, because `species` is a class attribute.
+- **Step 6:** Not found anywhere: Python raises `AttributeError`.
 
 ### What this confirms
 
@@ -144,7 +153,16 @@ One more important subtlety: **assignment behaves differently from access.** Whe
 
 
 
-![Flowchart](../resources/ch-8-august-2026-namespaces-and-legb-rules.png)
+![Flowchart](../resources/S08-LR-ch-8-august-2026-namespaces-and-legb-rules.png)
+
+**Reading the figure**
+
+- **Step 1:** Your code uses a name, such as `pet`, and Python must find what it refers to.
+- **Step 2:** Python looks first in the Local scope, the function that is running. If the name is there, the search stops.
+- **Step 3:** Not found: it looks in the Enclosing scope, any outer function the current function is nested in.
+- **Step 4:** Not found: it looks in the Global scope, the names defined at the top level of the module.
+- **Step 5:** Not found: it looks in the Built-in scope, names such as `len` and `print`.
+- **Step 6:** Not found in any of the four scopes: Python raises `NameError`.
 
 
 
@@ -259,13 +277,15 @@ print("After global modification:", pet)   # -> After global modification: Modif
 def wrong_modify_global():
     # Because this function ASSIGNS to 'pet', Python treats 'pet' as
     # LOCAL to this function from the very start of the function --
-    # but there's no local 'pet' defined yet at this point, so trying
-    # to use it (even implicitly) raises an error.
-    pet = "Modified Global Pet"
+    # so READING it on the right-hand side, before any local value
+    # exists, raises an error.
+    pet = pet + " (modified)"
 
 wrong_modify_global()
 # Would raise: UnboundLocalError: local variable 'pet' referenced
 # before assignment
+# (Python 3.11+ words it: cannot access local variable 'pet' where it
+# is not associated with a value)
 """
 
 

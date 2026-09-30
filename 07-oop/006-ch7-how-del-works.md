@@ -140,6 +140,8 @@ End of script.
 
 ![Sequence Diagram](../resources/ch-7-august-2026-del-diagram-2.png)
 
+**Another flowchart of the same process**
+
 ![Sequence Diagram](../resources/S07-LR-ch-7-august-2026-del-diagram-2.png)
 
 **Reading the figure**

@@ -129,7 +129,17 @@ A useful way to think about it:
 
 ### Visual Representation
 
-![Visual Representation](../resources/ch16-pytest-080-flags-mental-model.png)
+![Visual Representation](../resources/S20-LR-ch16-pytest-080-flags-mental-model.png)
+
+**Reading the figure**
+
+- Each flag added to the `pytest` command changes one thing.
+- `-v` (verbose) changes what you see.
+- `-s` (show) also changes what you see.
+- `-k` (keyword) changes what runs.
+- With `-v`, each test is listed by name with PASSED or FAILED, instead of a single dot.
+- With `-s`, `print()` output is not captured, so it appears on the screen as the tests run.
+- With `-k`, only the tests whose names contain the given text are run; the others are deselected.
 
 [Back to the Table of Contents](010-ch20-pytest-flags.md#table-of-contents)
 
@@ -160,7 +170,18 @@ When pytest starts, it follows the same order every time:
 4. It runs the selected tests. If you did not use `-s`, it captures any `print()` output.
 5. It displays the results, in short form or in detail (with `-v`).
 
-![How pytest processes flags](../resources/ch16-pytest-090-how-process-flags.png)
+![How pytest processes flags](../resources/S20-LR-ch16-pytest-090-how-process-flags.png)
+
+**Reading the figure**
+
+- **Step 1:** Pytest reads the command and the flags you typed.
+- **Step 2:** It discovers (collects) all the tests.
+- **Step 3:** Was `-k` given?
+- **Step 4:** Yes: only the tests whose names match are kept; the rest are deselected.
+- **Step 5:** The selected tests are run (with no `-k`, every collected test).
+- **Step 6:** While each test runs: was `-s` given?
+- **Step 7:** Yes: `print()` output goes straight to the screen.
+- **Step 8:** Finally the results are displayed: a dot per test, or one line per test with `-v`. Without `-s`, captured output is shown only for failing tests.
 
 [Back to the Table of Contents](010-ch20-pytest-flags.md#table-of-contents)
 
@@ -372,7 +393,16 @@ You can read more in the pytest guide on [capturing output](https://docs.pytest.
 
 ### Output Capture Flow
 
-![Output Capture Flow](../resources/ch16-pytest-092-flags-output-capture.png)
+![Output Capture Flow](../resources/S20-LR-ch16-pytest-092-flags-output-capture.png)
+
+**Reading the figure**
+
+- **Step 1:** Inside a test, `print()` sends text to standard output.
+- **Step 2:** Was pytest run with `-s`?
+- **Step 3:** Yes: nothing is captured; the text appears on the screen immediately, whether the test passes or fails.
+- **Step 4:** No (the default): pytest redirects the text into a temporary store.
+- **Step 5:** Did the test pass? If it did, the stored text is simply thrown away.
+- **Step 6:** If it failed, the stored text is shown in the report under `Captured stdout call`, to help find the problem.
 
 [Back to the Table of Contents](010-ch20-pytest-flags.md#table-of-contents)
 
@@ -628,7 +658,16 @@ The message `Running withdraw test` does not appear because `test_withdraw` was 
 
 ### How -k Works
 
-![How -k works](../resources/ch16-pytest-095-flag-k.png)
+![How -k works](../resources/S20-LR-ch16-pytest-095-flag-k.png)
+
+**Reading the figure**
+
+- **Step 1:** Run `pytest -k deposit`.
+- **Step 2:** Pytest collects all the tests first.
+- **Step 3:** For each test: does its name contain the text `deposit` (case does not matter)?
+- **Step 4:** Yes: the test is selected and run.
+- **Step 5:** No: the test is deselected and not run.
+- **Step 6:** The summary reports both numbers, for example `2 passed, 1 deselected`.
 
 In simple steps:
 
@@ -733,7 +772,15 @@ When no file name is given, as here, pytest searches the current folder (and the
 
 ### Combined Execution Flow
 
-![Combined Execution Flow](../resources/ch16-pytest-096-combining-tests.png)
+![Combined Execution Flow](../resources/S20-LR-ch16-pytest-096-combining-tests.png)
+
+**Reading the figure**
+
+- **Step 1:** The three flags are combined in one command: `pytest -v -s -k deposit`.
+- **Step 2:** `-k deposit` keeps only the tests whose names contain `deposit`.
+- **Step 3:** Only those selected tests are run.
+- **Step 4:** `-s` lets their `print()` messages appear on the screen as they run.
+- **Step 5:** `-v` lists each test by its full name with its result.
 
 [Back to the Table of Contents](010-ch20-pytest-flags.md#table-of-contents)
 

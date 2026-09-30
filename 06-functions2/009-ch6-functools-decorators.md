@@ -165,10 +165,6 @@ bark()
 
 
 
-![Diagram shows situation without and with using functools](../resources/ch-6-using-functools.png)
-
-**Another way of looking at same diagram is given below**
-
 ![Diagram shows situation without and with using functools](../resources/S06-LR-ch-6-using-functools.png)
 
 **Reading the figure**

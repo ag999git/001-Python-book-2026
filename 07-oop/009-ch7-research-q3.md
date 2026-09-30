@@ -30,6 +30,17 @@ A **memory leak** happens when a program keeps holding on to memory it no longer
 
 ![Flowchart](../resources/ch-7august-2026-memory-leak.png)
 
+![Flowchart](../resources/S07-LR-ch-7august-2026-memory-leak.png)
+
+**Reading the figure**
+
+- **Step 1:** The program starts running.
+- **Step 2:** During normal work, the program keeps creating objects.
+- **Step 3:** Are the references to old objects removed once those objects are no longer needed?
+- **Step 4:** Yes: the objects become unreachable and Python frees their memory. The program carries on (back to Step 2) with steady memory use.
+- **Step 5:** No, something still refers to them (for example a list that only ever grows): the objects stay alive, and RAM use keeps climbing.
+- **Step 6:** Eventually the program slows down or crashes because it runs out of memory.
+
 
 
 ---

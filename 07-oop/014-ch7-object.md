@@ -80,7 +80,7 @@ An empty class — just `class Cat: pass`, with nothing else in it — still aut
 | `__eq__` | Powers the `==` comparison operator |
 | `__dir__` | Powers the built-in `dir()` function |
 | `__hash__` | Allows the object to be used as a dictionary key or stored in a set |
-| `__class__` | Lets you find out which class an object belongs to at runtime |
+| `__class__` | Lets you find out which class an object belongs to at runtime (strictly an attribute, not a method) |
 
 You can see the complete list yourself at any time with `dir(object)`.
 
@@ -90,9 +90,25 @@ You can see the complete list yourself at any time with `dir(object)`.
 
 
 
-The following flowchart shows the hierarchy of some inbuilt and user created classes. Note:- Exceptions as a class are discussed in the chapter on exceptions
+The following diagram shows the hierarchy of some built-in and user-defined classes. (Exceptions are also classes; they are discussed in the chapter on exceptions.)
 
-![Diagram](../.gitbook/assets/ch-7-oop-object-base.png)
+![Diagram](../resources/ch-7-oop-object-base.png)
+
+![Diagram](../resources/S07-LR-ch-7-oop-object-base.png)
+
+**Reading the figure**
+
+- `object` is the root class: every class in Python 3 inherits from it, directly or indirectly.
+- `int` is a built-in type that inherits directly from `object`.
+- `str` also inherits directly from `object`.
+- So does `list`.
+- So does `dict`.
+- `BaseException` is the root of all exceptions, and it too inherits from `object`.
+- `Exception` inherits from `BaseException`.
+- `ArithmeticError` inherits from `Exception`.
+- `ZeroDivisionError` inherits from `ArithmeticError`, so its chain is `ZeroDivisionError` → `ArithmeticError` → `Exception` → `BaseException` → `object`.
+- `class Dog(object):` names `object` as its parent explicitly.
+- `class Cat:` names no parent, but in Python 3 it inherits from `object` implicitly, exactly like `Dog`.
 
 Whether a class explicitly writes `(object)`, writes nothing at all, or is one of Python's own built-in types, the destination is always the same single root.
 
@@ -225,6 +241,6 @@ The identical shape of every result — regardless of whether the class was user
 - **`issubclass(cls, object)`** is a simple, direct way to confirm this relationship for any class, and always returns `True`.
 - Python 3 made this inheritance implicit specifically to remove the old Python 2 distinction between "new-style" and "old-style" classes, guaranteeing every class gets full, modern OOP behaviour by default.
 
-*(Note: exceptions are also classes with their own inheritance chain, ultimately rooted in `BaseException` rather than directly in `object` — this is covered separately in the chapter on exceptions.)*
+*(Note: exceptions are also classes with their own inheritance chain, whose root is `BaseException`, which in turn inherits from `object` — this is covered separately in the chapter on exceptions.)*
 
 

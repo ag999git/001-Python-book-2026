@@ -28,6 +28,14 @@ A variable name in the Stack doesn't hold the object itself — it holds the **m
 
 ![Flowchart](../resources/ch-7-oop-del-working-memory-ref.png)
 
+![Flowchart](../resources/S07-LR-ch-7-oop-del-working-memory-ref.png)
+
+**Reading the figure**
+
+- On the Stack, the name `p1` holds only a reference: the address of an object on the Heap.
+- `p2 = p1` creates a second name, `p2`, holding a reference to the same object. Nothing is copied.
+- On the Heap there is just one `Pet` object, with `name = 'Tiger'`. Two names refer to it, so its reference count is 2.
+
 
 
 In the diagram above, `p1` and `p2` are two different *names*, but both point at the **same single object** on the Heap. This is exactly what happens when you write `p2 = p1` — you're not copying the `Pet`, you're just creating a second label for the same warehouse shelf.
@@ -58,7 +66,7 @@ Python keeps a running count of how many references point to each object — its
 
 A useful way to think of it: `__del__()` is a **patient** method. It doesn't fire the moment you type `del p1` — it waits until the *very last* link to that object is broken, however many `del` statements (or reassignments, or the variable going out of scope) that takes.
 
-> **Timing note:** you can rely on `__del__()` eventually running once the refcount hits zero, but not on it running *immediately* — Python's garbage collector may briefly delay it if it's busy with other work. This is one reason `__del__()` is a poor place to put critical cleanup logic (use a context manager / `with` statement for anything that truly must happen on time, such as closing a file).
+> **Timing note:** in CPython (the standard Python you download from python.org), `__del__()` runs immediately when the refcount hits zero, as the script below shows. The language itself does not guarantee this, though: other implementations such as PyPy may run it later, and objects still alive when the program exits may never have `__del__()` called at all. This is one reason `__del__()` is a poor place to put critical cleanup logic (use a context manager / `with` statement for anything that truly must happen on time, such as closing a file).
 
 ---
 
@@ -130,12 +138,33 @@ End of script.
 
 ![Sequence Diagram](../resources/ch-7-august-2026-del-diagram-2.png)
 
+![Sequence Diagram](../resources/S07-LR-ch-7-august-2026-del-diagram-2.png)
+
+**Reading the figure**
+
+- **Step 1:** `p1 = Pet("Tiger")` creates the `Pet` object on the Heap and puts the name `p1` on the Stack. The reference count is 1.
+- **Step 2:** `p2 = p1` adds a second name for the same object. The reference count becomes 2.
+- **Step 3:** `del p1` removes the name `p1` from the Stack. The reference count drops to 1.
+- **Step 4:** The object survives, because `p2` still points to it. `__del__()` does not run yet.
+- **Step 5:** `del p2` removes the last name. The reference count drops to 0.
+- **Step 6:** At that moment Python calls the object's `__del__()` method automatically, which prints "Reference count is 0. Memory for Pet Tiger is freed".
+- **Step 7:** Python then frees the memory the object occupied on the Heap.
+
 
 
 
 ### Another way of visualizing how `__del__()` operates is as follows:
 
-![Figure: How del works](../.gitbook/assets/ch07-oop-del.png)
+![Figure: How del works](../resources/ch07-oop-del.png)
+
+![Figure: How del works](../resources/S07-LR-ch07-oop-del.png)
+
+**Reading the figure**
+
+- The name `p1` on the Stack refers to the `Pet` object.
+- The name `p2` on the Stack refers to the same object.
+- The `Pet` object lives on the Heap and occupies memory for as long as at least one name refers to it.
+- When `del p1` and `del p2` have removed both names, the reference count is 0: Python calls `__del__()` and then frees the memory.
 
 ---
 
@@ -147,20 +176,30 @@ Overriding `__del__()` in your own class does **not** give you control over memo
 
 ![Flowchart](../resources/ch-7-august-2026-del-diagram.png)
 
+![Flowchart](../resources/S07-LR-ch-7-august-2026-del-diagram.png)
+
+**Reading the figure**
+
+- **Step 1:** The trigger: the last reference to the object has gone, so its reference count is 0.
+- **Step 2:** Does the object's class define a `__del__()` method?
+- **Step 3:** Yes: Python calls your `__del__()` first. This is your chance to close files, log messages or clean up your own data.
+- **Step 4:** Once your code has finished (or at once, if there is no `__del__()`), Python's memory manager takes over.
+- **Step 5:** Python's internal C code frees the memory on the Heap. You cannot override or stop this step.
 
 
-## Note about overriding **del**()
 
-When you "override" **del**, you aren't replacing Python's ability to delete memory.
+## Note about overriding `__del__()`
+
+When you "override" `__del__()`, you aren't replacing Python's ability to delete memory.
 
 When the reference count hits zero, the following sequence takes place:
 
-1. **The Trigger:** is when the reference count for your object reaches zero. (Meaning all references to the object have been deleted.)
-2. **The User's Turn:** Python looks at your class. It sees you have overridden **del**. It calls your method first. This allows you to close files, log messages, or clean up your own data.
-3. **The System's Turn:** Once _your_ code in **del** finishes running, Python’s internal **Garbage Collector** takes over. It performs the actual "low-level" work of clearing the bits and bytes from the RAM (the Heap).
-4. **You don't "kill" the process:** Overriding **del** does not stop Python from reclaiming memory. It just allows you to "hook" into the moment right before it happens.
-5. **Automatic Execution:** You never have to manually call **del**. The interpreter handles the call automatically.
-6. **The Final Step:** Python's internal memory management is written in **C**. After your Python-level **del** finishes, the C-level code (which you cannot override) actually wipes the memory address.
+1. **The Trigger:** the reference count for your object reaches zero. (Meaning all references to the object have been deleted.)
+2. **The User's Turn:** Python looks at your class. It sees you have overridden `__del__()`. It calls your method first. This allows you to close files, log messages, or clean up your own data.
+3. **The System's Turn:** Once _your_ code in `__del__()` finishes running, Python’s internal **memory manager** takes over. It performs the actual "low-level" work of clearing the bits and bytes from the RAM (the Heap).
+4. **You don't "kill" the process:** Overriding `__del__()` does not stop Python from reclaiming memory. It just allows you to "hook" into the moment right before it happens.
+5. **Automatic Execution:** You never have to manually call `__del__()`. The interpreter handles the call automatically.
+6. **The Final Step:** Python's internal memory management is written in **C**. After your Python-level `__del__()` finishes, the C-level code (which you cannot override) actually wipes the memory address.
 
 
 
@@ -168,7 +207,7 @@ When the reference count hits zero, the following sequence takes place:
 
 1. **You never call `__del__()` yourself.** The interpreter calls it automatically, only once, only when the refcount hits zero.
 2. **Your `__del__()` code runs first**, giving you a chance to do cleanup (closing files, logging, releasing external resources).
-3. **After your code finishes**, Python's internal Garbage Collector — implemented in C — does the actual low-level work of clearing the memory. This final step is not something you can intercept or override.
+3. **After your code finishes**, Python's internal memory manager — implemented in C — does the actual low-level work of clearing the memory. This final step is not something you can intercept or override.
 4. **Overriding `__del__()` never stops or delays memory being reclaimed** — it just adds your own code to run immediately beforehand.
 
 ---
@@ -179,7 +218,7 @@ When the reference count hits zero, the following sequence takes place:
 - `del name` removes a **name**, not an object. The object is only cleaned up once **every** name pointing to it has been removed.
 - `__del__()` is Python's automatic destructor — it runs exactly once, exactly when an object's reference count hits zero, and you should never call it directly.
 - `sys.getrefcount(obj)` is handy for learning/debugging, but always **subtract 1** from its result, since calling the function itself adds a temporary reference.
-- Overriding `__del__()` lets you add your own cleanup step, but the actual memory-freeing is always handled afterwards by Python's C-level Garbage Collector, which you cannot override.
+- Overriding `__del__()` lets you add your own cleanup step, but the actual memory-freeing is always handled afterwards by Python's C-level memory manager, which you cannot override.
 
 
 

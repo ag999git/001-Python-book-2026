@@ -42,6 +42,20 @@ If a class defines `__repr__()` but does **not** define `__str__()`, then callin
 
 ![Flowchart](../resources/ch-7-august-2026-str-versus-repr.png)
 
+![Flowchart](../resources/S07-LR-ch-7-august-2026-str-versus-repr.png)
+
+**Reading the figure**
+
+- **Step 1:** `print(obj)` or `str(obj)` asks for the object's user-friendly text.
+- **Step 2:** Does the class define `__str__()`?
+- **Step 3:** Yes: its text is used, for example `Tommy is a Dog`.
+- **Step 4:** No: does the class define `__repr__()`?
+- **Step 5:** Yes: Python falls back to the `__repr__()` text, for example `Pet(name='Tommy', animal_type='Dog')`.
+- **Step 6:** No: Python uses its own generic default, `<__main__.Pet object at 0x...>`, which shows only the class name and the memory address.
+- **Step 7:** `repr(obj)` asks for the object's official, developer-facing text.
+- **Step 8:** Does the class define `__repr__()`? Note that `repr()` never falls back to `__str__()`.
+- **Step 9:** Yes: the `__repr__()` text is used. No: the flow goes to Step 6, Python's generic default.
+
 
 
 Notice the asymmetry: `repr()` **never** falls back to `__str__()`. Only `str()`/`print()` are willing to fall back to `__repr__()`. This is why defining `__repr__()` alone still gives you working, sensible output everywhere, while defining `__str__()` alone leaves `repr()` using Python's generic, not-very-useful default.
@@ -188,9 +202,17 @@ print(repr(pet1))
 ---
 
 
-**The following figure shows how str() and repr() interact:**
+**The following figure shows how `str()` and `repr()` interact:**
 
-![Figure](../.gitbook/assets/ch-7-oop-str-vs-repr.png)
+![Figure](../resources/ch-7-oop-str-vs-repr.png)
+
+![Figure](../resources/S07-LR-ch-7-oop-str-vs-repr.png)
+
+**Reading the figure**
+
+- A `Pet` object can be turned into text in two ways.
+- `str()` and `print()` use `__str__()`, the user-friendly text.
+- `repr()` uses `__repr__()`, the developer-friendly text. If `__str__()` is not defined, `str()` and `print()` fall back to `__repr__()` (the dashed arrow); the reverse never happens.
 
 ## Comparing all four cases
 

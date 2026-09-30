@@ -45,6 +45,16 @@ Because the formula above is **linear** (no squaring, no exponentials — just m
 
 ![Flowchart](../resources/ch-7-oop-prng-vulnerability.png)
 
+![Flowchart](../resources/S07-LR-ch-7-oop-prng-vulnerability.png)
+
+**Reading the figure**
+
+- **Step 1:** The attacker sees a few consecutive outputs of the LCG, for example session tokens or reset codes.
+- **Step 2:** Are the multiplier `a` and the modulus `m` already known?
+- **Step 3:** Yes, only `c` is unknown: Attack 1 recovers `c` from two outputs, `c = (X1 - a * X0) % m`.
+- **Step 4:** No, only `m` is known: Attack 2 recovers both `a` and `c` from three outputs, using a modular inverse.
+- **Step 5:** With `a`, `c` and `m` known, the attacker can predict every value the generator will ever produce.
+
 
 
 #### Attack 1 — Finding `c` (when `a` and `m` are already known)
@@ -195,7 +205,7 @@ Recovered a: 1103515245
 Recovered c: 12345
 
 --- Proof: predicting a future output using recovered a and c ---
-Predicted next output: <a specific number, fully determined by the recovered a and c>
+Predicted next output: 1357823696
 ```
 
 Both attacks correctly recover the LCG's real hidden constants (`a = 1103515245`, `c = 12345` — the same defaults used to build the original generator), confirmed by seeing them come back exactly as expected. The final "proof" step goes one step further: it builds a brand-new `LCG` object using only the recovered constants, and uses it to predict a value the attacker never actually saw — demonstrating the real-world danger described above.

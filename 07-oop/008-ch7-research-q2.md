@@ -37,6 +37,16 @@ Python's `copy` module provides two different ways to duplicate data, and the di
 
 ![Flowchart](../resources/ch-7-august-2026-deep-copy.png)
 
+![Flowchart](../resources/S07-LR-ch-7-august-2026-deep-copy.png)
+
+**Reading the figure**
+
+- `original_shelter` is a list whose slot 0 refers to the Tiger object.
+- `shallow_shelter = copy.copy(original_shelter)` is a new list, but its slot 0 refers to the very same Tiger object.
+- `deep_shelter = copy.deepcopy(original_shelter)` is also a new list, and its slot 0 refers to a separate clone.
+- The one Tiger object shared by the original list and the shallow copy. Renaming it to `'Sheru'` shows through both lists.
+- The independent clone made by the deep copy. It keeps the name `'Tiger'` after the rename.
+
 
 
 
@@ -123,6 +133,14 @@ It helps to remember that a Python list doesn't *contain* objects directly — i
 ## When should you use which?
 
 ![Flowchart](../resources/ch-7-august-2026-deep-copy-2.png)
+
+![Flowchart](../resources/S07-LR-ch-7-august-2026-deep-copy-2.png)
+
+**Reading the figure**
+
+- **Step 1:** Do you need to modify the inner objects of the copy independently of the original?
+- **Step 2:** No, the data is read-only or immutable: use a shallow copy, `copy.copy()`. It is faster and uses less memory.
+- **Step 3:** Yes, the inner objects will be modified separately: use a deep copy, `copy.deepcopy()`. It is slower, but the copy is fully independent.
 
 
 

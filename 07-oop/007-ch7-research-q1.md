@@ -30,6 +30,15 @@ A **circular reference** occurs when two (or more) objects hold references to ea
 
 ![Flowchart](../resources/ch-7august-2026-circular-reference.png)
 
+![Flowchart](../resources/S07-LR-ch-7august-2026-circular-reference.png)
+
+**Reading the figure**
+
+- `dog` is a label on the Stack, reachable from your code. The dotted arrow is the link that `del dog` removes.
+- `cat` is the second Stack label. The dotted arrow is the link that `del cat` removes.
+- The Tiger object's `friend` attribute refers to Kitty.
+- The Kitty object's `friend` attribute refers back to Tiger. After both labels are deleted, the two objects form an "island of isolation" on the Heap: your code cannot reach them, yet each still has a reference count of 1.
+
 
 
 The dotted arrows above show the links that `del dog` and `del cat` remove. Notice that even after both are deleted, the solid arrows — `Tiger.friend → Kitty` and `Kitty.friend → Tiger` — remain, keeping both objects alive as far as reference counting is concerned.
@@ -167,6 +176,20 @@ This design rests on one observation from real-world programs: **most objects di
 ### The mechanism, step by step
 
 ![Flowchart](../resources/ch-7august-2026-circular-reference--2.png)
+
+![Flowchart](../resources/S07-LR-ch-7august-2026-circular-reference--2.png)
+
+**Reading the figure**
+
+- **Step 1:** You call `gc.collect()` (or Python runs it automatically when a threshold is crossed).
+- **Step 2:** Your program briefly pauses while the collector works ("stop the world").
+- **Step 3:** The garbage collector traces every reference between the objects in the generation it is checking.
+- **Step 4:** Has it found a group of objects that refer to each other, but that nothing in your running code can reach?
+- **Step 5:** No: there is no island, so nothing is collected.
+- **Step 6:** Yes: the whole group is marked as garbage, an "island of isolation".
+- **Step 7:** The collector breaks the circular links between the objects.
+- **Step 8:** Their reference counts drop to 0, so `__del__()` runs for each object and its memory on the Heap is freed.
+- **Step 9:** Your program carries on from where it paused. `gc.collect()` returns the number of unreachable objects it found.
 
 
 1. **Detection:** calling `gc.collect()` briefly pauses your running program.

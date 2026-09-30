@@ -161,7 +161,7 @@ End of script.
 
 ![Figure: How del works](../resources/ch07-oop-del.png)
 
-
+**Another flowchart of the same process**
 
 ![Figure: How del works](../resources/S07-LR-ch07-oop-del.png)
 

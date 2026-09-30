@@ -5,15 +5,13 @@
 
 This section complements the conceptual Q&A elsewhere in this chapter with something more hands-on: forty short, self-contained scripts, each built around a single exception-handling idea. Where the conceptual questions asked "why does Python behave this way?", these are "here's a small script — read it, run it, and see that behavior for yourself." They move from the fundamentals (catching a `TypeError`, using `try`/`except`/`else`/`finally`) through the standard built-in exception types, into custom exceptions, and finish with a set of more advanced topics — exception chaining, exception groups, and context managers — marked *(Advanced)* since they build on ideas from later in the chapter.
 
-Each exercise keeps its **original prompt exactly as printed in the book**. The scripts and explanations underneath have been reworked: extra explanation has been added before and after each one, every script now has step-by-step comments, and one real bug from the original file has been fixed — see Exercise 1 below.
+Each exercise keeps its **original prompt exactly as printed in the book**. The scripts and explanations underneath have been reworked: extra explanation has been added before and after each one, and every script now has step-by-step comments.
 
 A tip on working through these: try writing your own solution to each prompt *before* looking at the answer given here. The value of these exercises is in the attempt, not just in reading the final code.
 
 ---
 
 ### 1. Write a script that attempts to add a string and an integer. Wrap this in a `try`-`except` block to catch the specific exception and print a helpful message.
-
-> **Note:** the original version of this script had a copy-paste error — a stray fragment of markdown formatting had been accidentally pasted directly into the Python string, which would have caused this script to fail with a `SyntaxError` before it could even demonstrate the `TypeError` it was meant to show. The corrected version below fixes that.
 
 ```python
 try:
@@ -65,8 +63,8 @@ except ValueError as e:
 
 try:
     # Step 2: the error below only happens once this line actually
-    # RUNS -- Python has no way of knowing in advance that num2 will
-    # be zero just by reading the code structurally.
+    # RUNS -- checking the structure of the code (parsing) does not
+    # carry out the division, so the problem only shows up at runtime.
     calculation = 10 / 0
 
 except ZeroDivisionError:
@@ -317,7 +315,14 @@ except ChildError:
     print("Caught by Child block.")
 ```
 
-![Flowchart](../resources/ch-9-exceptions-august-2026-scripting-question-bank01.png)
+![Flowchart](../resources/S09-LR-ch-9-exceptions-august-2026-scripting-question-bank01.png)
+
+**Reading the figure**
+
+- **Step 1:** The `try` block raises a `ChildError`.
+- **Step 2:** Python checks the `except` blocks from top to bottom. The first is `except ParentError`, and it matches, because a `ChildError` is also a `ParentError`.
+- **Step 3:** That block runs and prints "Caught by Parent block."
+- **Step 4:** The exception has now been handled, so the `except ChildError` block below is never reached: it is unreachable code.
 
 
 
@@ -571,7 +576,14 @@ result = check_finally()
 print(result)
 ```
 
-![Flowchart](../resources/ch-9-exceptions-august-2026-scripting-question9.png)
+![Flowchart](../resources/S09-LR-ch-9-exceptions-august-2026-scripting-question9.png)
+
+**Reading the figure**
+
+- **Step 1:** Inside `check_finally()`, the `try` block prints "Inside try block" and reaches `return "Returning from try"`.
+- **Step 2:** Python does not leave the function yet; it keeps the return value aside.
+- **Step 3:** The `finally` block runs and prints "Finally block executing after return statement!".
+- **Step 4:** Only now does the function return the held value, which the caller prints.
 
 
 ---
@@ -822,7 +834,14 @@ except ValueError as e:
     print(f"Outer: Caught converted exception: {e}")
 ```
 
-![Flowchart](../resources/ch-9-exceptions-august-2026-scripting-question39.png)
+![Flowchart](../resources/S09-LR-ch-9-exceptions-august-2026-scripting-question39.png)
+
+**Reading the figure**
+
+- **Step 1:** The inner `try` block tries to open `none.txt`.
+- **Step 2:** The file does not exist, so `FileNotFoundError` is raised.
+- **Step 3:** The inner `except` block catches it, prints "Inner: File missing. Raising ValueError instead." and raises a new `ValueError("Configuration missing")`.
+- **Step 4:** The outer `except ValueError` block catches this converted error and prints its message.
 
 
 ---

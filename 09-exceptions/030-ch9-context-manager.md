@@ -107,7 +107,7 @@ manager = SomeContextManager()
 x = manager.__enter__()
 try:
     do_something(x)
-except Exception as e:
+except BaseException as e:
     # manager.__exit__() decides whether to re-raise this exception
     if not manager.__exit__(type(e), e, e.__traceback__):
         raise
@@ -378,7 +378,19 @@ __enter__() -> error raised -> __exit__() -> error is NOT suppressed -> program 
 
 The same three cases, as a flowchart:
 
-![Flowchart](../resources/ch-9-exceptions-august-2026-context-manager-project.png)
+![Flowchart](../resources/S09-LR-ch-9-exceptions-august-2026-context-manager-project.png)
+
+**Reading the figure**
+
+- **Step 1:** The `with` statement creates a `SafeFileHandler` object.
+- **Step 2:** Python calls its `__enter__()` method, which opens the file and returns the file object as `f`.
+- **Step 3:** The code inside the `with` block runs.
+- **Step 4:** Did that code raise an exception?
+- **Step 5:** No: Python calls `__exit__(None, None, None)`, which closes the file.
+- **Step 6:** Yes, a `ValueError`: `__exit__()` closes the file and returns `True`, so the exception is suppressed.
+- **Step 7:** Yes, any other exception (for example `KeyError`): `__exit__()` closes the file and returns `False`.
+- **Step 8:** The exception then propagates as usual and may stop the program.
+- **Step 9:** In the first two cases the program simply continues after the `with` block.
 
 ### 8. Key learning points
 
@@ -392,11 +404,24 @@ The same three cases, as a flowchart:
 
 ---
 
-## Original Flowchart
+## The complete flow, including an error inside `__enter__()`
 
-The following flowchart (from the printed book) shows the same flow of execution for the script above:
+The following flowchart adds the case from Note 6 above, where opening the file fails inside `__enter__()`:
 
-![Diagram](../.gitbook/assets/ch9-exceptions-context-manager.png)
+![Diagram](../resources/S09-LR-ch9-exceptions-context-manager.png)
+
+**Reading the figure**
+
+- **Step 1:** `with SafeFileHandler(fileName, "r") as f:` creates the object, and Python calls its `__enter__()` method, which tries to open the file.
+- **Step 2:** Did opening the file fail, for example because it does not exist?
+- **Step 3:** Yes: `FileNotFoundError` propagates straight away. The `with` block never started, so `__exit__()` is not called.
+- **Step 4:** No: the file is open, and the code inside the `with` block runs.
+- **Step 5:** Did the code inside the block raise an exception?
+- **Step 6:** No: `__exit__(None, None, None)` closes the file.
+- **Step 7:** Yes, a `ValueError`: `__exit__()` closes the file and returns `True`, so the exception is suppressed.
+- **Step 8:** Yes, any other exception: `__exit__()` closes the file and returns `False`.
+- **Step 9:** That exception then propagates and may stop the program.
+- **Step 10:** After Steps 6 and 7 the program continues normally after the `with` block.
 
 ---
 

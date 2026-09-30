@@ -84,7 +84,16 @@ else:
 4. This "bubbling up" repeats, one level at a time, until either a matching handler is found somewhere in the chain of calls, or the very top of the program is reached.
 5. If it reaches the top without ever being caught, Python's own default handler takes over: it prints a traceback and stops the program.
 
-![Flowchart](../resources/ch-9-exceptions-august-2026-conceptual-question-bank1.png)
+![Flowchart](../resources/S09-LR-ch-9-exceptions-august-2026-conceptual-question-bank1.png)
+
+**Reading the figure**
+
+- **Step 1:** An exception is raised, for example inside `level3()`.
+- **Step 2:** Does the function where it happened have a matching `except` block?
+- **Step 3:** Yes: that block handles the exception, and the program continues from there.
+- **Step 4:** No: the function stops at once, and the exception passes up to the function that called it (from `level3()` to `level2()`, then to `level1()`).
+- **Step 5:** Has the exception now reached the top level of the program? If not, the same check (Step 2) is made in the caller.
+- **Step 6:** Yes, and nothing caught it: Python's default handler prints the traceback and stops the program.
 
 
 > **New term — "bubbling up" / "propagation":** this is just the everyday name for an exception moving outward through the chain of function calls, level by level, until something catches it. See the [official Python docs on the exception-handling statement](https://docs.python.org/3/reference/compound_stmts.html#the-try-statement) for the formal description of this process.
@@ -526,6 +535,16 @@ In practice, printing the whole exception object (`print(e)`) or its string form
 3. This means a single `except LookupError:` block can catch either problem — useful when your code doesn't care *which specific kind* of "not found" occurred, just that a lookup failed.
 
 ![Flowchart](../resources/ch-9-exceptions-august-2026-conceptual-question-bank02.png)
+
+**Another view of the same diagram**
+
+![Flowchart](../resources/S09-LR-ch-9-exceptions-august-2026-conceptual-question-bank02.png)
+
+**Reading the figure**
+
+- `LookupError` is the shared parent for failed lookups, so `except LookupError:` catches both children.
+- `IndexError`: a position that is out of range in a sequence (`list`, `tuple`, `str`).
+- `KeyError`: a key that does not exist in a dictionary.
 
 
 ```python

@@ -273,7 +273,19 @@ ZeroDivisionError: division by zero
 
 ### The same flow, as a flowchart 
 
-![Flowchart](../resources/ch-9-exceptions-august-2026-digging-into-exceptions-sys-traceback.png)
+![Flowchart](../resources/S09-LR-ch-9-exceptions-august-2026-digging-into-exceptions-sys-traceback.png)
+
+**Reading the figure**
+
+- **Step 1:** Inside the `try` block, the program calls `level1()`.
+- **Step 2:** `level1()` calls `level2()`.
+- **Step 3:** `level2()` calls `level3()`.
+- **Step 4:** In `level3()`, `x = 10 / 0` raises `ZeroDivisionError`.
+- **Step 5:** None of the three functions has an `except` block, so the exception travels back up through `level3()`, `level2()` and `level1()`.
+- **Step 6:** The `except Exception as e:` block in the main program catches it.
+- **Step 7:** `sys.exc_info()` returns the exception's type, its value (the exception object) and the traceback object.
+- **Step 8:** `traceback.extract_tb()` lists file, line, function and code for each frame, and `traceback.format_exc()` gives the full traceback as one string.
+- **Step 9:** The `finally` block runs and prints "8. Program continues after exception handling".
 
 
 ### Key Concepts Explained

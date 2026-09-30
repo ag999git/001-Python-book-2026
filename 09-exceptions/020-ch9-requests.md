@@ -58,7 +58,7 @@ Both libraries do fundamentally the same thing — send a request to a URL and g
 | --- | --- | --- |
 | Needs installing? | No — comes with Python | Yes — `pip install requests` |
 | Getting text content | `response.read().decode("utf-8")` (two separate steps) | `response.text` (one step — decoding is automatic) |
-| Checking for HTTP errors | You must check `response.status` yourself | `response.raise_for_status()` does it for you in one call |
+| Checking for HTTP errors | `urlopen()` raises `HTTPError` automatically for 4xx/5xx responses | `requests.get()` does **not** raise on its own; you call `response.raise_for_status()` |
 | Error types | `URLError`, `HTTPError` | `ConnectionError`, `Timeout`, `HTTPError`, and more — each with a clearly matching name |
 | General reputation | More verbose, but no installation needed | Widely considered friendlier and more "Pythonic" |
 
@@ -100,7 +100,7 @@ response = requests.get(url)
 response.raise_for_status()   # raises HTTPError here if the request failed
 ```
 
-This is one of the biggest conveniences `requests` offers over `urllib`: instead of manually checking `if response.status != 200: ...`, you get proper exception-based error handling in a single line.
+This matters because, unlike `urllib.request.urlopen()` (which raises `HTTPError` automatically), `requests.get()` happily returns a response for a 404 or a 500 without raising anything. One call to `raise_for_status()` turns such a response into a proper exception, so you don't have to write `if response.status_code != 200: ...` yourself.
 
 ### Step 5: Common exceptions in `requests`
 
@@ -255,10 +255,11 @@ print("Case 3: HTTP Error (404)")
 read_online_file("https://raw.githubusercontent.com/python/cpython/main/NOFILE.txt")
 # Flow: try -> except(HTTPError) -> finally
 
-# Case 4: a URL engineered to respond very slowly, longer than our
-# 5-second timeout -- triggers Timeout
+# Case 4: a URL engineered to respond very slowly (httpbin.org waits
+# 7 seconds before answering), longer than our 5-second timeout --
+# triggers Timeout
 print("Case 4: Timeout simulation (very slow site)")
-read_online_file("https://httpstat.us/200?sleep=7000")
+read_online_file("https://httpbin.org/delay/7")
 # Flow: try -> except(Timeout) -> finally
 ```
 
@@ -299,7 +300,15 @@ RequestException
 
 The same relationship, as a flowchart 
 
-![Flowchart](../resources/ch-9-exceptions-august-2026-exceptions-for-internet-project.png)
+![Flowchart](../resources/S09-LR-ch-9-exceptions-august-2026-exceptions-for-internet-project.png)
+
+**Reading the figure**
+
+- `requests.exceptions.RequestException` is the parent of every exception `requests` raises, so it must be the last `except` block.
+- `HTTPError`: the server answered with an error status (404, 500 and so on); raised by `raise_for_status()`.
+- `ConnectionError`: the server could not be reached at all.
+- `Timeout`: the server took longer than the `timeout` you gave.
+- `TooManyRedirects`: the server kept redirecting the request more times than allowed.
 
 
 > **Why the order of `except` blocks still matters here too:** exactly as explained for `urllib` in the previous section, Python checks `except` blocks from top to bottom and stops at the first match. Since every exception in this tree — `HTTPError`, `ConnectionError`, `Timeout`, and `TooManyRedirects` — is *also* a `RequestException`, a generic `except requests.exceptions.RequestException:` block placed too early would catch all of them, and the more specific, more informative blocks below it would never run. That's why the script in Part 3 lists its `except` blocks from most specific to most general, with `RequestException` last.
@@ -314,7 +323,7 @@ The same relationship, as a flowchart
 | Readability | Lower — more boilerplate code | Higher — closer to plain English |
 | Built into Python? | Yes | No — install with `pip install requests` |
 | Getting text content | Two steps: `.read()` then `.decode()` | One step: `.text` |
-| Checking for HTTP errors | Manual — check `response.status` yourself | One call: `.raise_for_status()` |
+| Checking for HTTP errors | Automatic — `urlopen()` raises `HTTPError` | You call `.raise_for_status()` |
 | Error handling | Works, but more verbose | Cleaner, more specific exception names |
 
 **A practical rule of thumb:** if you're working in an environment where installing extra packages is difficult or not allowed, `urllib` gets the job done without any dependencies. Otherwise, for everyday projects, `requests` is generally the better choice — which is exactly why it remains one of the most widely used third-party libraries in the entire Python ecosystem.

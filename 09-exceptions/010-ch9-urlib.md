@@ -159,16 +159,14 @@ def read_online_file(url):
 
     try:
         # Step 1: try to open a connection to the URL.
-        # This is the step most likely to raise URLError -- for
-        # example, if the domain name doesn't exist, or there's
-        # no internet connection at all.
+        # This is the step that raises URLError (for example, the
+        # domain name doesn't exist, or there's no internet connection)
+        # and also HTTPError (the server answered with an error status,
+        # like 404 Not Found) -- urlopen() raises HTTPError automatically.
         print("1. Connecting...")
         response = urllib.request.urlopen(url)
 
         # Step 2: read the raw bytes the server sent back.
-        # This is where HTTPError shows up -- the connection itself
-        # succeeded, but the server responded with an error status
-        # (like 404 Not Found).
         print("2. Reading data...")
         data = response.read()
 
@@ -230,10 +228,10 @@ read_online_file("https://invalid-url.com/file.txt")
 print("Case 3: HTTP Error (404)")
 read_online_file("https://raw.githubusercontent.com/python/cpython/main/NOFILE.txt")
 
-# Case 4: a URL pointing at binary (non-text) content --
-# .decode("utf-8") will fail on this -- triggers UnicodeDecodeError
-print("Case 4: Encoding issue (rare but possible)")
-read_online_file("https://example.com/binaryfile")
+# Case 4: a URL pointing at binary (non-text) content -- here, a PNG
+# image -- .decode("utf-8") will fail on this -- triggers UnicodeDecodeError
+print("Case 4: Encoding issue (binary file)")
+read_online_file("https://raw.githubusercontent.com/ag999git/001-Python-book-2026/main/resources/ch-10-file-handling-1.png")
 ```
 
 ### What Each Test Case Demonstrates
@@ -243,7 +241,7 @@ read_online_file("https://example.com/binaryfile")
 | 1 | A real, working file URL | *(none — the `else` block runs instead)* | Error-free execution |
 | 2 | A domain that doesn't exist | `except urllib.error.URLError` | Network/connection failure |
 | 3 | A real domain, missing file | `except urllib.error.HTTPError` | Server-side error (404) |
-| 4 | A URL returning non-text data | `except UnicodeDecodeError` | Wrong/incompatible encoding |
+| 4 | A URL returning non-text data (a PNG image) | `except UnicodeDecodeError` | Wrong/incompatible encoding |
 
 ---
 
@@ -265,17 +263,31 @@ Python's exceptions are organized into a hierarchy — some exception types are 
 ```
 Exception
 │
-├── URLError
-│     └── HTTPError
+├── OSError
+│     └── URLError
+│           └── HTTPError
 │
-├── UnicodeDecodeError
+├── ValueError
+│     └── UnicodeError
+│           └── UnicodeDecodeError
 │
 └── (all other exception types)
 ```
 
 ### The same relationship, drawn as a flowchart 
 
-![Flowchart](../resources/ch-9-exceptions-august-2026-urlib-project.png)
+![Flowchart](../resources/S09-LR-ch-9-exceptions-august-2026-urlib-project.png)
+
+**Reading the figure**
+
+- `Exception` is the parent of every ordinary error, so `except Exception` catches all of them.
+- `OSError` covers errors from the operating system and the network.
+- `URLError` is a kind of `OSError`: the server could not be reached at all.
+- `HTTPError` is a kind of `URLError`: the server answered, but with an error status such as 404. Because every `HTTPError` is also a `URLError`, `except HTTPError` must come before `except URLError`.
+- `ValueError` covers values of the right type but the wrong content.
+- `UnicodeError` is a kind of `ValueError` for text-encoding problems.
+- `UnicodeDecodeError` is a kind of `UnicodeError`: the bytes could not be decoded with the chosen encoding.
+- Every other exception type also sits somewhere under `Exception`, which is why `except Exception` goes last.
 
 
 

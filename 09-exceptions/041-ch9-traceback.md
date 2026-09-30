@@ -189,7 +189,19 @@ Extract file, line, function, code
 
 The same flow, as a flowchart 
 
-![Flowchart](../resources/ch-9-exceptions-august-2026-exception-object-traceback-module.png)
+![Flowchart](../resources/S09-LR-ch-9-exceptions-august-2026-exception-object-traceback-module.png)
+
+**Reading the figure**
+
+- **Step 1:** `10 / 0` inside `level3()` raises `ZeroDivisionError`.
+- **Step 2:** Python creates the exception object, which `except Exception as e:` catches as `e`.
+- **Step 3:** `e.__traceback__` holds the raw traceback object, with no need for `sys`.
+- **Step 4:** `traceback.extract_tb()` converts that raw object into readable frame summaries.
+- **Step 5:** The result, `tb_list`, has one entry for each function call in the chain.
+- **Step 6:** A `for` loop goes through the frames one by one.
+- **Step 7:** For each frame it prints the file name, line number, function name and line of code.
+- **Step 8:** `traceback.format_exc()` returns the whole traceback as one formatted string, ready to print or log.
+- **Step 9:** The `finally` block runs, and the program carries on.
 
 
 ### The Script

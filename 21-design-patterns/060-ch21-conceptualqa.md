@@ -130,7 +130,7 @@ Design patterns improve software in several ways:
 - they make programs easier to modify;
 - they improve code readability;
 - they promote the reuse of proven solutions;
-- they give programmers a **shared vocabulary**. Saying "use an Observer here" tells another programmer a whole design idea in three words.
+- they give programmers a **shared vocabulary**. Saying "use an Observer here" tells another programmer a whole design idea in four words.
 
 **Step-by-step: how to recognise a design pattern**
 
@@ -164,7 +164,15 @@ No again. A library such as `math` or `json` is ready-made code: you import it a
 
 **Flowchart**
 
-![Flowchart: design pattern versus algorithm](../resources/ch16-21-design-patterns-qa1.png)
+![Flowchart: design pattern versus algorithm](../resources/S21-LR-ch16-21-design-patterns-qa1.png)
+
+**Reading the figure**
+
+- **Step 1:** Start from a design problem that keeps appearing in many programs, for example "many parts of the program must be told when data changes".
+- **Step 2:** A general arrangement of classes and objects solves it, for example "one subject keeps a list of observers and calls each of them".
+- **Step 3:** That arrangement can be written in many different ways and still keep the same idea.
+- **Step 4:** When all three are true, it is a design pattern: not an algorithm (a precise sequence of steps) and not ready-made library code.
+- **Step 5:** Applying the pattern in your own code makes the program easier to maintain and extend.
 
 **Follow-up questions**
 
@@ -251,7 +259,17 @@ The original GoF book describes 23 patterns in total: 5 creational, 7 structural
 
 **Flowchart**
 
-![Flowchart: the three categories of design patterns](../resources/ch16-21-qa2.png)
+![Flowchart: the three categories of design patterns](../resources/S21-LR-ch16-21-qa2.png)
+
+**Reading the figure**
+
+- The Gang of Four sorted design patterns into three categories.
+- Creational patterns answer "how should objects be created?"
+- Structural patterns answer "how should objects be connected?"
+- Behavioral patterns answer "how should objects interact?"
+- Creational examples: Singleton, Factory Method, Abstract Factory, Builder, Prototype.
+- Structural examples: Decorator, Adapter, Facade, Composite, Proxy.
+- Behavioral examples: Observer, Strategy, Command, Iterator, Template Method.
 
 **Follow-up questions**
 
@@ -448,10 +466,6 @@ Both forms share the same core idea: client code does not create the concrete ob
 | Changes affect many locations | Changes usually affect only the factory |
 | Strong (tight) coupling | Loose coupling |
 
-**Flowchart**
-
-![Flowchart: Factory Method pattern](../resources/ch-16-21-qa3.png)
-
 **Follow-up questions**
 
 1. *Should every object in a program be created through a factory?*
@@ -593,7 +607,16 @@ Singleton should also be used with care. A single shared object behaves like a g
 
 **Flowchart**
 
-![Flowchart: Singleton compared with Factory Method](../resources/ch16-21-august-2026-04.png)
+![Flowchart: Singleton compared with Factory Method](../resources/S21-LR-ch16-21-august-2026-04.png)
+
+**Reading the figure**
+
+- **Step 1:** Your program needs an object.
+- **Step 2:** Must there be exactly one shared instance of it, such as the application configuration?
+- **Step 3:** Yes: use a Singleton; `AppConfig()` returns the same object every time.
+- **Step 4:** No: does the exact class depend on something known only at run time, such as `"pdf"` or `"excel"`?
+- **Step 5:** Yes: use a Factory Method, such as `create_report(report_type)`, which creates an object of the right class.
+- **Step 6:** No: simply call the class directly; no pattern is needed.
 
 **Follow-up questions**
 
@@ -772,7 +795,15 @@ With inheritance, we would need classes such as `CoffeeWithMilk`, `CoffeeWithSug
 
 **Flowchart**
 
-![Flowchart: Decorator pattern](../resources/ch16-21-august-qa-5.png)
+![Flowchart: Decorator pattern](../resources/S21-LR-ch16-21-august-qa-5.png)
+
+**Reading the figure**
+
+- **Step 1:** Start with an ordinary function such as `greet(name)`.
+- **Step 2:** The decorator syntax `@log_call` replaces `greet` with a wrapper function around it; `functools.wraps` keeps its name and docstring.
+- **Step 3:** The caller still writes `greet("Asha")`, exactly as before.
+- **Step 4:** The wrapper runs first and adds its extra behaviour, such as logging the call.
+- **Step 5:** The wrapper then calls the original function and returns its result. The original code was never changed.
 
 **Follow-up questions**
 
@@ -891,7 +922,17 @@ Read more at [Refactoring Guru: Abstract Factory](https://refactoring.guru/desig
 
 **Flowchart**
 
-![Flowchart: Abstract Factory pattern](../resources/ch16-21-august-2026-05.png)
+![Flowchart: Abstract Factory pattern](../resources/S21-LR-ch16-21-august-2026-05.png)
+
+**Reading the figure**
+
+- The client, `build_screen(factory)`, receives one factory object and uses only its methods.
+- Given a `WindowsFactory`, it gets Windows widgets.
+- Given a `MacFactory`, it gets Mac widgets.
+- `create_button()` on the Windows factory returns a `WindowsButton`.
+- `create_checkbox()` on the same factory returns a `WindowsCheckbox`, so the two always match.
+- `create_button()` on the Mac factory returns a `MacButton`.
+- `create_checkbox()` returns a `MacCheckbox`: a whole family of related objects comes from one factory.
 
 **Follow-up questions**
 
@@ -1068,7 +1109,15 @@ A Builder is still useful in Python when construction really happens in stages, 
 
 **Flowchart**
 
-![Flowchart: Builder pattern](../resources/ch16-21-august-2026-10.png)
+![Flowchart: Builder pattern](../resources/S21-LR-ch16-21-august-2026-10.png)
+
+**Reading the figure**
+
+- **Step 1:** Create a `ComputerBuilder`.
+- **Step 2:** Set the parts one at a time with named methods, such as `set_processor()`; each returns the builder, so the calls can be chained.
+- **Step 3:** Add further parts, such as `set_ram()` and `set_ssd()`.
+- **Step 4:** Optional parts, such as graphics or the operating system, are added only if wanted.
+- **Step 5:** `build()` returns the finished `Computer` object.
 
 **Follow-up questions**
 
@@ -1165,7 +1214,14 @@ Gateway received 50000 paise
 
 **Flowchart**
 
-![Flowchart: Adapter pattern](../resources/ch16-21-august-qa-question-8.png)
+![Flowchart: Adapter pattern](../resources/S21-LR-ch16-21-august-qa-question-8.png)
+
+**Reading the figure**
+
+- **Step 1:** The client code, `checkout()`, only knows the method `pay(amount)`, as in `UPIPayment`.
+- **Step 2:** The `GatewayAdapter` offers that same `pay()` method.
+- **Step 3:** Inside, it translates the request: the amount in rupees becomes paise.
+- **Step 4:** It then calls the third-party gateway's own, incompatible method, `make_payment(amount_in_paise)`.
 
 **Follow-up questions**
 
@@ -1308,7 +1364,16 @@ Read more at [Refactoring Guru: Facade](https://refactoring.guru/design-patterns
 
 **Flowchart**
 
-![Flowchart: Facade pattern](../resources/ch16-21-august-2026-qa-question9.png)
+![Flowchart: Facade pattern](../resources/S21-LR-ch16-21-august-2026-qa-question9.png)
+
+**Reading the figure**
+
+- The client makes one simple call.
+- `watch_movie(movie)` on the facade hides all the separate steps.
+- The facade switches the television on.
+- It switches the sound system on and sets the volume.
+- It starts the streaming device playing the movie.
+- It dims the lights. The subsystems still exist and can be used directly when needed.
 
 **Follow-up questions**
 
@@ -1413,7 +1478,14 @@ Facade (uses both of the above inside):
 
 **Flowchart**
 
-![Flowchart: Decorator, Adapter and Facade compared](../resources/ch16-21-august-2026-qa-question-10.png)
+![Flowchart: Decorator, Adapter and Facade compared](../resources/S21-LR-ch16-21-august-2026-qa-question-10.png)
+
+**Reading the figure**
+
+- Adapter, Decorator and Facade are all structural patterns, but each does a different job.
+- Adapter: `PrinterAdapter` makes `OldPrinter.print_text()` usable through the method name the program expects, `output()`.
+- Decorator: `TimestampDecorator` keeps the same `output()` interface and adds something extra, a timestamp.
+- Facade: `OfficeFacade.print_report()` hides several steps behind one simple method.
 
 **Follow-up questions**
 
@@ -1549,7 +1621,16 @@ Read more at [Refactoring Guru: Composite](https://refactoring.guru/design-patte
 
 **Flowchart**
 
-![Flowchart: Composite pattern](../resources/ch16-21-august-2026-qa-question-11.png)
+![Flowchart: Composite pattern](../resources/S21-LR-ch16-21-august-2026-qa-question-11.png)
+
+**Reading the figure**
+
+- The company is a `Department` object that contains other departments: a group made of groups.
+- Department A is a group containing employees.
+- Department B is another group.
+- Employee 1 is a single object (a leaf).
+- Employee 2 is another leaf.
+- Employee 3 is a leaf. Calling `display()` or `count()` on the company works the same way on every level: each group simply calls the same method on its members.
 
 **Follow-up questions**
 
@@ -1675,10 +1756,6 @@ Read more at [Refactoring Guru: Proxy](https://refactoring.guru/design-patterns/
 | Object is created immediately | Lazy loading is possible |
 | No central place to add security checks | Better security and monitoring |
 | Slightly faster, no extra step | One extra step, but more control |
-
-**Flowchart**
-
-![Flowchart: Proxy pattern](../resources/ch16-21-august-2026-qa-question12.png)
 
 **Follow-up questions**
 
@@ -1811,10 +1888,6 @@ Read more at [Refactoring Guru: Observer](https://refactoring.guru/design-patter
 | Tight coupling, subject knows every receiver | Loose coupling, subject only knows `update()` |
 | Difficult to add new listeners | Easy to register new observers |
 | More maintenance | Better extensibility |
-
-**Flowchart**
-
-![Flowchart: Observer pattern](../resources/ch16-21-august-2026-qa-question-13.png)
 
 **Follow-up questions**
 
@@ -1950,7 +2023,16 @@ Read more at [Refactoring Guru: Strategy](https://refactoring.guru/design-patter
 
 **Flowchart**
 
-![Flowchart: Strategy pattern](../resources/ch16-21-august-2026-qa-question-14.png)
+![Flowchart: Strategy pattern](../resources/S21-LR-ch16-21-august-2026-qa-question-14.png)
+
+**Reading the figure**
+
+- A `Checkout` object is given one strategy (a function) when it is created, and can be given another later.
+- One strategy: pay by card.
+- Another: pay by UPI.
+- Another: net banking.
+- A new one, the wallet, is added without changing `Checkout` at all.
+- `total(amount)` simply calls whichever strategy was chosen, with no `if-elif` chain.
 
 **Follow-up questions**
 
@@ -2112,10 +2194,6 @@ Read more at [Refactoring Guru: Command](https://refactoring.guru/design-pattern
 | Less flexible | More flexible |
 | Tight coupling between caller and receiver | Loose coupling |
 
-**Flowchart**
-
-![Flowchart: Command pattern](../resources/ch16-21-august-2026-qa-question15.png)
-
 **Follow-up questions**
 
 1. *How would you add a Redo feature?*
@@ -2222,7 +2300,7 @@ next(): 20
 **How the script works**
 
 - `Countdown` keeps its own `current` value. The `for` loop only calls `next()` and never looks inside.
-- The generator `countdown()` produces the same numbers in five lines. `yield` pauses the function and resumes it on the next request.
+- The generator `countdown()` produces the same numbers in four lines. `yield` pauses the function and resumes it on the next request.
 - Iterating over a dictionary gives its **keys**.
 - Step 5 shows exactly what a `for` loop does automatically.
 
@@ -2308,7 +2386,16 @@ Read more at [Refactoring Guru: Iterator](https://refactoring.guru/design-patter
 
 **Flowchart**
 
-![Flowchart: Iterator and Template Method patterns](../resources/ch16-21-august-2026-qa-question-16.png)
+![Flowchart: Iterator and Template Method patterns](../resources/S21-LR-ch16-21-august-2026-qa-question-16.png)
+
+**Reading the figure**
+
+- Iterator: a `for` loop over a `Countdown` object.
+- The loop first calls `__iter__()`, which returns the iterator.
+- It then calls `__next__()` for each value; when there are none left, `StopIteration` ends the loop. A generator function with `yield` does the same with less code.
+- Template Method: the base class `ReportGenerator` defines `generate()`, the skeleton of the algorithm.
+- `generate()` always runs the steps in the same order: read the data, process it, format the report, save it.
+- Subclasses such as `SalesReport` and `AttendanceReport` supply only the steps that differ.
 
 **Follow-up questions**
 
@@ -2458,7 +2545,16 @@ Running add...
 
 **Flowchart**
 
-![Flowchart: Pythonic design patterns](../resources/ch16-21-august-2026-qa-question-17.png)
+![Flowchart: Pythonic design patterns](../resources/S21-LR-ch16-21-august-2026-qa-question-17.png)
+
+**Reading the figure**
+
+- Python has language features that do the work of several classic patterns with far less code.
+- Decorators, written with `@`, add behaviour to a function without changing it (the Decorator pattern).
+- Context managers, used with `with`, guarantee setup and cleanup, as in `opened_resource(name)`.
+- Mixins, such as `JSONMixin`, add a ready-made ability to any class that inherits from them.
+- Duck typing: `make_it_speak()` works with any object that has a `speak()` method, whether `Duck` or `Robot`, with no shared interface class.
+- Dataclasses generate the constructor, `repr` and equality methods from the field list, as for `Point`.
 
 **Follow-up questions**
 
@@ -2540,10 +2636,6 @@ Understanding the **purpose** of each pattern is therefore more important than m
 - **Step 6:** No: is it about organising or connecting objects?
 - **Step 7:** Yes: look at the structural patterns: Decorator, Adapter, Facade, Composite and Proxy.
 - **Step 8:** No: it is about how objects behave and communicate, so look at the behavioural patterns: Observer, Strategy, Command, Iterator and Template Method.
-
-**Flowchart**
-
-![Flowchart: choosing a design pattern](../resources/ch16-21-august-2026-qa-question-18.png)
 
 **Follow-up questions**
 
@@ -2680,7 +2772,16 @@ The client code in Step 5 uses only `ResultBoard` and chooses a strategy. It doe
 
 **Flowchart**
 
-![Flowchart: combining design patterns](../resources/ch16-21-august-2026-qa-question-19.png)
+![Flowchart: combining design patterns](../resources/S21-LR-ch16-21-august-2026-qa-question-19.png)
+
+**Reading the figure**
+
+- The client makes one call, `board.show(by_marks)`, and knows nothing else.
+- `ResultBoard` acts as the facade: one simple entry point.
+- The sorting functions are wrapped by the `@logged` decorator, which records each call.
+- The strategy passed in, `by_name` or `by_marks`, decides the order of the students.
+- The board then notifies each view in its list: the Observer pattern.
+- `ConsoleView` prints every student and `TopperView` prints the topper. Each pattern solves one part of the job.
 
 **Follow-up questions**
 
@@ -2781,7 +2882,16 @@ A better design splits these jobs into separate classes, such as `StudentRecords
 
 **Flowchart**
 
-![Flowchart: anti-patterns and how to avoid them](../resources/ch16-21-august-2026-qa-question-20.png)
+![Flowchart: anti-patterns and how to avoid them](../resources/S21-LR-ch16-21-august-2026-qa-question-20.png)
+
+**Reading the figure**
+
+- **Step 1:** Start from the programming problem.
+- **Step 2:** Write the simplest direct solution first (KISS, YAGNI).
+- **Step 3:** Does a real problem appear, for example the same `if-elif` block growing for the third time?
+- **Step 4:** No: keep the simple design; adding patterns now would be over-engineering.
+- **Step 5:** Yes: understand the problem, then add the one pattern that fits it, instead of copying patterns blindly (cargo-cult programming).
+- **Step 6:** Keep reviewing and refactoring, giving each class one job, so that no class grows into a God Object.
 
 **Follow-up questions**
 

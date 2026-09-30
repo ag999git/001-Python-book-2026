@@ -30,9 +30,6 @@ A **memory leak** happens when a program keeps holding on to memory it no longer
 
 ![Flowchart](../resources/ch-7august-2026-memory-leak.png)
 
-**Another flowchart of the same process**
-
-
 ![Flowchart](../resources/S07-LR-ch-7august-2026-memory-leak.png)
 
 **Reading the figure**

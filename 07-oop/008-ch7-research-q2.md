@@ -37,9 +37,6 @@ Python's `copy` module provides two different ways to duplicate data, and the di
 
 ![Flowchart](../resources/ch-7-august-2026-deep-copy.png)
 
-**Another flowchart of the same process**
-
-
 ![Flowchart](../resources/S07-LR-ch-7-august-2026-deep-copy.png)
 
 **Reading the figure**
@@ -136,9 +133,6 @@ It helps to remember that a Python list doesn't *contain* objects directly — i
 ## When should you use which?
 
 ![Flowchart](../resources/ch-7-august-2026-deep-copy-2.png)
-
-**Another flowchart of the same process**
-
 
 ![Flowchart](../resources/S07-LR-ch-7-august-2026-deep-copy-2.png)
 

@@ -94,9 +94,6 @@ The following diagram shows the hierarchy of some built-in and user-defined clas
 
 ![Diagram](../resources/ch-7-oop-object-base.png)
 
-**Another flowchart of the same process**
-
-
 ![Diagram](../resources/S07-LR-ch-7-oop-object-base.png)
 
 **Reading the figure**

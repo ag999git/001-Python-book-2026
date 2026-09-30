@@ -42,9 +42,6 @@ If a class defines `__repr__()` but does **not** define `__str__()`, then callin
 
 ![Flowchart](../resources/ch-7-august-2026-str-versus-repr.png)
 
-**Another flowchart of the same process**
-
-
 ![Flowchart](../resources/S07-LR-ch-7-august-2026-str-versus-repr.png)
 
 **Reading the figure**
@@ -208,9 +205,6 @@ print(repr(pet1))
 **The following figure shows how `str()` and `repr()` interact:**
 
 ![Figure](../resources/ch-7-oop-str-vs-repr.png)
-
-**Another flowchart of the same process**
-
 
 ![Figure](../resources/S07-LR-ch-7-oop-str-vs-repr.png)
 

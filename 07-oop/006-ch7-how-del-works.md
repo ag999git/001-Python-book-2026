@@ -28,8 +28,6 @@ A variable name in the Stack doesn't hold the object itself — it holds the **m
 
 ![Flowchart](../resources/ch-7-oop-del-working-memory-ref.png)
 
-**Another flowchart of the same process**
-
 ![Flowchart](../resources/S07-LR-ch-7-oop-del-working-memory-ref.png)
 
 **Reading the figure**
@@ -140,8 +138,6 @@ End of script.
 
 ![Sequence Diagram](../resources/ch-7-august-2026-del-diagram-2.png)
 
-**Another flowchart of the same process**
-
 ![Sequence Diagram](../resources/S07-LR-ch-7-august-2026-del-diagram-2.png)
 
 **Reading the figure**
@@ -161,8 +157,6 @@ End of script.
 
 ![Figure: How del works](../resources/ch07-oop-del.png)
 
-**Another flowchart of the same process**
-
 ![Figure: How del works](../resources/S07-LR-ch07-oop-del.png)
 
 **Reading the figure**
@@ -181,9 +175,6 @@ Overriding `__del__()` in your own class does **not** give you control over memo
 
 
 ![Flowchart](../resources/ch-7-august-2026-del-diagram.png)
-
-**Another flowchart of the same process**
-
 
 ![Flowchart](../resources/S07-LR-ch-7-august-2026-del-diagram.png)
 

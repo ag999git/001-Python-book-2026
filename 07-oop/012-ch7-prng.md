@@ -45,6 +45,9 @@ Because the formula above is **linear** (no squaring, no exponentials — just m
 
 ![Flowchart](../resources/ch-7-oop-prng-vulnerability.png)
 
+**Another flowchart of the same process**
+
+
 ![Flowchart](../resources/S07-LR-ch-7-oop-prng-vulnerability.png)
 
 **Reading the figure**

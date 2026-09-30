@@ -5,7 +5,7 @@
 
 ## What this page contains, and why it matters
 
-Regular expressions are learned best by writing a lot of small, focused programs rather than by reading theory alone. This page is exactly that: twenty short, independent Python scripts, each one built around a single regex idea — checking a string's shape, pulling matching pieces out of a paragraph, splitting text apart, replacing pieces of it, and a few of the more advanced tricks such as backreferences and lookaheads. Taken together, they form a practice set that touches almost every regex tool this chapter has introduced: character classes, quantifiers, anchors, groups, backreferences, greedy and non-greedy matching, and four of the most useful functions in Python's `re` module — `re.fullmatch()`, `re.findall()`, `re.split()`, `re.sub()`, and `re.finditer()`.
+Regular expressions are learned best by writing a lot of small, focused programs rather than by reading theory alone. This page is exactly that: twenty short, independent Python scripts, each one built around a single regex idea — checking a string's shape, pulling matching pieces out of a paragraph, splitting text apart, replacing pieces of it, and a few of the more advanced tricks such as backreferences and lookaheads. Taken together, they form a practice set that touches almost every regex tool this chapter has introduced: character classes, quantifiers, anchors, groups, backreferences, greedy and non-greedy matching, and five of the most useful functions in Python's `re` module — `re.fullmatch()`, `re.findall()`, `re.split()`, `re.sub()`, and `re.finditer()`.
 
 Every script on this page was actually run while preparing it, and every line of printed output shown here is the real, checked output of that exact code — not a description of what the code is expected to do. Working through all twenty, in order, is a good way to test whether the earlier parts of this chapter have genuinely sunk in, since each question asks you to reach for a slightly different regex tool without telling you in advance which one.
 
@@ -23,7 +23,7 @@ Every script on this page was actually run while preparing it, and every line of
 | Quantifier | A symbol that says how many times the thing right before it may repeat, such as `+` (one or more), `{6}` (exactly six), or `{2,}` (two or more). |
 | Anchor | A symbol that matches a *position* in the string rather than a character — `^` for the very start, `$` for the very end, `\b` for a word boundary (the position between a word character and a non-word character, or the edge of the string). |
 | Capturing group | A part of a pattern wrapped in parentheses, `(...)`, whose matched text is remembered separately, so it can be extracted afterward or reused later in the same pattern. |
-| Non-capturing group | A group written `(?:...)`, used purely to apply a quantifier or an alternation (`|`) to several characters at once, without the overhead of remembering what it matched. |
+| Non-capturing group | A group written `(?:...)`, used purely to apply a quantifier or an alternation (`\|`) to several characters at once, without the overhead of remembering what it matched. |
 | Backreference | A way of referring, later in the same pattern, to whatever text an earlier capturing group matched — written `\1` for the first group, `\2` for the second, and so on. |
 | Lookahead, `(?=...)` | A check that peeks forward in the string to confirm something is present, without actually consuming any characters itself. See [Python's how-to guide on lookahead assertions](https://docs.python.org/3/howto/regex.html#lookahead-assertions) for the official reference. |
 | Greedy vs. non-greedy | A greedy quantifier (`*`, `+`, `{m,n}`) tries to match as much text as possible; adding a `?` right after it (`*?`, `+?`) makes it non-greedy, so it tries to match as little text as possible instead. |
@@ -71,7 +71,7 @@ Scanning down this table before working through the questions one by one gives a
 | 11 | Extract hashtags | `re.findall()` | `#\w+` |
 | 12 | Remove duplicate spaces | `re.sub()` | `\s+` |
 | 13 | Extract file extensions | `re.findall()` | Capturing group after `\.` |
-| 14 | Match titles (Mr/Ms/Dr) | `re.findall()` | Non-capturing group `(?:...)`, alternation `|` |
+| 14 | Match titles (Mr/Ms/Dr) | `re.findall()` | Non-capturing group `(?:...)`, alternation `\|` |
 | 15 | String starts with 'Python' | `re.search()` | Anchor `^` |
 | 16 | String ends with '.com' | `re.search()` | Anchor `$` |
 | 17 | Extract floating-point numbers | `re.findall()` | `\d+\.\d+` |
@@ -446,9 +446,17 @@ Non-Greedy:
 <h1>
 ```
 
-Both patterns start looking from the very first `<` in the string, but they disagree completely about where to stop. The greedy version's `.*` reaches all the way to the very last `>` in the entire string before the engine even starts checking whether the pattern is satisfied, because greedy quantifiers grab as much as they can up front, and only give characters back if forced to. Since the string does end in a `>`, the greedy match never needs to give anything back, and the whole string becomes one giant match. The non-greedy version's `.*?` does the opposite: it grabs as few characters as it possibly can, checking after every single character whether a `>` would let the pattern succeed right now — and the very first `>`, closing the opening `<h1>` tag, is reached almost immediately, so the match stops there.
+Both patterns start looking from the very first `<` in the string, but they disagree completely about where to stop. The greedy version's `.*` first runs all the way to the end of the string (swallowing the final `>` too), because greedy quantifiers grab as much as they can up front, and only give characters back if forced to. The pattern's closing `>` then has nothing left to match, so the engine backtracks exactly one character, hands the final `>` back, and the whole string becomes one giant match. The non-greedy version's `.*?` does the opposite: it grabs as few characters as it possibly can, checking after every single character whether a `>` would let the pattern succeed right now — and the very first `>`, closing the opening `<h1>` tag, is reached almost immediately, so the match stops there.
 
-![Flowchart](../resources/ch-13-august-2026-exercise-greedy-nongreedy.png)
+![Flowchart](../resources/S13-LR-ch-13-august-2026-exercise-greedy-nongreedy.png)
+
+**Reading the figure**
+
+- Both searches start at the first `<` in `text = "<h1>Hello</h1><p>World</p>"`.
+- Greedy `<.*>`: `.*` first runs to the end of the string, swallowing the last `>` too; the pattern's own `>` then has nothing to match, so the engine backtracks one character.
+- Non-greedy `<.*?>`: `.*?` takes one character at a time and checks after each whether the pattern's `>` can match.
+- The greedy match is the whole string, `<h1>Hello</h1><p>World</p>`.
+- The non-greedy match stops at the very first `>`: `<h1>`.
 
 This distinction matters in practice far more often than it might first appear: a greedy `<.*>` used to pull individual HTML tags out of real HTML would, exactly as shown here, swallow everything from the first tag to the last one on the whole page, rather than matching one tag at a time. The non-greedy version is almost always the one you actually want when the goal is "match one small, specific piece," while greedy matching is more useful when the goal genuinely is "match as much as possible."
 
@@ -501,7 +509,18 @@ Invalid Password
 
 `"GoodPass1"` is nine characters long, contains the uppercase letters `G` and `P`, and contains the digit `1`, so it satisfies all three conditions. `"badpass"` fails on every count at once: it is only seven characters long (short of the required eight), it has no uppercase letter, and it has no digit — any one of these three failures on its own would already be enough to make the whole pattern fail.
 
-![Flowchart](../resources/ch-13-august-2026-exercise-valid-invalid-password.png)
+![Flowchart](../resources/S13-LR-ch-13-august-2026-exercise-valid-invalid-password.png)
+
+**Reading the figure**
+
+- **Step 1:** Start with a candidate password, checked with `re.fullmatch(r"(?=.*[A-Z])(?=.*\d).{8,}", pw)`.
+- **Step 2:** Does it contain at least one uppercase letter, `(?=.*[A-Z])`?
+- **Step 3:** No: "Invalid Password".
+- **Step 4:** Does it contain at least one digit, `(?=.*\d)`?
+- **Step 5:** No: "Invalid Password".
+- **Step 6:** Is it at least eight characters long, `.{8,}`?
+- **Step 7:** No: "Invalid Password".
+- **Step 8:** Yes to all three: "Valid Password". (`"GoodPass1"` passes; `"badpass"` already fails the first check.)
 
 <a id="question-11"></a>
 

@@ -516,7 +516,7 @@ print(parts)
 **Explanation:**
 
 - The character class `[,;\s]` contains every kind of separator this text might use, all treated as equally valid split points.
-- The `+` quantifier combines consecutive separators together, which matters here because "Banana Grape" is separated by a plain space while the other words use punctuation — `re.split()` handles all three separator styles uniformly in one call, which plain [`str.split()`](https://docs.python.org/3/library/stdtypes.html#str.split) could not do without several separate calls.
+- The `+` quantifier combines consecutive separators together, (this text happens to use only single separators, but without `+` a comma followed by a space would leave an empty string in the result) — `re.split()` handles all three separator styles uniformly in one call, which plain [`str.split()`](https://docs.python.org/3/library/stdtypes.html#str.split) could not do without several separate calls.
 
 #### **Q17. Write a script that demonstrates the difference between greedy and non-greedy matching.**
 
@@ -801,7 +801,7 @@ print(result)
 ['oooo', 'eeaau']
 ```
 
-> **Fix applied here:** the original comment claimed this would print `['ooo', 'eeaa', 'uu']` — three separate matches. Counting the vowels carefully in `"cooool beeaautiful"` shows this is not correct: `"cooool"` contains **four** consecutive `o`s (`c-o-o-o-o-l`), not three, and in `"beeaautiful"` the run `e-e-a-a-u` is **one single, unbroken** run of five vowels (`"eeaau"`) — it is not split into a separate `"eeaa"` and `"uu"`, because there is no non-vowel character sitting between the `a` and the `u`. The corrected, verified output is `['oooo', 'eeaau']` — two matches, not three.
+> **Note:** it is easy to expect `['ooo', 'eeaa', 'uu']` — three separate matches. Counting the vowels carefully in `"cooool beeaautiful"` shows this is not correct: `"cooool"` contains **four** consecutive `o`s (`c-o-o-o-o-l`), not three, and in `"beeaautiful"` the run `e-e-a-a-u` is **one single, unbroken** run of five vowels (`"eeaau"`) — it is not split into a separate `"eeaa"` and `"uu"`, because there is no non-vowel character sitting between the `a` and the `u`. The actual output is `['oooo', 'eeaau']` — two matches, not three.
 
 **Explanation:**
 
@@ -1014,7 +1014,7 @@ import re
 # Step 2: Set up sample text containing a 16-digit card number
 text = "My card number is 1234567812345678"
 
-# Step 3: \d(?=\d{4}) matches any SINGLE digit that has EXACTLY four
+# Step 3: \d(?=\d{4}) matches any SINGLE digit that has AT LEAST four
 # more digits somewhere immediately after it. (?=\d{4}) is a positive
 # lookahead: it CHECKS for four digits ahead without consuming them,
 # so those four digits remain available for the next \d(?=\d{4})

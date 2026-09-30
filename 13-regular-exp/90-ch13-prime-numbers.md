@@ -482,7 +482,19 @@ is_prime_unary(9) -> False
 
 ## How the regex decision-making flows
 
-![Flowchart](../resources/ch-13-august-2026-exercise-prime-numbers-with-regex.png)
+![Flowchart](../resources/S13-LR-ch-13-august-2026-exercise-prime-numbers-with-regex.png)
+
+**Reading the figure**
+
+- **Step 1:** Start with a whole number `n`.
+- **Step 2:** Convert it to unary text, a string of `n` copies of the character `1`.
+- **Step 3:** Is the string empty, or exactly one character long (`^1?$`)?
+- **Step 4:** Yes: not prime; this covers `n = 0` and `n = 1`.
+- **Step 5:** Try the next block length, starting with the shortest allowed block of two characters (`(11+?)`).
+- **Step 6:** Does the whole string consist of that block repeated (`\1+`), with nothing left over?
+- **Step 7:** Yes: a repeating block was found, so `n` has a real factor and is not prime.
+- **Step 8:** No: is there a longer block length still to try? If so, go back to Step 5 with that length.
+- **Step 9:** No block length is left: no repeating block ever divided the string evenly, so `n` is prime.
 
 
 
@@ -496,9 +508,9 @@ is_prime_unary(9) -> False
 | 4 | `1111` | 2 | Match (`"11"` × 2) | 4 = 2 × 2 |
 | 7 | `1111111` | 2, 3 | No match | Neither block size divides 7 evenly |
 | 9 | `111111111` | 2 (fails), then 3 | Match (`"111"` × 3) | 9 = 3 × 3, but only after trying the smaller block of 2 first |
-| 11 | `11111111111` | 2, 3, 4, 5 | No match | None of the block sizes up to 5 (half of 11, rounded down) divide 11 evenly |
+| 11 | `11111111111` | 2, 3, 4, 5 | No match | None of the block sizes 2 to 5 divides 11 evenly, and larger blocks cannot fit twice |
 
-The pattern for every prime number in this table is the same: the engine dutifully tries every possible block length from 2 up to half the number, finds that none of them evenly divide the string, and only then reports "no match" — meaning `is_prime_unary` can finally, correctly, return `True`. This exhaustive process, of trying every possibility and finding nothing, is exactly why primes are the *slow* case for this algorithm, which the next section measures directly.
+The pattern for every prime number in this table is the same: the engine dutifully tries every possible block length from 2 upward (only lengths up to half the number could possibly succeed), finds that none of them evenly divide the string, and only then reports "no match" — meaning `is_prime_unary` can finally, correctly, return `True`. This exhaustive process, of trying every possibility and finding nothing, is exactly why primes are the *slow* case for this algorithm, which the next section measures directly.
 
 ## Just how inefficient is "extremely inefficient"?
 
@@ -589,7 +601,7 @@ The Deliverables section at the top of this page asks for three specific things.
 
 - *How the regex works:* it tries two alternatives, joined by `|`. The first, `^1?$`, matches only the empty string or a single `"1"` character, catching the special cases `n = 0` and `n = 1`. The second, `^(11+?)\1+$`, uses a non-greedy capturing group to find the shortest possible block of two or more `'1'`s, then uses a backreference (`\1+`) to check whether that exact block, repeated one or more further times, accounts for the rest of the string with nothing left over.
 - *Why it detects composite numbers:* a composite number, by definition, is a product of two smaller whole numbers greater than 1 — for example, `9 = 3 × 3`. In unary, this means the string of `'1'`s can always be split into that many equal-sized blocks. The regex's job is exactly to search for such a split, trying every possible block length from the smallest upward.
-- *Why primes fail to match:* a prime number, by definition, has no such factor pair. No matter which block length the regex tries, some `'1'`s are always left over, or the block does not divide the string evenly. Once every possible block length (from 2 up to half the number) has been tried and none of them work, the regex engine reports no match, which is exactly the signal `is_prime_unary` uses to return `True`.
+- *Why primes fail to match:* a prime number, by definition, has no such factor pair. No matter which block length the regex tries, some `'1'`s are always left over, or the block does not divide the string evenly. Once every possible block length (from 2 upward; only those up to half the number could possibly fit twice) has been tried and none of them work, the regex engine reports no match, which is exactly the signal `is_prime_unary` uses to return `True`.
 
 
 

@@ -103,7 +103,7 @@ print(type(match) is re.Match)
 Verified output:
 
 ```text
-Pattern object: re.compile('\d+')
+Pattern object: re.compile('\\d+')
 Match object : <re.Match object; span=(0, 3), match='123'>
 <class 're.Pattern'>
 <class 're.Match'>
@@ -152,7 +152,7 @@ This was independently confirmed by fetching that exact commit's copy of the fil
 > **Follow-up questions**, added for students who want to push the investigation further (these are new; the four numbered questions above are the printed book's original research questions and are unchanged):
 >
 > 5. The line `Pattern = type(_compiler.compile('', 0))` would still work correctly no matter what regular expression you compiled instead of `''` — try it yourself with `_compiler.compile(r'[a-z]+', 0)` and compare `type()` of the result against `re.Pattern`. If the choice of pattern does not matter, why do you think the developers specifically chose the *simplest possible* one?
-> 6. `re.Pattern` and `re.Match` are assigned as ordinary module-level variables, exactly like `PatternError = error = _compiler.PatternError` a few lines above them in the same file. What does this tell you about the difference between how Python *defines* a class internally, versus how a class *appears* to code that imports and uses it?
+> 6. `re.Pattern` and `re.Match` are assigned as ordinary module-level variables, exactly like `PatternError = error = _compiler.PatternError` earlier in the same file (on Python 3.12 that line reads `error = _compiler.error`). What does this tell you about the difference between how Python *defines* a class internally, versus how a class *appears* to code that imports and uses it?
 
 ## The "Cheat Sheet"
 
@@ -196,7 +196,16 @@ To answer these questions, it helps to keep three facts in mind:
 Now suppose, as the `re` module's own developers once did, that you want to let other people's code check whether some object is a Pattern — using the completely ordinary, idiomatic `isinstance(obj, re.Pattern)`. To make that possible, `re.Pattern` has to exist as a real, importable, checkable class name. The authors of the `re` module solved this with a small, well-known trick: they created two throwaway objects, and then deliberately named the *result of asking for those objects' types* `Pattern` and `Match`.
 
 
-![Flowchart](../resources/ch-13-august-2026-exercise-missing-classes.png)
+![Flowchart](../resources/S13-LR-ch-13-august-2026-exercise-missing-classes.png)
+
+**Reading the figure**
+
+- **Step 1:** The Pattern class is implemented in C and has no Python source, so it cannot be imported by name.
+- **Step 2:** Step 1: build an instance anyway, by calling the private C-backed function `_compiler.compile('', 0)` with an empty pattern and no flags.
+- **Step 3:** Step 2: ask Python what class that instance belongs to, with the built-in `type()` function (reflection).
+- **Step 4:** Step 3: store the answer under a public, class-like name: `Pattern = type(_compiler.compile('', 0))`. The same trick with `.match('')` gives `Match`.
+- **Step 5:** Step 4: list `Pattern` (and `Match`) in `__all__`, so code that imports `re` sees them as ordinary public names.
+- **Step 6:** Result: `re.Pattern` behaves like a normal importable class, for `isinstance()` checks and type hints.
 
 
 #### The key idea behind the hack
@@ -218,7 +227,7 @@ Pattern = type(_compiler.compile('', 0))
 Match = type(_compiler.compile('', 0).match(''))
 ```
 
-The walkthrough below breaks this into four numbered steps and, unlike the original write-up, actually runs each step separately and shows you its real, verified output, so you can see the value building up piece by piece rather than only reading about it in the abstract.
+The walkthrough below breaks this into four numbered steps and actually runs each step separately and shows you its real, verified output, so you can see the value building up piece by piece rather than only reading about it in the abstract.
 
 ```python
 # Step 1: Call the private compiler function directly, exactly the way

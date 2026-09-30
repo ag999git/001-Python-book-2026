@@ -352,7 +352,7 @@ If you tried to write this without lookaheads, you would have to account for eve
 Let's look at why `"Ab1xyz"` fails:
 
 1. `^`: Start at index 0.
-2. `(?=.*[a-z])`: Looks ahead, finds 'b'. **Pass.**
+2. `(?=.*[a-z])`: Looks ahead, finds 'z' (the greedy `.*` backtracks from the end, so the last lowercase letter is found first). **Pass.**
 3. `(?=.*[A-Z])`: Looks ahead, finds 'A'. **Pass.**
 4. `(?=.*[0-9])`: Looks ahead, finds '1'. **Pass.**
 5. `(?=.*[!@#$%^&*])`: Looks ahead through the entire string. **No special character found.**
@@ -363,8 +363,8 @@ Let's look at why `"Ab1xyz"` fails:
 For balance, here is the same style of step-by-step breakdown for a password that succeeds — `"Good1@Pwd"` — since seeing a full pass, one requirement at a time, makes it much easier to see exactly what "all requirements satisfied" actually means in practice.
 
 1. `^`: Start at index 0.
-2. `(?=.*[a-z])`: Looks ahead, finds 'o' (from "Go**o**d"). **Pass.**
-3. `(?=.*[A-Z])`: Looks ahead, finds 'G'. **Pass.**
+2. `(?=.*[a-z])`: Looks ahead, finds 'd' (from "Pw**d**" — the greedy `.*` backtracks from the end). **Pass.**
+3. `(?=.*[A-Z])`: Looks ahead, finds 'P'. **Pass.**
 4. `(?=.*[0-9])`: Looks ahead, finds '1'. **Pass.**
 5. `(?=.*[!@#$%^&*])`: Looks ahead, finds '@'. **Pass.**
 6. `[A-Za-z0-9!@#$%^&*]{6,12}$`: The engine now actually consumes the string, character by character, confirming every one of "Good1@Pwd" (9 characters) belongs to the allowed set, and that the whole string is between 6 and 12 characters long. **Pass.**
@@ -407,13 +407,28 @@ Checking `"Ab1@xy!"` against every requirement in the Problem Statement above:
 
 `"Ab1@xy!"` genuinely satisfies every single stated requirement. It is not "too long" (7 is comfortably inside the 6-to-12 range), and having *two* special characters instead of exactly one is not against any rule in the Problem Statement, which only asks for "at least one." This is exactly why the regex correctly reports it as `GOOD`, and why the original script's own output table already shows `Ab1@xy! → GOOD` — the code was never wrong. The only slightly misleading thing is where this test case was placed in the list (under the `# Invalid passwords` heading) and its own uncertain inline comment. The most likely explanation is that this test case was originally written to explore a *stricter* rule that the Problem Statement never actually states — for example, "exactly one special character, no more" — and was left in the list as a discussion point once it became clear the stated rules do not forbid a second special character.
 
-This is a good habit to take away from this one test case: when a script's own comment expresses doubt ("keep for discussion"), that is a signal to actually run the code and check the real answer against the stated requirements, rather than trusting the comment's guess. Section 12 ("Follow-up questions") below invites you to explore a stricter version of this rule yourself.
+This is a good habit to take away from this one test case: when a script's own comment expresses doubt ("keep for discussion"), that is a signal to actually run the code and check the real answer against the stated requirements, rather than trusting the comment's guess. Section 13 ("Follow-up questions") below invites you to explore a stricter version of this rule yourself.
 
 The second easy-to-miss case in the same list is `"Ab1@xy "` (with a trailing space) directly followed by `"Ab1@xy?"`. Using the original script's plain `print(f"{pwd:15} → GOOD")` / `print(f"{pwd:15} → BAD")` formatting, `"Ab1@xy"` (6 characters, no trailing space, GOOD) and `"Ab1@xy "` (7 characters, with a trailing space, BAD) print as visually identical lines in a terminal, since the padding to 15 characters hides the difference. Step 3 and the Combined Script on this page deliberately print each password's `repr()` and length alongside the verdict, specifically so this kind of invisible-character difference is always visible in the output rather than hidden by formatting.
 
 ## How the whole check flows
 
-![Flowchart](../resources/ch-13-august-2026-exercise-password-with-regex.png)
+![Flowchart](../resources/S13-LR-ch-13-august-2026-exercise-password-with-regex.png)
+
+**Reading the figure**
+
+- **Step 1:** Start with a candidate password string.
+- **Step 2:** The lookahead `(?=.*[a-z])`: is there at least one lowercase letter anywhere?
+- **Step 3:** No: reject the password (BAD).
+- **Step 4:** `(?=.*[A-Z])`: is there at least one uppercase letter?
+- **Step 5:** No: BAD.
+- **Step 6:** `(?=.*[0-9])`: is there at least one digit?
+- **Step 7:** No: BAD.
+- **Step 8:** `(?=.*[!@#$%^&*])`: is there at least one special character from the allowed set?
+- **Step 9:** No: BAD.
+- **Step 10:** `[A-Za-z0-9!@#$%^&*]{6,12}$`: is every character in the allowed set, and is the total length between 6 and 12?
+- **Step 11:** No: BAD.
+- **Step 12:** Yes: accept the password (GOOD). The four lookaheads do not consume characters, so each one checks the whole string from the start.
 
 ## Follow-up questions
 

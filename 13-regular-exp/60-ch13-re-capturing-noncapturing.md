@@ -237,7 +237,7 @@ Better practice groups(): ('dog',)
 Better practice group(1): dog
 ```
 
-**What this shows:** this script was newly added here (it did not appear in the original text, which only described the bad-vs-better idea in prose) to make the "bad vs. better practice" point concrete and verifiable, rather than something you have to take on faith. Both versions successfully find `"dog"` — but the better-practice version makes it `group(1)`, the simplest possible position to remember and to keep stable as the pattern evolves. This is (1) cleaner and (2) less error-prone, exactly as the original text summarised.
+**What this shows:** this script makes the "bad vs. better practice" point concrete and verifiable, rather than something you have to take on faith. Both versions successfully find `"dog"` — but the better-practice version makes it `group(1)`, the simplest possible position to remember and to keep stable as the pattern evolves. This is (1) cleaner and (2) less error-prone.
 
 ## Worked example: choosing which part of a match to capture
 
@@ -279,12 +279,12 @@ m3.group(1): report
 m3.group(2): pdf
 ```
 
-> **Fix applied here:** the original text claimed `m1.group(1)` would be `"docx"`, and that `m2.group(1)` / `m3.group(1)` would both be `"notes"`.
+> **Note:** you might expect `m1.group(1)` to be `"docx"`, and `m2.group(1)` / `m3.group(1)` to be `"notes"`.
 > Note: `re.search()` always returns the **first** (leftmost) match it finds while scanning the text from left to right, and in `"Here are some files: report.pdf, notes.docx, image.png, summary.txt."`, the filename `report.pdf` appears **before** `notes.docx`.
 > Since `report.pdf` matches the pattern just as well as `notes.docx` would have, `re.search()` stops there and never even looks as far as `notes.docx`.
 > This is exactly the same leftmost-match rule already verified elsewhere on this chapter's companion page — see Script 13 on [`10-ch13-re.md`](10-ch13-re.md), which uses this very same sentence as its example text.
 
-Notice that `m2` and `m3` above use the *exact same pattern* — the script simply calls `.group(1)` and `.group(2)` on the same match twice, in two separate steps, to show that both pieces are available on the one `Match` object once you capture them both.
+Notice that `m2` and `m3` above use the *exact same pattern* — the script simply runs the same search twice (as `m2` and `m3`), to show that both pieces are available on the one `Match` object once you capture them both.
 
 ## Case study: removing duplicate words with a backreference
 
@@ -438,7 +438,15 @@ Duplicate word: wall
 The flowchart below summarises the decision in one place: for any pair of parentheses you are about to type into a pattern, ask yourself whether you will ever need that piece of text back again — either through `.group(n)` afterwards, or through a backreference such as `\1` later in the *same* pattern.
 
 
-![Flowchart](../resources/ch-13-august-2026-capturing-noncapturing-decision-01.png)
+![Flowchart](../resources/S13-LR-ch-13-august-2026-capturing-noncapturing-decision-01.png)
+
+**Reading the figure**
+
+- **Step 1:** You are about to write a pair of parentheses in a regular expression.
+- **Step 2:** Will you need this piece of text afterwards, through `.group(n)`?
+- **Step 3:** Yes: use a capturing group, `( … )`. The matched text is stored and gets a group number.
+- **Step 4:** No: will you refer back to it with a backreference such as `\1` later in the same pattern?
+- **Step 5:** No to both: use a non-capturing group, `(?: … )`. It only groups; nothing is stored and no group number is used.
 
 
 ### Summary comparison table

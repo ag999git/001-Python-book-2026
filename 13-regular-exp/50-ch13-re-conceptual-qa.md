@@ -208,7 +208,7 @@ print(re.findall(r".", text))
 The following characters carry special meaning in a regex pattern, rather than matching themselves literally:
 
 ```text
-\  ^  $  .  |  ?  *  +  (  )  [  {
+\  ^  $  .  |  ?  *  +  (  )  [  ]  {  }
 ```
 
 **Learning Points:**
@@ -557,7 +557,7 @@ print(repr(m.group()))
 **Answer:**
 
 - `re.compile()` builds and returns a reusable **Pattern object** once, up front.
-- Calling a module-level function directly, such as `re.search(pattern, text)`, compiles the pattern **internally** on every single call (Python does cache a small number of recently-used patterns automatically, but that cache is limited and is not something your code should rely on).
+- Calling a module-level function directly, such as `re.search(pattern, text)`, looks up (and, if it is not cached, compiles) the pattern **internally** on every single call (Python does cache a small number of recently-used patterns automatically, but that cache is limited and is not something your code should rely on).
 
 ```python
 # Step 1: Import re and timeit

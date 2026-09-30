@@ -28,7 +28,7 @@ If you would like the wider companion resources for this chapter, see [`10-ch13-
 
 ## The twelve conversions, one at a time
 
-The original file presented all twelve functions as one long script. Here, each conversion gets its own explanation and its own small, runnable script, so you can study — and test — one conversion at a time before seeing them all combined at the end.
+Here, each conversion gets its own explanation and its own small, runnable script, so you can study — and test — one conversion at a time before seeing them all combined at the end.
 
 ### 1. `snake_case` to `camelCase`
 
@@ -98,10 +98,11 @@ def camel_to_snake(camel_name: str) -> str:
     # Example: "abcXyz" -> "abc_Xyz"
     step1 = re.sub(r'(.)([A-Z][a-z]+)', r'\1_\2', camel_name)
 
-    # Step 2b: Handle the one case Step 2a deliberately leaves alone
-    # -- a lowercase letter or digit immediately followed by an
-    # uppercase letter, which covers the boundary AFTER a run of
-    # capitals, such as "XML" followed by "File" in "XMLFile"
+    # Step 2b: Insert an underscore between a lowercase letter or digit
+    # and an uppercase letter that directly follows it. This catches the
+    # boundaries Step 2a misses because its matches cannot overlap
+    # ("camel_CaseExample" -> "camel_Case_Example"), and names that end
+    # in capitals ("getHTTP" -> "get_HTTP")
     snake_name = re.sub(r'([a-z0-9])([A-Z])', r'\1_\2', step1)
 
     # Step 2c: Lowercase everything, since snake_case is always
@@ -122,7 +123,7 @@ camel to snake -> camel_case_example
 XMLFile -> xml_file
 ```
 
-**Explanation:** this is the most involved function on the page, and it needs **two** separate substitutions because a single simple rule ("insert `_` before every capital letter") would incorrectly split up acronyms — see the comparison with `pascal_to_snake` below for exactly what goes wrong if you try that shortcut. Step 2a's pattern, `(.)([A-Z][a-z]+)`, only inserts an underscore before a capital letter that starts an *ordinary* word (one capital followed by lowercase letters) — this correctly handles `"camelCase"` → `"camel_Case"`. Step 2b's pattern, `([a-z0-9])([A-Z])`, then catches the one situation Step 2a leaves alone: a lowercase letter or digit running directly into an uppercase letter, which is exactly the boundary *after* an acronym like `"XML"` butting up against `"File"`. Running both steps in sequence on `"XMLFile"` correctly produces `"xml_file"` — exactly as the function's own docstring promises — rather than fragmenting the acronym letter by letter.
+**Explanation:** this is the most involved function on the page, and it needs **two** separate substitutions because a single simple rule ("insert `_` before every capital letter") would incorrectly split up acronyms — see the comparison with `pascal_to_snake` below for exactly what goes wrong if you try that shortcut. Step 2a's pattern, `(.)([A-Z][a-z]+)`, only inserts an underscore before a capital letter that starts an *ordinary* word (one capital followed by lowercase letters) — this correctly handles `"camelCase"` → `"camel_Case"`. Step 2b's pattern, `([a-z0-9])([A-Z])`, then catches what Step 2a misses: a lowercase letter or digit running directly into an uppercase letter. Because Step 2a's matches cannot overlap, it turns `"camelCaseExample"` into only `"camel_CaseExample"`, and Step 2b adds the missing underscore; it also splits names such as `"getHTTP"` into `"get_HTTP"`. Running both steps in sequence on `"XMLFile"` correctly produces `"xml_file"` — exactly as the function's own docstring promises — rather than fragmenting the acronym letter by letter.
 
 ### 3. `PascalCase` to `snake_case`
 
@@ -161,7 +162,7 @@ pascal to snake -> pascal_case_example
 XMLFile -> x_m_l_file
 ```
 
-**Explanation:** this function's pattern is deliberately simpler than `camel_to_snake`'s — it inserts an underscore before *every* capital letter except one right at the start, with no attempt to detect acronyms. That is enough for ordinary PascalCase names like `"PascalCaseExample"`, but notice what happens with `"XMLFile"`: since every one of `X`, `M`, `L`, and `F` is an uppercase letter not at the very start, an underscore goes in front of each one, producing `"x_m_l_file"` instead of the more readable `"xml_file"` that `camel_to_snake` manages for the same input. Neither the original text nor this page's rewrite claims `pascal_to_snake` handles acronyms — but seeing the two functions produce genuinely different results on the very same input is a useful, concrete illustration of why `camel_to_snake`'s extra step exists at all.
+**Explanation:** this function's pattern is deliberately simpler than `camel_to_snake`'s — it inserts an underscore before *every* capital letter except one right at the start, with no attempt to detect acronyms. That is enough for ordinary PascalCase names like `"PascalCaseExample"`, but notice what happens with `"XMLFile"`: since every one of `X`, `M`, `L`, and `F` is an uppercase letter not at the very start, an underscore goes in front of each one, producing `"x_m_l_file"` instead of the more readable `"xml_file"` that `camel_to_snake` manages for the same input. This page does not claim that `pascal_to_snake` handles acronyms — but seeing the two functions produce genuinely different results on the very same input is a useful, concrete illustration of why `camel_to_snake`'s extra step exists at all.
 
 >  **Extra practice question (not in the printed book):** could you rewrite `pascal_to_snake` to handle acronyms the same way `camel_to_snake` does? *(One approach: reuse `camel_to_snake`'s own two-step pattern, since a PascalCase string is really just a camelCase string whose very first letter also happens to be capitalized — try `camel_to_snake("XMLFile")` against `pascal_to_snake("XMLFile")` to confirm this for yourself.)*
 
@@ -455,69 +456,145 @@ pascal to upper -> PASCAL_CASE_EXAMPLE
 
 There are four naming styles on this page, and twelve functions — which is exactly the number of *ordered pairs* you can make from four styles (pick a "from" style and a different "to" style: 4 choices for "from", 3 remaining choices for "to", giving 4 × 3 = 12). Every possible direction of conversion between the four styles is covered, with none missing and none duplicated.
 
-Looking at how each function is actually implemented, a pattern emerges: `snake_case` acts as a kind of **hub**. Six of the twelve functions convert directly between two styles with their own dedicated logic (a regex substitution, a lookahead pattern, or a simple case change), while the four functions converting to or from `UPPER_CASE` and either `camelCase` or `PascalCase` are built by **composing** two of the direct functions together, routing *through* `snake_case` as a common intermediate form, rather than duplicating similar logic a second time.
+Looking at how each function is actually implemented, a pattern emerges: `snake_case` acts as a kind of **hub**. Eight of the twelve functions convert directly between two styles with their own dedicated logic (a regex substitution, a lookahead pattern, or a simple case change), while the four functions converting to or from `UPPER_CASE` and either `camelCase` or `PascalCase` are built by **composing** two of the direct functions together, routing *through* `snake_case` as a common intermediate form, rather than duplicating similar logic a second time.
 
 
 ### Snake to Camel case
 
-![Flowchart](../resources/ch-13-august-2026-snake_to-camel.png)
+![Flowchart](../resources/S13-LR-ch-13-august-2026-snake_to-camel.png)
+
+**Reading the figure**
+
+- **Step 1:** Start with the `snake_case` name `"snake_case_example"`.
+- **Step 2:** `split('_')` breaks it into words: `['snake', 'case', 'example']`.
+- **Step 3:** The first word stays exactly as it is: `snake`.
+- **Step 4:** Every other word is capitalized: `Case`, `Example`.
+- **Step 5:** Join them with no separator: `"snakeCaseExample"`. No regex is needed.
 
 
 ### Camel to Snake
 
-![Flowchart](../resources/ch-13-august-2026-camel-to-snake_02.png)
+![Flowchart](../resources/S13-LR-ch-13-august-2026-camel-to-snake_02.png)
+
+**Reading the figure**
+
+- **Step 1:** Start with the `camelCase` name `"camelCaseExample"`.
+- **Step 2:** Step 2a, `re.sub(r'(.)([A-Z][a-z]+)', r'\1_\2', …)`, puts `_` before a capital that starts an ordinary word. The matches cannot overlap: after `lCase` is used, no character is left in front of `Example`, so only one underscore goes in: `"camel_CaseExample"`.
+- **Step 3:** Step 2b, `re.sub(r'([a-z0-9])([A-Z])', r'\1_\2', …)`, puts `_` between a lowercase letter or digit and a capital. It adds the missing underscore: `"camel_Case_Example"` (it also splits names such as `"getHTTP"` into `"get_HTTP"`).
+- **Step 4:** Step 2c lowercases everything: `"camel_case_example"`.
 
 
 
 ### Pascal case to Snake case
 
-![Flowchart](../resources/ch-13-august-2026-pascal-to-snake_03.png)
+![Flowchart](../resources/S13-LR-ch-13-august-2026-pascal-to-snake_03.png)
+
+**Reading the figure**
+
+- **Step 1:** Start with the `PascalCase` name `"PascalCaseExample"`.
+- **Step 2:** `re.sub(r'(?<!^)(?=[A-Z])', '_', …)` inserts `_` at every position that is not the very start (`(?<!^)`) and has a capital letter next (`(?=[A-Z])`): `"Pascal_Case_Example"`.
+- **Step 3:** `.lower()` gives `"pascal_case_example"`.
 
 
 ### Snake to Pascal case
 
-![Flowchart](../resources/ch-13-august-2026-snake-to-pascal_04.png)
+![Flowchart](../resources/S13-LR-ch-13-august-2026-snake-to-pascal_04.png)
+
+**Reading the figure**
+
+- **Step 1:** Start with `"snake_case_example"`.
+- **Step 2:** `split('_')` breaks it into `['snake', 'case', 'example']`.
+- **Step 3:** Every word is capitalized, including the first: `Snake`, `Case`, `Example`.
+- **Step 4:** Join them with no separator: `"SnakeCaseExample"`.
 
 
 
 ### Camel case to Pascal case
 
-![Flowchart](../resources/ch-13-august-2026-camel-to-pascal_05.png)
+![Flowchart](../resources/S13-LR-ch-13-august-2026-camel-to-pascal_05.png)
+
+**Reading the figure**
+
+- **Step 1:** Start with `"camelCaseExample"`.
+- **Step 2:** Uppercase only the first character and keep the rest exactly as it is. No regex is needed: the two styles have the same word boundaries.
+- **Step 3:** The result is `"CamelCaseExample"`.
 
 
 ### Pascal to Camel Case
 
-![Flowchart](../resources/ch-13-august-2026-pascal-to-camel_06.png)
+![Flowchart](../resources/S13-LR-ch-13-august-2026-pascal-to-camel_06.png)
+
+**Reading the figure**
+
+- **Step 1:** Start with `"PascalCaseExample"`.
+- **Step 2:** Lowercase only the first character and keep the rest exactly as it is: the mirror image of `camel_to_pascal()`.
+- **Step 3:** The result is `"pascalCaseExample"`.
 
 
 ### UPPER case to Snake case
 
-![Flowchart](../resources/ch-13-august-2026-UPPER-case-to-snake-case_07.png)
+![Flowchart](../resources/S13-LR-ch-13-august-2026-UPPER-case-to-snake-case_07.png)
+
+**Reading the figure**
+
+- **Step 1:** Start with `"UPPER_CASE_EXAMPLE"`.
+- **Step 2:** `.lower()` lowercases every letter. No regex is needed: both styles already have underscores in the same places.
+- **Step 3:** The result is `"upper_case_example"`.
 
 
 ### Snake case to UPPER Case
 
-![Flowchart](../resources/ch-13-august-2026-snake-case-to-upper-case_08.png)
+![Flowchart](../resources/S13-LR-ch-13-august-2026-snake-case-to-upper-case_08.png)
+
+**Reading the figure**
+
+- **Step 1:** Start with `"snake_case_example"`.
+- **Step 2:** `.upper()` uppercases every letter: the mirror image of `upper_to_snake()`.
+- **Step 3:** The result is `"SNAKE_CASE_EXAMPLE"`.
 
 
 ### UPPER case to Camel Case
 
-![Flowchart](../resources/ch-13-august-2026-upper-case-to-camel-case_09.png)
+![Flowchart](../resources/S13-LR-ch-13-august-2026-upper-case-to-camel-case_09.png)
+
+**Reading the figure**
+
+- **Step 1:** Start with `"UPPER_CASE_EXAMPLE"`.
+- **Step 2:** Reuse conversion 7, `upper_to_snake()`: `"upper_case_example"`.
+- **Step 3:** Reuse conversion 1, `snake_to_camel()`: `"upperCaseExample"`.
 
 
 ### Camel case to UPPER Case
 
-![Flowchart](../resources/ch-13-august-2026-camel-case-to-UPPER-case_10.png)
+![Flowchart](../resources/S13-LR-ch-13-august-2026-camel-case-to-UPPER-case_10.png)
+
+**Reading the figure**
+
+- **Step 1:** Start with `"camelCaseExample"`.
+- **Step 2:** Reuse conversion 2, `camel_to_snake()` (two regex substitutions, then `.lower()`): `"camel_case_example"`.
+- **Step 3:** Reuse conversion 8, `snake_to_upper()`: `"CAMEL_CASE_EXAMPLE"`.
 
 
 ### UPPER Case to Pascal Case
 
-![Flowchart](../resources/ch-13-august-2026-UPPER-case-to-Pascal-case_11.png)
+![Flowchart](../resources/S13-LR-ch-13-august-2026-UPPER-case-to-Pascal-case_11.png)
+
+**Reading the figure**
+
+- **Step 1:** Start with `"UPPER_CASE_EXAMPLE"`.
+- **Step 2:** Reuse conversion 7, `upper_to_snake()`: `"upper_case_example"`.
+- **Step 3:** Reuse conversion 4, `snake_to_pascal()`: `"UpperCaseExample"`.
 
 
 ### Pascal Case to UPPER Case
 
-![Flowchart](../resources/ch-13-august-2026-Pascal-case-to-UPPER-case_12.png)
+![Flowchart](../resources/S13-LR-ch-13-august-2026-Pascal-case-to-UPPER-case_12.png)
+
+**Reading the figure**
+
+- **Step 1:** Start with `"PascalCaseExample"`.
+- **Step 2:** Reuse conversion 3, `pascal_to_snake()` (the lookbehind/lookahead substitution, then `.lower()`): `"pascal_case_example"`.
+- **Step 3:** Reuse conversion 8, `snake_to_upper()`: `"PASCAL_CASE_EXAMPLE"`.
 
 
 
@@ -527,7 +604,7 @@ Looking at how each function is actually implemented, a pattern emerges: `snake_
 
 ## Combined script: all twelve conversions together
 
-Since each conversion was introduced separately above, here is the complete script combining all twelve functions in one place — exactly matching how the original file presented them, and reproducing every one of its verified results in a single run.
+Since each conversion was introduced separately above, here is the complete script combining all twelve functions in one place — reproducing every one of the results shown above in a single run.
 
 ```python
 # Step 1: Import re, needed by camel_to_snake and pascal_to_snake

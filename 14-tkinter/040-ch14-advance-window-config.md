@@ -34,7 +34,7 @@ A few technical words come up repeatedly below. If you already know them, skip t
 
 Every time your program creates a root window with `root = tk.Tk()`, Tkinter opens a direct line of communication with your operating system's Window Manager. On Windows this is the Desktop Window Manager; on macOS it is Quartz/Aqua; on Linux it is typically X11 or Wayland. You do not need to remember these names — the point is simply that a different piece of software on every operating system is actually responsible for drawing the window frame and deciding where it sits on the screen, and Tkinter's job is to ask that software for what you want.
 
-This leads to an important idea that is easy to miss as a beginner: **when you call a method like `window.geometry(...)` or `window.state(...)`, you are not directly drawing pixels on the screen.** You are sending a *request* to the Window Manager, which then decides how to honor it. Almost all of the time your request is granted exactly as asked, which is why the distinction rarely matters in practice — but it explains a few things that otherwise seem strange, such as why `window.state("zoomed")` behaves slightly differently on Linux than it does on Windows (see the table in the next section), or why setting `-alpha` (transparency) may be ignored on a Linux system that does not have visual compositing turned on.
+This leads to an important idea that is easy to miss as a beginner: **when you call a method like `window.geometry(...)` or `window.state(...)`, you are not directly drawing pixels on the screen.** You are sending a *request* to the Window Manager, which then decides how to honor it. Almost all of the time your request is granted exactly as asked, which is why the distinction rarely matters in practice — but it explains a few things that otherwise seem strange, such as why `window.state("zoomed")` works on Windows and macOS but is rejected with a `TclError` on Linux (X11), where `window.attributes("-zoomed", True)` is used instead (see the table in the next section), or why setting `-alpha` (transparency) may be ignored on a Linux system that does not have visual compositing turned on.
 
 Understanding this distinction is useful for a very practical reason: it lets you deliberately shape how a user is allowed to experience your application. For example, you can:
 
@@ -97,7 +97,7 @@ Each entry below follows the same pattern: a plain-language explanation first, f
 | --- | --- |
 | Syntax | `window.geometry("WxH+X+Y")` |
 | Parameters | `geometry_string (str)` — formatted as `"WidthxHeight+X_Offset+Y_Offset"`. |
-| Default behavior | If you never call this method, the window automatically shrinks or grows to fit whatever widgets are packed inside it, and opens at position `+0+0` (the top-left corner of the screen). |
+| Default behavior | If you never call this method, the window automatically shrinks or grows to fit whatever widgets are packed inside it, and the window manager decides where it first appears on screen. |
 | What happens under the hood | The requested size and position are sent directly to the operating system's window-compositing manager (the part of the OS responsible for combining and drawing all on-screen windows) before anything is actually drawn. |
 | Example use case | Setting a predictable launch size and position, for example `root.geometry("800x600+100+100")`. |
 | Return value | `str` — calling `window.geometry()` with no arguments returns the *current* geometry string, which is how the `center_window()` method later in this page reads the window's own size. |
@@ -116,7 +116,7 @@ Each entry below follows the same pattern: a plain-language explanation first, f
 | What happens under the hood | Tkinter asks the operating system to add or remove the resize handles from the window's border/frame. |
 | Example use case | Freezing a fixed-size wizard step or a strict login box, for example `window.resizable(False, False)`. |
 | Return value | `None` |
-| Common mistakes | Passing the strings `"True"`/`"False"` instead of the actual Boolean values `True`/`False` will raise a `TypeError`. Also, be careful not to lock resizing so aggressively that content becomes inaccessible on a small screen. |
+| Common mistakes | Passing the strings `"True"`/`"False"` instead of the actual Boolean values `True`/`False` is unnecessary but harmless (Tcl reads them as booleans), while any other string, such as `"yes please"`, raises a `TclError`. Also, be careful not to lock resizing so aggressively that content becomes inaccessible on a small screen. |
 | Cross-platform note | On macOS, users often expect the green "zoom" button in the title bar to work; locking resizing can override or disable that expectation. |
 
 #### `window.minsize()`
@@ -127,7 +127,7 @@ Each entry below follows the same pattern: a plain-language explanation first, f
 | --- | --- |
 | Syntax | `window.minsize(width, height)` |
 | Parameters | `width (int)`, `height (int)` — measured in physical display pixels. |
-| Default behavior | Defaults to `0, 0`, meaning the user could compress the window down to a practically invisible sliver. |
+| Default behavior | Defaults to `1, 1`, meaning the user could compress the window down to a practically invisible sliver. |
 | What happens under the hood | Tkinter intercepts the operating system's manual window-drag resize events and refuses to let the window cross this boundary. |
 | Example use case | Preventing a complex form with many fields, or a table of text, from being squeezed into an unreadable block. |
 | Return value | `None` |
@@ -162,7 +162,7 @@ Each entry below follows the same pattern: a plain-language explanation first, f
 | Example use case | Opening an application already maximized (`"zoomed"`), or safely minimizing a running script to the taskbar (`"iconic"`). |
 | Return value | `str` — calling `window.state()` with no arguments returns the *current* state as a string. |
 | Common mistakes | 1) Confusing `"zoomed"` (maximized, but still a normal window with a title bar) with true fullscreen (see `attributes("-fullscreen", ...)` below, which removes the title bar entirely). 2) Passing the state name without quotes, which Python will interpret as a variable name and raise an error. |
-| Cross-platform note | `"zoomed"` works as expected on Windows and macOS. On Linux, some window managers (for example, certain GNOME or KDE configurations) may ignore the exact "zoomed" flag and simply treat the request as a standard maximize. |
+| Cross-platform note | `"zoomed"` works as expected on Windows and macOS. On Linux (X11), Tk does not accept "zoomed" at all: `window.state("zoomed")` raises `TclError: bad argument "zoomed": must be normal, iconic, or withdrawn`. Use `window.attributes("-zoomed", True)` there instead. |
 
 #### `window.iconbitmap()`
 
@@ -282,7 +282,7 @@ Each entry below follows the same pattern: a plain-language explanation first, f
 | Example use case | Implementing a custom "Exit" or "Close" button, or shutting down a temporary auxiliary window. |
 | Return value | `None` |
 | Common mistake | Confusing `destroy()` with `quit()`. `quit()` merely stops the `mainloop()` event loop but can leave the window visibly on screen; `destroy()` actually removes the window. |
-| Cross-platform note | `destroy()` is the safest, recommended way to close a window on every platform. `quit()` is considered legacy and is best avoided in modern code. |
+| Cross-platform note | `destroy()` is the safest, recommended way to close a window on every platform. `quit()` is not deprecated, but it only stops the event loop, so use `destroy()` when you actually want the window closed. |
 
 #### `window.mainloop()`
 
@@ -301,13 +301,20 @@ Each entry below follows the same pattern: a plain-language explanation first, f
 
 ### 2.3 Visualizing the Window Lifecycle
 
-The four states controlled by `state()` (plus the special "withdrawn" state controlled by `withdraw()`/`deiconify()`) form a small cycle. The diagram below shows how a window moves between them. It uses plain flowchart syntax so that it can also be opened and edited inside diagramming tools such as draw.io.
+The four states that `state()` can report and set (normal, iconic, zoomed, and withdrawn, the last also reachable with `withdraw()`/`deiconify()`) form a small cycle. The diagram below shows how a window moves between them. It uses plain flowchart syntax so that it can also be opened and edited inside diagramming tools such as draw.io.
 
 
-![Flowchart](../resources/ch14-tkinter-September-2026-window-configuration-lifecycle-management.png)
+![Flowchart](../resources/S14-LR-ch14-tkinter-September-2026-window-configuration-lifecycle-management.png)
+
+**Reading the figure**
+
+- A window starts out Normal: visible, with its usual size and position.
+- Iconic: `state("iconic")` or `iconify()` minimizes it to the taskbar; `state("normal")` or `deiconify()` brings it back.
+- Zoomed: `state("zoomed")` maximizes it on Windows and macOS (on Linux use `attributes("-zoomed", True)`); `state("normal")` restores it.
+- Withdrawn: `withdraw()` hides it completely, even from the taskbar; `deiconify()` (or `state("normal")`) brings it back.
 
 
-Reading this diagram: a window starts out **Normal**. Calling `state("iconic")` sends it to **Iconic** (minimized); calling `deiconify()` or `state("normal")` brings it back. Calling `state("zoomed")` sends it to **Zoomed** (maximized); calling `state("normal")` restores it. Calling `withdraw()` sends it to **Withdrawn**, the most complete form of hiding — the window disappears from the taskbar entirely — and only `deiconify()` can bring it back.
+Reading this diagram: a window starts out **Normal**. Calling `state("iconic")` sends it to **Iconic** (minimized); calling `deiconify()` or `state("normal")` brings it back. Calling `state("zoomed")` (on Linux, `attributes("-zoomed", True)`) sends it to **Zoomed** (maximized); calling `state("normal")` restores it. Calling `withdraw()` sends it to **Withdrawn**, the most complete form of hiding — the window disappears from the taskbar entirely — and `deiconify()` (or `state("normal")`) brings it back.
 
 ---
 
@@ -679,7 +686,18 @@ Each button created above calls one of the methods below when clicked. These met
 
 The `open_auxiliary()` method above is a good example of `withdraw()` and `deiconify()` working as a pair. The flowchart below traces that sequence of events from the moment the user clicks the button to the moment the main window reappears.
 
-![Flowchart](../resources/ch14-tkinter-September-2026-window-configuration-lifecycle-management-02.png)
+![Flowchart](../resources/S14-LR-ch14-tkinter-September-2026-window-configuration-lifecycle-management-02.png)
+
+**Reading the figure**
+
+- **Step 1:** The main application window is open.
+- **Step 2:** The user clicks the button that calls `open_auxiliary()`.
+- **Step 3:** `self.withdraw()` hides the main window completely.
+- **Step 4:** A `tk.Toplevel` auxiliary window is created and shown.
+- **Step 5:** The user closes the auxiliary window with its close button.
+- **Step 6:** Because of `aux.protocol("WM_DELETE_WINDOW", on_aux_close)`, the handler `on_aux_close()` runs instead of the default close.
+- **Step 7:** `aux.destroy()` removes the auxiliary window.
+- **Step 8:** `self.deiconify()` (and `self.lift()`) makes the main window visible again.
 
 ### 3.7 Starting the Application
 

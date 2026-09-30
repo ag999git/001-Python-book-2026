@@ -223,7 +223,18 @@ The crucial point is Step 2. The label never holds the Python object. It holds a
 
 The same idea as a diagram:
 
-![Flowchart](../resources/ch14-tkinter-September-2026-photoimage-001.png)
+![Flowchart](../resources/S14-LR-ch14-tkinter-September-2026-photoimage-001.png)
+
+**Reading the figure**
+
+- **Step 1:** `tk.PhotoImage(file="flower.png")` creates a picture object, registered with Tk under a name such as `pyimage1`.
+- **Step 2:** The object is passed to the Label as its `image` option.
+- **Step 3:** Tkinter hands Tk only the text `"pyimage1"`, so the Label holds a name, not the Python object.
+- **Step 4:** Is any Python variable still pointing at the `PhotoImage` object?
+- **Step 5:** Yes: the object stays alive, and so does the picture inside Tk.
+- **Step 6:** The picture is displayed correctly.
+- **Step 7:** No: the reference count falls to zero and Python deletes the object at once.
+- **Step 8:** Deleting it also deletes the picture inside Tk, so the Label names a picture that no longer exists and shows blank space.
 
 
 **Seeing it happen for yourself.** The short program below puts the wrong way and the right way side by side in one window, then asks Tkinter directly what each label is holding. This is the most convincing way to understand the problem, because you do not have to take anyone's word for it.
@@ -335,7 +346,15 @@ This is normally an excellent arrangement, and it is the reason Python programme
 
 The trouble in this particular case is that Tk is holding the picture in a way Python cannot see. Tk knows about the image, and your window depends on it, but Python's count says nobody is pointing at it. So Python does exactly what it was designed to do, and throws away something you very much still needed.
 
-![Flowchart](../resources/ch14-tkinter-September-2026-photoimage-002.png)
+![Flowchart](../resources/S14-LR-ch14-tkinter-September-2026-photoimage-002.png)
+
+**Reading the figure**
+
+- **Step 1:** While a line like `img = tk.PhotoImage(...)` runs, two things refer to the object: the variable `img` and a temporary.
+- **Step 2:** When the line finishes, the temporary disappears and the reference count drops to 1.
+- **Step 3:** Is the variable `img` still in scope (for example, not a local variable of a function that has returned)?
+- **Step 4:** Yes: the count stays at 1 and the object is kept.
+- **Step 5:** No: the count falls to 0 and Python deletes the object immediately, taking the Tk picture with it.
 
 This causes problems with `PhotoImage()` if the image object is not stored properly.
 
@@ -666,6 +685,19 @@ Work down this list in order; the first item is by far the most common cause.
 
 The same guide as a decision flowchart:
 
-![Flowchart](../resources/ch14-tkinter-September-2026-photoimage-003.png)
+![Flowchart](../resources/S14-LR-ch14-tkinter-September-2026-photoimage-003.png)
+
+**Reading the figure**
+
+- **Step 1:** The picture does not appear.
+- **Step 2:** Is the `PhotoImage` stored in a variable?
+- **Step 3:** No: store it in a variable. This is by far the most common cause.
+- **Step 4:** Yes: was it created inside a function or method, in a local variable?
+- **Step 5:** Yes: keep a second reference that lives as long as the widget, `lbl.image = img`, or store it as `self.img`.
+- **Step 6:** No: is the file a format Tk reads natively (PNG, GIF, PGM or PPM)?
+- **Step 7:** No (for example JPEG): convert it to PNG, or load it with Pillow's `ImageTk.PhotoImage`.
+- **Step 8:** Yes: does the file exist where the program is looking for it?
+- **Step 9:** No: build the path from the script's own folder with `os.path` and `__file__`.
+- **Step 10:** Yes: check the file name for typos, and check that the file itself is not damaged.
 
 ---

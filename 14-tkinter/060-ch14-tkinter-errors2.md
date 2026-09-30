@@ -78,7 +78,7 @@ In many GUI applications, some tasks do not run immediately. Instead, they run *
 
 Examples:
 
-```python
+```text
 Show reminder after 5 seconds
 Auto-save after some time
 Load data after startup
@@ -476,7 +476,19 @@ The middle row is a real trap, and it is worth checking your own code for. Passi
 4. Write your own message rather than showing Python's.
 5. Update the on-screen status as well as the pop-up, so there is a visible record after the dialog is dismissed.
 
-![Flowchart](../resources/ch14-tkinter-September-2026-safe-callback-001.png)
+![Flowchart](../resources/S14-LR-ch14-tkinter-September-2026-safe-callback-001.png)
+
+**Reading the figure**
+
+- **Step 1:** The delayed callback (scheduled with `after()`) starts.
+- **Step 2:** Does the window still exist, `winfo_exists()`?
+- **Step 3:** No: there is nothing to update, so return quietly.
+- **Step 4:** Yes: read the current text from the entry box, fresh, inside the callback.
+- **Step 5:** Inside `try-except`: can the text be converted to a whole number?
+- **Step 6:** Yes: is the number between 0 and 100?
+- **Step 7:** No to either check: show a friendly message written by you, not Python's own error text.
+- **Step 8:** Yes: show the success message.
+- **Step 9:** Either way, update the on-screen status label as a visible record.
 
 
 [Back to Table of Contents](#table-of-contents)
@@ -514,7 +526,7 @@ The reason is that a second `Tk()` does not just create a second window — it s
 | --- | --- |
 | They are separate engines | Verified: with two `Tk()` objects, `root1.tk is root2.tk` is `False`. They are two independent worlds. |
 | Images cannot be shared | Verified: putting a `PhotoImage` created for the first window into a widget of the second raises `TclError: image "pyimage1" doesn't exist`. |
-| Only one event loop runs | `mainloop()` serves the window it was called on. The second window's clicks are not processed until the first loop ends, so it appears frozen. |
+| One loop keeps running for both | A single `mainloop()` processes events for every `Tk()` window, and it does not return until all of them are destroyed, so closing the "main" window can leave the program running. |
 | Shutdown becomes unpredictable | Closing one `Tk()` does not close the other, so the program can be left running invisibly, or can end while a window is still on screen. |
 | Fonts, styles and variables do not carry over | Anything registered with one engine is unknown to the other, producing errors that look like typos but are not. |
 
@@ -529,7 +541,15 @@ win.grab_set()        # makes it modal: the user must deal with it before return
 ```
 
 
-![Flowchart](../resources/ch14-tkinter-September-2026-safe-callback-002.png)
+![Flowchart](../resources/S14-LR-ch14-tkinter-September-2026-safe-callback-002.png)
+
+**Reading the figure**
+
+- Create exactly one `tk.Tk()` window; it owns the Tk engine and runs the single `mainloop()`.
+- Every extra window, such as a task window, is a `tk.Toplevel(root)`.
+- A settings window is another `Toplevel`.
+- An about box is another `Toplevel`.
+- All of them use the same engine and event loop, so images, fonts and variables can be shared freely.
 
 
 [Back to Table of Contents](#table-of-contents)
@@ -540,7 +560,7 @@ The five rules asked for by the question, each with the reason behind it:
 
 1.  **Prefer `after()` over `time.sleep()` in Tkinter.** `sleep()` stops the event loop, so the window freezes and stops redrawing. `after()` schedules the work and lets the loop carry on.
 2.  **Always use `try-except` in delayed tasks.** A delayed task runs in a world that may have changed since it was scheduled, and an uncaught error fails silently, leaving the user with no idea what went wrong.
-3.  **Use `Toplevel()` for extra windows.** A second `Tk()` starts a second engine that cannot share images or variables and is not served by your `mainloop()`.
+3.  **Use `Toplevel()` for extra windows.** A second `Tk()` starts a second engine that cannot share images or variables with the first, and it keeps `mainloop()` running after the main window is closed.
 4.  **Validate input before processing.** Check both that the value *can* be converted and that the converted value is in range, and treat those as two separate checks with two separate messages.
 5.  **Show friendly errors using `messagebox`.** Write the message yourself in plain language rather than forwarding Python's internal wording to the user.
 
@@ -887,7 +907,7 @@ Three things in that output are worth noticing:
 
 - Every invalid case produced a message written in plain English. Nothing that Python said internally reached the user.
 - In the double-click test, the second click cancelled the first job — `job id = after#6` was cancelled and replaced by `after#7`, so only one pop-up appeared instead of two.
-- In the final test the window was closed during the wait. Nothing crashed, and no error appeared. A job scheduled with `win_top.after(...)` is cancelled automatically when `win_top` is destroyed, so the callback never ran at all. The `winfo_exists()` check in Step 5a is a second line of defence, and it becomes essential if the job is ever scheduled on `root` instead of on the child window.
+- In the final test the window was closed during the wait. Nothing crashed, and no error appeared. When `win_top` is destroyed, Tkinter deletes the Tcl command that the scheduled job points to, so when the timer fires the Python callback is never called. The `winfo_exists()` check in Step 5a is a second line of defence, and it becomes essential if the job is ever scheduled on `root` instead of on the child window.
 
 [Back to Table of Contents](#table-of-contents)
 
@@ -937,9 +957,24 @@ While that countdown runs, the window can still be moved, resized and typed into
 | The error message looks like Python source code | `str(e)` was passed straight to `messagebox.showerror()`. | Catch the error and write your own message in plain language. |
 | `AttributeError: module 'tkinter' has no attribute 'toplevel'` | The class name was written in lower case. | Use a capital T: `tk.Toplevel(root)`. |
 | `TclError: image "pyimage1" doesn't exist` when using two windows | Two separate `Tk()` objects were created, and an image was shared between them. | Create one `Tk()` and use `Toplevel()` for every other window. |
-| The second window never responds to clicks | Two `Tk()` objects were created, and `mainloop()` is only serving the first. | Same fix: one `Tk()`, and `Toplevel()` for the rest. |
+| The program keeps running after the main window is closed | Two `Tk()` objects were created; `mainloop()` only returns once every `Tk()` window has been destroyed. | Same fix: one `Tk()`, and `Toplevel()` for the rest. |
 
-![Flowchart](../resources/ch14-tkinter-September-2026-safe-callback-003.png)
+![Flowchart](../resources/S14-LR-ch14-tkinter-September-2026-safe-callback-003.png)
+
+**Reading the figure**
+
+- **Step 1:** The delayed task is not behaving as expected.
+- **Step 2:** Did it run immediately instead of waiting?
+- **Step 3:** Yes: the function was called, `after(3000, task())`; pass its name without brackets, `after(3000, task)`.
+- **Step 4:** No: did it run far too soon?
+- **Step 5:** Yes: `after()` counts milliseconds, so three seconds is `3000`, not `3`.
+- **Step 6:** No: did the window freeze during the wait?
+- **Step 7:** Yes: `time.sleep()` was used; replace it with `after()`.
+- **Step 8:** No: did nothing at all appear to happen?
+- **Step 9:** Yes: an exception was raised inside the callback; look for a traceback in the console and add `try-except` with a message.
+- **Step 10:** No: did you get `TclError: invalid command name`?
+- **Step 11:** Yes: the callback touched a destroyed widget; check `winfo_exists()` first, or cancel pending jobs when the window closes.
+- **Step 12:** Otherwise, several jobs may be stacking up: store the job id and call `after_cancel()` before scheduling again.
 
 [Back to Table of Contents](#table-of-contents)
 

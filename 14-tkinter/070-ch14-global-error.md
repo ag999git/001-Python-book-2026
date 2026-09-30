@@ -201,7 +201,16 @@ That last row is the whole subject of this page: `sys.excepthook` is not an alte
 
 By default, Python follows this sequence:
 
-![Flowchart](../resources/ch14-tkinter-September-2026-uncaught-exceptions-001.png)
+![Flowchart](../resources/S14-LR-ch14-tkinter-September-2026-uncaught-exceptions-001.png)
+
+**Reading the figure**
+
+- **Step 1:** An exception is raised.
+- **Step 2:** Python looks for a matching `try-except`, first in the current function and then in each caller in turn.
+- **Step 3:** None of them has a matching handler, so the exception is uncaught.
+- **Step 4:** Python calls `sys.excepthook`.
+- **Step 5:** The default hook prints the traceback to stderr.
+- **Step 6:** The program ends with exit status 1.
 
 Notice the fourth box, which the short version of this story usually leaves out. Printing the traceback is not something Python does directly — it is done *by* `sys.excepthook`, which is simply the function Python happens to have installed there by default. That is exactly why replacing it changes what happens.
 
@@ -247,7 +256,13 @@ Python provides a built-in mechanism called `sys.excepthook`. It controls:
 
 By default:
 
-![Flowchart](../resources/ch14-tkinter-September-2026-uncaught-exceptions-002.png)
+![Flowchart](../resources/S14-LR-ch14-tkinter-September-2026-uncaught-exceptions-002.png)
+
+**Reading the figure**
+
+- **Step 1:** An exception reaches the top of the program without being caught.
+- **Step 2:** The default `sys.excepthook` prints the traceback to stderr.
+- **Step 3:** The program ends (exit status 1).
 
 However, programmers can replace Python’s default behaviour:
 
@@ -260,7 +275,7 @@ Now, instead of showing an unfriendly traceback, your own `handle_uncaught()` fu
 -   display a friendly popup,
 -   save errors to a log file,
 -   notify the user,
--   prevent abrupt crashes.
+-   replace an unexplained crash with a clear message (the program still ends afterwards).
 
 Thus:
 
@@ -295,7 +310,7 @@ If your function takes the wrong number of arguments, Python cannot call it, and
 | Programmer control | Explicitly written around risky code | Runs automatically |
 | Example | File reading, division | Unexpected program failures |
 | When you write it | Wherever you can predict a failure | Once, near the start of the program |
-| Can the program continue afterwards? | Yes, normally by design | Only if your handler is written to allow it |
+| Can the program continue afterwards? | Yes, normally by design | No — `sys.excepthook` runs just before the program exits (only Tkinter's `report_callback_exception` lets a GUI carry on) |
 | What it is for | Errors you expected | Errors you did not expect |
 
 **Local exception handling (`try-except`)**
@@ -331,11 +346,24 @@ Hence: **global exception handling**.
 
 Local handling:
 
-![Flowchart](../resources/ch14-tkinter-September-2026-uncaught-exceptions-003.png)
+![Flowchart](../resources/S14-LR-ch14-tkinter-September-2026-uncaught-exceptions-003.png)
+
+**Reading the figure**
+
+- **Step 1:** An exception is raised inside a block of code.
+- **Step 2:** That block is wrapped in a matching `try-except`.
+- **Step 3:** The `except` block deals with it on the spot, and the program carries on: local exception handling.
 
 Global handling:
 
-![Flowchart](../resources/ch14-tkinter-September-2026-uncaught-exceptions-004.png)
+![Flowchart](../resources/S14-LR-ch14-tkinter-September-2026-uncaught-exceptions-004.png)
+
+**Reading the figure**
+
+- **Step 1:** An exception is raised.
+- **Step 2:** No `try-except` handles it anywhere up the chain of calls.
+- **Step 3:** Python calls `sys.excepthook`, which you have replaced with your own function.
+- **Step 4:** Your global handler runs, for example logging the error and showing a message, before the program ends.
 
 **They are partners, not rivals.** It is tempting to conclude that a global handler makes `try-except` unnecessary. It does not, and it is worth understanding why. A `try-except` block knows exactly what went wrong and exactly where, so it can recover intelligently — ask the user to retype a number, fall back to a default setting, retry a download. A global handler knows only that *something* failed *somewhere*, so all it can sensibly do is record the problem and apologise. Use `try-except` wherever you can foresee a failure, and treat the global handler as the safety net for everything you could not foresee.
 
@@ -425,7 +453,7 @@ Traceback (most recent call last):
   File "/usr/lib/python3.12/tkinter/__init__.py", line 1967, in __call__
     return self.func(*args)
            ^^^^^^^^^^^^^^^^
-  File "demo_compare.py", line 12, in boom
+  File "demo_compare.py", line 13, in boom
     print(undefined_variable)
           ^^^^^^^^^^^^^^^^^^
 NameError: name 'undefined_variable' is not defined
@@ -448,7 +476,17 @@ A wider test confirms where each hook applies:
 | Inside a separate thread | `threading.excepthook` |
 
 
-![Flowchart](../resources/ch14-tkinter-September-2026-uncaught-exceptions-005.png)
+![Flowchart](../resources/S14-LR-ch14-tkinter-September-2026-uncaught-exceptions-005.png)
+
+**Reading the figure**
+
+- **Step 1:** An exception is raised in a Tkinter program.
+- **Step 2:** Was it raised inside a Tkinter callback: a button's `command`, an `after()` job, a `bind()` handler or a variable trace?
+- **Step 3:** Yes: Tkinter catches it before anything else can.
+- **Step 4:** Tkinter calls `root.report_callback_exception`.
+- **Step 5:** No, it is ordinary top-level code: the exception travels up the chain of calls.
+- **Step 6:** Python calls `sys.excepthook`.
+- **Step 7:** Assign the same handler function to both, so every case is covered.
 
 
 **The conclusion for Part B.** The question asks you to override Python's default exception route using `sys.excepthook`, and the model program below does exactly that. But it also assigns the same function to `root.report_callback_exception`, because that is the only way the button in requirement 7 can produce the friendly popup in requirement 8. Pointing both names at one handler function costs one extra line and makes the program behave the way the question describes.
@@ -459,11 +497,37 @@ A wider test confirms where each hook applies:
 
 ## Flowchart Showing the Execution of the Script
 
-![Flowchart handling global exceptions](../resources/ch14-tkinter-exceptions.png)
+![Flowchart handling global exceptions](../resources/S14-LR-ch14-tkinter-exceptions.png)
+
+**Reading the figure**
+
+- **Step 1:** Import everything the program needs: `tkinter`, `messagebox`, `sys` and `logging`.
+- **Step 2:** Configure logging so that every error is saved to `error_log.txt`.
+- **Step 3:** Create the main window.
+- **Step 4:** Create the live log panel, a `Text` widget that shows what is happening.
+- **Step 5:** Define the global handler, `handle_uncaught(exc_type, exc_value, exc_traceback)`.
+- **Step 6:** Install the handler in both places: `sys.excepthook` (top-level errors) and `root.report_callback_exception` (callback errors).
+- **Step 7:** Add the Trigger button and start `root.mainloop()`.
+- **Step 8:** The user clicks the button; `trigger_error()` runs `print(undefined_variable)`, which raises `NameError`.
+- **Step 9:** There is no `try-except`, so Tkinter catches the error and calls `root.report_callback_exception`, which is `handle_uncaught()`.
+- **Step 10:** The handler writes to the log panel, saves the full traceback in `error_log.txt`, and shows a friendly popup.
+- **Step 11:** The window stays open and the program carries on.
 
 The same sequence in text form, showing what happens from the moment the button is clicked:
 
-![Flowchart](../resources/ch14-tkinter-September-2026-uncaught-exceptions-006.png)
+![Flowchart](../resources/S14-LR-ch14-tkinter-September-2026-uncaught-exceptions-006.png)
+
+**Reading the figure**
+
+- **Step 1:** The user clicks the Trigger NameError button.
+- **Step 2:** `trigger_error()` first writes a line to the log panel.
+- **Step 3:** The line `print(undefined_variable)` raises `NameError`.
+- **Step 4:** There is no `try-except`, so Tkinter catches the error itself.
+- **Step 5:** Tkinter calls `root.report_callback_exception`, which has been set to `handle_uncaught()`.
+- **Step 6:** The handler writes two lines into the log panel.
+- **Step 7:** It saves the full traceback in `error_log.txt`.
+- **Step 8:** It shows a friendly popup to the user.
+- **Step 9:** The window stays open and remains usable.
 
 [Back to Table of Contents](#table-of-contents)
 
@@ -794,7 +858,7 @@ The consequences are that the window disappears without warning, any unsaved wor
 | Top-level error: what the user sees | The application disappears | A clear popup explaining what went wrong |
 | Callback error: what the user sees | Nothing at all | A clear popup explaining what went wrong |
 | Where the details go | `stderr`, often into a terminal nobody is watching | `error_log.txt`, kept permanently |
-| Unsaved work | Lost on a top-level error | The window stays open, so it can be saved |
+| Unsaved work | Lost on a top-level error | Still lost on a top-level error (the program ends once the hook returns); after a callback error the window stays open, so it can be saved |
 | Can the programmer investigate later? | Only if someone copied the traceback down | Yes, the log file has the full trace with a timestamp |
 
 In short, overriding the hook changes an error from something that either kills the program silently or does nothing visible at all, into something the user is told about and the programmer can investigate afterwards.
@@ -816,7 +880,20 @@ In short, overriding the hook changes an error from something that either kills 
 | A stream of identical popups appears | The error happens repeatedly, for example inside a repeating `after()` job. | Cancel the repeating job inside the handler, or count errors and stop after a few. |
 | Errors inside a thread are still not caught | `sys.excepthook` does not cover threads. | Use `threading.excepthook`, added in Python 3.8. |
 
-![Flowchart](../resources/ch14-tkinter-September-2026-uncaught-exceptions-007.png)
+![Flowchart](../resources/S14-LR-ch14-tkinter-September-2026-uncaught-exceptions-007.png)
+
+**Reading the figure**
+
+- **Step 1:** The global error handler does not seem to work.
+- **Step 2:** Did the error come from a button click, an `after()` job or another callback?
+- **Step 3:** Yes: callbacks never reach `sys.excepthook`; assign the handler to `root.report_callback_exception` as well.
+- **Step 4:** No: does the handler accept exactly three arguments?
+- **Step 5:** No: it must accept `exc_type`, `exc_value` and `exc_traceback`.
+- **Step 6:** Yes: is `error_log.txt` empty?
+- **Step 7:** Yes: the handler never ran; check that both hooks are installed.
+- **Step 8:** No: is the traceback missing from the file?
+- **Step 9:** Yes: pass `exc_info=(exc_type, exc_value, exc_traceback)` to `logging.error()`.
+- **Step 10:** No: if the error was raised in a separate thread, `sys.excepthook` does not see it; use `threading.excepthook`.
 
 [Back to Table of Contents](#table-of-contents)
 

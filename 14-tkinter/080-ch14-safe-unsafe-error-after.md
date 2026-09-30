@@ -115,7 +115,7 @@ Write a Tkinter program that:
 1.  Creates a GUI window with a scrolling log area.
 2.  Adds two buttons:
 
-```python
+```text
 Unsafe after() Error
 Safe after() Error
 ```
@@ -227,7 +227,16 @@ root.after(3000, show_message)
 
 The important thing to picture is what the program is doing during those three seconds: **everything else**. It is not paused. The line after the `after()` call runs straight away, and the window remains completely usable. Real programs use this for reminders, auto-save, countdowns, clocks, animations, splash screens that disappear on their own, and checking whether new data has arrived.
 
-![Flowchart](../resources/ch14-tkinter-September-2026-safe-unsafe-callbacks-001.png)
+![Flowchart](../resources/S14-LR-ch14-tkinter-September-2026-safe-unsafe-callbacks-001.png)
+
+**Reading the figure**
+
+- **Step 1:** Your code calls `root.after(3000, show_message)`.
+- **Step 2:** `after()` only books the job and returns straight away.
+- **Step 3:** The next line of your code runs at once; nothing is paused.
+- **Step 4:** For three seconds the window stays fully responsive.
+- **Step 5:** The delay of 3000 milliseconds expires.
+- **Step 6:** The event loop calls `show_message()`.
 
 [Back to Table of Contents](#table-of-contents)
 
@@ -313,7 +322,17 @@ def task():
 
 The error is caught locally, and the program behaves safely.
 
-![Flowchart](../resources/ch14-tkinter-September-2026-safe-unsafe-callbacks-002.png)
+![Flowchart](../resources/S14-LR-ch14-tkinter-September-2026-safe-unsafe-callbacks-002.png)
+
+**Reading the figure**
+
+- **Step 1:** The function scheduled with `after()` runs and hits an error, such as `10 / 0`.
+- **Step 2:** Is there a `try-except` inside the function itself?
+- **Step 3:** Yes, a safe callback: the `except` block handles the error where it happened.
+- **Step 4:** A friendly message is shown and the program carries on normally.
+- **Step 5:** No, an unsafe callback: the error escapes the function.
+- **Step 6:** The global handler (installed as `root.report_callback_exception`) catches it.
+- **Step 7:** The error is written to the log file and a popup is shown.
 
 
 **Which should you use?** Both, for different things. This is the point that is easy to miss. A safe callback is better wherever you can *predict* a failure, because a local `try-except` knows exactly what went wrong and can respond intelligently — retry, use a default, ask the user for a different value. A global handler knows only that something, somewhere, failed; all it can sensibly do is record the problem and apologise. So write `try-except` around code you know might fail, and keep the global handler as the safety net for the failures you never saw coming.
@@ -393,7 +412,17 @@ One function, two entry points. Whichever route an error takes, it arrives at th
 | At the top level of the script | `sys.excepthook` |
 | Inside a separate thread | `threading.excepthook` |
 
-![Flowchart](../resources/ch14-tkinter-September-2026-safe-unsafe-callbacks-003.png)
+![Flowchart](../resources/S14-LR-ch14-tkinter-September-2026-safe-unsafe-callbacks-003.png)
+
+**Reading the figure**
+
+- **Step 1:** An exception is raised in a Tkinter program.
+- **Step 2:** Was it raised inside a callback, such as a function scheduled with `after()` or a button's `command`?
+- **Step 3:** Yes: Tkinter catches it before anything else can.
+- **Step 4:** Tkinter calls `root.report_callback_exception`.
+- **Step 5:** No: the exception travels up the chain of calls to the top level.
+- **Step 6:** Python calls `sys.excepthook`.
+- **Step 7:** Assign the same handler to both names, so every error arrives at the same place.
 
 [Back to Table of Contents](#table-of-contents)
 
@@ -766,11 +795,40 @@ This file is the clearest proof of the whole lesson. **Both buttons caused exact
 
 The flowchart shows the steps in the execution of the above script:
 
-![Unsafe vs Safe after Callback](../resources/ch14-tkinter-safe-unsafe-after.png)
+![Unsafe vs Safe after Callback](../resources/S14-LR-ch14-tkinter-safe-unsafe-after.png)
+
+**Reading the figure**
+
+- **Step 1:** The program starts.
+- **Step 2:** Logging is configured so that errors go to `error_log.txt`.
+- **Step 3:** The window and the live log panel are created.
+- **Step 4:** One handler is installed in both places: `sys.excepthook` and `root.report_callback_exception`.
+- **Step 5:** The program waits in `mainloop()` for the user to click one of the two buttons.
+- **Step 6:** Unsafe button: the task is scheduled with `after(2000, unsafe_task)`; the window stays usable for two seconds.
+- **Step 7:** `unsafe_task()` runs and divides by zero, with no `try-except` around it.
+- **Step 8:** The error escapes, so Tkinter calls `report_callback_exception`, which runs the global handler.
+- **Step 9:** The error is written to `error_log.txt` and an error popup is shown.
+- **Step 10:** Safe button: the task is scheduled with `after(2000, safe_task)`.
+- **Step 11:** `safe_task()` runs and divides by zero inside a `try` block.
+- **Step 12:** The `except` block catches it on the spot: a warning popup is shown, and nothing reaches the log file.
 
 The same two journeys in text form, side by side:
 
-![Flowchart](../resources/ch14-tkinter-September-2026-safe-unsafe-callbacks-004.png)
+![Flowchart](../resources/S14-LR-ch14-tkinter-September-2026-safe-unsafe-callbacks-004.png)
+
+**Reading the figure**
+
+- Top row: the user clicks "Unsafe after Error".
+- `start_unsafe()` writes to the log panel and schedules the task with `after(2000, ...)`.
+- For two seconds the window stays usable.
+- `unsafe_task()` runs and divides by zero.
+- There is no `try-except` inside it, so the error escapes the function.
+- Tkinter routes it to `report_callback_exception`: `handle_uncaught()` logs it to the file and shows an error popup.
+- Bottom row: the user clicks "Safe after Error".
+- `start_safe()` writes to the log panel and schedules the task with `after(2000, ...)`.
+- For two seconds the window stays usable.
+- `safe_task()` runs and divides by zero.
+- Its own `try-except` catches the error immediately: a warning popup is shown and nothing is written to the log file.
 
 [Back to Table of Contents](#table-of-contents)
 
@@ -791,7 +849,20 @@ The same two journeys in text form, side by side:
 | The safe button also writes to the log file | The `except` block re-raised the error, or the exception type did not match. | Check that the `except` clause names the error actually being raised. |
 | Several popups appear at once | The button was clicked repeatedly, scheduling several jobs. | Store the job id from `after()` and call `after_cancel()` before scheduling a new one. |
 
-![Flowchart](../resources/ch14-tkinter-September-2026-safe-unsafe-callbacks-005.png)
+![Flowchart](../resources/S14-LR-ch14-tkinter-September-2026-safe-unsafe-callbacks-005.png)
+
+**Reading the figure**
+
+- **Step 1:** The delayed error handling does not behave as expected.
+- **Step 2:** Does the unsafe button show no popup, with only a traceback in the terminal?
+- **Step 3:** Yes: only `sys.excepthook` was installed; assign the handler to `root.report_callback_exception` too.
+- **Step 4:** No: did the task run immediately instead of after the delay?
+- **Step 5:** Yes: pass the function itself, `after(2000, task)`, not `after(2000, task())`.
+- **Step 6:** No: did the window freeze during the wait?
+- **Step 7:** Yes: replace `time.sleep()` with `after()`.
+- **Step 8:** No: is `error_log.txt` empty?
+- **Step 9:** Yes: the global handler never ran; install both hooks.
+- **Step 10:** No (for example, the safe button also logs): check that the `except` clause names the error actually raised.
 
 [Back to Table of Contents](#table-of-contents)
 

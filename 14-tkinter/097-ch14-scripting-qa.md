@@ -96,7 +96,7 @@ A handful of words show up again and again in the explanations below. Rather tha
 
 ## Topic 1: Building a Tkinter App with an OOP Class Structure
 
-
+**Original textbook question:**
 
 > **1. Create a basic Tkinter application using an OOP class structure that initializes the main window, sets a custom title and geometry, and includes a button that prints a message to the console when clicked.**
 
@@ -204,7 +204,17 @@ Button clicked! Application logic executed.
 
 (Two lines shown above because the button was clicked twice — one line appears per click, for as long as the window stays open.)
 
-![Flowchart](../resources/ch14-tkinter-September-2026-Scripting-QA-001.png)
+![Flowchart](../resources/S14-LR-ch14-tkinter-September-2026-Scripting-QA-001.png)
+
+**Reading the figure**
+
+- **Step 1:** The Python script starts.
+- **Step 2:** `app = BasicOOPApp()` creates the application object.
+- **Step 3:** `super().__init__()` runs `tk.Tk.__init__`, which builds the operating-system window.
+- **Step 4:** `self.title()` and `self.geometry("400x300")` set the title and size.
+- **Step 5:** The Button widget is created and placed.
+- **Step 6:** `app.mainloop()` starts the event loop and waits.
+- **Step 7:** Each click runs the `on_click()` callback, which prints one line; control then returns to the waiting loop.
 
 [Back to Table of Contents](#table-of-contents)
 
@@ -383,7 +393,19 @@ if __name__ == "__main__":
 
 There is no console output — the feedback appears as the status Label changing colour and text as you type. Typing "abc" shows "Status: Too Short!" in red; continuing to "abcdef" or beyond switches it instantly to "Status: Strong Password" in green, with no button click involved.
 
-![Flowchart](../resources/ch14-tkinter-September-2026-Scripting-QA-002.png)
+![Flowchart](../resources/S14-LR-ch14-tkinter-September-2026-Scripting-QA-002.png)
+
+**Reading the figure**
+
+- **Step 1:** The user types a character into the Entry.
+- **Step 2:** The Entry, linked with `textvariable`, updates `password_var`.
+- **Step 3:** Tcl fires the write trace attached with `trace_add("write", ...)`.
+- **Step 4:** `validate_password()` runs and reads the current value.
+- **Step 5:** Is the text empty?
+- **Step 6:** Yes: "Status: Waiting", in gray.
+- **Step 7:** No: is it shorter than 6 characters?
+- **Step 8:** Yes: "Status: Too Short!", in red.
+- **Step 9:** No, 6 or more: "Status: Strong Password", in green.
 
 [Back to Table of Contents](#table-of-contents)
 
@@ -429,7 +451,7 @@ Same pattern, `row=1`, for the Email field.
 submit_btn.grid(row=2, column=0, columnspan=2, pady=20)
 ```
 
-`columnspan=2` makes the button stretch across both columns instead of sitting in just one, so it appears centred under the form.
+`columnspan=2` gives the button a cell spanning both columns instead of just one; without `sticky` it keeps its natural size, so it appears centred under the form.
 
 **Step 5 — Let the second column grow.**
 
@@ -492,7 +514,7 @@ The result is a small two-row form (Full Name, Email) with a Submit button centr
 
 If `.grid()` is a spreadsheet, `.pack()` is more like stacking boxes. Each widget is added to one side of the remaining space — top, bottom, left, or right — and Tkinter fills in the rest around it. This script builds the classic three-part application shell you see in almost every desktop program: a toolbar at the top, a status bar at the bottom, and everything else filling the middle.
 
-The order in which you call `.pack()` matters. Tkinter carves space off the side you request, one widget at a time, from whatever space is left over. Packing the toolbar first claims a strip at the top; packing the status bar next claims a strip at the bottom of what remains; whatever widget is packed last with `expand=True` gets everything left over — which is why the content area, packed last, becomes the largest section.
+The order in which you call `.pack()` matters. Tkinter carves space off the side you request, one widget at a time, from whatever space is left over. Packing the toolbar first claims a strip at the top; the content area, packed next with `expand=True`, is given any extra space; the status bar, packed last with `side="bottom"`, still gets its own strip at the bottom — which is why the content area becomes the largest section.
 
 ### Step-by-Step Walkthrough (Topic 5)
 
@@ -865,7 +887,7 @@ def open_child_window(self):
     child.geometry("250x150")
 ```
 
-Passing `self` as the argument to `tk.Toplevel` tells Tkinter which window is this new window's logical parent — useful for things like keeping it on top of the main window and closing it automatically if the main window closes.
+Passing `self` as the argument to `tk.Toplevel` tells Tkinter which window is this new window's logical parent — useful for things like closing it automatically if the main window closes (to keep it on top of the main window as well, call `child.transient(self)`).
 
 **Step 3 — Read the main window's data inside the child.**
 
@@ -935,7 +957,7 @@ No console output. Clicking "Open Child Window" opens a second, smaller window o
 Every widget seen so far reacts through `command=` or `textvariable=` — Tkinter's higher-level shortcuts. `Canvas` drawing needs something lower-level: direct access to raw mouse activity. That is what `.bind()` gives you. Instead of one abstract "this was clicked" signal, you get three separate physical events, each firing at a different moment of a click-and-drag gesture:
 
 - `<Button-1>` fires once, the instant the left mouse button goes down.
-- `<B1-Motion>` fires repeatedly, once for every pixel the mouse moves *while* the left button is still held down.
+- `<B1-Motion>` fires repeatedly, once for each motion event the system reports *while* the left button is still held down.
 - `<ButtonRelease-1>` fires once, the instant the left button is released.
 
 A callback bound to any of these automatically receives an `event` object as its argument, carrying the mouse's `x` and `y` position at that moment.
@@ -1039,7 +1061,14 @@ if __name__ == "__main__":
 
 No console output — this is a purely visual script. Clicking and dragging from one corner to another draws a blue-outlined rectangle that grows and shrinks smoothly as you move the mouse, and stays fixed in place the moment you let go.
 
-![Flowchart](../resources/ch14-tkinter-September-2026-Scripting-QA-003.png)
+![Flowchart](../resources/S14-LR-ch14-tkinter-September-2026-Scripting-QA-003.png)
+
+**Reading the figure**
+
+- **Step 1:** Pressing the left button runs `on_mouse_down()`, which stores the starting corner, `start_x` and `start_y`.
+- **Step 2:** Each motion event while the button is held runs `on_mouse_drag()`, which first deletes the previous rectangle (if there is one).
+- **Step 3:** It then draws a new rectangle from the starting corner to the current mouse position; this repeats for every motion event.
+- **Step 4:** Releasing the button runs `on_mouse_up()`, which sets `current_rect = None`, so the finished rectangle stays and the next drag starts a new one.
 
 [Back to Table of Contents](#table-of-contents)
 
@@ -1049,7 +1078,7 @@ No console output — this is a purely visual script. Clicking and dragging from
 
 > **11. Create a `Listbox` widget populated with items. Add buttons to Add and Delete items. Ensure the listbox selection updates a label in real-time using the `<<ListboxSelect>>` virtual event.**
 
-Topic 10 used *physical* events — `<Button-1>` fires for any left click, on anything. `<<ListboxSelect>>` is different: it is a *virtual* event, built by Tkinter specifically for the Listbox widget, and it only fires when the highlighted item actually changes. Clicking the same already-selected item twice, for instance, does not fire it a second time. This distinction — raw hardware activity versus a meaningful, widget-specific occurrence — is worth remembering, because most complex widgets (Combobox, Treeview, Notebook) define their own virtual events the same way.
+Topic 10 used *physical* events — `<Button-1>` fires for any left click, on anything. `<<ListboxSelect>>` is different: it is a *virtual* event, built by Tkinter specifically for the Listbox widget, and it fires whenever the user makes a selection with the mouse or keyboard — including clicking the item that is already selected — but not for unrelated clicks elsewhere. This distinction — raw hardware activity versus a meaningful, widget-specific occurrence — is worth remembering, because most complex widgets (Combobox, Treeview, Notebook) define their own virtual events the same way.
 
 ### Step-by-Step Walkthrough (Topic 11)
 
@@ -1135,7 +1164,7 @@ class ListboxApp(tk.Tk):
             self.listbox.insert(tk.END, item)
 
         # Step 2: Bind the virtual selection event.
-        # <<ListboxSelect>> fires only when the highlighted item changes.
+        # <<ListboxSelect>> fires whenever the user selects an item.
         self.listbox.bind("<<ListboxSelect>>", self.on_select)
 
         # -- Status label --
@@ -1525,7 +1554,7 @@ No console output. The table opens with three employees already listed; clicking
 
 Tkinter actually ships two overlapping widget sets. The original `tk` widgets (`tk.Button`, `tk.Label`, and so on) are older, simpler, and let you set colours directly with `bg=` and `fg=`. The newer `ttk` widgets (`ttk.Button`, `ttk.Entry`, `ttk.Combobox` — most of what has appeared since Topic 4) are "themed": they try to match the look of whatever operating system they're running on, which makes them look modern, but as a trade-off they refuse most direct colour arguments.
 
-This matters in practice because a student who is used to `tk.Button(bg="red")` will often try `ttk.Button(bg="red")` next and get a confusing error, or find the colour is silently ignored depending on the platform. The fix is a `ttk.Style` object: instead of colouring one widget at a time, you define a named style once, and any widget can opt into it with `style="Custom.TButton"`.
+This matters in practice because a student who is used to `tk.Button(bg="red")` will often try `ttk.Button(bg="red")` next and get a confusing error (`TclError: unknown option "-bg"`) on every platform — and even a style's `background` setting may be silently ignored by some themes. The fix is a `ttk.Style` object: instead of colouring one widget at a time, you define a named style once, and any widget can opt into it with `style="Custom.TButton"`.
 
 ### Step-by-Step Walkthrough (Topic 15)
 
@@ -1937,7 +1966,7 @@ Dragging the slider changes `self.size_var`, which — because of the trace set 
 **Step 3 — Draw the initial rectangle.**
 
 ```python
-self.rect_id = self.canvas.create_rectangle(100, 50, 200, 150, fill="blue", outline="black")
+self.rect_id = self.canvas.create_rectangle(125, 75, 175, 125, fill="blue", outline="black")
 ```
 
 `create_rectangle` returns an ID number, saved here as `self.rect_id`, which is what lets later code find and modify this exact shape rather than drawing a new one on top of it.
@@ -1995,7 +2024,7 @@ class ScaleCanvasApp(tk.Tk):
         # Step 3: Draw the initial rectangle, centered at (150, 100).
         # create_rectangle(x1, y1, x2, y2)
         self.rect_id = self.canvas.create_rectangle(
-            100, 50, 200, 150, fill="blue", outline="black"
+            125, 75, 175, 125, fill="blue", outline="black"
         )
 
     def update_rectangle(self, *args):
@@ -2023,7 +2052,16 @@ if __name__ == "__main__":
 
 No console output. Dragging the slider to the right grows the blue rectangle smoothly, larger in every direction at once; dragging it left shrinks the rectangle the same way. The "Size: 50" label above the canvas updates in step with the slider's numeric value.
 
-![Flowchart](../resources/ch14-tkinter-September-2026-Scripting-QA-004.png)
+![Flowchart](../resources/S14-LR-ch14-tkinter-September-2026-Scripting-QA-004.png)
+
+**Reading the figure**
+
+- **Step 1:** The user drags the Scale slider.
+- **Step 2:** The Scale is linked to `size_var`, an `IntVar`, which receives the new value.
+- **Step 3:** The write trace added with `trace_add("write", ...)` fires.
+- **Step 4:** `update_rectangle()` runs and updates the "Size" label.
+- **Step 5:** It calculates new corners `x1, y1, x2, y2` around the fixed centre (150, 100).
+- **Step 6:** `canvas.coords()` moves and resizes the existing rectangle instead of drawing a new one.
 
 
 
@@ -2156,7 +2194,18 @@ Version 1.0
 
 Choosing File > Exit closes the application entirely.
 
-![Flowchart](../resources/ch14-tkinter-September-2026-Scripting-QA-005.png)
+![Flowchart](../resources/S14-LR-ch14-tkinter-September-2026-Scripting-QA-005.png)
+
+**Reading the figure**
+
+- The menu bar holds two cascades, added with `add_cascade()`.
+- The File menu (`tearoff=0`).
+- The Help menu.
+- New: calls `dummy_action()`, which prints "Menu action triggered."
+- Open: also calls `dummy_action()`.
+- `add_separator()` draws a purely visual dividing line.
+- Exit: calls `quit_app()`, which closes the application.
+- About: calls `show_about()`, which shows the "Tkinter Menu Demo / Version 1.0" pop-up.
 
 [Back to Table of Contents](#table-of-contents)
 

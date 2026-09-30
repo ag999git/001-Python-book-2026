@@ -27,7 +27,7 @@ This page is "Part 2" of the extended, GitHub-only reference material that accom
 
 ## 1. Unified Core Options (All Containers)
 
-The options below form the base configuration shared across the whole container family. Not every container accepts every option below — the per-widget sections in Part 2 note any exceptions — but these are the ones worth learning first, because they show up again and again.
+The options below form the base configuration shared across the whole container family. Not every container accepts every option below — the per-widget sections in Section 2 note any exceptions — but these are the ones worth learning first, because they show up again and again.
 
 | Option / Keyword | Data Type | In Plain Words | Engine Purpose and Layout Behavior |
 | --- | --- | --- | --- |
@@ -53,11 +53,32 @@ Each member of the container family has its own specialized options and methods,
 
 The following diagram gives the same guidance visually, as a simple decision flow.
 
-![Flowchart](../resources/ch14-tkinter-September-2026-container-family-001.png)
+![Flowchart](../resources/S14-LR-ch14-tkinter-September-2026-container-family-001.png)
+
+**Reading the figure**
+
+- **Step 1:** Do you need a genuinely separate operating-system window (a dialog, a pop-up form)?
+- **Step 2:** Yes: use `tk.Toplevel`.
+- **Step 3:** No: do you need several pages that the user switches between with tabs?
+- **Step 4:** Yes: use `ttk.Notebook`.
+- **Step 5:** No: should the user be able to drag a divider to resize two areas?
+- **Step 6:** Yes: use `ttk.PanedWindow`.
+- **Step 7:** No: do you want a visible border with a caption around the group?
+- **Step 8:** Yes: use `ttk.LabelFrame`.
+- **Step 9:** No: a plain, invisible `ttk.Frame` is enough.
 
 The image below is an alternate view of the same process
 
-![Flowchart](../resources/ch14-tkinter-container-widgets.png)
+![Flowchart](../resources/S14-LR-ch14-tkinter-container-widgets.png)
+
+**Reading the figure**
+
+- The container family: widgets whose job is to hold other widgets.
+- `ttk.Frame` groups and isolates widgets, with no border or caption.
+- `ttk.LabelFrame` groups widgets inside a visible border with a title.
+- `ttk.Notebook` shows one of several pages at a time, chosen by tabs.
+- `ttk.PanedWindow` splits an area into panes with draggable dividers (the classic `tk.PanedWindow` also exists).
+- `tk.Toplevel` is a separate window of its own, managed by the operating system.
 
 ### 2.1 `ttk.Frame` — The Invisible Layout Divider
 
@@ -89,7 +110,7 @@ The image below is an alternate view of the same process
 - **Core API methods:**
   - `.add(child_widget, text="Tab Title")`: adds an existing frame (or other widget) to the notebook as a new tab, using `text` as the label shown on the tab itself.
   - `.select(tab_index)`: switches the notebook to show a particular tab, by its position (or by passing the child widget directly).
-  - `.tabs()`: returns a list of the Tkinter widget identifiers (short internal name strings, not memory addresses) for every tab currently in the notebook, in tab order — useful when you need to loop over all the open tabs.
+  - `.tabs()`: returns a tuple of the Tkinter widget identifiers (short internal name strings, not memory addresses) for every tab currently in the notebook, in tab order — useful when you need to loop over all the open tabs.
 
 ### 2.4 `ttk.PanedWindow` — The Resizable Workspace Splitter
 
@@ -100,7 +121,7 @@ The image below is an alternate view of the same process
 - **When to use it:** dashboards or tools where the user should be able to manually control how much screen space each section takes up — for example, a file list next to a preview area.
 - **Special sub-parameters and methods:**
   - `orient`: set to `tk.HORIZONTAL` (panes arranged side by side) or `tk.VERTICAL` (panes stacked one above another).
-  - `sashwidth` (`int`): sets the pixel thickness of the draggable divider line.
+  - `sashwidth` (`int`): classic `tk.PanedWindow` only. `ttk.PanedWindow` has no such option (`ttk.PanedWindow(root, sashwidth=5)` raises `TclError: unknown option "-sashwidth"`); a themed sash is styled through `ttk.Style`.
   - `.add(child, weight=1)`: adds a pane. The `weight` value decides how much of any *extra* space is given to that particular pane when the whole `PanedWindow` is resized — a pane with `weight=2` grows twice as fast as one with `weight=1` when the window is stretched.
 
 ### 2.5 `tk.Toplevel` — The Independent Window
@@ -120,13 +141,17 @@ The image below is an alternate view of the same process
 
 ## 3. Production Architecture: Dos and Don'ts
 
-*(The original heading for this section repeated the word "Architecture" twice — corrected here.)*
-
 ### 3.1 The Architectural Layout Rule
 
 Structure every layout using the same predictable, three-step sequence, so that the coordinate system stays easy to reason about as the interface grows:
 
-![Flowchart](../resources/ch14-tkinter-September-2026-container-family-002.png)
+![Flowchart](../resources/S14-LR-ch14-tkinter-September-2026-container-family-002.png)
+
+**Reading the figure**
+
+- **Step 1:** Create the container first, for example `form_frame = ttk.Frame(root, padding=10)`.
+- **Step 2:** Place the container itself with a geometry manager, for example `form_frame.pack(fill="both", expand=True)`.
+- **Step 3:** Create the child widgets with the container as their parent, and place them inside it, for example with `grid()`.
 
 In code, that three-step pattern looks like this:
 
@@ -158,7 +183,14 @@ label_user.grid(row=0, column=0, padx=5, pady=5)
   The same structure, shown as a flow chart:
 
 
-![Flowchart](../resources/ch14-tkinter-September-2026-container-family-003.png)
+![Flowchart](../resources/S14-LR-ch14-tkinter-September-2026-container-family-003.png)
+
+**Reading the figure**
+
+- The root window holds only three frames, not dozens of loose widgets.
+- `top_header_frame` holds the status labels.
+- `body_form_frame` holds the data entry fields.
+- `bottom_action_frame` holds the buttons that carry out actions.
 
 - **DON'T dump dozens of interactive widgets directly onto the top-level `root` window.** This makes it very difficult to control alignment and scaling once the window is resized, because every widget is now competing for space in a single, unstructured container instead of a small number of well-defined zones.
 
@@ -199,7 +231,7 @@ label_user.grid(row=0, column=0, padx=5, pady=5)
 
 ## 5. A Complete Worked Example: Building a Simple Registration Form
 
-Sections 1 to 4 describe each container and each rule in isolation. This section puts them to work together in one small, complete, runnable program: a registration form with a header, a bordered form area, and a row of buttons — built by deliberately following the "Do" list from Section 3.2 and deliberately avoiding the "Don't" list. The program was actually run (using a virtual display, since it has no visible screen of its own) to confirm it works and to capture real console output, shown in Section 5.5 below. Teaching-only `print()` statements were added throughout, exactly as in the "Do" and "Don't" style used elsewhere on this page, so you can see what is happening at each step even though most of what this script does is visual.
+Sections 1 to 4 describe each container and each rule in isolation. This section puts them to work together in one small, complete, runnable program: a registration form with a header, a bordered form area, and a row of buttons — built by deliberately following the "Do" list from Section 3.2 and deliberately avoiding the "Don't" list. Its real console output is shown in Section 5.5 below. Teaching-only `print()` statements were added throughout, exactly as in the "Do" and "Don't" style used elsewhere on this page, so you can see what is happening at each step even though most of what this script does is visual.
 
 ### 5.1 Imports and a Small Helper Function
 

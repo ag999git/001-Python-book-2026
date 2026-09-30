@@ -144,7 +144,16 @@ When you write `lbl = tk.Label(root, textvariable=self.text_var)`, you create a 
 
 The key rule is: **`text=` is a static assignment; `textvariable=` is a live binding.**
 
-![Flowchart](../resources/ch14-tkinter-September-2026-conceptual-QA-001.png)
+![Flowchart](../resources/S14-LR-ch14-tkinter-September-2026-conceptual-QA-001.png)
+
+**Reading the figure**
+
+- **Step 1:** Somewhere in the program, `var.set(...)` gives the `StringVar` a new value.
+- **Step 2:** How was the Label created?
+- **Step 3:** With `textvariable=var`: the Label is linked to the variable.
+- **Step 4:** Tk pushes the new value to the Label, which repaints immediately.
+- **Step 5:** With `text=var`: at creation Tkinter turned the variable into text, its internal name such as `PY_VAR0`, and copied that once.
+- **Step 6:** The Label keeps showing `PY_VAR0` and never changes.
 
 
 A short demonstration, with its real output:
@@ -252,7 +261,7 @@ widget.bind("<Button-1>", on_click)
 
 Useful attributes on that event object include `event.x` and `event.y` (position), `event.char` and `event.keysym` (the key pressed), and `event.widget` (which widget it happened to).
 
-**`bind("<<ListboxSelect>>")`** attaches a handler to a *virtual* event, written with double angle brackets. Virtual events describe a logical change rather than a physical action — the selection in a `Listbox` actually changed, a `Combobox` value was chosen, and so on. This is the smarter choice when you care about the data rather than the mouse, because it does not fire for clicks that change nothing.
+**`bind("<<ListboxSelect>>")`** attaches a handler to a *virtual* event, written with double angle brackets. Virtual events describe a logical change rather than a physical action — the selection in a `Listbox` actually changed, a `Combobox` value was chosen, and so on. This is the smarter choice when you care about the data rather than the mouse, because it fires only for selection actions, not for every mouse event (note that it does still fire when the user clicks the item that is already selected).
 
 | | `command=` | `bind("<Button-1>")` | `bind("<<ListboxSelect>>")` |
 | --- | --- | --- | --- |
@@ -260,7 +269,7 @@ Useful attributes on that event object include `event.x` and `event.y` (position
 | What it responds to | The widget being activated | A physical action | A logical change |
 | What your function receives | Nothing | An event object | An event object |
 | Can you read coordinates? | No | Yes | Not meaningfully |
-| Fires on a click that changes nothing? | Not applicable | Yes | No |
+| Fires on a click that changes nothing? | Not applicable | Yes | Yes (re-clicking the selected item still fires it) |
 | Typical use | Buttons and menus | Drawing, custom hover behaviour, keyboard handling | Reacting to a new selection |
 
 Use `command=` for ordinary buttons, `bind("<Button-1>")` when you need the position or the key, and a virtual event such as `bind("<<ListboxSelect>>")` when what you care about is that the data changed.
@@ -294,7 +303,17 @@ The error names the problem precisely: this container already has children manag
 What you **can** do — and should — is use different managers in *different* containers:
 
 
-![Flowchart](../resources/ch14-tkinter-September-2026-conceptual-QA-004.png)
+![Flowchart](../resources/S14-LR-ch14-tkinter-September-2026-conceptual-QA-004.png)
+
+**Reading the figure**
+
+- Bad: in one container, some children are placed with `pack()` and others with `grid()`.
+- Tk refuses at once: `TclError: cannot use geometry manager grid inside … which already has slaves managed by pack`.
+- Good: the root window holds frames.
+- `frame_one` is placed in the root with `pack()`.
+- `frame_two` is also placed in the root with `pack()`.
+- Inside `frame_one`, every child uses `grid()`: allowed, because it is a different container.
+- Inside `frame_two`, every child uses `pack()`: also allowed.
 
 
 
@@ -342,7 +361,15 @@ Tkinter is not a drawing library. It is a stack of layers, each handing work to 
 | 3 | The Tcl/Tk engine | An embedded Tcl interpreter receives those commands. The Tk toolkit holds the definitions of how each widget behaves and looks, and tracks its state. |
 | 4 | The operating system | Tk asks the OS for windows and drawing surfaces through its native interfaces. The OS performs the final rendering. |
 
-![Flowchart](../resources/ch14-tkinter-September-2026-conceptual-QA-005.png)
+![Flowchart](../resources/S14-LR-ch14-tkinter-September-2026-conceptual-QA-005.png)
+
+**Reading the figure**
+
+- **Step 1:** Layer 1: your Python code creates a widget, such as `tk.Button(...)`.
+- **Step 2:** Layer 2: Tkinter translates the call into a Tcl command.
+- **Step 3:** Layer 3: the embedded Tcl interpreter passes it to the Tk toolkit, which knows how each widget behaves and looks.
+- **Step 4:** Layer 4: Tk asks the operating system for a window and a drawing surface.
+- **Step 5:** The operating system renders the actual pixels on screen.
 
 
 
@@ -588,7 +615,7 @@ If you do not keep the identifier, you have no way to stop the job. It will stil
 
 This matters most for repeating jobs. A function that re-books itself with `after()` at the end of every run will keep going forever unless something cancels it, so a clock or an animation should always store its latest identifier. The habit worth forming is: **if you can start it, make sure you can stop it.**
 
-**On the related method in the question's original wording:** `trace_add()` also returns something — a handle string identifying that watch — which you can pass to `variable.trace_remove("write", handle)` to stop watching a variable. The two are easy to confuse because both hand back a string you may need later, but they cancel quite different things: `after_cancel()` stops a delayed job, and `trace_remove()` stops a variable watch.
+**A related method worth knowing:** `trace_add()` also returns something — a handle string identifying that watch — which you can pass to `variable.trace_remove("write", handle)` to stop watching a variable. The two are easy to confuse because both hand back a string you may need later, but they cancel quite different things: `after_cancel()` stops a delayed job, and `trace_remove()` stops a variable watch.
 
 [Back to Table of Contents](#table-of-contents)
 
@@ -606,18 +633,18 @@ new_window.title("Settings")
 | | Second `Tk()` | `Toplevel(root)` |
 | --- | --- | --- |
 | Starts a new interpreter | Yes | No |
-| Served by your existing `mainloop()` | No | Yes |
+| Served by your existing `mainloop()` | Yes, but it keeps the loop alive after the main window closes | Yes |
 | Can share images and variables with the main window | No | Yes |
 | Closing it ends the program | Not necessarily | No |
 | Recommended | No | Yes |
 
-The practical symptoms of two `Tk()` objects are hard to diagnose: the second window may not respond to clicks at all, because `mainloop()` is serving the first; images created for one cannot be used in the other; and shutting the program down cleanly becomes unpredictable. A `Toplevel` avoids all of it, has its own title bar and close button, and is removed completely when you call `.destroy()` on it while the rest of the application carries on.
+The practical symptoms of two `Tk()` objects are hard to diagnose: closing the main window may not end the program, because `mainloop()` keeps running until every `Tk()` window is destroyed; images created for one cannot be used in the other; and shutting the program down cleanly becomes unpredictable. A `Toplevel` avoids all of it, has its own title bar and close button, and is removed completely when you call `.destroy()` on it while the rest of the application carries on.
 
 [Back to Table of Contents](#table-of-contents)
 
 ### 19. What is sys.excepthook, and why is it important for Tkinter applications specifically?
 
-`sys.excepthook` is the function Python calls when an exception reaches the top of the program without any `try-except` having caught it. Normally it prints a traceback and the program ends. Replacing it lets you take over that moment — show a friendly dialog, write the details to a log file, and keep the program alive:
+`sys.excepthook` is the function Python calls when an exception reaches the top of the program without any `try-except` having caught it. Normally it prints a traceback and the program ends. Replacing it lets you take over that moment — show a friendly dialog, and write the details to a log file before the program ends:
 
 ```python
 def handle_error(exc_type, exc_value, exc_traceback):
@@ -646,7 +673,17 @@ root.report_callback_exception = handle_error
 
 Why this matters so much in a GUI is that the default behaviour for a callback error is close to the worst possible one for a user. The program does not crash — Tkinter prints a traceback to the console and carries on — so the user clicks a button, absolutely nothing happens, no message appears, and the only explanation is in a terminal they are probably not looking at. A global handler converts that silence into a clear message.
 
-![Flowchart](../resources/ch14-tkinter-September-2026-conceptual-QA-006.png)
+![Flowchart](../resources/S14-LR-ch14-tkinter-September-2026-conceptual-QA-006.png)
+
+**Reading the figure**
+
+- **Step 1:** An exception is raised somewhere in the program.
+- **Step 2:** Was it raised inside a Tkinter callback: a button click, an `after()` job, a `bind()` handler or a variable trace?
+- **Step 3:** Yes: Tkinter catches it first.
+- **Step 4:** Tkinter calls `root.report_callback_exception` (set on the root window).
+- **Step 5:** No, ordinary top-level code: the exception travels up the chain of calls.
+- **Step 6:** Python calls `sys.excepthook`.
+- **Step 7:** Point both names at the same handler function to cover every case.
 
 
 
@@ -875,7 +912,16 @@ Putting every widget straight onto the root window produces a flat layout with n
 
 The recommended pattern is to build a small hierarchy of containers first, then place the actual controls inside them:
 
-![Flowchart](../resources/ch14-tkinter-September-2026-conceptual-QA-007.png)
+![Flowchart](../resources/S14-LR-ch14-tkinter-September-2026-conceptual-QA-007.png)
+
+**Reading the figure**
+
+- The root window holds a few frames instead of many loose widgets.
+- A header frame for the title and status.
+- A body frame for the data entry fields.
+- A footer frame for the action buttons.
+- Inside the body frame, labels and entry boxes are arranged with `grid()`.
+- Inside the footer frame, the buttons are arranged with `pack()` — a different manager is fine, because it is a different container.
 
 ```python
 # Step 1: Create the zones and place them in the window.

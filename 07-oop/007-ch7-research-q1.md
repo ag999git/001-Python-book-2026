@@ -30,6 +30,8 @@ A **circular reference** occurs when two (or more) objects hold references to ea
 
 ![Flowchart](../resources/ch-7august-2026-circular-reference.png)
 
+**Another view of the same diagram**
+
 ![Flowchart](../resources/S07-LR-ch-7august-2026-circular-reference.png)
 
 **Reading the figure**
@@ -174,8 +176,6 @@ Scanning *every* object in memory on *every* check would make Python far too slo
 This design rests on one observation from real-world programs: **most objects die young** (a temporary variable inside a function, for instance). So the GC checks Generation 0 most often, and only occasionally checks the older, more stable generations — saving a lot of unnecessary work.
 
 ### The mechanism, step by step
-
-![Flowchart](../resources/ch-7august-2026-circular-reference--2.png)
 
 ![Flowchart](../resources/S07-LR-ch-7august-2026-circular-reference--2.png)
 

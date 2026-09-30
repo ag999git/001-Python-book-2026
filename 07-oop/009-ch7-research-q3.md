@@ -28,8 +28,6 @@ A **memory leak** happens when a program keeps holding on to memory it no longer
 | **The result, either way** | Your program's RAM usage keeps climbing over time | Eventually the OS runs out of memory to give the process, and it slows to a crawl or crashes |
 
 
-![Flowchart](../resources/ch-7august-2026-memory-leak.png)
-
 ![Flowchart](../resources/S07-LR-ch-7august-2026-memory-leak.png)
 
 **Reading the figure**

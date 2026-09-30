@@ -92,8 +92,6 @@ You can see the complete list yourself at any time with `dir(object)`.
 
 The following diagram shows the hierarchy of some built-in and user-defined classes. (Exceptions are also classes; they are discussed in the chapter on exceptions.)
 
-![Diagram](../resources/ch-7-oop-object-base.png)
-
 ![Diagram](../resources/S07-LR-ch-7-oop-object-base.png)
 
 **Reading the figure**

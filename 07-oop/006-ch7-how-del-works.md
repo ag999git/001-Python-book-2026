@@ -28,6 +28,8 @@ A variable name in the Stack doesn't hold the object itself — it holds the **m
 
 ![Flowchart](../resources/ch-7-oop-del-working-memory-ref.png)
 
+**Another flowchart of the same process**
+
 ![Flowchart](../resources/S07-LR-ch-7-oop-del-working-memory-ref.png)
 
 **Reading the figure**

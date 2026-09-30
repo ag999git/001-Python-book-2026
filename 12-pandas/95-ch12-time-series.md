@@ -35,7 +35,7 @@ Most real-world data changes over time — sales, temperature, website visitors,
 
 **Research Question:** _How can raw multi-column temporal data be converted into a Datetime Index to facilitate analysis of seasonal fluctuations and long-term growth trends?_
 
-**Project Scenario:** The "Airline Passenger Traffic" dataset (`flights`) provides monthly counts of airline passengers from 1949 to 1960. While the dataset contains time information, it is currently split across two distinct columns: `year` (Integer) and `month` (String). To perform effective time series analysis, one must first engineer a unified datetime object. The objective is to:
+**Project Scenario:** The "Airline Passenger Traffic" dataset (`flights`) provides monthly counts of airline passengers from 1949 to 1960. While the dataset contains time information, it is currently split across two distinct columns: `year` (Integer) and `month` (month names, stored as a `category` column). To perform effective time series analysis, one must first engineer a unified datetime object. The objective is to:
 
 1. **Construct a single Datetime Index** from the separate year and month columns.
 2. **Slice the data** to isolate specific eras (e.g., the 1950s).
@@ -72,7 +72,15 @@ Resampling is the process of changing the frequency of time-series observations.
 * **Upsampling:** Increasing frequency (e.g., Monthly → Daily). Requires *interpolation* (*guessing in-between values*).
 * **Downsampling:** Decreasing frequency (e.g., Monthly → Yearly). Requires *aggregation* (Sum, Mean, Max).
 
-![Flowchart](../resources/ch12-august-2026-time-series-00.png)
+![Flowchart](../resources/S12-LR-ch12-august-2026-time-series-00.png)
+
+**Reading the figure**
+
+- **Step 1:** Start with monthly data: 144 rows, one per month from 1949 to 1960.
+- **Step 2:** Are you changing to a lower frequency, such as quarterly (`'QE'`) or yearly (`'YE'`)?
+- **Step 3:** Yes, downsampling: several months fall into each new period, so they must be aggregated, for example `mean()` for a smoother trend or `sum()` for yearly totals.
+- **Step 4:** No, upsampling to a higher frequency such as daily: more rows than you have data for.
+- **Step 5:** The new in-between rows must be filled, usually by interpolation.
 
 **Table of Resampling Offsets for Flights Data**
 
@@ -80,10 +88,10 @@ Resampling is the process of changing the frequency of time-series observations.
 |-------|-------------|----------------------------|
 | `ME` | Month End | Original data (already monthly). |
 | `QE` | Quarter End | Smoother trend (3-month averages). |
-| `YE` / `A` | Year End | Shows total passengers per year (Annual growth). |
+| `YE` | Year End | Shows total passengers per year (Annual growth). |
 | `MS` | Month Start | Shifts index to 1st of month (purely for formatting). |
 
->  **Deprecation note:** In older tutorials you will see `'M'`, `'Q'`, `'Y'`, `'A'`. Recent pandas versions replaced these with `'ME'`, `'QE'`, `'YE'` — the old codes still work but print a `FutureWarning`. See [Offset aliases in the pandas docs](https://pandas.pydata.org/docs/user_guide/timeseries.html#offset-aliases).
+>  **Deprecation note:** In older tutorials you will see `'M'`, `'Q'`, `'Y'`, `'A'`. Recent pandas versions replaced these with `'ME'`, `'QE'`, `'YE'` — in pandas 2.2 the old codes still work with a `FutureWarning`; in pandas 3 they raise `ValueError: Invalid frequency`. See [Offset aliases in the pandas docs](https://pandas.pydata.org/docs/user_guide/timeseries.html#offset-aliases).
 
 ---
 
@@ -203,8 +211,8 @@ print(df.head(3))
 
 
 # ERROR EXAMPLE:
-# pd.to_datetime(df['month'])  # Fails because month alone is not a complete date
-# → Not a complete date
+# pd.to_datetime(df['month'])  # Does NOT give real dates: month alone is not a complete date
+# → 'Jan' is parsed as 0001-01-01 (with a UserWarning)
 
 
 # ==========================================================
@@ -332,7 +340,7 @@ print("\nSTEP 6: RESAMPLING")
 # apply to the data within each new time period.
 # The resulting quarterly_avg Series will have a DatetimeIndex with the end of each quarter as the index and the average number of passengers
 # for that quarter as the values.
-# NOTE: 'QE' is the modern alias. Older pandas used 'Q', which now raises a FutureWarning.
+# NOTE: 'QE' is the modern alias. Older pandas used 'Q' (a FutureWarning in pandas 2.2, a ValueError in pandas 3).
 
 quarterly_avg = df['passengers'].resample('QE').mean()
 
@@ -352,7 +360,7 @@ print(quarterly_avg.head())
 # for that year as the values.
 # This allows us to see the overall trend in passenger numbers on a yearly basis, which can be useful for identifying long-term
 # growth patterns or seasonality in the data.
-# NOTE: 'YE' is the modern alias. Older pandas used 'Y' (or 'A'), which now raises a FutureWarning.
+# NOTE: 'YE' is the modern alias. Older pandas used 'Y' (or 'A') (a FutureWarning in pandas 2.2, a ValueError in pandas 3).
 
 yearly_total = df['passengers'].resample('YE').sum()
 
@@ -390,7 +398,7 @@ BEST PRACTICES:
 - Prefer vectorized operations over apply()
 - Use structured datetime creation for reliability
 - Always set datetime as index before resampling
-- Validate transformations using head() and shape()
+- Validate transformations using `.head()` and `.shape`
 - Use modern frequency aliases: ME / QE / YE (not M / Q / Y)
 """)
 ```
@@ -403,11 +411,35 @@ BEST PRACTICES:
 
 <summary>Flowchart of the script</summary>
 
-![Flowchart of the script](../.gitbook/assets/ch12-timeline.png)
+![Flowchart of the script](../resources/S12-LR-ch12-timeline.png)
+
+**Reading the figure**
+
+- **Step 1:** Load the flights dataset: 144 rows of `year`, `month` and `passengers`.
+- **Step 2:** Inspect it with `.head()`, `.dtypes` and `.shape`.
+- **Step 3:** Map the month names to numbers (`'Jan'` → 1, `'Feb'` → 2, ...) in a new `month_num` column.
+- **Step 4:** Build a real date with `pd.to_datetime(dict(year=..., month=..., day=1))`.
+- **Step 5:** Check that the new `date` column has a datetime type.
+- **Step 6:** Make `date` the index with `set_index('date')`, giving a DatetimeIndex.
+- **Step 7:** Drop the columns that are no longer needed: `year`, `month` and `month_num`.
+- **Step 8:** Extract components from the index: `.year`, `.quarter`, `.month`.
+- **Step 9:** Slice by time: `df.loc['1950':'1959']` selects the 1950s.
+- **Step 10:** Resample: quarterly averages with `resample('QE').mean()` and yearly totals with `resample('YE').sum()`.
+- **Step 11:** Print the key learnings: the trend, the growth and the seasonal pattern.
 
 ### Another flow chart
 
-![Flowchart](../resources/ch12-august-2026-time-series-01.png)
+![Flowchart](../resources/S12-LR-ch12-august-2026-time-series-01.png)
+
+**Reading the figure**
+
+- **Step 1:** Load the flights dataset (144 rows).
+- **Step 2:** Map the month names to month numbers.
+- **Step 3:** Combine year, month number and `day=1` into a `date` column.
+- **Step 4:** Make `date` the index and drop the redundant columns, leaving a DatetimeIndex and one column, `passengers`.
+- **Step 5:** Extract the year, quarter and month from the index.
+- **Step 6:** Slice the 1950s by date string.
+- **Step 7:** Downsample: the quarterly average and the yearly total.
 
 </details>
 
@@ -785,7 +817,7 @@ print("\nFirst 5 rows:")
 print(df.head())
 
 # OUTPUT HINT:
-# Columns → (int), month (category), passengers (int)
+# Columns → year (int), month (category), passengers (int)
 
 ```
 
@@ -799,8 +831,8 @@ STEP 1: LOAD DATASET
 First 5 rows:
    year month  passengers
 0  1949   Jan         112
-1  49   Feb         118
-2  1949   Mar 132
+1  1949   Feb         118
+2  1949   Mar         132
 3  1949   Apr         129
 4  1949   May         121
 
@@ -809,7 +841,7 @@ First 5 rows:
 
 ***
 
-**STEP 1.: First 5 Rows**
+**STEP 1.1: First 5 Rows**
 
 **Output Explanation**
 
@@ -864,8 +896,8 @@ print("\nSTEP 2: CREATE DATETIME COLUMN (ROBUST METHOD)")
 
 # We create a mapping dictionary to convert month names to their corresponding numeric values.
 month_map = {
-    'Jan': 1, '': 2, 'Mar': 3, 'Apr': 4,
-    'May': 5, 'Jun': 6 'Jul': 7, 'Aug': 8,
+    'Jan': 1, 'Feb': 2, 'Mar': 3, 'Apr': 4,
+    'May': 5, 'Jun': 6, 'Jul': 7, 'Aug': 8,
     'Sep': 9, 'Oct': 10, 'Nov': 11, 'Dec': 12
 }
 
@@ -876,13 +908,14 @@ print("\nMonth Mapping Preview:")
 print(df[['month', 'month_num']].head())
 ```
 
-**Output STEP 2 and 2.1
+**Output STEP 2 and 2.1**
 
 ```text
 STEP 2: CREATE DATETIME COLUMN (ROBUST METHOD)
 
 Month Mapping Preview:
-  month month_num0   Jan         1
+  month  month_num
+0   Jan          1
 1   Feb         2
 2   Mar         3
 3   Apr         4
@@ -908,7 +941,8 @@ Month Mapping Preview:
 # ----------------------------------------------------------
 
 # We create a new 'date' column by combining the 'year' and 'month_num' columns into a proper datetime format.
-# We set the day to 1 for all entries since we only have year and month informationdf['date'] = pd.to_datetime(
+# We set the day to 1 for all entries since we only have year and month information
+df['date'] = pd.to_datetime(
     dict(year=df['year'], month=df['month_num'], day=1)
 )
 
@@ -926,7 +960,7 @@ Preview with 'date' column:
 2  1949   Mar         132         3 1949-03-01
 ```
 
-**PLANATION: STEP 2.2: Datetime Creation**
+**EXPLANATION: STEP 2.2: Datetime Creation**
 
 **Output Explanation**
 
@@ -990,7 +1024,7 @@ Shape: (144, 1)
 **Output Explanation**
 
 * The `date` column becomes the index of the DataFrame.
-* Old columns (`year`, `month `month_num`) are removed.
+* Old columns (`year`, `month`, `month_num`) are removed.
 * Now:
   * Index → datetime values
   * Column → only `passengers`
@@ -1025,7 +1059,7 @@ print(df.head())
 **Output STEP 4, 4.1 and 4.2**
 
 ```text
-STEP 4: EXTRACT TIME COMPONENT
+STEP 4: EXTRACT TIME COMPONENTS
 
 Data with extracted components:
             passengers  Year  Quarter  Month
@@ -1041,9 +1075,11 @@ date
 
 ***
 
-**Output Explanation* New columns are added:
+**Output Explanation**
+
+* New columns are added:
   * `Year` → extracted from index
-  `Quarter` → values from 1 to 4
+  * `Quarter` → values from 1 to 4
   * `Month` → numeric month (1–12)
 * The dataset now contains both:
   * Original data (`passengers`)
@@ -1058,15 +1094,16 @@ print("\nSTEP 5: TIME-BASED SLICING")
 
 # ----------------------------------------------------------
 # STEP 5.1: FILTER 1950s DATA
- ----------------------------------------------------------
+# ----------------------------------------------------------
 
 # (Full explanation retained in the combined script — see Part 1. In brief: string-based
 #  slicing on a DatetimeIndex selects rows between two dates, both inclusive.)
 
-fifties_data = df.loc['19501959']
+fifties_data = df.loc['1950':'1959']
 
 # ----------------------------------------------------------
-# STEP 5.2: ANALYZE# ----------------------------------------------------------
+# STEP 5.2: ANALYZE
+# ----------------------------------------------------------
 
 print("\n1950s Summary:")
 
@@ -1105,7 +1142,7 @@ Average passengers: 276.075
 * `Total passengers: 33129`
   * Sum of all passengers in the 1950s (120 monthly values: 10 years × 12 months)
 * `Average passengers: 276.075`
-  * monthly passengers in that decade (33129 ÷ 120 = 276.075)
+  * Average monthly passengers in that decade (33129 ÷ 120 = 276.075)
 * Indicates **growth trend** compared to earlier years (the 1949 average was around 126 — more than double in a decade).
 
 #### STEP 6 and 6.1
@@ -1114,7 +1151,8 @@ Average passengers: 276.075
 
 print("\nSTEP 6: RESAMPLING")
 
-# ------------------------------------------------# STEP 6.1: QUARTERLY AVERAGE
+# ----------------------------------------------------------
+# STEP 6.1: QUARTERLY AVERAGE
 # ----------------------------------------------------------
 
 # (Full explanation retained in the combined script — see Part 1.)
@@ -1142,13 +1180,13 @@ date
 Freq: QE-DEC, Name: passengers, dtype: float64
 ```
 
->  **Note:** The script above uses `'QE'`, if instead you use `resample('Q')` then a message like
-> `FutureWarning` (`'Q' is deprecated ... use 'QE' instead`) appears
-> 
+>  **Note:** The script above uses `'QE'`. With the old code, `resample('Q')`, pandas 2.2 still gives the result below but shows a
+> `FutureWarning` (`'Q' is deprecated ... use 'QE' instead`); pandas 3 raises `ValueError: Invalid frequency: Q` instead.
+
 ```text
 Quarterly Average:
 date
-199-03-31    120.666667
+1949-03-31    120.666667
 1949-06-30    128.333333
 1949-09-30    144.000000
 1949-12-31    113.666667
@@ -1175,7 +1213,7 @@ date
 * In the original run a warning was shown:
   * `'Q' is deprecated → use 'QE'`
 * This indicates newer pandas prefers updated codes.
-* **Watch the seasonal pattern in the numbers:** the third quarter (July–, value 144) is consistently the highest — summer holiday travel. The first quarter (Jan–Mar) is the lowest. Resampling makes this seasonal rhythm easy to see; the monthly table hides it among 144 rows.
+* **Watch the seasonal pattern in the numbers:** the third quarter (July–Sep, value 144) is consistently the highest — summer holiday travel. The first quarter (Jan–Mar) is usually the lowest (in a few years, such as 1949, the fourth quarter is lower still). Resampling makes this seasonal rhythm easy to see; the monthly table hides it among 144 rows.
 
 #### STEP 6.2
 
@@ -1197,7 +1235,7 @@ print(yearly_total.head())
 ```text
 Yearly Total:
 date
-1949-12-    1520
+1949-12-31    1520
 1950-12-31    1676
 1951-12-31    2042
 1952-12-31    2364
@@ -1209,7 +1247,7 @@ Freq: YE-DEC, Name: passengers, dtype: int64
 
 **Output Explanation**
 
-* Data is grouped year.
+* Data is grouped by year.
 * Each value shows **total passengers in that year**:
   * e.g., `1520` = sum of the 12 monthly values of 1949
 * Index shows year-end dates:
@@ -1222,18 +1260,21 @@ Freq: YE-DEC, Name: passengers, dtype: int64
 * The original run used `'Y'`, which triggered: `'Y' is deprecated → use 'YE'`
 * Same reason as above (updated pandas standards). The script in this chapter uses `'YE'`, so no warning appears.
 
-**sampling vs Upsampling — recap with this output**
+**Downsampling vs Upsampling — recap with this output**
 
 | Operation | Direction | Rows before → after | Function used |
 |-----------|-----------|---------------------|---------------|
 | Monthly → Quarterly | Downsampling | 144 → 48 | `mean()` |
 | Monthly → Yearly | Downsampling | 144 → 12 | `sum()` |
-| Monthly → Daily | Upsampling | 144 → ~4,380 | Needs interpolation (not shown here)### STEP 7 (It is just a summary)
+| Monthly → Daily | Upsampling | 144 → ~4,380 | Needs interpolation (not shown here) |
+
+### STEP 7 (It is just a summary)
 
 ```python
 print("\nSTEP 7: SUMMARY")
 
-printKEY LEARNINGS:
+print("""
+KEY LEARNINGS:
 
 1. Datetime can be created using structured input (year, month, day)
 2. Avoid string parsing when possible
@@ -1241,11 +1282,12 @@ printKEY LEARNINGS:
 4. .loc allows intuitive time slicing
 5. resample() changes frequency of time series
 
-BESTRACTICES:
+BEST PRACTICES:
 
 - Prefer vectorized operations over apply()
-- Use structured datetime creation for reliability- Always set datetime as index before resampling
-- Validate transformations using head() and shape()
+- Use structured datetime creation for reliability
+- Always set datetime as index before resampling
+- Validate transformations using `.head()` and `.shape`
 - Use modern frequency aliases: ME / QE / YE (not M / Q / Y)
 """)
 ```
@@ -1273,16 +1315,16 @@ year + month columns  →  map month names to numbers
                       →  pd.to_datetime(dict(year, month, day=1))
                       →  set_index('date')        [DatetimeIndex]
                       →  .loc['1950':'1959']      [time slicing]
-                      →  resampleQE'/'YE')      [downsampling + aggregation]
+                      →  resample('QE'/'YE')    [downsampling + aggregation]
 ```
 
 | Objective from the Task | Where solved | Result |
 |-------------------------|--------------|--------|
 | 1. Construct a Datetime Index | Steps 2–3 | 144 rows indexed by real dates (`1949-01-01` …) |
-| 2. Slice a specific era | Step 5 | 1950s subset: total 33129, 276.075 |
-| 3. Resample for trends | 6 | averages (48 rows, smoothed) and yearly totals (12 rows, clear growth: 1520 → 2700) |
+| 2. Slice a specific era | Step 5 | 1950s subset: total 33129, monthly average 276.075 |
+| 3. Resample for trends | Step 6 | Quarterly averages (48 rows, smoothed) and yearly totals (12 rows, clear growth: 1520 → 2700) |
 
-**Answering the Research Question:** Raw multi-column temporal data (`year` as integer and `month` as a string) was converted into a single `datetime64` column using structured input to `pd.to_datetime`, then promoted to a DatetimeIndex. This index unlocked time-based slicing (`df.loc['1950':'1959']`) with no filtering code, and enabled resampling — downsampling the noisy 144 monthly observations into 48 quarterly averages and 12 yearly totals, which made both the seasonal rhythm (Q3 peaks) and the strong long-term growth (passengers nearly doubling over the decade) immediately visible.
+**Answering the Research Question:** Raw multi-column temporal data (`year` as integer and `month` as month names) was converted into a single `datetime64` column using structured input to `pd.to_datetime`, then promoted to a DatetimeIndex. This index unlocked time-based slicing (`df.loc['1950':'1959']`) with no filtering code, and enabled resampling — downsampling the noisy 144 monthly observations into 48 quarterly averages and 12 yearly totals, which made both the seasonal rhythm (Q3 peaks) and the strong long-term growth (yearly passengers nearly quadrupling from 1949 to 1960) immediately visible.
 
 **DO it yourself (follow-up sub-questions recap):**
 

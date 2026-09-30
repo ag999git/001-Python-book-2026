@@ -36,7 +36,20 @@ The `io` module is Python's built-in toolkit for handling input and output — r
 
 **Visual hierarchy of the `io` module:**
 
-![Visual Hierarchy of io Module](../.gitbook/assets/ch12-io-module.png)
+![Visual Hierarchy of io Module](../resources/S12-LR-ch12-io-module.png)
+
+**Reading the figure**
+
+- The `io` module groups its stream classes into three families.
+- Text I/O reads and writes `str` objects.
+- Binary I/O reads and writes `bytes`, with a buffer in between for speed.
+- Raw I/O is the low-level, unbuffered layer.
+- `TextIOWrapper` is the object you get from `open('file.txt')` in text mode.
+- `StringIO` is a text stream that lives in memory.
+- `BufferedReader` and `BufferedWriter` are the objects you get from `open(..., 'rb')` and `open(..., 'wb')`.
+- `BytesIO` is a binary stream that lives in memory.
+- `BufferedRandom` is used when a binary file is opened for both reading and writing, `'r+b'`.
+- `FileIO` is the raw file that the buffered classes sit on top of.
 
 ---
 
@@ -51,7 +64,14 @@ When working with Pandas, picking the right one of these two matters: `pd.read_c
 | What it expects | A `str` | A `bytes` object (written with a `b` prefix, e.g. `b'...'`) |
 | Typical use case | Parsing a small CSV snippet, or a text-based API response | Processing a compressed or specially-formatted binary file |
 
-![Flowchart](../resources/ch12-august-2026-memory-based-IO-01.png)
+![Flowchart](../resources/S12-LR-ch12-august-2026-memory-based-IO-01.png)
+
+**Reading the figure**
+
+- **Step 2:** You have data to hand to a pandas reading function, without a file on disk.
+- **Step 1:** Is the data plain text (a `str`), or binary (`bytes`)?
+- **Step 3:** Text: use `io.StringIO` for formats such as CSV, JSON and XML.
+- **Step 4:** Binary: use `io.BytesIO` for formats such as Excel (`.xlsx`), Parquet and HDF5.
 
 ---
 
@@ -157,7 +177,15 @@ print(buf.read())   # -> "Data"  (...now this works correctly)
 ```
 
 
-![Flowchart](../resources/ch12-august-2026-memory-based-IO-02.png)
+![Flowchart](../resources/S12-LR-ch12-august-2026-memory-based-IO-02.png)
+
+**Reading the figure**
+
+- **Step 1:** Create an empty buffer with `io.StringIO()`. The cursor is at position 0.
+- **Step 2:** `buf.write("Data")` writes 4 characters and leaves the cursor at the end, position 4.
+- **Step 3:** Has `buf.seek(0)` been called to move the cursor back to the start?
+- **Step 4:** Yes: `buf.read()` reads from position 0 and returns `"Data"`.
+- **Step 5:** No: `buf.read()` starts at the end, finds nothing left, and returns an empty string `''`. A pandas reader would see an empty file.
 
 **Rule to remember:** always call `.seek(0)` on a buffer you've just written to, before handing it to a Pandas reading function — otherwise, Pandas will see what looks like an empty file.
 

@@ -38,7 +38,25 @@ These four pillars break down further into ten categories:
 9. String Methods (`.str`)
 10. DateTime Methods (`.dt`)
 
-![Flowchart](../resources/ch12-august-2026-series-01.png)
+![Flowchart](../resources/S12-LR-ch12-august-2026-series-01.png)
+
+**Reading the figure**
+
+- The methods of a `Series` are sorted into four pillars, according to what you want to do.
+- Pillar 1, Inspection & Retrieval: "show me the data, or give it to me in another format".
+- Pillar 2, Analysis & Summarization: "give me the big picture: trends and totals".
+- Pillar 3, Cleaning & Manipulation: "fix the errors, remove the bad rows, change the values".
+- Pillar 4, Type-Specific Operations: special tools for text and for dates.
+- Pillar 1 holds category 1, Viewing & Accessing.
+- Pillar 1 also holds category 2, Conversion & Export.
+- Pillar 2 holds category 3, Descriptive Statistics.
+- Pillar 2 also holds category 4, Counts & Unique Values.
+- Pillar 3 holds category 5, Handling Missing Data.
+- Pillar 3 holds category 6, Filtering & Conditions.
+- Pillar 3 holds category 7, Transformation.
+- Pillar 3 holds category 8, Sorting & Ranking.
+- Pillar 4 holds category 9, String Methods, reached through the `.str` accessor.
+- Pillar 4 holds category 10, DateTime Methods, reached through the `.dt` accessor.
 
 ---
 
@@ -82,7 +100,24 @@ These four pillars break down further into ten categories:
 The following diagram (from the book's own resources) shows all the key methods grouped into categories and pillars:
 
 
-![Flowchart of Methods of Series](../resources/ch12-pandas-series-methods.png)
+![Flowchart of Methods of Series](../resources/S12-LR-ch12-pandas-series-methods.png)
+
+**Reading the figure**
+
+- Pillar 1: Inspection & Retrieval.
+- Pillar 2: Analysis & Summarization.
+- Pillar 3: Cleaning & Manipulation.
+- Pillar 4: Type-Specific Operations.
+- Viewing & Accessing: `.loc[]` and `.iloc[]` select by label or by position; `.head()` and `.tail()` preview the ends; `.get()` returns a default instead of raising an error.
+- Conversion & Export: `.to_list()`, `.to_dict()` and `.to_frame()` turn the Series into a list, a dictionary or a one-column DataFrame.
+- Descriptive Statistics: `.sum()`, `.min()`, `.max()`, `.mean()`, `.median()`, `.std()`, and `.describe()` for all of them at once.
+- Counts & Unique Values: `.value_counts()`, `.unique()` and `.nunique()`.
+- Handling Missing Data: `.isna()` finds them, `.fillna()` fills them, `.dropna()` removes them.
+- Filtering & Conditions: `.between()`, `.isin()` and `.duplicated()`.
+- Transformation: `.map()`, `.apply()`, `.replace()` and `.astype()`.
+- Sorting & Ranking: `.sort_values()`, `.sort_index()` and `.rank()`.
+- String Methods, through the `.str` accessor: `.str.upper()`, `.str.lower()`, `.str.contains()`, `.str.replace()`.
+- DateTime Methods, through the `.dt` accessor: `.dt.year`, `.dt.month`, `.dt.day_name()`, `.dt.strftime()`.
 
 ---
 

@@ -20,7 +20,17 @@ You will learn to:
 
 ## Flowchart showing the steps of Essential Data Exploration in Pandas
 
-![Essential Data Exploration in Pandas](../.gitbook/assets/ch12-Essential-Data-Exploration.png)
+![Essential Data Exploration in Pandas](../resources/S12-LR-ch12-Essential-Data-Exploration.png)
+
+**Reading the figure**
+
+- **Step 1:** Load the Palmer Penguins dataset into a DataFrame with `sns.load_dataset('penguins')`.
+- **Step 2:** Peek at the rows: `head()` for the first rows, `tail()` for the last rows, `sample()` for random rows.
+- **Step 3:** Structural summary with `info()`: column names, data types and non-null counts.
+- **Step 4:** Statistical summary with `describe()`: count, mean, standard deviation, minimum, quartiles and maximum (and, with `include='all'`, the text columns too).
+- **Step 5:** `nunique()` counts the distinct values in each column.
+- **Step 6:** `value_counts()` shows how often each species and each island appears.
+- **Step 7:** `isnull().sum()` counts the missing values in each column.
 
 ## Script showing usage of Pandas DataFrame exploration methods such as `.head()`, `.tail()`, `.sample()`, `.info()`, `.describe()`, `.value_counts()`, and `.nunique()`
 
@@ -40,7 +50,7 @@ print(df.head())
 # 1 Adelie Torgersen 39.5 17.4 186  3800 Female
 # 2 Adelie Torgersen 40.3 18.0 195  3250 Female
 # 3 Adelie Torgersen NaN NaN NaN NaN NaN    
-# 4 Adelie Torgersen 36.7 19.3 193  3450 Male
+# 4 Adelie Torgersen 36.7 19.3 193  3450 Female
 
 
 # STEP 2: Peeking at Data
@@ -99,13 +109,13 @@ print(df.describe())
 # max → maximum value
 # ACTUAL OUTPUT
 # bill_length_mm bill_depth_mm flipper_length_mm body_mass_g
-# count 344.000000 344.000000 344.000000 344.000000
-# mean 43.921512 17.151163 200.915698 4201.754651
-# std 5.459584 1.974603 14.061714 801.954236
+# count 342.000000 342.000000 342.000000 342.000000
+# mean 43.921930 17.151170 200.915205 4201.754386
+# std 5.459584 1.974793 14.061714 801.954536
 # min 32.100000 13.100000 172.000000 2700.000000
 # 25% 39.225000 15.600000 190.000000 3550.000000
 # 50% 44.450000 17.300000 197.000000 4050.000000
-# 75% 48.100000 18.700000 213.000000 4750.000000
+# 75% 48.500000 18.700000 213.000000 4750.000000
 # max 59.600000 21.500000 231.000000 6300.000000
 
 
@@ -118,16 +128,16 @@ print(df.describe(include='all'))
 
 # ACTUAL OUTPUT
 # species island bill_length_mm bill_depth_mm flipper_length_mm body_mass_g sex
-# count 344 344 344 344 344 344 344 
+# count 344 344 342 342 342 342 333 
 # unique 3 3 NaN NaN NaN NaN 2
-# top Adelie Torgersen NaN NaN NaN NaN Male
+# top Adelie Biscoe NaN NaN NaN NaN Male
 # freq 152 168 NaN NaN NaN NaN 168  
-# mean NaN NaN 43.921512 17.151163 200.915698 4201.754651 NaN
-# std NaN NaN 5.459584 1.974603 14.061714 801.954236 NaN
+# mean NaN NaN 43.921930 17.151170 200.915205 4201.754386 NaN
+# std NaN NaN 5.459584 1.974793 14.061714 801.954536 NaN
 # min NaN NaN 32.100000 13.100000 172.000000 2700.000000 NaN
 # 25% NaN NaN 39.225000 15.600000 190.000000 3550.000000 NaN
 # 50% NaN NaN 44.450000 17.300000 197.000000 4050.000000 NaN
-# 75% NaN NaN 48.100000 18.700000 213.000000 4750.000000 NaN
+# 75% NaN NaN 48.500000 18.700000 213.000000 4750.000000 NaN
 # max NaN NaN 59.600000 21.500000 231.000000 6300.000000 NaN
 
 # STEP 5: Unique Values Analysis
@@ -138,10 +148,10 @@ print(df.nunique())
 # ACTUAL OUTPUT:
 # species 3
 # island 3
-# bill_length_mm 168
-# bill_depth_mm 168
-# flipper_length_mm 70  
-# body_mass_g 123
+# bill_length_mm 164
+# bill_depth_mm 80
+# flipper_length_mm 55  
+# body_mass_g 94
 # sex 2 
 # dtype: int64
 
@@ -159,9 +169,9 @@ print("\nSTEP 6B: Island Distribution")
 print(df['island'].value_counts())
 
 # ACTUAL OUTPUT:
-# Torgersen 168
-# Biscoe 124
-# Dream 52
+# Biscoe 168
+# Dream 124
+# Torgersen 52
 
 
 # STEP 7: Handling Missing Values (Optional Insight)

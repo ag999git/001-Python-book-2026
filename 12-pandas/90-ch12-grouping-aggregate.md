@@ -66,7 +66,18 @@ The DataFrame is not actually copied into separate variables; it is **virtually 
 
 **Flowchart of Grouping:**
 
-![Flowchart of Grouping](../.gitbook/assets/ch12-grouping.png)
+![Flowchart of Grouping](../resources/S12-LR-ch12-grouping.png)
+
+**Reading the figure**
+
+- `df.groupby('species')` looks at the grouping key, `species`.
+- Split: the Adelie rows form one group.
+- Split: the Chinstrap rows form another group.
+- Split: the Gentoo rows form the third group.
+- Apply: the aggregation (for example `.mean()`) runs on the Adelie group alone.
+- Apply: the same function runs on the Chinstrap group.
+- Apply: and on the Gentoo group.
+- Combine: the three results are put together in one table, with the species names as the index.
 
 ### The Three Stages in a Table
 
@@ -91,7 +102,6 @@ The DataFrame is not actually copied into separate variables; it is **virtually 
 ```python
 DataFrame.groupby(
     by=None,        # what to group by
-    axis=0,         # group along rows (0) or columns (1)
     level=None,     # for MultiIndex grouping
     as_index=True,  # group labels become the index?
     sort=True,      # sort group?
@@ -128,7 +138,7 @@ print(type(grouped))
 ```
 
 ```text
-<class 'pandas.core.groupby.generic.DataFrameGroupBy'>
+<class 'pandas.api.typing.DataFrameGroupBy'>
 ```
 
 ---
@@ -152,13 +162,13 @@ Name: body_mass_g, dtype: float64
 ### B. Multiple Aggregations → `DataFrame` (MultiIndex columns)
 
 ```python
-df.groupby("species").agg(["mean", "max"])
+df.groupby("species")[["bill_length_mm", "body_mass_g"]].agg(["mean", "max"])
 ```
 
 ### C. Multi-column Grouping → MultiIndex
 
 ```python
-df.groupby(["species", "island"]).mean()
+df.groupby(["species", "island"]).mean(numeric_only=True)
 ```
 
 ### D. Filtering Groups → Filtered `DataFrame`
@@ -281,11 +291,11 @@ print("Shape:", df.shape)
 ```text
 --- FIRST 5 ROWS ---
   species     island  bill_length_mm  ...  body_mass_g     sex
-0  Adelie  Torgersen            39.1  ...       3750.0  MALE
-1  Adelie  Torgersen            39.5  ...       3800.0  FEMALE
-2  Adelie  Torgersen            40.3  ...       3250.0  FEMALE
-3  Adelie orgersen             NaN  ...          NaN  NaN
-4  Adelie  Torgersen            36.7  ...       3450.0  FEMALE
+0  Adelie  Torgersen            39.1  ...       3750.0  Male
+1  Adelie  Torgersen            39.5  ...       3800.0  Female
+2  Adelie  Torgersen            40.3  ...       3250.0  Female
+3  Adelie  Torgersen            NaN  ...          NaN  NaN
+4  Adelie  Torgersen            36.7  ...       3450.0  Female
 
 --- SHAPE OF DATA ---
 Shape: (344, 7)
@@ -330,7 +340,7 @@ Gentoo              47.50             217.19
 >  A quick sanity check that `groupby()` is lazy:
 > ```python
 > print(type(grouped_species))
-> # <class 'pandas.core.groupby.generic.DataFrameGroupBy'>
+> # <class 'pandas.api.typing.DataFrameGroupBy'>   (pandas 2.x: pandas.core.groupby.generic.DataFrameGroupBy)
 > ```
 > No computation happens at the `groupby()` line itself — only when `.mean()` is called.
 
@@ -380,8 +390,8 @@ print(alt_style)
           body_mass_g            
                  mean     max
 island                       
-Biscoe     4716.017442  6300.0
-Dream      3712.900000  4800.0
+Biscoe     4716.017964  6300.0
+Dream      3712.903226  4800.0
 Torgersen  3706.372549  4700.0
 ```
 
@@ -552,7 +562,7 @@ df = sns.load_dataset("penguins")
 print("--- FIRST 5 ROWS ---")
 print(df.head())
 print("\n--- SHAPE OF DATA ---")
-printShape:", df.shape)
+print("Shape:", df.shape)
 
 # Step 1: Descriptive statistics — mean bill and flipper length per species
 grouped_species = df.groupby("species")          # Step 1a: SPLIT (lazy — nothing computed yet)
@@ -568,7 +578,7 @@ island_stats = df.groupby("island")["body_mass_g"].agg(
 )
 
 print("\n--- MEAN AND MAX BODY MASS PER ISLAND ---")
-print(is_stats.round(2))
+print(island_stats.round(2))
 
 # Step 2 (alternative): dictionary style — produces MultiIndex columns
 alt_style = df.groupby("island").agg({"body_mass_g": ["mean", "max"]})
@@ -589,7 +599,7 @@ print("Islands remaining:", df_qc["island"].unique())
 
 # Step 4: Bonus — .transform() adds group averages back to every row
 df["species_mean_mass"] = df.groupby("species")["body_mass_g"].transform("mean")
-df["deviation_from_mean"] = df["body_mass_g"] - df["species_mean"]
+df["deviation_from_mean"] = df["body_mass_g"] - df["species_mean_mass"]
 
 print("\n--- ROW-LEVEL COMPARISON (first 5 valid rows) ---")
 print(
@@ -633,11 +643,11 @@ COMMON PITFALLS:
 ```text
 --- FIRST 5 ROWS ---
   species     island  bill_length_mm  ...  body_mass_g     sex
-0  Adelie  Torgersen            39.1  ...       3750.0  MALE
-1  Adelie  Torgersen            39.5  ...       3800.0  FEMALE
-2  Adelie  Torgersen            40.3  ...       3250.0  FEMALE
+0  Adelie  Torgersen            39.1  ...       3750.0  Male
+1  Adelie  Torgersen            39.5  ...       3800.0  Female
+2  Adelie  Torgersen            40.3  ...       3250.0  Female
 3  Adelie  Torgersen             NaN  ...          NaN  NaN
-4  Adelie  Torgersen            36.7  ...       3450.0  FEMALE
+4  Adelie  Torgersen            36.7  ...       3450.0  Female
 
 --- SHAPE OF DATA ---
 Shape: (344, 7)
@@ -651,7 +661,7 @@ Gentoo              47.50             217.19
 
 --- MEAN AND MAX BODY MASS PER ISLAND ---
            mean_mass  max_mass
-land
+island
 Biscoe      4716.02    6300.0
 Dream       3712.90    4800.0
 Torgersen   3706.37    4700.0
@@ -660,9 +670,9 @@ Torgersen   3706.37    4700.0
           body_mass_g            
                  mean     max
 island                       
-Biscoe     4716.    6300.0
+Biscoe     4716.02    6300.0
 Dream      3712.90    4800.0
-Torgersen  3706.37    40.0
+Torgersen  3706.37    4700.0
 
 --- OBSERVATIONS PER ISLAND ---
 island
@@ -690,7 +700,7 @@ Islands remaining: ['Biscoe' 'Dream']
 1     Adelie      Dream      3688.39
 2     Adelie  Torgersen      3706.37
 3  Chinstrap      Dream      3733.09
-4     Gentoo     Biscoe      507.02
+4     Gentoo     Biscoe      5076.02
 ```
 
 ---

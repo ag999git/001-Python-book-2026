@@ -61,9 +61,24 @@ The following table shows the most frequently used `orient` values with simple e
 ### 1.4 Choosing the Right `orient` — A Decision Guide
 
 
-![Flowchart](../resources/ch12-august-2026-JSON-into-pandas-01.png)
+![Flowchart](../resources/S12-LR-ch12-august-2026-JSON-into-pandas-01.png)
 
->  **Version note:** In older pandas versions (≤ 1.x) the default `orient` was `'columns'`; from pandas 2.0 the default is `'records'`. It is good practice to **always specify `orient` explicitly** rather than relying on the default.
+**Reading the figure**
+
+- **Step 1:** You have JSON data to load with `pd.read_json()`.
+- **Step 2:** Is it a list of dictionaries, one dictionary per row?
+- **Step 3:** Yes: `orient='records'`, the shape most web APIs return.
+- **Step 4:** No: is it a list of lists (just the values)?
+- **Step 5:** Yes: `orient='values'`; the row and column labels are lost.
+- **Step 6:** No: does it have a `"schema"` key and a `"data"` key?
+- **Step 7:** Yes: `orient='table'`, which also stores the column types.
+- **Step 8:** No: does it have the three keys `"index"`, `"columns"` and `"data"`?
+- **Step 9:** Yes: `orient='split'`.
+- **Step 10:** No, so it is a dictionary of dictionaries: are the outer keys row labels, such as IDs or dates?
+- **Step 11:** Yes: `orient='index'`.
+- **Step 12:** No, the outer keys are column names: `orient='columns'`, the default for a DataFrame.
+
+>  **Version note:** For a DataFrame, the default `orient` of `read_json()` and `to_json()` is `'columns'` (for a Series it is `'index'`), and this has not changed in pandas 2 or 3. It is still good practice to **always specify `orient` explicitly** rather than relying on the default.
 
 ## 1.5 Basic Examples and Expected Outputs
 
@@ -232,7 +247,7 @@ json_data = '''{
 # Step 2: Read with orient='index'
 df = pd.read_json(StringIO(json_data), orient='index')
 
-# Step 3: Inspect the index (dates kept as strings)
+# Step 3: Inspect the index (the date keys become a DatetimeIndex)
 print(df.index)
 
 # Step 4: Inspect the data types
@@ -245,27 +260,27 @@ print(df)
 **Output:**
 
 ```text
-Index(['2023-01-01', '2023-01-02', '2023-01-03'], dtype='object')
+DatetimeIndex(['2023-01-01', '2023-01-02', '2023-01-03'], dtype='datetime64[us]', freq=None)
 
 open     float64
-high     float64
+high       int64
 low      float64
 close    float64
 dtype: object
 
-            open   high    low  close
-2023-01-01  100.5  105.0   99.5  104.0
-2023-01-02  104.0  108.0  103.5  107.5
-2023-01-03  107.5  110.0  107.0  109.5
+             open  high    low  close
+2023-01-01  100.5   105   99.5  104.0
+2023-01-02  104.0   108  103.5  107.5
+2023-01-03  107.5   110  107.0  109.5
 ```
 
 **Constraints and Errors**:
 
 - **Unique Index Required**: If outer dictionary keys are not unique, pandas will raise a `ValueError` (in JSON, duplicate keys are technically possible but meaningless — pandas refuses to guess)
-- **Index Type Preservation**: The index type is preserved as string (can be converted with `convert_axes=True`)
+- **Index Conversion**: date-like keys are converted to a `DatetimeIndex` automatically (`convert_axes=True` is the default; pass `convert_axes=False` to keep them as strings). Whole-number floats such as `105.0` may also come back as integers (`high` above), because `read_json()` infers the types again
 - **Column Uniqueness**: Column names must be unique across all inner dictionaries
 
->  **Beginner tip:** to turn the string index into a proper DatetimeIndex (as used in the earlier flights chapter), add `df.index = pd.to_datetime(df.index)` after loading.
+>  **Beginner tip:** if you load with `convert_axes=False`, or the dates reach you as strings some other way, `df.index = pd.to_datetime(df.index)` turns them into a proper DatetimeIndex (as used in the earlier flights chapter).
 
 ### `orient='columns'`
 
@@ -474,7 +489,6 @@ print(df.dtypes)
 
 ```text
         id     name   value
-index
 row1     1    Alice   100.5
 row2     2      Bob   200.7
 row3     3  Charlie   150.3
@@ -535,7 +549,15 @@ With `json_normalize()`:
 
 ### The Normalization Process at a Glance
 
-![Flowchart](../resources/ch12-august-2026-JSON-into-pandas-02.png)
+![Flowchart](../resources/S12-LR-ch12-august-2026-JSON-into-pandas-02.png)
+
+**Reading the figure**
+
+- Each student record contains a nested dictionary, `"grades": {"math": 90, "english": 85}`.
+- `pd.json_normalize()` flattens the nested keys.
+- `pd.DataFrame()` alone does not flatten anything.
+- Result: separate `grades.math` and `grades.english` columns, ready to filter, aggregate and plot.
+- Result: a `grades` column whose cells are whole dictionaries, which cannot be used directly for calculations.
 
 ## 1. What is "Nested JSON"?
 
@@ -671,7 +693,7 @@ Students with math > 85:
 ```python
 """
 SUPPLEMENT: pd.read_json() — the orient parameter
-Demonstrates all six common orient values with runnable examples.
+Demonstrates all eight orient examples with runnable code.
 """
 
 # ==========================================================
@@ -732,7 +754,7 @@ print("\nSTEP 4: ORIENT = 'index' (stock prices)")
 json_data = '''{
     "2023-01-01": {"open": 100.5, "high": 105.0, "low": 99.5, "close": 104.0},
     "2023-01-02": {"open": 104.0, "high": 108.0, "low": 103.5, "close": 107.5},
-    "2023-01-03": {"open": 107.5, "high": 110.0, "low": 1070, "close": 109.5}
+    "2023-01-03": {"open": 107.5, "high": 110.0, "low": 107.0, "close": 109.5}
 }'''
 df = pd.read_json(StringIO(json_data), orient='index')
 print(df.index)
@@ -796,11 +818,6 @@ json_data = '''{
             {"name": "value", "type": "number"}
         ],
         "primaryKey": ["index"],
-       
-
-
-
-```python
         "pandas_version": "1.4.0"
     },
     "data": [
@@ -928,7 +945,7 @@ KEY TAKEAWAYS — json_normalize():
 
 ## Practice Questions (Follow-up)
 
-1. In Example 4, the index is a set of *strings*. Write one line to convert it to a real `DatetimeIndex` (hint: `pd.to_datetime`). Why does that matter for the resampling techniques used earlier in this chapter?
+1. In Example 4, `read_json()` turned the date keys into a `DatetimeIndex` for you. Load the same JSON again with `convert_axes=False`, check `df.index`, and write one line to convert it to a real `DatetimeIndex` (hint: `pd.to_datetime`). Why does that matter for the resampling techniques used earlier in this chapter?
 2. Take Example 7's `'values'` output and add column names afterward using `df.columns = ['a', 'b', 'c']`. What have you *not* recovered compared to `'split'` format?
 3. Load Example 2's records with `pd.json_normalize(...)` instead of `pd.read_json(...)` — what happens to the nested `scores` dictionary? (Hint: `pd.json_normalize` accepts a list of dicts directly.)
 4. Round-trip test: save Example 6's DataFrame with `to_json('x.json', orient='split')`, reload it, and compare with `df.equals(...)`. Repeat with `orient='values'` — which one survives the round trip intact and why?

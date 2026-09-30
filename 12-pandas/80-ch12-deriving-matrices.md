@@ -620,7 +620,15 @@ Last 3 Adelie penguins (sorted by mass):
 Look carefully at the very last row: `body_mass_g = 0.0`. This isn't a real penguin that happened to weigh nothing — it comes directly from Phase 1's `fillna(0)`. So what actually happened here is: **an originally missing value has, by the end of this pipeline, been sorted in as if it were the single lightest penguin in the entire dataset.**
 
 
-![Flowchart](../resources/ch12-august-2026-data-deriving-matrices-01.png)
+![Flowchart](../resources/S12-LR-ch12-august-2026-data-deriving-matrices-01.png)
+
+**Reading the figure**
+
+- **Step 1:** Row 3 of the dataset has no measurements at all: its `body_mass_g` (and the bill measurements) are NaN.
+- **Step 2:** Phase 1 runs `df.fillna(0)`, so every missing measurement becomes `0.0`.
+- **Step 3:** A side effect in Phase 2: `slenderness_index` for row 3 is `0.0 / 0.0`, which is NaN (undefined), a visible symptom of the missing data.
+- **Step 4:** Phase 4 sorts by `body_mass_g` in descending order.
+- **Step 5:** Row 3, with its fake `0.0`, lands at the very end, looking like the lightest Adelie penguin instead of a missing measurement.
 
 #### Important Hidden Lesson
 

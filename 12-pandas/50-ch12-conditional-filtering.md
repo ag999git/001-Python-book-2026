@@ -165,7 +165,14 @@ cond_not.head()->        species island  bill_length_mm  bill_depth_mm  flipper_
 **Why `&`/`|`/`~` instead of `and`/`or`/`not`?** Python's built-in `and`/`or`/`not` expect a *single* `True` or `False` value — but `df['species'] == 'Adelie'` produces an entire *Series* of hundreds of `True`/`False` values, one per row, not just one. Pandas's `&`, `|`, and `~` are specifically designed to compare two Series *element by element* (a "vectorized" operation, mentioned in the glossary above), which is exactly what's needed here.
 
 
-![Flowchart](../resources/ch12-august-2026-conditional-filtering-01.png)
+![Flowchart](../resources/S12-LR-ch12-august-2026-conditional-filtering-01.png)
+
+**Reading the figure**
+
+- Each condition, such as `df['species'] == 'Adelie'`, gives one `True` or `False` for every row.
+- AND, `&`: keeps a row only when both conditions are `True`.
+- OR, `|`: keeps a row when at least one of the conditions is `True`.
+- NOT, `~`: flips every `True` to `False` and every `False` to `True`, keeping the rows that do not match.
 
 
 
@@ -264,6 +271,8 @@ safe_filter.head()->   species     island  bill_length_mm  bill_depth_mm  flippe
 
 Notice row 3 (which had a missing `sex` value, as seen back in Step 0's output) is correctly and cleanly excluded here, rather than causing an error.
 
+Notice also that rows with `Female` are kept as well: the pattern `'male'` (with `case=False`) is found *inside* the word `Female`. To keep only the males, compare exactly, `df['sex'] == 'Male'`, or anchor the pattern to the whole value, `df['sex'].str.contains('^male$', case=False, na=False)`.
+
 ---
 
 ### Step 6: Understanding Common Errors
@@ -301,6 +310,10 @@ Notice row 3 (which had a missing `sex` value, as seen back in Step 0's output) 
 # (rather than True or False) in the result -- and Pandas cannot use
 # a mask containing NaN to filter rows, raising: ValueError: Cannot
 # mask with non-boolean array containing NA / NaN values.
+# (This is the behaviour of pandas 1.x and 2.x. From pandas 3, text
+# columns use a string type that treats a missing value as "no match",
+# so no error is raised -- but na=False is still the clear, portable
+# way to say what you mean.)
 ```
 
 **Error-type summary:**
@@ -310,11 +323,23 @@ Notice row 3 (which had a missing `sex` value, as seen back in Step 0's output) 
 | 1 | Missing parentheses around conditions | Operator precedence makes Python compute the wrong thing first | `TypeError` |
 | 2 | Using `and`/`or` instead of `&`/`\|` | Python's `and`/`or` can't handle an entire Series at once | `ValueError` |
 | 3 | Using `.str.contains()` on a non-text column | The `.str` accessor requires genuine text data | `AttributeError` |
-| 4 | Forgetting `na=False` on a column with missing values | A `NaN` in the filtering mask can't be interpreted as True/False | `ValueError` |
+| 4 | Forgetting `na=False` on a column with missing values | A `NaN` in the filtering mask can't be interpreted as True/False | `ValueError` (pandas 1.x/2.x) |
 
 
 
-![Flowchart](../resources/ch12-august-2026-conditional-filtering-02.png)
+![Flowchart](../resources/S12-LR-ch12-august-2026-conditional-filtering-02.png)
+
+**Reading the figure**
+
+- **Step 1:** The filtering line raises an error.
+- **Step 2:** Did you leave out the parentheses around each condition, as in `df[df['body_mass_g'] > 4000 & df['species'] == 'Adelie']`?
+- **Step 3:** Yes: `&` is evaluated before `>` and `==`, so Python first tries `4000 & df['species']`, which raises `TypeError`.
+- **Step 4:** No: did you use `and` / `or` instead of `&` / `|`?
+- **Step 5:** Yes: `and` and `or` need a single `True` or `False`, but each side is a whole Series, so pandas raises `ValueError: The truth value of a Series is ambiguous`.
+- **Step 6:** No: did you use `.str` on a column that does not hold text, such as `body_mass_g`?
+- **Step 7:** Yes: `AttributeError: Can only use .str accessor with string values`.
+- **Step 8:** No: did you call `.str.contains()` on a column with missing values without `na=False`?
+- **Step 9:** Yes: in pandas 2.x the missing values make the mask contain NaN and pandas raises `ValueError: Cannot mask with non-boolean array containing NA / NaN values`. (pandas 3 treats a missing value as no match, but `na=False` makes your intention clear in every version.)
 
 
 ---
@@ -343,7 +368,18 @@ Use clear and well-structured conditions for readability and correctness
 
 The following diagram (from the book's own resources) shows the full sequence of steps in this project:
 
-![Filtering Flowchart](../.gitbook/assets/ch12-filtering.png)
+![Filtering Flowchart](../resources/S12-LR-ch12-filtering.png)
+
+**Reading the figure**
+
+- Step 0: import pandas and seaborn and load the penguins dataset into a DataFrame.
+- Step 1: filter with a single condition, `df[df['body_mass_g'] > 4000]`: the condition is a boolean Series, one `True`/`False` per row.
+- Step 2: combine conditions with `&` (and), `|` (or) and `~` (not), each condition in its own parentheses.
+- Step 3: `.isin([...])` keeps rows whose value matches any of several exact values.
+- Step 4: `.str.contains()` searches text columns for a pattern, with options for case and regular expressions.
+- Step 5: `na=False` makes missing values count as "no match".
+- Step 6: the four common errors: missing parentheses, `and`/`or` instead of `&`/`|`, `.str` on a non-text column, and a mask containing NaN.
+- Step 7: a printed summary of the key learnings and best practice.
 
 ---
 

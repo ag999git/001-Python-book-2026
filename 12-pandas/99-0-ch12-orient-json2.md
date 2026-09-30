@@ -12,7 +12,7 @@ The companion supplement (`98-ch12-orient-json.md`) introduced the `orient` para
 
 By the end you should be able to answer these questions for yourself:
 
-- What does each `orient` value like *as actual JSON text on disk*?
+- What does each `orient` value look like *as actual JSON text on disk*?
 - Why do all four formats rebuild to the same table?
 - What is the difference between "simple 2-level nesting" (which pandas reads fine) and "true nesting" (which needs `json_normalize()`)?
 
@@ -22,7 +22,18 @@ By the end you should be able to answer these questions for yourself:
 
 ##  The Whole Journey at a Glance
 
-![Flowchart](../resources/ch12-august-2026-JSON-4-formats-01.png)
+![Flowchart](../resources/S12-LR-ch12-august-2026-JSON-4-formats-01.png)
+
+**Reading the figure**
+
+- `pd.read_csv()` loads the tips dataset, a CSV file on the web with 244 rows of restaurant bills and tips, into a DataFrame in memory.
+- `to_json()` is called four times, once per format.
+- `orient='records'` writes `tips_records.json`, a list of row dictionaries.
+- `orient='columns'` writes `tips_columns.json`, a dictionary of columns.
+- `orient='index'` writes `tips_index.json`, a dictionary of rows keyed by index.
+- `orient='split'` writes `tips_split.json`, with separate `index`, `columns` and `data`.
+- Each file is read back with `read_json()` and the same `orient` it was written with.
+- The four DataFrames are identical: `.equals()` returns `True` for each pair.
 ---
 
 # Detailed Discussion on the Script Given in the Book
@@ -83,7 +94,7 @@ df.to_json("tips_split.json", orient="split")
 
 > Same data → **4 different storage structures**
 
->  **Why bother with four formats?** Different consumers prefer different shapes: web front-ends love `records` (it maps directly to a list of objects); column-oriented stores like `columns`; `split` is the best for lossless **round-trips** (save → load with nothing changed, including dtypes); `index` mirrors "keyed" data like time series.
+>  **Why bother with four formats?** Different consumers prefer different shapes: web front-ends love `records` (it maps directly to a list of objects); column-oriented stores like `columns`; `split` is the best of the four for **round-trips** (labels preserved exactly); `index` mirrors "keyed" data like time series.
 
 ----------
 
@@ -146,7 +157,7 @@ Hierarchy:
 ```text
 list
  ├── dict (row 1)
- ── dict (row 2)
+ └── dict (row 2)
 ```
 
 ----------
@@ -216,7 +227,7 @@ df_index = pd.read_json("tips_index.json", orient="index")
 ```python
 {
  "0": {"total_bill": 16.99, "tip": 1.01, ...},
- "1": {"total_bill": 10.34, "": 1.66, ...}
+ "1": {"total_bill": 10.34, "tip": 1.66, ...}
 }
 ```
 
@@ -277,7 +288,7 @@ dict
  └── list of lists (data)
 ```
 
->  **Why `split` round-trips best:** column names and index labels are stored *explicitly*, and the values sit in a plain rectangle — so pandas can restore dtypes from the metadata rather than re-guessing them. `records`/`index`/`columns` all force pandas to re-infer things on the way back in.
+>  **Why `split` round-trips best of the four:** column names and index labels are stored *explicitly*, and the values sit in a plain rectangle — so the labels come back exactly. The dtypes are still re-inferred from the values (only `orient='table'` stores a dtype schema). `records`/`index`/`columns` all force pandas to re-infer things on the way back in.
 
 ----------
 
@@ -304,7 +315,7 @@ True
 
 > Different formats → **same data**. `DataFrame.equals()` checks both values **and** dtypes — so these `True`s are a strong guarantee, not just "looks similar".
 
->  **Beginner caveat:** equality holds here because the values happen to re-infer to the same dtypes. With trickier data (dates, mixed types, missing values), `records`/`columns`/`index` can come back with slightly different dtypes than the original, whilesplit` (and `table`) preserve them. When in doubt, compare with `df.dtypes`, not just `.equals()`.
+>  **Beginner caveat:** equality holds here because the values happen to re-infer to the same dtypes. With trickier data (dates, mixed types, missing values), `records`/`columns`/`index` can come back with slightly different dtypes than the original — and so can `split`; only `table` stores the dtypes. When in doubt, compare with `df.dtypes`, not just `.equals()`.
 
 ----------
 
@@ -359,7 +370,7 @@ print(df_nested)
 | `records` | list of row-dicts | list | dict (columns) | Good; dtypes re-inferred |
 | `columns` | dict of column-dicts | dict (columns) | dict (row → value) | Good; dtypes re-inferred |
 | `index` | dict of row-dicts, keyed by index | dict (rows) | dict (columns) | Good; keeps row labels |
-| `split` | dict with `columns` + `index` + `data` | dict (metadata) | list of lists (values) | **Best** — labels and dtypes explicit |
+| `split` | dict with `columns` + `index` + `data` | dict (metadata) | list of lists (values) | **Best of the four** — labels explicit (dtypes still inferred) |
 
 ----------
 
@@ -471,7 +482,7 @@ with open("tips_index.json", "r") as f:
     data_index = json.load(f)
 
 print(type(data_index))          # <class 'dict'>
-keys list(data_index.keys())
+keys = list(data_index.keys())
 print("Row indices:", keys[:5])  # ['0', '1', '2', '3', '4']  (as STRINGS)
 print("First row data:", {keys[0]: data_index[keys[0]]})
 
@@ -536,7 +547,7 @@ STEP 1: ORIGINAL DATAFRAME
    total_bill   tip     sex smoker  day    time  size
 0        16.99  1.01  Female     No  Sun  Dinner     2
 1        10.34  1.66    Male     No  Sun  Dinner     3
-Shape: (244 7)
+Shape: (244, 7)
 
 STEP 4: RAW JSON (records FORMAT)
 <class 'list'>
@@ -557,14 +568,14 @@ STEP 12: Flattened DataFrame:
 1    Bob           80              75
 ```
 
-> ⚠️ **Two technical notes on the original output hints:** (1) in the raw `index`/`columns` files the row labels are **strings** (`'0'`, `'1'`), not integers — JSON object keys are always strings; pandas converts them back to integers on reload. (2) In modern pandas, reloading with `orient='split'` may require `typ='frame'` explicitly if the file was written by `Series.to_json` — for DataFrames as here, the defaults work fine.
+> ⚠️ **Two technical notes on the original output hints:** (1) in the raw `index`/`columns` files the row labels are **strings** (`'0'`, `'1'`), not integers — JSON object keys are always strings; pandas converts them back to integers on reload. (2) If a file was written by `Series.to_json`, reload it with `typ='series'` (the default, `typ='frame'`, expects a DataFrame) — for DataFrames as here, the defaults work fine.
 
 ---
 
 ## Practice Questions (Follow-up)
 
 1. Write the four JSON files to disk, then open `tips_records.json` in a text editor. How does what you see differ from the pretty-printed version in Step 4? (Hint: try `json.dumps(data_records[:2], indent=2)`.)
-2. In Step 11, replace the third check with `df_split(df)` — comparing against the **original** DataFrame. Is it still `True`? If not, print `df.dtypes` vs `df_split.dtypes` and find the difference.
+2. In Step 11, replace the third check with `df_split.equals(df)` — comparing against the **original** DataFrame. Is it still `True`? If not, print `df.dtypes` vs `df_split.dtypes` and find the difference.
 3. Delete the `orient` argument from one of the Step 3/5/7/9 `read_json` calls. Does it still work? (Recall the pandas-version default changed — see supplement `98-ch12-orient-json.md`.)
 4. Add a fifth save: `df.to_json("tips_table.json", orient="table")` and read it back with `orient="table"`. Does `.equals(df)` hold? Why is `table` even better than `split` for round-trips?
 5. Take the Step 12 nested data and add a third record with an extra key `"age": 21`. What does `json_normalize` put in the other rows' `age` column? What happens if Bob instead has a *missing* `grades` dict entirely?

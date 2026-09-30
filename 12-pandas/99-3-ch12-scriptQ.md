@@ -605,7 +605,16 @@ Sun    21.410000  247.39
 | **Apply** | A calculation runs independently on each group | `.agg()` computes mean(`total_bill`) and sum(`tip`) *per group* |
 | **Combine** | Every group's result is merged back into one table | The 4 per-day results become the 4 rows of `result` |
 
-![Flowchart](../resources/ch12-august-2026-scripting-question-08.png)
+![Flowchart](../resources/S12-LR-ch12-august-2026-scripting-question-08.png)
+
+**Reading the figure**
+
+- Split: `df.groupby('day')` divides the tips rows into four groups: Thur, Fri, Sat and Sun.
+- Apply, Thursday: `.agg({'total_bill': 'mean', 'tip': 'sum'})` gives a mean bill of 17.68 and total tips of 171.83.
+- Apply, Friday: 17.15 and 51.96.
+- Apply, Saturday: 20.44 and 260.40.
+- Apply, Sunday: 21.41 and 247.39.
+- Combine: the four results become the four rows of `result`, indexed by `day`.
 
 *Learn more:* [Group by: split-apply-combine (user guide)](https://pandas.pydata.org/docs/user_guide/groupby.html) · [DataFrameGroupBy.agg() reference](https://pandas.pydata.org/docs/reference/api/pandas.core.groupby.DataFrameGroupBy.agg.html)
 
@@ -1214,7 +1223,13 @@ Reshaped Long Format:
 | Function to convert Wide → Long | `.melt()` | — |
 | Function to convert Long → Wide | — | `.pivot_table()` (Question 9) / `.unstack()` (Question 19) |
 
-![Flowchart](../resources/ch12-august-2026-scripting-question-16.png)
+![Flowchart](../resources/S12-LR-ch12-august-2026-scripting-question-16.png)
+
+**Reading the figure**
+
+- Wide format: one row per product, with the monthly sales in three separate columns.
+- `.melt(id_vars=['Product'], value_vars=['Jan', 'Feb', 'Mar'], var_name='Month', value_name='Sales')` gives long format: one row per product and month.
+- `.pivot_table()` (or `.unstack()`) turns the long table back into wide format.
 
 <a id="q17"></a>
 
@@ -1945,7 +1960,7 @@ Successfully Read with Correct Encoding:
 
 ### 27. How does the chunksize parameter in read_csv enable processing of datasets that are larger than the available system RAM (Out-of-Core processing), and what is the typical workflow pattern?
 
-**Task:** Write a script that defines a generator function reading a large CSV (simulated here with a loop) in chunks of 10 rows. Aggregate the sum of a 'Value' column across all chunks to demonstrate processing data without ever holding the full dataset in memory.
+**Task:** Write a script that reads a large CSV (simulated here in memory) in chunks of 10 rows. Aggregate the sum of a 'Value' column across all chunks to demonstrate processing data without ever holding the full dataset in memory.
 
 **Steps to follow:**
 
@@ -2006,7 +2021,15 @@ Total Sum of all chunks: 1818
 4. The trade-off: any calculation that needs to see the *whole* dataset at once (an overall median, or a global sort by value, for instance) can no longer be done with one simple built-in method call — you instead have to write logic that combines each chunk's own partial result into a running, whole-file answer, exactly as this script's `total_sum` running total does for addition. Some calculations (like a running sum, or a running count) translate naturally into this chunk-by-chunk pattern; others (like an exact median) are genuinely harder to compute this way and may require a different, specialised out-of-core approach.
 5. This is the same underlying idea that lets database systems and big-data tools handle files vastly larger than any one computer's RAM — process a manageable slice, combine its result into a running summary, discard the slice, repeat — and `chunksize` is Pandas' straightforward, built-in way to apply that same pattern to an oversized CSV file.
 
-![Flowchart](../resources/ch12-august-2026-scripting-question-27.png)
+![Flowchart](../resources/S12-LR-ch12-august-2026-scripting-question-27.png)
+
+**Reading the figure**
+
+- **Step 1:** `chunksize=10` makes `read_csv()` return an iterator instead of one big DataFrame.
+- **Step 2:** The `for` loop asks: is there another chunk left in the file?
+- **Step 3:** Yes: the next 10 rows are read as a small DataFrame; only this chunk is in memory.
+- **Step 4:** Its `Value` column is summed and added to the running total, and the chunk is then discarded before the next one is read.
+- **Step 5:** No more chunks: print the grand total. Only one chunk and the running total were ever held in memory.
 
 *Learn more:* [read_csv() reference (see chunksize)](https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html) · [Scaling to large datasets (user guide)](https://pandas.pydata.org/docs/user_guide/scale.html)
 

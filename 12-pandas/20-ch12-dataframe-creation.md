@@ -25,7 +25,14 @@ Knowing all three categories matters because real projects use different ones at
 
 ## The three categories, at a glance
 
-![Flowchart](../resources/ch12-august-2026-DataFrame-creation-01.png)
+![Flowchart](../resources/S12-LR-ch12-august-2026-DataFrame-creation-01.png)
+
+**Reading the figure**
+
+- Every way of creating a `DataFrame` falls into one of three categories.
+- Category A, standard Python structures: a dictionary of lists, a list of dictionaries, or a list of lists with column names (Methods 1 to 3). Good for small data typed by hand.
+- Category B, external data sources: `pd.read_csv()`, `pd.read_excel()` and `pd.read_json()` (Methods 4 to 6). This is how most real analysis begins.
+- Category C, existing pandas or NumPy objects: a dictionary of `Series`, a 2D NumPy array, or an empty DataFrame that is filled in later (Methods 7 to 9).
 
 ---
 
@@ -95,7 +102,16 @@ The `io` module (part of Python's standard library) provides two tools that let 
 **A practical note:** in real projects, you will almost always use genuine file paths rather than these in-memory tools — they're used here purely so this script can be copied, pasted, and run immediately, without you needing to first create any actual files on your own computer.
 
 
-![Flowchart](../resources/ch12-august-2026-DataFrame-creation-02.png)
+![Flowchart](../resources/S12-LR-ch12-august-2026-DataFrame-creation-02.png)
+
+**Reading the figure**
+
+- The normal way: pass the path of a real file on disk, for example `pd.read_csv('data.csv')`.
+- If the text (such as CSV data) is already in a Python string, there is no file to open.
+- If binary data (such as an `.xlsx` workbook) is already in a `bytes` object, there is no file either.
+- `io.StringIO` wraps the string so that it behaves like an open text file, entirely in memory.
+- `io.BytesIO` wraps the bytes so that they behave like an open binary file, entirely in memory.
+- The pandas reading function accepts the real file or either wrapper in the same way.
 
 ### The script
 
@@ -148,7 +164,7 @@ except ImportError:
 # databases (like MongoDB).
 # ------------------------------------------------------------
 json_data = '[{"Name": "Alice", "Age": 25}, {"Name": "Bob", "Age": 30}]'
-df6 = pd.read_json(json_data)
+df6 = pd.read_json(io.StringIO(json_data))
 print("\n6. From JSON (.read_json):\n", df6)
 ```
 
@@ -252,7 +268,7 @@ except ImportError:
     print("  [Skipped] Please install openpyxl to run this: pip install openpyxl")
 
 json_data = '[{"Name": "Alice", "Age": 25}, {"Name": "Bob", "Age": 30}]'
-df6 = pd.read_json(json_data)
+df6 = pd.read_json(io.StringIO(json_data))
 print("\n6. From JSON (.read_json):\n", df6)
 
 

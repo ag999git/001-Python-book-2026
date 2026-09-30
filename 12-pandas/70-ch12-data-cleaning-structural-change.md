@@ -100,7 +100,22 @@ The index is the "address" of a row — the label Pandas uses to look it up.
 
 The full flow of this project is shown below (from the book's own resources):
 
-![Flow chart Data cleaning Structural change](../.gitbook/assets/ch12-data-cleaning-structural-change.png)
+![Flow chart Data cleaning Structural change](../resources/S12-LR-ch12-data-cleaning-structural-change.png)
+
+**Reading the figure**
+
+- The script has four parts: Step 0, Phase 1, Phase 2 and Step 3.
+- Step 0: import pandas and seaborn and load the clean penguins dataset.
+- Phase 1 deliberately breaks the data in three realistic ways.
+- Phase 2 repairs each problem.
+- Step 3: a summary of the key learnings.
+- 1.1: the column names are replaced with inconsistent ones such as `BLmm` and `BMg`.
+- 1.2: `BLmm` (bill length) is converted to text with `.astype(str)`.
+- 1.3: the first 5 rows are appended again with `pd.concat()`, creating 5 duplicate rows.
+- 2.1: `.rename()` maps the messy names back to clear ones.
+- 2.2: `.astype()` converts the bill length back to `float` and suitable text columns to `category`.
+- 2.3: `.duplicated()` finds the duplicate rows and `.drop_duplicates()` removes them.
+- 2.4: a `penguin_id` column is created and moved into the index with `.set_index()`; `.reset_index()` reverses this.
 
 ---
 
@@ -212,7 +227,7 @@ Series.astype(dtype)
 | Output | A new, converted Series |
 | Limitation | Fails with an error if the conversion is genuinely incompatible |
 
-> **Did you know?** Converting a column containing missing (`NaN`) values to text doesn't leave those values blank — it turns each one into the literal four-character string `"nan"`. Later, in Step 2.2, converting that same column back to `float` happens to work correctly, because Python's `float()` function specifically recognizes the text `"nan"` and turns it back into a genuine floating-point `NaN`. This is a happy coincidence, though, not something to rely on generally — if the missing values had instead been written as `"N/A"`, `"missing"`, or blank strings, converting back to `float` would raise an error rather than silently succeeding.
+> **Did you know?** What happens to missing (`NaN`) values here depends on your pandas version. In pandas 1.x and 2.x, `.astype(str)` turns each one into the literal three-letter string `"nan"`; converting the column back to `float` in Step 2.2 still works, because Python's `float()` function recognizes the text `"nan"` and turns it back into a genuine `NaN`. In pandas 3, the new string type keeps them as genuine missing values, so nothing changes in the round trip. Either way, don't rely on this in general — if the missing values had instead been written as `"N/A"`, `"missing"`, or blank strings, converting back to `float` would raise an error rather than silently succeeding.
 
 #### STEP 1.3: Creating Duplicates
 
@@ -276,7 +291,7 @@ Messy dataset df_messy tail (showing the appended duplicates):->
 348  Adelie  Torgersen  36.7  19.3  193.0  3450.0  Female
 ```
 
-The shape confirms it: `344 + 5 = 349` rows. Notice rows 344–348 (the appended copies) are identical to rows 0–4 at the very start of the dataset — this is exactly what Step 2.3 will detect and remove. Also notice `BLmm` is now listed as `str`, exactly as intended by Step 1.2, and (per the "Did you know?" note above) row 347's missing value still displays as `NaN` here, since this is Pandas's own display formatting rather than the raw string value underneath.
+The shape confirms it: `344 + 5 = 349` rows. Notice rows 344–348 (the appended copies) are identical to rows 0–4 at the very start of the dataset — this is exactly what Step 2.3 will detect and remove. Also notice `BLmm` is now listed as `str`, exactly as intended by Step 1.2, and (per the "Did you know?" note above) row 347's missing value displays as `NaN` here because in pandas 3 it is still a genuine missing value (in pandas 2.x it would be the text `nan`).
 
 ---
 
@@ -556,7 +571,19 @@ Every row now has a genuinely meaningful label (`ID_0`, `ID_1`, ...) instead of 
 ## The Full Process, Visualized
 
 
-![Flowchart](../resources/ch12-august-2026-data-cleaning-01.png)
+![Flowchart](../resources/S12-LR-ch12-august-2026-data-cleaning-01.png)
+
+**Reading the figure**
+
+- **Step 1:** Load the clean penguins dataset.
+- **Step 2:** Phase 1: overwrite the column names with inconsistent ones.
+- **Step 3:** Phase 1: convert `bill_length_mm` (now `BLmm`) to text.
+- **Step 4:** Phase 1: append the first 5 rows again, creating duplicates.
+- **Step 5:** Step 2.1: rename the columns back to clean names.
+- **Step 6:** Step 2.2: convert the types back: the bill length to `float`, and text columns to `category`.
+- **Step 7:** Step 2.3: detect the duplicate rows and drop them.
+- **Step 8:** Step 2.4: create a `penguin_id` column (`ID_0`, `ID_1`, ...) and set it as the index.
+- **Step 9:** The result, `df_final`, is ready for analysis.
 
 ---
 
@@ -854,264 +881,6 @@ Inspect before AND after every structural change -- never assume it worked
 ```
 
 This combined run confirms every figure discussed step-by-step above lines up exactly: 349 rows after the duplicates are appended, 10 rows flagged by `keep=False`, back down to 344 rows after `drop_duplicates()`, and a final `penguin_id`-indexed DataFrame ready for analysis.
-
----
-
-## The Complete Script in a Single Block
-
-For convenience, here is the entire project — Step 0, all of Phase 1, all of Phase 2, and a short final summary — combined into one runnable file, followed by its complete, real output.
-
-```python
-"""
-PROJECT: Data Cleaning - Structural Changes
-DATASET: Palmer Penguins
-
-OBJECTIVE:
-1. Simulate a messy, real-world dataset (bad column names,
-   wrong data types, duplicate rows)
-2. Clean it up: rename columns, fix data types, remove
-   duplicates, and set a meaningful index
-
-NOTE:
-This script is written with detailed comments for teaching purposes.
-"""
-
-# STEP 0: IMPORT LIBRARIES AND LOAD DATASET
-print("\n STEP 0. IMPORT LIBRARIES AND LOAD DATASET")
-
-import pandas as pd
-import seaborn as sns
-
-# Step 1: load the clean, original dataset first, before we
-# deliberately introduce problems into it in Phase 1 below.
-df_raw = sns.load_dataset('penguins')
-
-print("=== ORIGINAL DATA ===")
-print("Original dataset df_raw columns:->", list(df_raw.columns))
-print("Original dataset df_raw shape:->", df_raw.shape)
-
-
-# PHASE 1: CREATING MESSY DATA BY DELIBERATE MANIPULATION
-print("\n PHASE 1. CREATING MESSY DATA BY DELIBERATE MANIPULATION")
-
-# Step 1: inconsistent column names (simulating bad data entry)
-df_raw.columns = ['Species', 'Island', 'BLmm', 'BDmm', 'FLmm', 'BMg', 'Sex']
-
-# Step 2: convert a numeric column to text (simulating an import error)
-df_raw['BLmm'] = df_raw['BLmm'].astype(str)
-
-# Step 3: create 5 duplicate rows by appending the first 5 rows
-# to the end of the dataset. ignore_index=True renumbers the
-# combined result sequentially rather than repeating index labels.
-df_messy = pd.concat([df_raw, df_raw.head(5)], ignore_index=True)
-
-print("\n=== INITIAL MESSY DATA ===")
-print("Messy dataset df_messy shape:->", df_messy.shape)
-print("Messy dataset df_messy dtypes:->\n", df_messy.dtypes)
-print("Messy dataset df_messy tail (showing the appended duplicates):->\n", df_messy.tail(7))
-
-
-# PHASE 2: STRUCTURAL CLEANING
-print("\n PHASE 2. STRUCTURAL CLEANING")
-
-# STEP 2.1: RENAMING COLUMNS
-print("\n STEP 2.1: RENAMING COLUMNS ================")
-
-# Step 1: map each messy column name to its clean, descriptive equivalent.
-rename_map = {
-    'Species': 'species',
-    'Island': 'island',
-    'BLmm': 'bill_length_mm',
-    'BDmm': 'bill_depth_mm',
-    'FLmm': 'flipper_length_mm',
-    'BMg': 'body_mass_g',
-    'Sex': 'sex',
-}
-
-# Step 2: inplace=True saves the change directly onto df_messy,
-# rather than returning a separate, new DataFrame.
-df_messy.rename(columns=rename_map, inplace=True)
-
-# ERROR EXAMPLE (commented out): renaming a column that doesn't
-# exist doesn't raise an error by default -- it's simply ignored.
-# df_messy.rename(columns={'ghost_col': 'real_col'}, inplace=True)
-# Adding errors='raise' would make Pandas complain loudly instead.
-
-print("\n=== AFTER RENAMING COLUMNS BACK TO ORIGINAL ===")
-print("df_messy columns after renaming:->", list(df_messy.columns))
-
-
-# STEP 2.2: CHANGING DATA TYPES
-print("\n STEP 2.2: CHANGING DATA TYPES ================")
-
-# Step 1: bill_length_mm is currently text (object/str) because of
-# our simulation in Phase 1 -- convert it back to float so it can
-# be used in calculations again.
-df_messy['bill_length_mm'] = df_messy['bill_length_mm'].astype(float)
-
-# Step 2: 'sex' has only a few distinct values (Male, Female, and
-# missing) -- converting it to 'category' reduces memory usage
-# compared to storing the same repeated text over and over.
-df_messy['sex'] = df_messy['sex'].astype('category')
-
-# Step 3: 'island' has the same property -- only 3 distinct island
-# names (Torgersen, Biscoe, Dream) across the whole dataset.
-df_messy['island'] = df_messy['island'].astype('category')
-
-print("\n=== AFTER TYPE CONVERSION ===")
-print("df_messy dtypes after conversion:->\n", df_messy.dtypes)
-
-
-# STEP 2.3: REMOVING DUPLICATES
-print("\n STEP 2.3: REMOVING DUPLICATES ================")
-
-# Step 1: identify every row involved in duplication (both the
-# ORIGINAL and its copy) using keep=False -- this is purely for
-# INSPECTION, nothing is removed yet.
-duplicates_mask = df_messy.duplicated(keep=False)
-
-print("\n=== DUPLICATE ROWS (keep=False) ===")
-print("Number of rows marked as duplicate (originals + copies):->", duplicates_mask.sum())
-print("df_messy duplicate rows before dropping:->\n", df_messy[duplicates_mask])
-
-# Step 2: now actually remove the extra copies. The default,
-# keep='first', keeps each row's FIRST occurrence and drops any
-# later repeats -- exactly right here, since our duplicates were
-# appended onto the END of the dataset in Phase 1.
-df_clean = df_messy.drop_duplicates(keep='first')
-
-print("\n=== AFTER DROPPING DUPLICATES ===")
-print("df_clean shape after dropping duplicates:->", df_clean.shape)
-
-
-# STEP 2.4: SETTING AND RESETTING INDEX
-print("\n STEP 2.4: SETTING AND RESETTING INDEX ================")
-
-# Step 1: create a new, genuinely identifying column -- 'ID_0',
-# 'ID_1', ... 'ID_n' -- one per row of the now-duplicate-free df_clean.
-df_clean = df_clean.copy()   # work on a copy to avoid a SettingWithCopyWarning
-df_clean['penguin_id'] = ['ID_' + str(i) for i in range(len(df_clean))]
-
-# Step 2: move 'penguin_id' INTO the index, replacing the default
-# numeric row labels with this new, meaningful identifier.
-df_final = df_clean.set_index('penguin_id')
-
-print("\n=== AFTER SETTING INDEX ===")
-print("df_final head after setting index:->\n", df_final.head())
-print("\ndf_final index name:->", df_final.index.name)
-
-# RESET INDEX (commented out): this would move 'penguin_id' back
-# out into a regular column, and restore the default 0,1,2... index.
-# df_reset = df_final.reset_index()
-# print("df_reset head:->", df_reset.head())
-
-
-# FINAL SUMMARY
-print("\n STEP 3. SUMMARY")
-print(f"""
-Original shape:                {(344, 7)}
-After adding messy duplicates: {(349, 7)}
-After cleaning (df_final):     {df_final.shape}
-Final columns:                 {list(df_final.columns)}
-Final index name:              {df_final.index.name}
-""")
-```
-
-### Complete Output
-
-```text
- STEP 0. IMPORT LIBRARIES AND LOAD DATASET
-=== ORIGINAL DATA ===
-Original dataset df_raw columns:-> ['species', 'island', 'bill_length_mm', 'bill_depth_mm', 'flipper_length_mm', 'body_mass_g', 'sex']
-Original dataset df_raw shape:-> (344, 7)
-
- PHASE 1. CREATING MESSY DATA BY DELIBERATE MANIPULATION
-
-=== INITIAL MESSY DATA ===
-Messy dataset df_messy shape:-> (349, 7)
-Messy dataset df_messy dtypes:->
- Species        str
-Island         str
-BLmm           str
-BDmm       float64
-FLmm       float64
-BMg        float64
-Sex            str
-dtype: object
-Messy dataset df_messy tail (showing the appended duplicates):->
-     Species     Island  BLmm  BDmm   FLmm     BMg     Sex
-342  Gentoo     Biscoe  45.2  14.8  212.0  5200.0  Female
-343  Gentoo     Biscoe  49.9  16.1  213.0  5400.0    Male
-344  Adelie  Torgersen  39.1  18.7  181.0  3750.0    Male
-345  Adelie  Torgersen  39.5  17.4  186.0  3800.0  Female
-346  Adelie  Torgersen  40.3  18.0  195.0  3250.0  Female
-347  Adelie  Torgersen   NaN   NaN    NaN     NaN     NaN
-348  Adelie  Torgersen  36.7  19.3  193.0  3450.0  Female
-
- PHASE 2. STRUCTURAL CLEANING
-
- STEP 2.1: RENAMING COLUMNS ================
-
-=== AFTER RENAMING COLUMNS BACK TO ORIGINAL ===
-df_messy columns after renaming:-> ['species', 'island', 'bill_length_mm', 'bill_depth_mm', 'flipper_length_mm', 'body_mass_g', 'sex']
-
- STEP 2.2: CHANGING DATA TYPES ================
-
-=== AFTER TYPE CONVERSION ===
-df_messy dtypes after conversion:->
- species                   str
-island               category
-bill_length_mm        float64
-bill_depth_mm         float64
-flipper_length_mm     float64
-body_mass_g           float64
-sex                  category
-dtype: object
-
- STEP 2.3: REMOVING DUPLICATES ================
-
-=== DUPLICATE ROWS (keep=False) ===
-Number of rows marked as duplicate (originals + copies):-> 10
-df_messy duplicate rows before dropping:->
-     species     island  bill_length_mm  bill_depth_mm  flipper_length_mm  body_mass_g     sex
-0    Adelie  Torgersen            39.1           18.7              181.0       3750.0    Male
-1    Adelie  Torgersen            39.5           17.4              186.0       3800.0  Female
-2    Adelie  Torgersen            40.3           18.0              195.0       3250.0  Female
-3    Adelie  Torgersen             NaN            NaN                NaN          NaN     NaN
-4    Adelie  Torgersen            36.7           19.3              193.0       3450.0  Female
-344  Adelie  Torgersen            39.1           18.7              181.0       3750.0    Male
-345  Adelie  Torgersen            39.5           17.4              186.0       3800.0  Female
-346  Adelie  Torgersen            40.3           18.0              195.0       3250.0  Female
-347  Adelie  Torgersen             NaN            NaN                NaN          NaN     NaN
-348  Adelie  Torgersen            36.7           19.3              193.0       3450.0  Female
-
-=== AFTER DROPPING DUPLICATES ===
-df_clean shape after dropping duplicates:-> (344, 7)
-
- STEP 2.4: SETTING AND RESETTING INDEX ================
-
-=== AFTER SETTING INDEX ===
-df_final head after setting index:->
-             species     island  bill_length_mm  bill_depth_mm  flipper_length_mm  body_mass_g     sex
-penguin_id
-ID_0         Adelie  Torgersen            39.1           18.7              181.0       3750.0    Male
-ID_1         Adelie  Torgersen            39.5           17.4              186.0       3800.0  Female
-ID_2         Adelie  Torgersen            40.3           18.0              195.0       3250.0  Female
-ID_3         Adelie  Torgersen             NaN            NaN                NaN          NaN     NaN
-ID_4         Adelie  Torgersen            36.7           19.3              193.0       3450.0  Female
-
-df_final index name:-> penguin_id
-
- STEP 3. SUMMARY
-
-Original shape:                (344, 7)
-After adding messy duplicates: (349, 7)
-After cleaning (df_final):     (344, 7)
-Final columns:                 ['species', 'island', 'bill_length_mm', 'bill_depth_mm', 'flipper_length_mm', 'body_mass_g', 'sex']
-Final index name:              penguin_id
-```
-
-This confirms the full round trip: the clean dataset starts at `(344, 7)`, Phase 1 deliberately grows it to `(349, 7)` by injecting 5 duplicate rows, and Phase 2 brings it back to a fully clean `(344, 7)` — with correct column names, correct data types, no duplicates, and a genuinely meaningful `penguin_id` index throughout.
 
 ---
 

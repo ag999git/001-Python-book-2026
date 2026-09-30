@@ -33,7 +33,18 @@ Real-world data is never perfect. When you encounter missing or incorrect values
 
 Dropping data has real consequences: dropping *columns* reduces the number of "features" available in your dataset; dropping *rows* can introduce **bias**, if the rows you happen to lose aren't a fair, random sample of the whole dataset.
 
-![Missing data small/ large](../.gitbook/assets/ch12-missing-data-small-large.png)
+![Missing data small/ large](../resources/S12-LR-ch12-missing-data-small-large.png)
+
+**Reading the figure**
+
+- **Step 1:** You find missing values in the dataset.
+- **Step 2:** Is only a small amount of the data missing?
+- **Step 3:** Yes: dropping the affected rows (or columns) with `dropna()` loses little. Watch for bias if the dropped rows are not a fair sample.
+- **Step 4:** No: fill the gaps instead. Is the column numeric?
+- **Step 5:** Numeric: is the data skewed, or does it have extreme outliers?
+- **Step 6:** Yes: fill with the median, which outliers do not pull around.
+- **Step 7:** No: fill with the mean.
+- **Step 8:** Not numeric (a category such as `sex`): fill with the mode, the most common value.
 
 ### A follow-up question worth exploring
 
@@ -68,7 +79,15 @@ Running `df.dropna(axis=1)` is equivalent to `df.dropna(axis=1, how='any')`:
 This is genuinely risky on a dataset like this one: since almost every column has *at least one* missing value somewhere, using this without thinking can remove most of your dataset's actual content — as Step 3(B) below demonstrates directly.
 
 
-![Flowchart](../resources/ch12-august-2026-missing-values-01.png)
+![Flowchart](../resources/S12-LR-ch12-august-2026-missing-values-01.png)
+
+**Reading the figure**
+
+- **Step 1:** `df.dropna()` is called; with no arguments it means `axis=0, how='any'`.
+- **Step 2:** Is `axis=0` (the default)?
+- **Step 3:** Yes: each row is treated as a unit, and a row is dropped if any of its values is missing.
+- **Step 4:** No, `axis=1`: each column is treated as a unit.
+- **Step 5:** A column is dropped if any of its values is missing. On the penguins data this removes 5 of the 7 columns.
 
 
 ---
@@ -106,7 +125,16 @@ This is genuinely risky on a dataset like this one: since almost every column ha
 
 The full six-step flow is shown below (from the book's own resources):
 
-![Script flow chart- Missing data](../.gitbook/assets/ch12-handling-missing-data-script-6steps.png)
+![Script flow chart- Missing data](../resources/S12-LR-ch12-handling-missing-data-script-6steps.png)
+
+**Reading the figure**
+
+- **Step 1:** Import pandas and seaborn and load the penguins dataset.
+- **Step 2:** Find and count the missing values with `isna()` (or `isnull()`) and `.sum()`.
+- **Step 3:** Drop missing values: rows with `dropna()` or columns with `dropna(axis=1)`, and see how much data is lost.
+- **Step 4:** Fill missing values instead: the mean or median for numeric columns, the mode for a categorical column, using `fillna()`.
+- **Step 5:** Look at three common errors: the mean on a text column, misreading `how='all'`, and not assigning the result.
+- **Step 6:** Summarise the key learnings and best practices.
 
 ---
 
@@ -667,7 +695,17 @@ df = df.fillna(0)          # Option 1: reassign the result back to df
 df.fillna(0, inplace=True) # Option 2: use inplace=True to modify df directly
 ```
 
-![Flowchart](../resources/ch12-august-2026-missing-values-02.png)
+![Flowchart](../resources/S12-LR-ch12-august-2026-missing-values-02.png)
+
+**Reading the figure**
+
+- Three checks when `fillna()` or `dropna()` does not do what you expect.
+- 5A: you tried to fill a text column such as `sex` with its mean.
+- 5B: you used `how='all'`, expecting it to remove every column with a missing value.
+- 5C: you called `df.fillna(0)` without keeping the result.
+- A mean cannot be computed on text, so pandas raises `TypeError`. Fill a categorical column with its mode instead.
+- `how='all'` drops a column only when every value in it is missing. To drop columns with any missing value, use the default, `how='any'`.
+- `fillna()` returns a new DataFrame. Reassign it, `df = df.fillna(0)`, or use `inplace=True`.
 
 ---
 

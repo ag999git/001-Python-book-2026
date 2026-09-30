@@ -635,7 +635,19 @@ What each pillar is about:
 
 The flowchart below lays these four out side by side, with a few representative methods under each, so you can see at a glance which pillar a method you've just learned belongs to.
 
-![Flowchart](../resources/ch12-august-2026-conceptual-question-13.png)
+![Flowchart](../resources/S12-LR-ch12-august-2026-conceptual-question-13.png)
+
+**Reading the figure**
+
+- pandas methods are grouped into four pillars.
+- Pillar 1, Inspection & Retrieval: look at the data and pull out parts of it.
+- Pillar 2, Analysis & Summarization: statistics and comparisons between groups.
+- Pillar 3, Cleaning & Manipulation: fix, rename and reshape.
+- Pillar 4, Type-Specific Operations: tools for text and dates.
+- Examples: `.head()`, `.sample()`, `.loc[]`, `.iloc[]`.
+- Examples: `.describe()`, `.groupby()`, `.pivot_table()`.
+- Examples: `.dropna()`, `.fillna()`, `.rename()`, `.set_index()`, `.stack()`/`.unstack()`.
+- Examples: the `.str` accessor for text and the `.dt` accessor for dates.
 
 
 
@@ -764,7 +776,13 @@ Walking through the three stages:
 
 The practical benefit is that you go from one giant average for the whole dataset to a side-by-side comparison across meaningful segments — which is almost always the more useful question ("how does body mass differ *by* island?" rather than just "what's the average body mass overall?").
 
-![Flowchart](../resources/ch12-august-2026-conceptual-question-16.png)
+![Flowchart](../resources/S12-LR-ch12-august-2026-conceptual-question-16.png)
+
+**Reading the figure**
+
+- **Step 1:** Split: pandas divides the rows into groups, one per value of the grouping column (for example one per `island`). Nothing is calculated yet.
+- **Step 2:** Apply: a function such as `mean()` runs on each group separately.
+- **Step 3:** Combine: the per-group results are joined into one table, with the group labels as the index.
 
 ```python
 import pandas as pd
@@ -1190,7 +1208,7 @@ tables[1]:
 
 ### 24. Explain the importance of sending a "User-Agent" header when using requests.get() to fetch data for read_html().
 
-**In short:** many websites automatically block requests that don't "look like" they came from a real web browser — sending a `User-Agent` header that mimics one (for example, `"Mozilla/5.0 ..."`) is a standard way to get past that block, and since `pd.read_html()` itself has no built-in option to set custom headers, the usual workaround is to fetch the page yourself first with the `requests` library and hand the resulting HTML text to pandas.
+**In short:** many websites automatically block requests that don't "look like" they came from a real web browser — sending a `User-Agent` header that mimics one (for example, `"Mozilla/5.0 ..."`) is a standard way to get past that block, and since older versions of `pd.read_html()` had no option to set custom headers (pandas 2.1 and later accept `storage_options={'User-Agent': ...}`), the classic workaround is to fetch the page yourself first with the `requests` library and hand the resulting HTML text to pandas.
 
 Step by step, why this pattern is needed:
 
@@ -1669,7 +1687,13 @@ Working through why each format fits its typical use case:
 2. **Wide format** — the same information, but spread out: one row per shop, with a separate column for each item's amount. This is easier for a person to read at a glance — comparing Pen vs. Pencil sales for Shop1 means looking along one row, rather than scanning down a long list of Long-format rows and mentally filtering.
 3. The two are not competitors so much as complementary views of the same data — pandas' `.stack()` / `.unstack()` (Question 19/54) and `.pivot_table()` (Question 17) are exactly the tools for converting between them as the situation calls for one or the other.
 
-![Flowchart](../resources/ch12-august-2026-conceptual-question-35.png)
+![Flowchart](../resources/S12-LR-ch12-august-2026-conceptual-question-35.png)
+
+**Reading the figure**
+
+- Long format: every row is one fact, such as `(Shop1, Pen, 100)`. New shops or items only add rows, so the table structure never changes; this suits databases.
+- `.unstack()` or `.pivot_table()` spreads the items into columns: wide format, one row per shop, easy for a person to compare at a glance.
+- `.stack()` or `.melt()` turns the wide table back into long format.
 
 *Learn more:* [Reshaping and pivot tables](https://pandas.pydata.org/docs/user_guide/reshaping.html)
 
@@ -1962,13 +1986,13 @@ After dropna(inplace=True):
 0  1.0
 2  3.0
 
-After reassignment df = df.dropna() (original untouched):
+Original, untouched by the reassignment approach:
       a
 0  1.0
 1  NaN
 2  3.0 
 
-(new object):
+The new, separate cleaned object:
       a
 0  1.0
 2  3.0
@@ -2369,8 +2393,6 @@ merge (joining on the 'id' key):
     id   name  score
 0   1  Alice     85
 1   2    Bob     90
-
-ALL DONE
 ```
 
 *Learn more:* [pd.concat() reference](https://pandas.pydata.org/docs/reference/api/pandas.concat.html) · [pd.merge() reference / Merge, join, concatenate guide](https://pandas.pydata.org/docs/user_guide/merging.html)

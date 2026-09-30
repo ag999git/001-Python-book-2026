@@ -69,7 +69,15 @@ The data scientist's goal is to:
 
 ### The Reshaping Cycle at a Glance
 
-![Flowchart](../resources/ch12-august-2026-hierarcichal-data-analysis-01.png)
+![Flowchart](../resources/S12-LR-ch12-august-2026-hierarcichal-data-analysis-01.png)
+
+**Reading the figure**
+
+- **Step 1:** Start with the flat table: one row per penguin.
+- **Step 2:** `groupby(['species', 'sex'])['flipper_length_mm'].mean()` gives a Series with a two-level MultiIndex, in long format.
+- **Step 3:** `unstack(level='sex')` moves `sex` into the columns: a wide table with `Female` and `Male` side by side, ready for comparison.
+- **Step 4:** A vectorized calculation adds the difference column `diff_M_F = Male - Female`.
+- **Step 5:** `stack()` moves the columns back into the index, giving a long, hierarchical result for reporting or storage.
 
 
 ---
@@ -84,7 +92,7 @@ The data scientist's goal is to:
    species   sex         flipper_length_mm
 0  Adelie    Male        181
 1  Adelie    Female      186
-2  Gentoo    Male        210
+2  Adelie    Female      195
 ...
 ```
 
@@ -306,7 +314,7 @@ Gentoo     212.706897  221.540984  8.834087
 **6. (a) Method:** `stack()`
 
 ```python
-species     variable
+species     sex
 Adelie      Female       187
             Male         192
             diff_M_F       5
@@ -315,7 +323,7 @@ Adelie      Female       187
 **6. (b) What changed?**
 
 * Columns → rows
-* New index level: `variable`
+* The columns go back into the `sex` level of the index (which now also holds `diff_M_F`)
 
 **6. (c) What transformation happened?**
 
@@ -392,7 +400,7 @@ df.groupby(['species','sex'])   # Returns a GroupBy object, not a result
 2. Wrong column:
 
 ```python
-df.groupby(['species'])['wrong'].mean()   # KeyError: 'wrong'
+df.groupby(['species'])['wrong'].mean()   # KeyError: 'Column not found: wrong'
 ```
 
 3. Invalid unstack:
@@ -639,7 +647,7 @@ print(final_series.loc[('Adelie', 'Male')])
 # Error 1: No aggregation → returns a GroupBy object, not a table
 # df.groupby(['species','sex'])
 
-# Error 2: Wrong column → KeyError: 'wrong'
+# Error 2: Wrong column → KeyError: 'Column not found: wrong'
 # df.groupby(['species'])['wrong'].mean()
 
 # Error 3: Invalid unstack level → KeyError
@@ -676,7 +684,20 @@ A data scientist reshapes data depending on the task:
 
 ### Flowchart showing steps in the script
 
-![Flowchart showing steps in the script](../.gitbook/assets/ch12-pivot-table2.png)
+![Flowchart showing steps in the script](../resources/S12-LR-ch12-pivot-table2.png)
+
+**Reading the figure**
+
+- Step 0: import pandas and seaborn.
+- Step 1: load the penguins and drop rows with missing values.
+- Step 2: `groupby(['species', 'sex'])` and `mean()` give a Series with a MultiIndex.
+- Step 3: look at the index levels (`species`, `sex`) to understand the hierarchy.
+- Step 4: `unstack(level='sex')` gives a wide table, one column per sex.
+- Step 5: subtract the columns to get `diff_M_F`.
+- Step 6: `stack()` turns the wide table back into a MultiIndex Series.
+- Step 7: pick out a single value with `.loc[]`.
+- Step 8: common errors (commented out), such as a wrong column name or a wrong level name.
+- Step 9: print the summary of key ideas.
 
 ---
 
@@ -698,10 +719,10 @@ When `groupby()` is applied on **more than one column**, Pandas creates a **hier
 
 ```python
 species   sex
-Adelie    Male      192.4
-          Female    187.7
-Gentoo    Male      221.5
-          Female    212.4
+Adelie    Female    187.8
+          Male      192.4
+Gentoo    Female    212.7
+          Male      221.5
 ```
 
 #### Interpretation
@@ -778,7 +799,7 @@ Notice:
 
 #### Class
 
-`pandas.core.indexes.multi.MultiIndex`
+`pandas.MultiIndex` (defined in the module `pandas.core.indexes.multi`)
 
 #### Check in Code
 
@@ -788,7 +809,7 @@ grp = df.groupby(['species', 'sex'])['flipper_length_mm'].mean()
 print(type(grp.index))
 
 # Output hint:
-# <class 'pandas.core.indexes.multi.MultiIndex'>
+# <class 'pandas.MultiIndex'>   (pandas 2.x: <class 'pandas.core.indexes.multi.MultiIndex'>)
 ```
 
 ***
@@ -824,7 +845,7 @@ print(grp.index.names)
 
 #### Method 1: From `groupby()` — **most common**
 
-`df.groupby(['species', 'sex']).mean()`
+`df.groupby(['species', 'sex']).mean(numeric_only=True)`
 
 #### Method 2: From Tuples
 
@@ -922,7 +943,7 @@ Not just rows — columns can also be hierarchical.
 
 #### Example
 
-`df.groupby(['species', 'sex']).agg(['mean', 'max'])`
+`df.groupby(['species', 'sex'])[['flipper_length_mm', 'body_mass_g']].agg(['mean', 'max'])`
 
 #### Output
 

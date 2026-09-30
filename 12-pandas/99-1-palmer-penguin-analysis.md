@@ -155,7 +155,19 @@ pip install openpyxl
 
 Here is a bird's-eye view of the whole solution before we go through it one step at a time:
 
-![Flowchart](../resources/ch12-august-2026-exploring-penguin-data-01.png)
+![Flowchart](../resources/S12-LR-ch12-august-2026-exploring-penguin-data-01.png)
+
+**Reading the figure**
+
+- **Step 1:** Load the Palmer Penguins dataset.
+- **Step 2:** Rename the `species` column and preview the first row, transposed.
+- **Step 3:** Check the column names and data types, and select a single column.
+- **Step 4:** Count the unique species and how often each appears.
+- **Step 5:** Produce summary statistics for every column.
+- **Step 6:** Find the missing values and remove the affected rows.
+- **Step 7:** Convert `island` to the more efficient `category` type.
+- **Step 8:** Group by island and count the penguins in each group.
+- **Step 9:** Plot the counts as a bar chart.
 ---
 
 #### Step 1: Load Data and Inspect Shape
@@ -535,11 +547,23 @@ plt.show()
 
 ### Flowchart showing flow of execution of above script
 
-![Project1](../.gitbook/assets/ch12-project1-palmer-penguin.png)
+![Project1](../resources/S12-LR-ch12-project1-palmer-penguin.png)
+
+**Reading the figure**
+
+- **Step 1:** Step 1: load the dataset with `sns.load_dataset('penguins')` and check its size with `.shape`: 344 rows, 7 columns.
+- **Step 2:** Step 2: rename `species` to `penguin_species` with `.rename()`, and view the first row transposed with `.head(1).T`.
+- **Step 3:** Step 3: check the data types with `.dtypes` and select a single column.
+- **Step 4:** Step 4: `.nunique()` and `.value_counts()` show how many species there are and how often each appears.
+- **Step 5:** Step 5: `.describe(include='all')` summarises numeric and text columns.
+- **Step 6:** Step 6: `.isnull().sum()` counts the missing values; `.dropna()` removes those rows, leaving 333.
+- **Step 7:** Step 7: convert `island` with `.astype('category')` to save memory.
+- **Step 8:** Step 8: group by island and count the penguins, with `observed=True`.
+- **Step 9:** Step 9: draw a bar chart, set the labels and title, and show it with `plt.show()`.
 
 ### The resulting plot is as follows
 
-![Plot](../.gitbook/assets/ch12-project1-palmer-penguin-image.png)
+![Plot](../resources/ch12-project1-palmer-penguin-image.png)
 
 With `plt.show()`, you should see a bar chart with three bars — Biscoe, Dream, and Torgersen along the x-axis, and the penguin count on the y-axis — matching the `df_penguins` table printed in Step 8.
 
@@ -589,7 +613,7 @@ The table above gives you the numbers; these two flowcharts show *why* those num
 
 ##### Flowchart 1 of 2 — How `object`/`str` storage works
 
-![Flowchart](../resources/ch12-august-2026-exploring-penguin-data-02.png)
+![Flowchart](../resources/S12-LR-ch12-august-2026-exploring-penguin-data-02.png)
 
 * **Box 1** — Row 1's value is "Biscoe". Pandas writes the complete word "Biscoe" into memory for this row.
 * **Box 2** — Row 2's value is also "Biscoe". Pandas writes the complete word "Biscoe" into memory *again*, as if row 1 never happened — nothing is shared or reused between rows.
@@ -599,7 +623,7 @@ Notice that the text "Biscoe" was written out in full twice. That repeated, unco
 
 ##### Flowchart 2 of 2 — How `category` storage works
 
-![Flowchart](../resources/ch12-august-2026-exploring-penguin-data-03.png)
+![Flowchart](../resources/S12-LR-ch12-august-2026-exploring-penguin-data-03.png)
 
 * **Box 1** — Row 1's value is "Biscoe". Instead of storing the text itself, pandas assigns it a short numeric code: `0`.
 * **Box 2** — Row 2's value is also "Biscoe", so it *reuses* the same code, `0`. No new text is written anywhere — just the small number `0` again.

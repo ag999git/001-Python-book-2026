@@ -83,6 +83,7 @@ Data columns (total 7 columns):
  6   sex                333 non-null    object
 dtypes: float64(4), object(3)
 memory usage: 18.9+ KB
+df.info():-> None
 ```
 
 Notice the pattern immediately: several numeric columns show `342 non-null` out of `344` total rows — meaning 2 rows are missing those measurements — and `sex` is missing even more (`333` out of `344`). This is exactly the kind of thing `.info()` is designed to surface at a glance. (One small detail worth knowing: `.info()` *prints* its summary directly and returns `None` — that's why the code above shows `None` printed right after the summary table.)
@@ -101,12 +102,12 @@ print("df.describe():->\n", df.describe())
 ```text
        bill_length_mm  bill_depth_mm  flipper_length_mm  body_mass_g
 count      342.000000     342.000000         342.000000    342.000000
-mean        43.921930      17.151754         200.915205   4201.754386
-std          5.459584       1.974603          14.061714    801.954380
+mean        43.921930      17.151170         200.915205   4201.754386
+std          5.459584       1.974793          14.061714    801.954536
 min         32.100000      13.100000         172.000000   2700.000000
 25%         39.225000      15.600000         190.000000   3550.000000
 50%         44.450000      17.300000         197.000000   4050.000000
-75%         48.100000      18.700000         213.000000   4750.000000
+75%         48.500000      18.700000         213.000000   4750.000000
 max         59.600000      21.500000         231.000000   6300.000000
 ```
 
@@ -340,7 +341,14 @@ subset_iloc->
 **The single most important thing to notice across Steps 4(A) and 4(B):** `df.loc[0:5]` returned **6** rows (0 through 5, inclusive), while `df.iloc[0:5]` returned only **5** rows (0 through 4). This is *the* core practical difference between the two — and a very common source of off-by-one confusion for anyone new to Pandas.
 
 
-![Flowchart](../resources/ch12-august-2026-indexing-and-selection-01.png)
+![Flowchart](../resources/S12-LR-ch12-august-2026-indexing-and-selection-01.png)
+
+**Reading the figure**
+
+- `df.loc[0:5]` slices by row label.
+- `df.iloc[0:5]` slices by integer position.
+- `.loc[]` includes the end label, so it returns 6 rows, labelled 0 to 5.
+- `.iloc[]` excludes the end position, like ordinary Python slicing, so it returns 5 rows, positions 0 to 4.
 
 
 
@@ -368,17 +376,17 @@ print("slice_loc->\n", slice_loc)
 ```text
 slice_loc->
    species     island  body_mass_g
-10  Adelie  Torgersen       3750.0
-11  Adelie  Torgersen       3800.0
-12  Adelie  Torgersen       3250.0
-13  Adelie  Torgersen          NaN
-14  Adelie  Torgersen       3450.0
-15  Adelie  Torgersen       3650.0
-16  Adelie  Torgersen       3800.0
-17  Adelie  Torgersen       3700.0
-18  Adelie  Torgersen       3600.0
-19  Adelie  Torgersen       3500.0
-20  Adelie  Torgersen       3400.0
+10  Adelie  Torgersen       3300.0
+11  Adelie  Torgersen       3700.0
+12  Adelie  Torgersen       3200.0
+13  Adelie  Torgersen       3800.0
+14  Adelie  Torgersen       4400.0
+15  Adelie  Torgersen       3700.0
+16  Adelie  Torgersen       3450.0
+17  Adelie  Torgersen       4500.0
+18  Adelie  Torgersen       3325.0
+19  Adelie  Torgersen       4200.0
+20  Adelie     Biscoe       3400.0
 ```
 Notice this correctly includes row 20, since `.loc[]` slicing is inclusive of the end label.
 
@@ -427,7 +435,20 @@ Notice this correctly stops at row 19 (position 20 is excluded), and only 3 colu
 
 The following diagram illustrates the overall indexing decision process:
 
-![FlowChart](../.gitbook/assets/ch12-pandas-indexing.png)
+![FlowChart](../resources/S12-LR-ch12-pandas-indexing.png)
+
+**Reading the figure**
+
+- Start with what you want to select.
+- Columns only.
+- Rows only.
+- Rows and columns together.
+- One column: `df['col']` (dot notation, `df.col`, also works for simple names, but brackets are safer).
+- Several columns: a list inside the brackets, `df[['col1', 'col2']]`.
+- Rows by label: `df.loc[...]` (the end of a slice is included).
+- Rows by position: `df.iloc[...]` (the end of a slice is excluded).
+- Rows and columns by label: `df.loc[rows, cols]`.
+- Rows and columns by position: `df.iloc[rows, cols]`.
 
 ---
 

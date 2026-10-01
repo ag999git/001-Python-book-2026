@@ -9,7 +9,7 @@ Chapter 3 of the book covers the operators you will use every day: arithmetic, a
 1. The **matrix multiplication operator** `@`, which is used a lot in data science, machine learning and graphics, mostly with the NumPy library.
 2. The **set operators** `|`, `&`, `-` and `^`, which let you combine and compare sets with a single symbol, the same way you would in school mathematics.
 
-Both topics show an important idea about Python operators. The same symbol can do different jobs depending on the type of data it works on. For example, `-` subtracts numbers but finds the "difference" of two sets. And `@` does nothing at all for plain lists, but multiplies matrices when you use NumPy arrays.
+Both topics show an important idea about Python operators. The same symbol can do different jobs depending on the type of data it works on. For example, `-` subtracts numbers but finds the "difference" of two sets. And `@` does not work on plain lists at all (it raises a `TypeError`), but multiplies matrices when you use NumPy arrays.
 
 Each section explains the idea in simple steps, gives scripts with `# Step` comments, and shows the output you should see. A combined script is given at the end of each section so that you can run everything in one go.
 
@@ -136,7 +136,7 @@ Matrix multiplication only works when the sizes fit together:
 - For **matrix @ vector**, the number of **columns in the matrix** must equal the number of **elements in the vector**.
 - The answer has the rows of the first matrix and the columns of the second. A (2, 3) matrix `@` a (3, 2) matrix gives a (2, 2) matrix.
 
-![How Matrix Multiplication Works](../resources/LR-ch3-beyond-text-fig-01.png)
+![How Matrix Multiplication Works](../resources/S03-LR-ch3-beyond-text-fig-01.png)
 
 **Reading the figure**
 
@@ -144,11 +144,10 @@ Matrix multiplication only works when the sizes fit together:
 - **Step 2:** Check the shapes: is the number of columns in A equal to the number of rows in B?
 - **Step 3:** No: the shapes do not fit, so NumPy raises a `ValueError` and stops.
 - **Step 4:** Yes: pick row `i` of A and column `j` of B.
-- **Step 5:** Multiply the matching pairs: the first item of the row with the first item of the column, the second with the second, and so on.
-- **Step 6:** Add all those products together.
-- **Step 7:** Write the total in cell `(i, j)` of the answer.
-- **Step 8:** If any cells of the answer are still empty, go back to Step 4 for the next row and column.
-- **Step 9:** No cells are left, so the answer is ready. A (2, 3) matrix `@` a (3, 2) matrix gives a (2, 2) answer.
+- **Step 5:** Multiply the matching pairs (the first item of the row with the first item of the column, the second with the second, and so on) and add all those products together.
+- **Step 6:** Write the total in cell `(i, j)` of the answer.
+- **Step 7:** Are any cells of the answer still empty? Yes: go back to Step 4 for the next row and column.
+- **Step 8:** No: the answer is ready. A (2, 3) matrix `@` a (3, 2) matrix gives a (2, 2) answer.
 
 [Back to the Table of Contents](#table-of-contents)
 

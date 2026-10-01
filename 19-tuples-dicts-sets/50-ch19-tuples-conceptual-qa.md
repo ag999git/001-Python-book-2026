@@ -468,7 +468,7 @@ So the *variable* `t1` now refers to something different, but no tuple has been 
 
 You can see this with the built-in function `id()`. It returns a number that identifies an object while that object exists. If the number changes, you are looking at a different object.
 
-![Q5. Explain how t1 = t1 + (4, 5) modifies a variable. Trace memory via id().](../resources/LR-ch19-tuples-conceptual-qa-fig-02.png)
+![Q5. Explain how t1 = t1 + (4, 5) modifies a variable. Trace memory via id().](../resources/S19-LR-ch19-tuples-conceptual-qa-fig-02.png)
 
 **Reading the figure**
 
@@ -1129,7 +1129,7 @@ Applying the rule:
 | `bool(((),))` | 1 | `True` | Not empty (it holds an empty tuple) |
 | `bool(0)` | not a tuple | `False` | The number zero on its own is false |
 
-Watch the last two rows closely. `0` on its own is false, but `(0,)` is true. The comma makes all the difference, just as in [Q1](#q1).
+Compare the second row with the last one. `0` on its own is false, but `(0,)` is true. The comma makes all the difference, just as in [Q1](#q1).
 
 **Script: truthiness of tuples**
 
@@ -1763,7 +1763,7 @@ This is an internal choice that Python is free to make. It is not a rule of the 
 
 **How each operator decides, step by step**
 
-1. For `t1 == t2`, Python first checks that both tuples have the same length.
+1. For `t1 == t2`, Python compares the tuples item by item; they are equal only if every pair of items is equal and both tuples have the same length.
 2. It then compares the items one pair at a time: first with first, second with second, and so on.
 3. If every pair is equal, the result is `True`. As soon as one pair differs, the result is `False`.
 4. For `t1 is t2`, Python does not look at the items at all. It only checks whether the two names point to the same object.

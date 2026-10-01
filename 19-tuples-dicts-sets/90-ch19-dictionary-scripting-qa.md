@@ -789,7 +789,7 @@ hi       (str  ) -> True
 - This matches the chapter's rules on hashability.
 - In the `print()` line, `:<8` and `:<5` pad the text with spaces to a fixed width, so the columns line up. They do not affect the result.
 
-![Q9. Write isvalidkey(k) returning True/False if k can be used as a dict key. Test on 5, "hi", (1,2), [1,2], {1:2}.](../resources/S19-LR-ch19-dictionary-scripting-qa-fig-04.png)
+![Q9. Write is_valid_key(k) returning True/False if k can be used as a dict key. Test on 5, "hi", (1,2), [1,2], {1:2}.](../resources/S19-LR-ch19-dictionary-scripting-qa-fig-04.png)
 
 **Reading the figure**
 
@@ -1126,18 +1126,18 @@ Final: {'Fruit': ['Apple', 'Mango'], 'Veg': ['Carrot', 'Peas']}
 - `setdefault(category, [])` does both jobs in one call. It **inserts** the key with an empty list if the key is absent, and then **returns** the list stored for that key. The returned list is then immediately used by `.append(item)`.
 - The key point is that `setdefault()` returns the **actual list stored in the dictionary**, not a copy. So appending to what it returns changes the dictionary.
 
-![Q13. Empty dict category→list. Given list of (category, item) tuples, group items under categories using setdefault() — no manual if key in dict check.](../resources/LR-ch19-dictionary-scripting-qa-fig-06.png)
+![Q13. Empty dict category→list. Given list of (category, item) tuples, group items under categories using setdefault() — no manual if key in dict check.](../resources/S19-LR-ch19-dictionary-scripting-qa-fig-06.png)
 
 **Reading the figure**
 
-- **Step 1:** Take the next `(category, item)` pair from the list.
-- **Step 2:** `grouped.setdefault(category, [])` first checks: is `category` already a key?
-- **Step 3:** No: it stores `category` with a new empty list.
-- **Step 4:** Yes: it leaves the dictionary as it is.
-- **Step 5:** Either way, it returns the actual list stored for `category`, not a copy.
-- **Step 6:** `.append(item)` adds the item to that list, so the dictionary itself changes.
-- **Step 7:** If more pairs are left, go back to Step 1.
-- **Step 8:** No: print `grouped`, with each category and its list of items.
+- **Step 1:** Are there any `(category, item)` pairs left in the list?
+- **Step 2:** Yes: take the next pair.
+- **Step 3:** `grouped.setdefault(category, [])` first checks: is `category` already a key?
+- **Step 4:** No: it stores `category` with a new empty list.
+- **Step 5:** Yes: it leaves the dictionary as it is.
+- **Step 6:** Either way, it returns the actual list stored for `category`, not a copy.
+- **Step 7:** `.append(item)` adds the item to that list, so the dictionary itself changes. Then go back to Step 1.
+- **Step 8:** No pairs are left: print `grouped`, with each category and its list of items.
 
 **Try this next**
 
@@ -1407,15 +1407,15 @@ print(freq)
 
 The same pattern continues for `s`, `i`, `p`, `p` and `i`, giving the final result.
 
-![Q16. Count frequency of each character in "mississippi" using a dictionary, no library. Use get() with default 0.](../resources/LR-ch19-dictionary-scripting-qa-fig-08.png)
+![Q16. Count frequency of each character in "mississippi" using a dictionary, no library. Use get() with default 0.](../resources/S19-LR-ch19-dictionary-scripting-qa-fig-08.png)
 
 **Reading the figure**
 
 - **Step 1:** Start with an empty dictionary, `freq = {}`.
-- **Step 2:** Take the next character `ch` from "mississippi".
-- **Step 3:** `freq.get(ch, 0)` returns the count so far, or 0 if this character has not been seen yet. No `if` is needed.
-- **Step 4:** Store the new count: `freq[ch] = current + 1`.
-- **Step 5:** If more characters are left, go back to Step 2.
+- **Step 2:** Are there characters of "mississippi" left?
+- **Step 3:** Yes: take the next character `ch`.
+- **Step 4:** `freq.get(ch, 0)` returns the count so far, or 0 if this character has not been seen yet. No `if` is needed.
+- **Step 5:** Store the new count, `freq[ch] = current + 1`, and go back to Step 2.
 - **Step 6:** No: print `freq`, which is `{'m': 1, 'i': 4, 's': 4, 'p': 2}`.
 
 **Try this next**

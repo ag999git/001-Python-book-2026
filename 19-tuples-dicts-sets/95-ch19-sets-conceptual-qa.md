@@ -71,7 +71,7 @@ The ideas on this page connect closely with dictionaries. A set works very much 
 | Venn diagram | A drawing of overlapping circles that shows what two groups share and what they do not. | [Wikipedia: Venn diagram](https://en.wikipedia.org/wiki/Venn_diagram) |
 | `frozenset` | An immutable (unchangeable) version of a set. | [Python docs: frozenset](https://docs.python.org/3/library/stdtypes.html#frozenset) |
 
-> **A note on the outputs on this page:** A set has no fixed order, so when you print a set, the items may appear in a different order from the one you typed. For sets of **strings**, the order can even change each time you run the program (the reason is explained in [Q6 on the dictionaries page](80-ch19-dictionary-conceptual-qa.md#q6)). So that your output matches this page exactly, many scripts print `sorted(my_set)`, which shows the items as a sorted **list**. The set itself is unchanged.
+> **A note on the outputs on this page:** A set has no fixed order, so when you print a set, the items may appear in a different order from the one you typed. For sets of **strings**, the order can even change each time you run the program (the reason is explained in [Q6 on the dictionaries page](80-ch19-dictionary-conceptual-qa.md#q6)). So that your output matches this page exactly, many scripts print `sorted(my_set)`, which shows the items as a sorted **list**. The set itself is unchanged. Error messages are shown as Python 3.10 to 3.13 print them. From Python 3.14, an unhashable set element or dictionary key gives a longer message, such as `cannot use 'list' as a set element (unhashable type: 'list')`.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -609,7 +609,7 @@ for row in matrix:            # outer loop, read first
 
 This "left to right = outer to inner" rule is the single most useful trick for reading any nested comprehension, list or set, that you will meet later in the book.
 
-![Q7. Set comprehension — (a) syntax vs list comprehension (b) what "nested set comprehension" means and (c) how do you read the for clauses in one?](../resources/LR-ch19-sets-conceptual-qa-fig-03.png)
+![Q7. Set comprehension — (a) syntax vs list comprehension (b) what "nested set comprehension" means and (c) how do you read the for clauses in one?](../resources/S19-LR-ch19-sets-conceptual-qa-fig-03.png)
 
 **Reading the figure**
 
@@ -712,7 +712,7 @@ Python keeps whichever of the equal values was inserted **first**:
 4. `False` is equal to `0`, so it is skipped. The set keeps `0`.
 5. `"Python"` is added.
 
-So if `1` came before `True` in the source, the set stores `1`, not `True`. (Either way, it prints and compares the same, because the two are equal.)
+So if `1` came before `True` in the source, the set stores `1`, not `True`. (Either way, it compares the same, because the two are equal, but it prints differently: `{1}` versus `{True}`.)
 
 This is a subtle but real trap when you remove duplicates from mixed data. For example, a set of "flags" that mixes booleans and `0`/`1` whole numbers from different sources will quietly merge them into one.
 
@@ -1342,7 +1342,7 @@ Two other safe ways are often even simpler, because they build the result withou
 
 This "loop over a copy, change the original" pattern is not special to sets. The same technique is used with dictionaries (see [Q14 on the dictionaries page](80-ch19-dictionary-conceptual-qa.md#q14)) and with lists. Lists are actually more dangerous: they do not raise an error, but quietly **skip** items, as the script below shows. So it is worth learning this as a general Python habit, not as a set-only rule.
 
-![Q15. Modifying a set while iterating over it — (a) what happens and why (b) the correct fix](../resources/LR-ch19-sets-conceptual-qa-fig-07.png)
+![Q15. Modifying a set while iterating over it — (a) what happens and why (b) the correct fix](../resources/S19-LR-ch19-sets-conceptual-qa-fig-07.png)
 
 **Reading the figure**
 
@@ -1708,7 +1708,7 @@ print(python_students.isdisjoint(photography_club)) # True -- no overlap at all
 The difference shows up exactly when **the two sets are equal**:
 
 - `A <= A` is always `True`, because a set is always a subset of itself.
-- `A < A` is always `False`, because a proper subset also needs B to be **strictly larger**, with at least one element that A lacks.
+- `A < A` is always `False`, because a proper subset needs the other set to be **strictly larger**, with at least one element that A lacks.
 
 So "subset" allows equality and "proper subset" does not. This matches the everyday maths difference between `≤` (less than or equal to) and `<` (less than).
 
@@ -1720,7 +1720,7 @@ So "subset" allows equality and "proper subset" does not. This matches the every
 | Proper superset | `A > B` | (none) | `False` | `False` |
 | Disjoint | (none) | `A.isdisjoint(B)` | `False` | `False` |
 
-![Q19. Subset, proper subset, superset, and disjoint — (a) define each (b) exact distinction between subset and proper subset?](../resources/LR-ch19-sets-conceptual-qa-fig-08.png)
+![Q19. Subset, proper subset, superset, and disjoint — (a) define each (b) exact distinction between subset and proper subset?](../resources/S19-LR-ch19-sets-conceptual-qa-fig-08.png)
 
 **Reading the figure**
 

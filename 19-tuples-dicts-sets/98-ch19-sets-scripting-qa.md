@@ -25,7 +25,7 @@ Each answer is laid out in the same way:
 
 For the theory behind these scripts, see the companion page [Sets in Python: Conceptual Questions and Answers](95-ch19-sets-conceptual-qa.md).
 
-> **A note on the outputs on this page:** A set has no fixed order. When a set of **strings** is printed, the order of the items can even change each time you run the program. So that your output matches this page exactly, many scripts print `sorted(my_set)`, which shows the items as a sorted **list**. The set itself is not changed. Sets of small whole numbers usually print in the same order every time, so those are printed directly.
+> **A note on the outputs on this page:** A set has no fixed order. When a set of **strings** is printed, the order of the items can even change each time you run the program. So that your output matches this page exactly, many scripts print `sorted(my_set)`, which shows the items as a sorted **list**. The set itself is not changed. Sets of small whole numbers usually print in the same order every time, so those are printed directly. Error messages are shown as Python 3.10 to 3.13 print them. From Python 3.14, an unhashable set element or dictionary key gives a longer message, such as `cannot use 'list' as a set element (unhashable type: 'list')`.
 
 > **Tip:** Type the scripts in yourself and run them in IDLE, VS Code, Thonny or Google Colab. Then change the data and predict the output before you run the script again.
 
@@ -141,13 +141,13 @@ Number of cities: 3
 
 The rule to remember: whenever you need to start with nothing and build up, use the explicit constructor `set()` rather than the ambiguous literal `{}`.
 
-![Q1. Write script: (a) x = {} — print its type. (b) Create empty set correctly. (c) Add "Delhi", "Mumbai", "Pune" to it. (d) Print type before and after adding.](../resources/LR-ch19-sets-scripting-qa-fig-01.png)
+![Q1. Write script: (a) x = {} — print its type. (b) Create empty set correctly. (c) Add "Delhi", "Mumbai", "Pune" to it. (d) Print type before and after adding.](../resources/S19-LR-ch19-sets-scripting-qa-fig-01.png)
 
 **Reading the figure**
 
 - **Step 1:** Write `x = {}`.
 - **Step 2:** Python makes an empty dictionary, not a set: `type(x)` prints `<class 'dict'>`.
-- **Step 3:** Write `cities = set()` instead.
+- **Step 3:** So write `cities = set()` instead.
 - **Step 4:** Python makes an empty set: `type(cities)` prints `<class 'set'>`.
 - **Step 5:** Add three cities, one at a time, with `cities.add()`.
 - **Step 6:** It is still a set, now with 3 elements. To start empty and build up, always use `set()`, not `{}`.
@@ -385,12 +385,12 @@ Total scores: 9 | unique scores: 6
 - Because `85`, `90` and `78` each appear twice across the three rows, both ways end with the same **6** unique scores out of 9.
 - **Step 4**'s equality check confirms that the comprehension is not just shorter to type; it behaves exactly the same as the explicit loop.
 
-![Q4. examscores = [[78,85,90],[85,92,78],[60,90,100]]. Script: (a) nested set comprehension to get unique scores. (b) same result using explicit nested for loop. (c) confirm both are equal.](../resources/S19-LR-ch19-sets-scripting-qa-fig-02.png)
+![Q4. exam_scores = [[78,85,90],[85,92,78],[60,90,100]]. Script: (a) nested set comprehension to get unique scores. (b) same result using explicit nested for loop. (c) confirm both are equal.](../resources/S19-LR-ch19-sets-scripting-qa-fig-02.png)
 
 **Reading the figure**
 
 - **Step 1:** Start with an empty set.
-- **Step 2:** Outer loop, `for row in examscores`: is there another row?
+- **Step 2:** Outer loop, `for row in exam_scores`: is there another row?
 - **Step 3:** Yes: take the next row, for example `[78, 85, 90]`.
 - **Step 4:** Inner loop, `for score in row`: is there another score in this row? If not, go back to Step 2.
 - **Step 5:** Yes: take the next score.
@@ -652,7 +652,7 @@ This exercise targets a subtle but important misunderstanding: "tuples are immut
 2. When **Step 2** tries `.add(t)`, Python has to work out a hash for the tuple.
 3. To do that, it must work out a hash for **every element inside** the tuple.
 4. `hash(1)` and `hash(2)` work. The moment it reaches the nested list, hashing fails.
-5. The error message printed in **Step 3** names `'list'`, not `'tuple'`. This confirms that the real culprit is the object nested inside, not the tuple itself.
+5. The error message printed in **Step 3** ends with `unhashable type: 'list'`, not `'tuple'`. This confirms that the real culprit is the object nested inside, not the tuple itself.
 
 The rule to note: a tuple is hashable only if every element it contains, all the way down, is also hashable. An immutable outer container is necessary, but it is not enough.
 
@@ -778,7 +778,7 @@ Set inside a set -> unhashable type: 'set'
 Set as a dict key -> unhashable type: 'set'
 ```
 
-In Python 3.14 and later, the second message reads `cannot use 'set' as a dict key (unhashable type: 'set')`.
+In Python 3.14 and later, both messages change: the first reads `cannot use 'set' as a set element (unhashable type: 'set')` and the second reads `cannot use 'set' as a dict key (unhashable type: 'set')`.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -840,7 +840,7 @@ How to choose between them:
 - Use **`.update()`** only when you really want to merge in **every** element of another collection. Be especially careful with strings: they can be looped over in a way that surprises many beginners.
 - If you want `.update()` to add a whole word, wrap it in a list: `s.update(["bc"])`.
 
-![Q9. Script: (a) s1={"a"}, do s1.add("bc"); print. (b) s2={"a"}, do s2.update("bc"); print. Explain difference in a comment.](../resources/LR-ch19-sets-scripting-qa-fig-04.png)
+![Q9. Script: (a) s1={"a"}, do s1.add("bc"); print. (b) s2={"a"}, do s2.update("bc"); print. Explain difference in a comment.](../resources/S19-LR-ch19-sets-scripting-qa-fig-04.png)
 
 **Reading the figure**
 
@@ -1213,7 +1213,7 @@ Final set (odd numbers only): {1, 3, 5, 7}
 
 The general pattern, "loop over a copy, change the original", is the standard fix whenever you need to filter or trim a set (or a dictionary) in place while looping over it.
 
-![Q13. nums = {1,2,3,4,5,6,7,8}. Script: (a) try removing even numbers while looping directly over nums — catch the resulting error. (b) fix using .copy(), print final set.](../resources/LR-ch19-sets-scripting-qa-fig-06.png)
+![Q13. nums = {1,2,3,4,5,6,7,8}. Script: (a) try removing even numbers while looping directly over nums — catch the resulting error. (b) fix using .copy(), print final set.](../resources/S19-LR-ch19-sets-scripting-qa-fig-06.png)
 
 **Reading the figure**
 
@@ -1738,7 +1738,7 @@ Number of subject groups: 2
 
 **Concept applied: the "immutable key mapping" pattern.** This script shows a practical job that only a frozenset, never a plain set, can do.
 
-- **Step 2** builds a dictionary whose **keys** are frozensets. This is allowed only because dictionary keys, like set elements, must be hashable. A frozenset qualifies because its contents can never change after it is created, which gives it one fixed, permanent hash value.
+- **Step 2** builds a dictionary whose **keys** are frozensets. Dictionary keys, like set elements, must be hashable, and a frozenset is. A frozenset qualifies because its contents can never change after it is created, which gives it one fixed, permanent hash value.
 - A plain set in the same position would raise `TypeError: unhashable type: 'set'`, because a mutable object's hash could change without the dictionary knowing.
 - **Step 3**'s lookup, `classrooms[group1]`, works like any other dictionary lookup. Python works out the hash of `group1` and jumps straight to its value, `"Room 101"`.
 - Because a frozenset has no order, `frozenset({"Physics", "Math"})` is equal to `group1` and has the same hash. So it finds the same room. This makes frozensets a natural key for "a combination of things" where the order does not matter.

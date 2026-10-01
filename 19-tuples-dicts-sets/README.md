@@ -40,7 +40,7 @@ Each of the three types has the same pair of pages: a conceptual one that explai
 
 **A key must be hashable, and a tuple is hashable only if everything inside it is.** `(1, 2)` works as a key. `(1, [2, 3])` does not, because of the list inside.
 
-**Never change a dictionary or a set while looping over it.** Python raises `RuntimeError: dictionary changed size during iteration`. Loop over a snapshot instead, such as `list(my_dict)`.
+**Never add or remove items in a dictionary or a set while looping over it.** Python raises a `RuntimeError` (for a dictionary: `dictionary changed size during iteration`). Loop over a snapshot instead, such as `list(my_dict)`.
 
 **`d[key]` and `d.get(key)` behave differently when the key is missing.** The first raises `KeyError` and stops the program; the second returns `None`, or whatever default you give it.
 

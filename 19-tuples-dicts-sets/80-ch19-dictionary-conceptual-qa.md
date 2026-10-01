@@ -350,11 +350,11 @@ Formally, an object must meet three conditions:
 - **Step 1:** Look up a value with `d[key]`.
 - **Step 2:** Work out `hash(key)`. Rule 1, the hash never changes during the object's lifetime, makes sure it is the same number as when the key was stored.
 - **Step 3:** Go straight to the place in the table that this hash points to. No searching through every key is needed.
-- **Step 4:** Is a stored key there with the same hash?
-- **Step 5:** No: the key is not in the dictionary, so raise `KeyError`.
-- **Step 6:** Yes: is the stored key `==` the key given? This uses Rule 2, that the object can be compared for equality.
-- **Step 7:** Yes: found, so return the value. Rule 3, equal objects have equal hashes, guarantees that an equal key was stored at this same place.
-- **Step 8:** No: two different keys happen to share a hash, a collision. Check the next candidate place and go back to Step 4.
+- **Step 4:** Is that place empty?
+- **Step 5:** Yes: the key is not in the dictionary, so raise `KeyError`.
+- **Step 6:** No: a key is stored there. Does it have the same hash, and is it `==` the key given? This uses Rule 2, that the object can be compared for equality.
+- **Step 7:** Yes: found, so return the value. Rule 3, equal objects have equal hashes, guarantees that an equal key was stored where this hash leads.
+- **Step 8:** No: a different key took this place first, a collision. Check the next candidate place and go back to Step 4.
 
 This picture is simplified, but it shows why each rule is needed.
 
@@ -1126,7 +1126,7 @@ Because `list(my_dict.keys())` creates an independent copy of the keys at that m
 
 A second safe technique is to build a **new** dictionary that keeps only the entries you want, using a comprehension: `my_dict = {k: v for k, v in my_dict.items() if v != 2}`.
 
-![Q14. What error occurs if you try to delete a key from a dictionary while directly looping over it, and what is the recommended safe technique to avoid it?](../resources/LR-ch19-dictionary-conceptual-qa-fig-05.png)
+![Q14. What error occurs if you try to delete a key from a dictionary while directly looping over it, and what is the recommended safe technique to avoid it?](../resources/S19-LR-ch19-dictionary-conceptual-qa-fig-05.png)
 
 **Reading the figure**
 

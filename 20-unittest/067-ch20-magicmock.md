@@ -342,7 +342,7 @@ The mock did two jobs. It returned the value we chose (5), and it recorded that 
 
 ### Execution Flow of len()
 
-![Execution Flow of len()](../resources/LR-ch20-magicmock-fig-01.png)
+![Execution Flow of len()](../resources/S20-LR-ch20-magicmock-fig-01.png)
 
 **Reading the figure**
 
@@ -512,7 +512,7 @@ Second loop: [10, 20, 30]
 
 ### Execution Flow of Iteration
 
-![Execution Flow of Iteration](../resources/LR-ch20-magicmock-fig-02.png)
+![Execution Flow of Iteration](../resources/S20-LR-ch20-magicmock-fig-02.png)
 
 **Reading the figure**
 
@@ -692,7 +692,7 @@ Step 3 matters. In `with fake_file as f`, the name `f` receives whatever `__ente
 
 ### Context Manager Flow
 
-![Context Manager Flow](../resources/LR-ch20-magicmock-fig-03.png)
+![Context Manager Flow](../resources/S20-LR-ch20-magicmock-fig-03.png)
 
 **Reading the figure**
 

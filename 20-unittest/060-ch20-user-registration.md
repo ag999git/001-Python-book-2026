@@ -386,7 +386,7 @@ If any of these requirements is not met, the function immediately raises a `Valu
 
 The flowchart shows the order of the checks.
 
-![What the Script Does](../resources/LR-ch20-user-registration-fig-01.png)
+![What the Script Does](../resources/S20-LR-ch20-user-registration-fig-01.png)
 
 **Reading the figure**
 
@@ -640,7 +640,7 @@ This allows us to show several pytest features, one in each test. It also lets u
 
 The flowchart below shows how `pytest.raises()` decides whether a test passes.
 
-![Why This Example Is Good for pytest.raises()](../resources/LR-ch20-user-registration-fig-02.png)
+![Why This Example Is Good for pytest.raises()](../resources/S20-LR-ch20-user-registration-fig-02.png)
 
 **Reading the figure**
 

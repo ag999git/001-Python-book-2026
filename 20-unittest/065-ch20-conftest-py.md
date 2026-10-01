@@ -404,7 +404,7 @@ When a test asks for a fixture, pytest searches for it in a fixed order, startin
 
 #### Flowchart
 
-![How Pytest Resolves Distributed Fixtures](../resources/LR-ch20-conftest-py-fig-01.png)
+![How Pytest Resolves Distributed Fixtures](../resources/S20-LR-ch20-conftest-py-fig-01.png)
 
 **Reading the figure**
 

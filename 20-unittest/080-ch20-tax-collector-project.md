@@ -425,23 +425,20 @@ How `pytest.approx()` decides:
 
 ## 9. Flowchart: Parametrized Testing and Execution
 
-![Project: The "Micro-Precision" Tax Calculator (Using Parameterized Testing)](../resources/LR-ch20-tax-collector-project-fig-01.png)
+![Project: The "Micro-Precision" Tax Calculator (Using Parameterized Testing)](../resources/S20-LR-ch20-tax-collector-project-fig-01.png)
 
 **Reading the figure**
 
-- **Step 1:** pytest collects the test function `test_tax_values`.
-- **Step 2:** It reads the `@pytest.mark.parametrize` list, which holds 5 tuples.
-- **Step 3:** It creates 5 separate test cases, one for each tuple. Each one passes or fails on its own.
-- **Step 4:** Take the next test case.
-- **Step 5:** Put that tuple's values into the parameters `price` and `expected`.
-- **Step 6:** Call `calculate_tax(price)`.
-- **Step 7:** Does the result equal `pytest.approx(expected)`? `approx` allows a tiny floating-point difference.
-- **Step 8:** Yes: mark this case PASSED.
-- **Step 9:** No: mark this case FAILED and record the details, including the values that were compared.
-- **Step 10:** If more test cases are left, go back to Step 4.
-- **Step 11:** No: print the summary of all 5 cases.
+- **Step 1:** pytest collects the test function `test_tax_values`, reads the `@pytest.mark.parametrize` list of 5 tuples and creates 5 separate test cases, one for each tuple. Each one passes or fails on its own.
+- **Step 2:** Take the next test case and put that tuple's values into the parameters `price` and `expected`.
+- **Step 3:** Call `calculate_tax(price)`.
+- **Step 4:** Does the result equal `pytest.approx(expected)`? `approx` allows a tiny floating-point difference.
+- **Step 5:** Yes: mark this case PASSED.
+- **Step 6:** No: mark this case FAILED and record the details, including the values that were compared.
+- **Step 7:** Either way, go back to Step 2 for the next case, until all 5 have run.
+- **Step 8:** Print the summary of all 5 cases.
 
-Notice that step 9 does not stop the run. It records the failure and moves on to the next case. The next section explains why this matters.
+Notice that step 6 does not stop the run. It records the failure and moves on to the next case. The next section explains why this matters.
 
 [Back to the Table of Contents](080-ch20-tax-collector-project.md#table-of-contents)
 

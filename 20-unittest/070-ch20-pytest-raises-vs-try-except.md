@@ -142,7 +142,7 @@ A test that passes in both cases cannot tell a working function from a broken on
 
 #### Flow chart (Using only try/except without else)
 
-![Flow chart (Using only try/except without else)](../resources/LR-ch20-pytest-raises-vs-try-except-fig-01.png)
+![Flow chart (Using only try/except without else)](../resources/S20-LR-ch20-pytest-raises-vs-try-except-fig-01.png)
 
 **Reading the figure**
 
@@ -187,7 +187,7 @@ A small improvement: instead of `assert False, "..."`, pytest provides `pytest.f
 
 #### Flow chart for try/except with else
 
-![Flow chart for try/except with else](../resources/LR-ch20-pytest-raises-vs-try-except-fig-02.png)
+![Flow chart for try/except with else](../resources/S20-LR-ch20-pytest-raises-vs-try-except-fig-02.png)
 
 **Reading the figure**
 
@@ -215,14 +215,14 @@ def test_create_user():
 
 ### Flow chart of pytest raises
 
-![Flow chart of pytest raises](../resources/LR-ch20-pytest-raises-vs-try-except-fig-03.png)
+![Flow chart of pytest raises](../resources/S20-LR-ch20-pytest-raises-vs-try-except-fig-03.png)
 
 **Reading the figure**
 
 - **Step 1:** The test enters the block `with pytest.raises(ValueError):`.
 - **Step 2:** Inside the block it calls `create_user(10)`.
 - **Step 3:** Was an exception raised?
-- **Step 4:** No: the test fails with `DID NOT RAISE <class 'ValueError'>`.
+- **Step 4:** No: the test fails with `DID NOT RAISE <class 'ValueError'>` (pytest 9.1 and later print `DID NOT RAISE ValueError`).
 - **Step 5:** Yes: is it a `ValueError`?
 - **Step 6:** Yes: `pytest.raises` catches it, and the test passes.
 - **Step 7:** No: a different exception is not caught, so it passes through and the test fails.
@@ -387,7 +387,7 @@ Read the results in a table:
 | B. try/except/else | PASSED | FAILED | Works |
 | C. pytest.raises | PASSED | FAILED | Works, with the shortest code |
 
-The key line is `test_A_try_except_only_broken PASSED`. The function is broken, yet the test passes. Approaches B and C both fail on the broken version, which is exactly what a good test should do. Notice also that approach C gives the clearest message, `DID NOT RAISE <class 'ValueError'>`, without us having to write one.
+The key line is `test_A_try_except_only_broken PASSED`. The function is broken, yet the test passes. Approaches B and C both fail on the broken version, which is exactly what a good test should do. Notice also that approach C gives the clearest message, `DID NOT RAISE <class 'ValueError'>` (pytest 9.1 and later shorten this to `DID NOT RAISE ValueError`), without us having to write one.
 
 [Back to the Table of Contents](070-ch20-pytest-raises-vs-try-except.md#table-of-contents)
 

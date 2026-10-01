@@ -401,8 +401,9 @@ You can read more in the pytest guide on [capturing output](https://docs.pytest.
 - **Step 2:** Was pytest run with `-s`?
 - **Step 3:** Yes: nothing is captured; the text appears on the screen immediately, whether the test passes or fails.
 - **Step 4:** No (the default): pytest redirects the text into a temporary store.
-- **Step 5:** Did the test pass? If it did, the stored text is simply thrown away.
-- **Step 6:** If it failed, the stored text is shown in the report under `Captured stdout call`, to help find the problem.
+- **Step 5:** Did the test pass?
+- **Step 6:** No: the stored text is shown in the report under `Captured stdout call`, to help find the problem.
+- **Step 7:** Yes: the stored text is simply thrown away.
 
 [Back to the Table of Contents](010-ch20-pytest-flags.md#table-of-contents)
 
@@ -713,19 +714,19 @@ test_bank.py::test_deposit PASSED                                        [100%]
 
 The following flowchart shows how pytest decides for each test in this example.
 
-![Using and, or and not with -k](../resources/LR-ch20-pytest-flags-fig-01.png)
+![Using and, or and not with -k](../resources/S20-LR-ch20-pytest-flags-fig-01.png)
 
 **Reading the figure**
 
 - **Step 1:** The command is `pytest test_bank.py -k "deposit and not large"`. pytest first collects the 3 tests in `test_bank.py`.
-- **Step 2:** Take the next test and check its name against the `-k` expression.
-- **Step 3:** `and` needs both parts to be true. First part: does the name contain `deposit`?
-- **Step 4:** No: the first part is false, so the whole expression is false. Deselect the test. (`test_withdraw` goes this way.)
-- **Step 5:** Yes: now the second part, `not large`. Does the name contain `large`?
-- **Step 6:** Yes: `not large` is false, so deselect the test. (`test_deposit_large_amount` goes this way.)
-- **Step 7:** No: both parts are true, so select the test and run it. (`test_deposit` goes this way.)
-- **Step 8:** If any tests are left, go back to Step 2.
-- **Step 9:** No: show the summary, `1 passed, 2 deselected`.
+- **Step 2:** Are any tests left to check?
+- **Step 3:** Yes: take the next test and check its name against the `-k` expression.
+- **Step 4:** `and` needs both parts to be true. First part: does the name contain `deposit`?
+- **Step 5:** No: the first part is false, so the whole expression is false. Deselect the test and go back to Step 2. (`test_withdraw` goes this way.)
+- **Step 6:** Yes: now the second part, `not large`. Does the name contain `large`?
+- **Step 7:** Yes: `not large` is false, so deselect the test and go back to Step 2. (`test_deposit_large_amount` goes this way.)
+- **Step 8:** No: both parts are true, so select the test and run it, then go back to Step 2. (`test_deposit` goes this way.)
+- **Step 9:** No tests are left: show the summary, `1 passed, 2 deselected`.
 
 [Back to the Table of Contents](010-ch20-pytest-flags.md#table-of-contents)
 
@@ -862,7 +863,7 @@ A common workflow during development is:
 
 The same workflow as a flowchart:
 
-![Typical Pytest Workflow](../resources/LR-ch20-pytest-flags-fig-02.png)
+![Typical Pytest Workflow](../resources/S20-LR-ch20-pytest-flags-fig-02.png)
 
 **Reading the figure**
 

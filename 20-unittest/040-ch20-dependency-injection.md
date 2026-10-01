@@ -556,7 +556,7 @@ Notice three things:
 
 1. The result is `ERROR`, not `FAILED`. The test never started, because its setup could not be completed.
 2. The message `fixture 'database' not found` names the missing fixture exactly.
-3. Pytest lists the fixtures that **are** available, and `db` is among them. This is a strong hint that the parameter name was misspelled or chosen wrongly. The other names in the list are fixtures built into pytest, and the list may be longer on your computer if you have pytest plugins installed.
+3. Pytest lists the fixtures that **are** available, and `db` is among them. This is a strong hint that the parameter name was misspelled or chosen wrongly. The other names in the list are fixtures built into pytest, and the list may be different on your computer, depending on your pytest version and any plugins you have installed.
 
 **A useful detail:** strictly speaking, it is the fixture's **name** that must match the parameter, not the Python function's name. By default they are the same. But you can give a fixture a different name with the `name` argument. Save this as `test_fixture_name.py`:
 
@@ -634,7 +634,7 @@ In short, dependency injection lets each test do just one job: **check** somethi
 
 The flowchart below shows what happens for `test_injection`. The order of events is the same for every test in the file.
 
-![Flow for EACH test (testinjection / testconnect / teststate)](../resources/LR-ch20-dependency-injection-fig-01.png)
+![Flow for EACH test (test_injection / test_connect / test_state)](../resources/S20-LR-ch20-dependency-injection-fig-01.png)
 
 **Reading the figure**
 
@@ -643,12 +643,10 @@ The flowchart below shows what happens for `test_injection`. The order of events
 - **Step 3:** It searches for a fixture with that exact name.
 - **Step 4:** Was a fixture named `db` found?
 - **Step 5:** No: pytest reports an error, `fixture 'db' not found`, and the test does not run.
-- **Step 6:** Yes: pytest calls the fixture function `db()`.
-- **Step 7:** Inside the fixture, a `Database()` object is created.
-- **Step 8:** The fixture returns the `Database` object.
-- **Step 9:** pytest calls `test_injection` and passes that object in as the argument `db`. This is dependency injection.
-- **Step 10:** The test body runs: it checks `type(db)` and `isinstance(db, Database)`.
-- **Step 11:** The test completes, as PASSED or FAILED.
+- **Step 6:** Yes: pytest calls the fixture function `db()`. Inside it, a `Database()` object is created and returned.
+- **Step 7:** pytest calls `test_injection` and passes that object in as the argument `db`. This is dependency injection.
+- **Step 8:** The test body runs: it checks `type(db)` and `isinstance(db, Database)`.
+- **Step 9:** The test completes, as PASSED or FAILED.
 
 In words:
 
@@ -696,7 +694,7 @@ The key row is step 4. Because the fixture has the default **function scope**, i
 
 ### For test_connect(db)
 
-![For testconnect(db)](../resources/LR-ch20-dependency-injection-fig-02.png)
+![For test_connect(db)](../resources/S20-LR-ch20-dependency-injection-fig-02.png)
 
 **Reading the figure**
 
@@ -713,7 +711,7 @@ The key row is step 4. Because the fixture has the default **function scope**, i
 
 ### For test_state(db)
 
-![For teststate(db)](../resources/LR-ch20-dependency-injection-fig-03.png)
+![For test_state(db)](../resources/S20-LR-ch20-dependency-injection-fig-03.png)
 
 **Reading the figure**
 

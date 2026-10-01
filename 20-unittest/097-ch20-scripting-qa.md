@@ -322,7 +322,7 @@ PASSED
 
 Expected execution order:
 
-![Modify the fixture example to use session scope so that the object is created only once for all tests.](../resources/LR-ch20-scripting-qa-fig-01.png)
+![Modify the fixture example to use session scope so that the object is created only once for all tests.](../resources/S20-LR-ch20-scripting-qa-fig-01.png)
 
 **Reading the figure**
 
@@ -398,7 +398,7 @@ The line `<class 'test_injection.User'>` proves that the parameter `user` holds 
 
 Flow:
 
-![Write a pytest script demonstrating dependency injection. Show how pytest injects a fixture object into a test function parameter.](../resources/LR-ch20-scripting-qa-fig-02.png)
+![Write a pytest script demonstrating dependency injection. Show how pytest injects a fixture object into a test function parameter.](../resources/S20-LR-ch20-scripting-qa-fig-02.png)
 
 **Reading the figure**
 
@@ -887,7 +887,7 @@ PASSED
 
 Execution flow:
 
-![Write a pytest fixture using yield to perform setup and teardown operations.](../resources/LR-ch20-scripting-qa-fig-03.png)
+![Write a pytest fixture using yield to perform setup and teardown operations.](../resources/S20-LR-ch20-scripting-qa-fig-03.png)
 
 **Reading the figure**
 
@@ -1129,7 +1129,7 @@ from conftest import calculator
 
 Pytest looks for the fixture itself:
 
-![Create a conftest.py file containing a fixture and use it in a test file without importing it.](../resources/LR-ch20-scripting-qa-fig-05.png)
+![Create a conftest.py file containing a fixture and use it in a test file without importing it.](../resources/S20-LR-ch20-scripting-qa-fig-05.png)
 
 **Reading the figure**
 
@@ -1382,7 +1382,7 @@ PASSED
 
 Both tests pass. But look at why `test_status` passes: it receives the **same** `User` object that `test_login` changed.
 
-![Demonstrate the shared state problem with a session-scoped fixture.](../resources/LR-ch20-scripting-qa-fig-06.png)
+![Demonstrate the shared state problem with a session-scoped fixture.](../resources/S20-LR-ch20-scripting-qa-fig-06.png)
 
 **Reading the figure**
 
@@ -1524,7 +1524,7 @@ PASSED
 
 Flow:
 
-![Test exceptions and floating point values using pytest tools.](../resources/LR-ch20-scripting-qa-fig-07.png)
+![Test exceptions and floating point values using pytest tools.](../resources/S20-LR-ch20-scripting-qa-fig-07.png)
 
 **Reading the figure**
 
@@ -1855,7 +1855,7 @@ PASSED
 
 Execution:
 
-![Combine parameterized testing and fixtures to test multiple cases.](../resources/LR-ch20-scripting-qa-fig-08.png)
+![Combine parameterized testing and fixtures to test multiple cases.](../resources/S20-LR-ch20-scripting-qa-fig-08.png)
 
 **Reading the figure**
 
@@ -2009,30 +2009,30 @@ The final project demonstrates:
 
 ## Scripts for This Page and How to Run Them
 
-All the scripts are in the [scripting-qa folder](https://github.com/ag999git/001-Python-book-2026/tree/main/20-unittest/scripting-qa). Each question has its own sub-folder, because several questions use the same file names with different contents.
+All the scripts are in the [scripting-qa folder](https://github.com/ag999git/001-Python-book-2026/tree/main/20-unittest/qa-demo/scripting-qa). Each question has its own sub-folder, because several questions use the same file names with different contents.
 
 | Question | Folder | Files |
 | --- | --- | --- |
-| 1 | [q01](https://github.com/ag999git/001-Python-book-2026/tree/main/20-unittest/scripting-qa/q01) | `square.py`, `test_square.py` |
-| 2 | [q02](https://github.com/ag999git/001-Python-book-2026/tree/main/20-unittest/scripting-qa/q02) | `database.py`, `test_database.py` |
-| 3 | [q03](https://github.com/ag999git/001-Python-book-2026/tree/main/20-unittest/scripting-qa/q03) | `test_session_fixture.py` |
-| 4 | [q04](https://github.com/ag999git/001-Python-book-2026/tree/main/20-unittest/scripting-qa/q04) | `test_injection.py` |
-| 5 | [q05](https://github.com/ag999git/001-Python-book-2026/tree/main/20-unittest/scripting-qa/q05) | `calculator.py`, `test_calculator.py` |
-| 6 | [q06](https://github.com/ag999git/001-Python-book-2026/tree/main/20-unittest/scripting-qa/q06) | `calculator.py`, `test_calculator.py` |
-| 7 | [q07](https://github.com/ag999git/001-Python-book-2026/tree/main/20-unittest/scripting-qa/q07) | `validator.py`, `test_validator.py` |
-| 8 | [q08](https://github.com/ag999git/001-Python-book-2026/tree/main/20-unittest/scripting-qa/q08) | `my_project/pytest.ini`, `my_project/calculator.py`, `my_project/tests/test_calculator.py`, `my_project/tests/test_more_math.py` |
-| 9 | [q09](https://github.com/ag999git/001-Python-book-2026/tree/main/20-unittest/scripting-qa/q09) | `test_resource.py` |
-| 10 | [q10](https://github.com/ag999git/001-Python-book-2026/tree/main/20-unittest/scripting-qa/q10) | `payment.py`, `test_payment.py` (needs `requests`) |
-| 11 | [q11](https://github.com/ag999git/001-Python-book-2026/tree/main/20-unittest/scripting-qa/q11) | `project/calculator.py`, `project/conftest.py`, `project/test_calculator.py` |
-| 12 | [q12](https://github.com/ag999git/001-Python-book-2026/tree/main/20-unittest/scripting-qa/q12) | `test_scope.py` |
-| 13 | [q13](https://github.com/ag999git/001-Python-book-2026/tree/main/20-unittest/scripting-qa/q13) | `test_session.py` |
-| 14 | [q14](https://github.com/ag999git/001-Python-book-2026/tree/main/20-unittest/scripting-qa/q14) | `test_shared_state.py` |
-| 15 | [q15](https://github.com/ag999git/001-Python-book-2026/tree/main/20-unittest/scripting-qa/q15) | `calculator.py`, `test_calculator.py` |
-| 16 | [q16](https://github.com/ag999git/001-Python-book-2026/tree/main/20-unittest/scripting-qa/q16) | `calculator.py`, `test_calculator.py` |
-| 17 | [q17](https://github.com/ag999git/001-Python-book-2026/tree/main/20-unittest/scripting-qa/q17) | `bank.py`, `test_bank.py` |
-| 18 | [q18](https://github.com/ag999git/001-Python-book-2026/tree/main/20-unittest/scripting-qa/q18) | `test_user.py` |
-| 19 | [q19](https://github.com/ag999git/001-Python-book-2026/tree/main/20-unittest/scripting-qa/q19) | `test_login.py` |
-| 20 | [q20](https://github.com/ag999git/001-Python-book-2026/tree/main/20-unittest/scripting-qa/q20) | `student_project/pytest.ini`, `student_project/product.py`, `student_project/tests/test_product.py` |
+| 1 | [q01](https://github.com/ag999git/001-Python-book-2026/tree/main/20-unittest/qa-demo/scripting-qa/q01) | `square.py`, `test_square.py` |
+| 2 | [q02](https://github.com/ag999git/001-Python-book-2026/tree/main/20-unittest/qa-demo/scripting-qa/q02) | `database.py`, `test_database.py` |
+| 3 | [q03](https://github.com/ag999git/001-Python-book-2026/tree/main/20-unittest/qa-demo/scripting-qa/q03) | `test_session_fixture.py` |
+| 4 | [q04](https://github.com/ag999git/001-Python-book-2026/tree/main/20-unittest/qa-demo/scripting-qa/q04) | `test_injection.py` |
+| 5 | [q05](https://github.com/ag999git/001-Python-book-2026/tree/main/20-unittest/qa-demo/scripting-qa/q05) | `calculator.py`, `test_calculator.py` |
+| 6 | [q06](https://github.com/ag999git/001-Python-book-2026/tree/main/20-unittest/qa-demo/scripting-qa/q06) | `calculator.py`, `test_calculator.py` |
+| 7 | [q07](https://github.com/ag999git/001-Python-book-2026/tree/main/20-unittest/qa-demo/scripting-qa/q07) | `validator.py`, `test_validator.py` |
+| 8 | [q08](https://github.com/ag999git/001-Python-book-2026/tree/main/20-unittest/qa-demo/scripting-qa/q08) | `my_project/pytest.ini`, `my_project/calculator.py`, `my_project/tests/test_calculator.py`, `my_project/tests/test_more_math.py` |
+| 9 | [q09](https://github.com/ag999git/001-Python-book-2026/tree/main/20-unittest/qa-demo/scripting-qa/q09) | `test_resource.py` |
+| 10 | [q10](https://github.com/ag999git/001-Python-book-2026/tree/main/20-unittest/qa-demo/scripting-qa/q10) | `payment.py`, `test_payment.py` (needs `requests`) |
+| 11 | [q11](https://github.com/ag999git/001-Python-book-2026/tree/main/20-unittest/qa-demo/scripting-qa/q11) | `project/calculator.py`, `project/conftest.py`, `project/test_calculator.py` |
+| 12 | [q12](https://github.com/ag999git/001-Python-book-2026/tree/main/20-unittest/qa-demo/scripting-qa/q12) | `test_scope.py` |
+| 13 | [q13](https://github.com/ag999git/001-Python-book-2026/tree/main/20-unittest/qa-demo/scripting-qa/q13) | `test_session.py` |
+| 14 | [q14](https://github.com/ag999git/001-Python-book-2026/tree/main/20-unittest/qa-demo/scripting-qa/q14) | `test_shared_state.py` |
+| 15 | [q15](https://github.com/ag999git/001-Python-book-2026/tree/main/20-unittest/qa-demo/scripting-qa/q15) | `calculator.py`, `test_calculator.py` |
+| 16 | [q16](https://github.com/ag999git/001-Python-book-2026/tree/main/20-unittest/qa-demo/scripting-qa/q16) | `calculator.py`, `test_calculator.py` |
+| 17 | [q17](https://github.com/ag999git/001-Python-book-2026/tree/main/20-unittest/qa-demo/scripting-qa/q17) | `bank.py`, `test_bank.py` |
+| 18 | [q18](https://github.com/ag999git/001-Python-book-2026/tree/main/20-unittest/qa-demo/scripting-qa/q18) | `test_user.py` |
+| 19 | [q19](https://github.com/ag999git/001-Python-book-2026/tree/main/20-unittest/qa-demo/scripting-qa/q19) | `test_login.py` |
+| 20 | [q20](https://github.com/ag999git/001-Python-book-2026/tree/main/20-unittest/qa-demo/scripting-qa/q20) | `student_project/pytest.ini`, `student_project/product.py`, `student_project/tests/test_product.py` |
 
 To run them on your computer:
 

@@ -182,7 +182,7 @@ The steps are written for Windows. Where macOS or Linux is different, this is no
 
 The whole process looks like this:
 
-![Running the Scripts on Your Computer](../resources/LR-ch20-unittest-disadvantage-rigid-oop-style-fig-01.png)
+![Running the Scripts on Your Computer](../resources/S20-LR-ch20-unittest-disadvantage-rigid-oop-style-fig-01.png)
 
 **Reading the figure**
 
@@ -564,18 +564,17 @@ The third point is the first limitation, described next.
 
 The flowchart shows the order in which pytest handles a test class that has a `setup_method`.
 
-![How the xUnit Setup Runs](../resources/LR-ch20-unittest-disadvantage-rigid-oop-style-fig-02.png)
+![How the xUnit Setup Runs](../resources/S20-LR-ch20-unittest-disadvantage-rigid-oop-style-fig-02.png)
 
 **Reading the figure**
 
 - **Step 1:** pytest finds the test class `TestBankAccount`.
-- **Step 2:** Take the next test method in the class.
-- **Step 3:** Create a brand-new instance of the class for this one method, so no state leaks between tests.
+- **Step 2:** Are any test methods left in the class?
+- **Step 3:** Yes: take the next test method and create a brand-new instance of the class for it, so no state leaks between tests.
 - **Step 4:** Run `setup_method`, which creates a fresh `self.account`.
 - **Step 5:** Run the test method itself.
-- **Step 6:** Run `teardown_method` to clean up.
-- **Step 7:** If more test methods are left, go back to Step 2.
-- **Step 8:** No: report the results.
+- **Step 6:** Run `teardown_method` to clean up, then go back to Step 2.
+- **Step 7:** No methods are left: report the results.
 
 Notice that step 4 has no choice in it. There is no question like "does this test need an account?". The setup runs for every test method, every time.
 
@@ -787,20 +786,19 @@ Think of a restaurant. You do not walk into the kitchen and cook your own meal. 
 
 ### How Pytest Supplies a Fixture
 
-![How Pytest Supplies a Fixture](../resources/LR-ch20-unittest-disadvantage-rigid-oop-style-fig-03.png)
+![How Pytest Supplies a Fixture](../resources/S20-LR-ch20-unittest-disadvantage-rigid-oop-style-fig-03.png)
 
 **Reading the figure**
 
 - **Step 1:** pytest finds the next test function.
 - **Step 2:** It reads the names of the test's parameters.
-- **Step 3:** Does a parameter name match a fixture?
-- **Step 4:** No: run the test with no setup.
-- **Step 5:** Yes: run the fixture's code up to `yield`. This is the setup.
-- **Step 6:** Pass the object after `yield` into the test as the argument.
-- **Step 7:** Run the test.
-- **Step 8:** Run the rest of the fixture, the code after `yield`. This is the teardown, and it runs even if the test failed.
-- **Step 9:** If more tests are left, go back to Step 1.
-- **Step 10:** No: report the results.
+- **Step 3:** Does the test have any parameters?
+- **Step 4:** No: run the test with no fixture setup.
+- **Step 5:** Yes: does every parameter name match a fixture?
+- **Step 6:** No: pytest stops this test with an error, `fixture '...' not found`. The test does not run.
+- **Step 7:** Yes: run each fixture's code up to `yield` (the setup), and pass the object after `yield` into the test as the argument.
+- **Step 8:** Run the test.
+- **Step 9:** Run the rest of the fixture, the code after `yield`. This is the teardown, and it runs even if the test failed.
 
 Compare this with the xUnit flowchart earlier. There, the setup ran for every test with no choice. Here, step 3 makes a decision for each test, based only on the parameters the test asks for.
 

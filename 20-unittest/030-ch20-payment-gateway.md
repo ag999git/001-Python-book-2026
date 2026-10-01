@@ -94,7 +94,7 @@ Two points are worth remembering:
 
 The flowchart below shows the order of events when a run has one session-scoped fixture, and two test files that each have a module-scoped fixture.
 
-![The Fixture Lifecycle Hierarchy](../resources/LR-ch20-payment-gateway-fig-01.png)
+![The Fixture Lifecycle Hierarchy](../resources/S20-LR-ch20-payment-gateway-fig-01.png)
 
 **Reading the figure**
 
@@ -400,7 +400,7 @@ A function that contains `yield` is different. It is a **generator**: it can han
 3. The fixture then pauses while the tests run. How long it pauses depends on its scope: for a function-scoped fixture, until that one test ends; for a session-scoped fixture, until the last test of the whole run ends.
 4. Everything **after** `yield` is the **teardown phase**, where resources are released (here, the gateway is closed). This part runs even if a test fails.
 
-![The Mechanics of yield Statements](../resources/LR-ch20-payment-gateway-fig-02.png)
+![The Mechanics of yield Statements](../resources/S20-LR-ch20-payment-gateway-fig-02.png)
 
 **Reading the figure**
 
@@ -876,7 +876,7 @@ A simple rule: **start with the default function scope, and widen the scope only
 | Slow setup, such as loading a large data file, used by the tests of one file | Module | Shared only inside that file |
 | Very slow setup, such as a login or a database connection, used across many files, and the tests do not change it | Session (in `conftest.py`) | Paid for only once in the whole run |
 
-![Choosing the Right Scope](../resources/LR-ch20-payment-gateway-fig-03.png)
+![Choosing the Right Scope](../resources/S20-LR-ch20-payment-gateway-fig-03.png)
 
 **Reading the figure**
 
@@ -918,7 +918,7 @@ In `test_payments.py`, when exactly does the line `[TEARDOWN] GLOBAL SESSION END
 
 ### Question 3: Why Did a Correct Test Fail?
 
-In `test_contamination.py`, `test_normal_payment` fails. The test itself has no mistake. Why does it fail, and give two ways to fix the problem.
+In `test_contamination.py`, `test_normal_payment` fails. The test itself has no mistake. Why does it fail? Give two ways to fix the problem.
 
 **Answer:**
 

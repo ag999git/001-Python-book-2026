@@ -85,7 +85,7 @@ A unit test usually follows three steps, known as **Arrange, Act, Assert**:
 
 **Reading the figure**
 
-- **Step 1:** Arrange: prepare everything the test needs, such as the input values and the expected result.
+- **Step 1:** Arrange: prepare everything the test needs, such as the input values.
 - **Step 2:** Act: call the function or code being tested, once.
 - **Step 3:** Assert: check that the result is what was expected. If it is not, the test fails and tells you so.
 
@@ -202,17 +202,17 @@ project/
 
 Execution flow:
 
-![How does pytest discover test files and test functions automatically?](../resources/LR-ch20-conceptual-qa-fig-02.png)
+![How does pytest discover test files and test functions automatically?](../resources/S20-LR-ch20-conceptual-qa-fig-02.png)
 
 **Reading the figure**
 
 - **Step 1:** You type `pytest` in the terminal.
 - **Step 2:** pytest searches the current folder and all its sub-folders for files.
-- **Step 3:** Does the file name match `test_*.py` or `*_test.py`?
-- **Step 4:** No: skip the file.
+- **Step 3:** Are any files left to look at?
+- **Step 4:** Yes: does the next file name match `test_*.py` or `*_test.py`? No: skip the file and go back to Step 3.
 - **Step 5:** Yes: import the file.
-- **Step 6:** Collect the functions whose names start with `test`, and the classes whose names start with `Test`.
-- **Step 7:** Run each collected test and record whether it PASSED or FAILED.
+- **Step 6:** Collect the functions whose names start with `test`, and the classes whose names start with `Test`. Then go back to Step 3.
+- **Step 7:** No files are left: run each collected test and record whether it PASSED or FAILED.
 - **Step 8:** Print the summary.
 
 This automatic discovery removes the need to call every test function yourself.
@@ -369,7 +369,7 @@ def test_connection(database):
 
 Execution:
 
-![Explain pytest dependency injection using fixtures. Why does the fixture name become the test parameter name?](../resources/LR-ch20-conceptual-qa-fig-03.png)
+![Explain pytest dependency injection using fixtures. Why does the fixture name become the test parameter name?](../resources/S20-LR-ch20-conceptual-qa-fig-03.png)
 
 **Reading the figure**
 
@@ -829,7 +829,7 @@ The test passes because the expected exception was raised inside the `with` bloc
 
 The test fails if:
 
-- no exception occurs (pytest reports `DID NOT RAISE <class 'ValueError'>`)
+- no exception occurs (pytest reports `DID NOT RAISE <class 'ValueError'>`, or `DID NOT RAISE ValueError` in pytest 9.1 and later)
 - a different kind of exception occurs (it is not caught, and the test fails with that exception)
 
 In this way, `pytest.raises()` checks that the program handles invalid situations correctly.

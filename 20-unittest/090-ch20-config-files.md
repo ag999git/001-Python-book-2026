@@ -170,7 +170,7 @@ If you have ever used `pip install -r requirements.txt`, you have already used a
 
 #### Flowchart Explaining How a Configuration File Is Used
 
-![Configuration Files in the Python World](../resources/LR-ch20-config-files-fig-01.png)
+![Configuration Files in the Python World](../resources/S20-LR-ch20-config-files-fig-01.png)
 
 **Reading the figure**
 
@@ -354,15 +354,15 @@ This is why you can run `pytest` from inside the `tests` folder and still get yo
 
 ### Flowchart Showing How Pytest Finds the Configuration File
 
-![Where Does the File Live?](../resources/LR-ch20-config-files-fig-02.png)
+![Where Does the File Live?](../resources/S20-LR-ch20-config-files-fig-02.png)
 
 **Reading the figure**
 
-- **Step 1:** pytest starts looking in the current folder.
-- **Step 2:** Is there a configuration file here that contains pytest settings?
+- **Step 1:** pytest looks for a configuration file, starting in the current folder.
+- **Step 2:** Is there a configuration file in this folder that contains pytest settings?
 - **Step 3:** Yes: use it. This folder becomes the `rootdir`, the root of the project.
 - **Step 4:** No: is there a parent folder above this one?
-- **Step 5:** Yes: move up to the parent folder and go back to Step 2.
+- **Step 5:** Yes: move up to the parent folder and go back to Step 1 to look there.
 - **Step 6:** No: the top of the file system was reached with no config file found, so pytest uses its built-in defaults.
 
 [Back to the Table of Contents](090-ch20-config-files.md#table-of-contents)
@@ -375,7 +375,7 @@ Let us create a `pytest.ini` file to register the `slow` and `fast` markers (and
 
 ### Step 1: Create the File
 
-Create a file named `pytest.ini` in your project root, next to `test_backup.py`. The first line must be `[pytest]`.
+Create a file named `pytest.ini` in your project root, next to `test_backup.py`. It must contain the section header `[pytest]`, with the settings below it (comment lines starting with `#` may come before it).
 
 Take care that the name is exactly `pytest.ini`. In Windows, turn on **View > Show > File name extensions** in File Explorer to make sure it has not been saved as `pytest.ini.txt`.
 
@@ -487,7 +487,7 @@ More settings, and the rules for where pytest looks for them, are described in t
 
 ## 7. Visualizing the Lifecycle (Flowchart)
 
-![Visualizing the Lifecycle (Flowchart)](../resources/LR-ch20-config-files-fig-03.png)
+![Visualizing the Lifecycle (Flowchart)](../resources/S20-LR-ch20-config-files-fig-03.png)
 
 **Reading the figure**
 
@@ -722,7 +722,7 @@ The rest of the list shows the markers that are built into pytest.
 
 | What You Want to Do | Command or Code | Notes |
 | --- | --- | --- |
-| Create the file | `pytest.ini` in the project root | Must start with the `[pytest]` header |
+| Create the file | `pytest.ini` in the project root | Must contain the `[pytest]` section header |
 | Register a marker | `slow: description` | Goes under `markers =`, indented |
 | Run fast tests | `pytest -m fast` | Selects tests by marker name |
 | Exclude slow tests | `pytest -m "not slow"` | Use quotes when the expression has a space |

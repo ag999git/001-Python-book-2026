@@ -174,7 +174,7 @@ Step 4: Theme read through config2: dark
 
 **Flowchart**
 
-![Q1. Write a script implementing a basic Singleton pattern to maintain a single configuration reference. Verify if two instances point to the exact same memory object.](../resources/LR-ch21-scriptsqa-fig-01.png)
+![Q1. Write a script implementing a basic Singleton pattern to maintain a single configuration reference. Verify if two instances point to the exact same memory object.](../resources/S21-LR-ch21-scriptsqa-fig-01.png)
 
 **Reading the figure**
 
@@ -792,7 +792,7 @@ Step 3: Client using the adapter:
 
 **Flowchart**
 
-![Q8. Write an Adapter pattern script that converts a legacy incompatible .requestxml() output method style into a client-expected .getjson() format.](../resources/S21-LR-ch21-scriptsqa-fig-02.png)
+![Q8. Write an Adapter pattern script that converts a legacy incompatible .request_xml() output method style into a client-expected .get_json() format.](../resources/S21-LR-ch21-scriptsqa-fig-02.png)
 
 **Reading the figure**
 
@@ -1070,7 +1070,7 @@ Second display():
 
 **Flowchart**
 
-![Q11. Implement a lazy-loading proxy pattern class (ImageProxy) that defers actual instantiation of an expensive internal RealImage object until .display() is invoked.](../resources/LR-ch21-scriptsqa-fig-03.png)
+![Q11. Implement a lazy-loading proxy pattern class (ImageProxy) that defers actual instantiation of an expensive internal _RealImage object until .display() is invoked.](../resources/S21-LR-ch21-scriptsqa-fig-03.png)
 
 **Reading the figure**
 
@@ -1181,13 +1181,13 @@ Station: new temperature 28°C
 
 **Reading the figure**
 
-- **Step 1:** Each display calls `attach()` on the weather station to register itself.
+- **Step 1:** The client calls `attach()` on the weather station once for each display, `station.attach(phone)` and `station.attach(wall)`, to register it.
 - **Step 2:** The station adds each one to its list of observers.
 - **Step 3:** The client changes the data by calling `set_temperature()`.
 - **Step 4:** The station stores the new value.
 - **Step 5:** The station calls `_notify_all()` automatically. The underscore shows it is meant for use inside the class only.
 - **Step 6:** `_notify_all()` calls `update()` on every observer in the list.
-- **Step 7:** Each display prints the new temperature. After `detach(wall)`, only the phone would receive the next update.
+- **Step 7:** Each display prints the new temperature. After `detach(wall)`, only the phone receives the next update.
 
 **Pattern Explanation:**
 
@@ -1423,7 +1423,7 @@ Step 5: After second undo: OFF
 
 **Flowchart**
 
-![Q14. Implement an undoable transaction command routing pipeline using the descriptive Command Pattern framework mapping action targets against a Light resource receptor.](../resources/LR-ch21-scriptsqa-fig-05.png)
+![Q14. Implement an undoable transaction command routing pipeline using the descriptive Command Pattern framework mapping action targets against a Light resource receptor.](../resources/S21-LR-ch21-scriptsqa-fig-05.png)
 
 **Reading the figure**
 
@@ -1540,7 +1540,7 @@ Step 6: 'B' in collection -> True
 
 **Flowchart**
 
-![Q15. Write a custom sequence traversal loop pattern using the traditional Iterator architecture by defining sequential steps inside CustomIterator and CustomCollection.](../resources/LR-ch21-scriptsqa-fig-06.png)
+![Q15. Write a custom sequence traversal loop pattern using the traditional Iterator architecture by defining sequential steps inside CustomIterator and CustomCollection.](../resources/S21-LR-ch21-scriptsqa-fig-06.png)
 
 **Reading the figure**
 
@@ -1765,7 +1765,7 @@ The `with` statement writes all of this for you, and you cannot forget the clean
 
 **Flowchart**
 
-![Q17. Develop an elegant Pythonic native alternative to resource management workflows by configuring a class utilizing Context Manager protocols.](../resources/LR-ch21-scriptsqa-fig-07.png)
+![Q17. Develop an elegant Pythonic native alternative to resource management workflows by configuring a class utilizing Context Manager protocols.](../resources/S21-LR-ch21-scriptsqa-fig-07.png)
 
 **Reading the figure**
 
@@ -1966,7 +1966,7 @@ Step 5: Safe version
 
 1. *Is `hasattr()` the only way to write the safe version?*
    No. Another common Python style is "easier to ask forgiveness than permission" (EAFP): call `play()` inside `try` and handle `AttributeError` in `except`, as Step 4 does ([EAFP](https://docs.python.org/3/glossary.html#term-EAFP)).
-2. *Would `broadcast_media()` work with an object whose `play` is a plain string instead of a method?*
+2. *Would `safe_broadcast()` work with an object whose `play` is a plain string instead of a method?*
    No. `hasattr()` would return `True`, but calling it would raise `TypeError: 'str' object is not callable`. A stricter check is `callable(getattr(obj, "play", None))`.
 
 [Back to the Table of Contents](#table-of-contents)

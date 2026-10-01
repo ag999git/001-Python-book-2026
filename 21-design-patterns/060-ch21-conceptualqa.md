@@ -436,7 +436,7 @@ Both forms share the same core idea: client code does not create the concrete ob
 
 **Flowchart of the simple factory script**
 
-![Q3. Explain the Factory Method Pattern. What problem does it solve? How does it improve software compared to directly creating objects?](../resources/LR-ch21-conceptualqa-fig-01.png)
+![Q3. Explain the Factory Method Pattern. What problem does it solve? How does it improve software compared to directly creating objects?](../resources/S21-LR-ch21-conceptualqa-fig-01.png)
 
 **Reading the figure**
 
@@ -444,9 +444,8 @@ Both forms share the same core idea: client code does not create the concrete ob
 - **Step 2:** The factory looks up that type in its dictionary of known report classes.
 - **Step 3:** Is the type known?
 - **Step 4:** No: the factory raises `ValueError`, so a mistake in the type name is reported at once.
-- **Step 5:** Yes: the factory creates an object of the matching class.
-- **Step 6:** The object is returned to the client.
-- **Step 7:** The client calls `generate()` on it, without knowing or caring which concrete class it got.
+- **Step 5:** Yes: the factory creates an object of the matching class and returns it to the client.
+- **Step 6:** The client calls `generate()` on it, without knowing or caring which concrete class it got.
 
 **Advantages**
 
@@ -800,8 +799,8 @@ With inheritance, we would need classes such as `CoffeeWithMilk`, `CoffeeWithSug
 **Reading the figure**
 
 - **Step 1:** Start with an ordinary function such as `greet(name)`.
-- **Step 2:** The decorator syntax `@log_call` replaces `greet` with a wrapper function around it; `functools.wraps` keeps its name and docstring.
-- **Step 3:** The caller still writes `greet("Asha")`, exactly as before.
+- **Step 2:** `log_call` wraps the function in a wrapper function. This is done either with the `@log_call` line above a `def` (as for `greet_loudly`) or by an ordinary call, `logged_greet = log_call(greet)`. `functools.wraps` keeps the original name and docstring.
+- **Step 3:** The caller calls the decorated function in the usual way, for example `greet_loudly("Asha")` or `logged_greet("Ravi")`.
 - **Step 4:** The wrapper runs first and adds its extra behaviour, such as logging the call.
 - **Step 5:** The wrapper then calls the original function and returns its result. The original code was never changed.
 
@@ -1369,11 +1368,11 @@ Read more at [Refactoring Guru: Facade](https://refactoring.guru/design-patterns
 **Reading the figure**
 
 - The client makes one simple call.
-- `watch_movie(movie)` on the facade hides all the separate steps.
-- The facade switches the television on.
+- `watch_movie(movie)` on the facade hides all the separate steps, and runs them in a fixed order (numbered in the figure).
+- First, it dims the lights.
+- It switches the television on.
 - It switches the sound system on and sets the volume.
-- It starts the streaming device playing the movie.
-- It dims the lights. The subsystems still exist and can be used directly when needed.
+- It starts the streaming device playing the movie. The subsystems still exist and can be used directly when needed.
 
 **Follow-up questions**
 
@@ -1625,12 +1624,13 @@ Read more at [Refactoring Guru: Composite](https://refactoring.guru/design-patte
 
 **Reading the figure**
 
-- The company is a `Department` object that contains other departments: a group made of groups.
-- Department A is a group containing employees.
-- Department B is another group.
-- Employee 1 is a single object (a leaf).
-- Employee 2 is another leaf.
-- Employee 3 is a leaf. Calling `display()` or `count()` on the company works the same way on every level: each group simply calls the same method on its members.
+- The company, Head Office, is a `Department` object. It holds one employee directly and two other departments: a group made of groups.
+- Sunil, the Director, is an `Employee` placed straight under Head Office. He is a single object, a leaf.
+- IT is a department inside Head Office.
+- HR is another department inside Head Office.
+- Meena, a Developer, is a leaf in IT.
+- Arjun, a Tester, is another leaf in IT.
+- Kavita, a Recruiter, is a leaf in HR. Calling `display()` on Head Office works the same way on every level: each department simply calls `display()` on its members.
 
 **Follow-up questions**
 
@@ -1734,7 +1734,7 @@ Guest tries to view an image:
 
 **Flowchart of the script**
 
-![Q12. Explain the Proxy Pattern. Why is it used? Compare it with directly accessing an object.](../resources/LR-ch21-conceptualqa-fig-02.png)
+![Q12. Explain the Proxy Pattern. Why is it used? Compare it with directly accessing an object.](../resources/S21-LR-ch21-conceptualqa-fig-02.png)
 
 **Reading the figure**
 
@@ -1871,12 +1871,12 @@ Station: temperature changed to 30 C
 **Reading the figure**
 
 - **Step 1:** Create the `WeatherStation`, the subject that others want to watch.
-- **Step 2:** Attach two observers, a `PhoneDisplay` and an `AlertSystem`. The station keeps them in a list.
-- **Step 3:** The temperature changes.
-- **Step 4:** The subject calls its `notify()` method.
-- **Step 5:** `notify()` calls `update()` on every observer in the list. The station does not need to know what kind of object each one is.
+- **Step 2:** Attach two observers, a `PhoneDisplay` and an `AlertSystem`, with `station.attach()`. The station keeps them in a list.
+- **Step 3:** The temperature changes: `set_temperature()` stores the new value.
+- **Step 4:** The subject calls its `_notify()` method itself. The underscore shows it is meant for use inside the class only.
+- **Step 5:** `_notify()` calls `update()` on every observer in the list. The station does not need to know what kind of object each one is.
 - **Step 6:** Each observer reacts in its own way: the display shows the value, and the alert system checks it.
-- **Step 7:** An observer can call `detach()` at any time. After `detach(phone)`, only the alert system reacts to later changes.
+- **Step 7:** An observer can be removed with `detach()` at any time. After `station.detach(phone)`, only the alert system reacts to later changes.
 
 Read more at [Refactoring Guru: Observer](https://refactoring.guru/design-patterns/observer).
 
@@ -2168,7 +2168,7 @@ After running the queue: 'Hello!!'
 
 **Flowchart of the undo process**
 
-![Q15. Explain the Command Pattern. How does it help in implementing undo operations, menus and task queues?](../resources/LR-ch21-conceptualqa-fig-04.png)
+![Q15. Explain the Command Pattern. How does it help in implementing undo operations, menus and task queues?](../resources/S21-LR-ch21-conceptualqa-fig-04.png)
 
 **Reading the figure**
 
@@ -2410,7 +2410,7 @@ Read more at [Refactoring Guru: Iterator](https://refactoring.guru/design-patter
 
 **Answer**
 
-Many classical design patterns were first developed for languages such as C++ and Java. At that time, these languages had fewer high-level features, so programmers had to build certain solutions by hand, using extra classes and interfaces.
+Many classical design patterns were first described for languages such as C++ and Smalltalk. At that time, these languages had fewer high-level features, so programmers had to build certain solutions by hand, using extra classes and interfaces.
 
 Python includes many language features that support the same design goals with much less code. Solutions that use these features are often called **Pythonic patterns**. ("Pythonic" means written in the natural style of Python, as described in [PEP 20, The Zen of Python](https://peps.python.org/pep-0020/).)
 

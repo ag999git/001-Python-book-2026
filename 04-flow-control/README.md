@@ -10,7 +10,7 @@ You need Chapters 1 to 3 first. Nothing else is assumed.
 
 | Page | What it covers | Best for |
 | --- | --- | --- |
-| [Questions and Answers](03-flow-control-ch4-qa.md) | The twelve lettered questions from the end of the chapter, with worked scripts: truthiness, nested `if`, `do...until`, `pass`, definite and indefinite loops, infinite loops, nested `for`, `while` against `for`, `range()`, short-circuit evaluation and `continue` | Start here |
+| [Questions and Answers](03-flow-control-ch4-qa.md) | The twelve lettered questions from the end of the chapter, with worked scripts: truthiness, nested `if`, logical operators, `do...until`, `pass`, definite and indefinite loops, infinite loops, nested `for`, `while` against `for`, `range()`, short-circuit evaluation and `continue` | Start here |
 | [Conceptual Questions and Answers](03-2-ch4-conceptual-qa.md) | Forty questions in four parts, from the foundations through to `match-case`, the iterator protocol, the walrus operator and EAFP | After the book questions |
 | [Beyond the Text Solutions](04-ch4-flow-control-beyond-text.md) | Unreachable (dead) code, and writing a loop without using the word `for` | The two chapter projects |
 | [Interactive Notebook](00-ch4-colab-nb.md) | Opens this chapter's exercises in Google Colab | Running code in a browser |

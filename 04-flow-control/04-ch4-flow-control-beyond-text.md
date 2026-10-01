@@ -175,19 +175,20 @@ Error caught: Insufficient funds
 - **Logical Gap Test:** "impossible" is never returned, whatever number we try. No number can be greater than 5 and less than 2 at the same time.
 - **Raise Test:** "Sorry, not enough money." never appears. `raise` stopped the function, and the error was caught outside it, by the `try`/`except` in the main program.
 
-The flowchart below shows the path through `find_treasure()`. Notice that no arrow ever leads into box 6, the dead line.
+The flowchart below shows the path through `find_treasure()`. Notice that box 7, the dead line, is reached only by a dashed arrow: no real path through the function ever leads to it.
 
-![Example Script: How Dead Code Creeps In](../resources/LR-ch4-flow-control-beyond-text-fig-01.png)
+![Example Script: How Dead Code Creeps In](../resources/S04-LR-ch4-flow-control-beyond-text-fig-01.png)
 
 **Reading the figure**
 
-- **Step 1:** `find_treasure()` takes the next item from the list.
-- **Step 2:** Is the item "Gold"?
-- **Step 3:** No: print "Checking: item" and go back to Step 1.
-- **Step 4:** Yes: print "Found the Gold!".
-- **Step 5:** `break` leaves the loop at once.
-- **Step 6:** The line written after `break`, inside the loop, is dead code: no path ever leads to it, shown by the dashed arrow.
-- **Step 7:** The function ends. "Silver" is never checked, because the loop stopped at "Gold".
+- **Step 1:** `find_treasure()` checks whether any items are left in the list.
+- **Step 2:** Yes: take the next item.
+- **Step 3:** Is the item "Gold"?
+- **Step 4:** No: print "Checking: item" and go back to Step 1.
+- **Step 5:** Yes: print "Found the Gold!".
+- **Step 6:** `break` leaves the loop at once.
+- **Step 7:** The line written after `break`, inside the loop, is dead code: no real path ever leads to it, which the dashed arrow shows.
+- **Step 8:** The function ends, either because `break` ran or because no items were left. In the example, "Silver" is never checked, because the loop stopped at "Gold".
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -265,7 +266,7 @@ Result: dark
 
 ## 2. The Iterator Protocol: The "No-For-Loop" Challenge
 
-This is the solution to the Beyond Text problem given in Chapter 4 Flow Control.
+This is the solution to the Beyond the Text problem given in Chapter 4 Flow Control.
 
 In Python, we often use `for` loops to go through lists or strings. But have you ever wondered how the `for` loop actually "talks" to the list? It uses the **Iterator Protocol**.
 
@@ -343,19 +344,17 @@ The solution follows the four-step logic of the assignment exactly:
 3. **Handle** the boundary condition: `except StopIteration` catches the signal that the list has run out.
 4. **Terminate** the process: print "Loop Finished" and `break` out of the `while True` loop.
 
-![Solution Script](../resources/LR-ch4-flow-control-beyond-text-fig-02.png)
+![Solution Script](../resources/S04-LR-ch4-flow-control-beyond-text-fig-02.png)
 
 **Reading the figure**
 
-- **Step 1:** Initialise: `color_cursor = iter(colors)` creates an iterator over the list of colours.
-- **Step 2:** Start an endless `while True` loop.
-- **Step 3:** Attempt: inside `try`, call `next(color_cursor)`.
-- **Step 4:** Was an item returned?
-- **Step 5:** Yes: print "Processing" with the colour, and go back to Step 3.
-- **Step 6:** No: `next()` raised `StopIteration`, the signal that the list has run out. `except StopIteration` catches it.
-- **Step 7:** Print "Loop Finished".
-- **Step 8:** Terminate: `break` leaves the `while True` loop.
-- **Step 9:** The program continues normally after the loop.
+- **Step 1:** Initialise: `color_cursor = iter(colors)` creates an iterator over the list of colours. Then an endless `while True` loop starts.
+- **Step 2:** Attempt: inside `try`, call `next(color_cursor)`.
+- **Step 3:** Was an item returned?
+- **Step 4:** Yes: print "Processing" with the colour, and go back to Step 2.
+- **Step 5:** No: `next()` raised `StopIteration`, the signal that the list has run out. `except StopIteration` catches it.
+- **Step 6:** Print "Loop Finished", then terminate: `break` leaves the `while True` loop.
+- **Step 7:** The program continues normally after the loop.
 
 ```python
 # --- BEYOND TEXT: MANUAL ITERATION ---

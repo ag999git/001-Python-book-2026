@@ -5,7 +5,7 @@
 
 A Python script does not always run straight from the first line to the last. It can make choices, repeat work, skip steps and jump out of a task early. The rules that decide *which line runs next* are called **flow control**. They are the part of a program that turns a plain list of instructions into something that can think and react.
 
-Chapter 4 of the book introduces the tools of flow control: `if`, `elif` and `else`, the `match` statement, `while` and `for` loops, `range()`, and the transfer statements `break`, `continue`, `pass` and `return`. This page goes deeper. It collects forty conceptual questions, grouped into four parts, and answers each one in detail. Most answers include a short script with its output, so you can see the idea at work and not just read about it. Some answers also have flowcharts, tables and follow-up questions.
+Chapter 4 of the book introduces the tools of flow control: `if`, `elif` and `else`, the `match` statement, `while` and `for` loops, `range()`, the transfer statements `break`, `continue` and `return`, and the `pass` statement. This page goes deeper. It collects forty conceptual questions, grouped into four parts, and answers each one in detail. Most answers include a short script with its output, so you can see the idea at work and not just read about it. Some answers also have flowcharts, tables and follow-up questions.
 
 The four parts build on each other:
 
@@ -104,7 +104,7 @@ Every program, however large, is built from a few simple patterns: doing things 
 
 The picture below shows the three building blocks of flow, plus the transfer statements that can change the flow midway.
 
-![I. Foundations of Program Flow: Sequence, Selection, Iteration and Truthiness](../resources/LR-ch4-conceptual-qa-fig-01.png)
+![I. Foundations of Program Flow: Sequence, Selection, Iteration and Truthiness](../resources/S04-LR-ch4-conceptual-qa-fig-01.png)
 
 **Reading the figure**
 
@@ -112,9 +112,10 @@ The picture below shows the three building blocks of flow, plus the transfer sta
 - **Step 2:** Selection: an `if` statement tests a condition. Is it `True`?
 - **Step 3:** Yes: run the `if` block.
 - **Step 4:** No: run the `else` block.
-- **Step 5:** Iteration: a loop asks whether to go round again.
-- **Step 6:** Yes: run the loop body, then go back to Step 5. A `break` inside the body is a transfer statement: it jumps straight out of the loop to Step 7.
-- **Step 7:** No: the loop is over, and the flow returns to sequence with the next line after the loop.
+- **Step 5:** Both paths meet again, and the program carries on in sequence.
+- **Step 6:** Iteration: a loop asks whether to go round again.
+- **Step 7:** Yes: run the loop body, then go back to Step 6. A `break` inside the body is a transfer statement: it jumps straight out of the loop to Step 8.
+- **Step 8:** No: the loop is over, and the flow returns to sequence with the next line after the loop.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -139,7 +140,7 @@ The move from sequence to iteration matters because it lets one small, reusable 
 5. If yes, move one note and add its value to the total. Go back to Step 4.
 6. If no, stop counting and hand over the cash (back to sequence).
 
-![Q1. The ATM Analogy: From Sequence to Loop](../resources/LR-ch4-conceptual-qa-fig-02.png)
+![Q1. The ATM Analogy: From Sequence to Loop](../resources/S04-LR-ch4-conceptual-qa-fig-02.png)
 
 **Reading the figure**
 
@@ -366,7 +367,7 @@ Without selection, a program would always follow the same fixed path, whatever t
 4. If `False`, Python skips that block and runs the `else` block, if there is one.
 5. After either block, both paths meet again and the program continues.
 
-![Q4. Selection as the Decision-Maker](../resources/LR-ch4-conceptual-qa-fig-03.png)
+![Q4. Selection as the Decision-Maker](../resources/S04-LR-ch4-conceptual-qa-fig-03.png)
 
 **Reading the figure**
 
@@ -1585,7 +1586,7 @@ To get the same effect, Python programmers use the `while True:` pattern:
 
 This is often called an **input trap**, because the user is caught in the loop and asked again and again until they type something valid. A check such as `isdigit()` decides when the input is good enough to `break` out. The user is always prompted at least once.
 
-![Q5. Simulating a do...until Loop](../resources/LR-ch4-conceptual-qa-fig-05.png)
+![Q5. Simulating a do...until Loop](../resources/S04-LR-ch4-conceptual-qa-fig-05.png)
 
 **Reading the figure**
 
@@ -1650,15 +1651,15 @@ Notice that `-5` was rejected. The minus sign is not a digit, so `"-5".isdigit()
 | Remaining rounds | Never run | Still run |
 | Loop's `else` block (see Q8) | Skipped | Still runs if the loop ends normally |
 
-![Q6. break versus continue](../resources/LR-ch4-conceptual-qa-fig-06.png)
+![Q6. break versus continue](../resources/S04-LR-ch4-conceptual-qa-fig-06.png)
 
 **Reading the figure**
 
 - **Step 1:** The loop asks: are there any items left?
 - **Step 2:** Yes: take the next item.
-- **Step 3:** Should the loop stop completely?
-- **Step 4:** No: should this one item be skipped? (Yes at Step 3 means `break`: jump straight to Step 6, and no remaining rounds run.)
-- **Step 5:** No: run the rest of the loop body, then go back to Step 1. (Yes at Step 4 means `continue`: skip the rest of the body and go straight back to Step 1 for the next item.)
+- **Step 3:** Should the loop stop completely? Yes means `break`: jump straight to Step 6, and no remaining rounds run.
+- **Step 4:** No: should this one item be skipped? Yes means `continue`: skip the rest of the body and go straight back to Step 1 for the next item.
+- **Step 5:** No: run the rest of the loop body, then go back to Step 1.
 - **Step 6:** No items are left, or `break` ran: go on to the first line after the loop.
 
 **Script**
@@ -1716,7 +1717,7 @@ while with continue:
 
 ### Q7. The pass Statement
 
-7.  **What is the practical utility of the pass statement, and how does it prevent a script from crashing during the development phase.**
+7.  **What is the practical utility of the pass statement, and how does it prevent a script from crashing during the development phase?**
 
 **Answer**
 
@@ -1790,7 +1791,7 @@ The key rule: if the loop is ended by a **forced stop**, that is a `break` state
 
 This makes loop `else` a useful tool for code that should run only when the loop was *not* interrupted.
 
-![Q8. The else Clause on a Loop](../resources/LR-ch4-conceptual-qa-fig-07.png)
+![Q8. The else Clause on a Loop](../resources/S04-LR-ch4-conceptual-qa-fig-07.png)
 
 **Reading the figure**
 
@@ -1995,7 +1996,7 @@ Because of this protocol, Python can loop over strings and lists, and also over 
 
 (Method names with double underscores on both sides, like `__iter__`, are called "dunder" or *special methods*. Python calls them for you in certain situations. See [Special method names](https://docs.python.org/3/reference/datamodel.html#special-method-names).)
 
-![Q1. The Iterator Protocol](../resources/LR-ch4-conceptual-qa-fig-08.png)
+![Q1. The Iterator Protocol](../resources/S04-LR-ch4-conceptual-qa-fig-08.png)
 
 **Reading the figure**
 

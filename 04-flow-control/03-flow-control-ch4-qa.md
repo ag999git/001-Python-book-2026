@@ -277,7 +277,7 @@ To get the same effect in Python, use a `while True` loop with a `break` when th
 4. If the condition is True, `break` ends the loop.
 5. If not, the loop goes round again.
 
-![d. Python does not have do...until syntax. How to implement it?](../resources/LR-ch4-flow-control-qa-fig-01.png)
+![d. Python does not have do...until syntax. How to implement it?](../resources/S04-LR-ch4-flow-control-qa-fig-01.png)
 
 **Reading the figure**
 
@@ -1085,7 +1085,7 @@ For example, 153 has 3 digits, and 1<sup>3</sup> + 5<sup>3</sup> + 3<sup>3</sup>
 4. If the total equals the original number, it is an Armstrong number.
 5. Repeat this check for every number from 1 to 1000.
 
-In the script, `sum(int(d) ** n for d in digits)` does Steps 3 in one line. It goes through each digit `d`, turns it back into a number with `int(d)`, raises it to the power `n` with `**`, and adds all the results with `sum()`.
+In the script, `sum(int(d) ** n for d in digits)` does Step 3 in one line. It goes through each digit `d`, turns it back into a number with `int(d)`, raises it to the power `n` with `**`, and adds all the results with `sum()`.
 
 **Script**
 
@@ -1136,14 +1136,18 @@ Armstrong numbers 1-1000: [1, 2, 3, 4, 5, 6, 7, 8, 9, 153, 370, 371, 407]
 
 ### g. Hailstone sequence - iterative and recursive.
 
-The hailstone sequence is (1) Pick a positive integer n as the start. (2) If n is even, divide it by 2 (3) If n is odd, multiply it by 3 and add 1. (4) Continue this process until n is 1.
+The hailstone sequence is (1) Pick a positive integer n as the start. (2) If n is even, divide it by 2. (3) If n is odd, multiply it by 3 and add 1. (4) Continue this process until n is 1.
 
 The number n goes up and down but eventually ends at 1.
 
-Write a python script which takes a random number between 50 and 100 and generate its hailstone sequence.
-Note:- This problem can be solved both by iterative and recursive methods. Write scripts for both. The script should also print the number of items generated. For example
+Write a python script which takes a random number between 50 and 100 and generates its hailstone sequence.
+
+Note:- This problem can be solved both by iterative and recursive methods. Write scripts for both. The script should also print the number of items generated. For example:
+
+```text
 No of items in hailstone series for n = 68 -> 14
-Hailstone list for 68 is-> `[34, 17, 52, 26, 13, 40, 20, 10, 5, 16, 8, 4, 2, 1]`
+Hailstone list for 68 is-> [34, 17, 52, 26, 13, 40, 20, 10, 5, 16, 8, 4, 2, 1]
+```
 
 **Answer**
 
@@ -1161,7 +1165,7 @@ A note on "eventually ends at 1": every starting number that anyone has ever tes
 4. If `n` is odd, the next number is `3 * n + 1`.
 5. Add the next number to the list, make it the new `n`, and go back to Step 2.
 
-![g. Hailstone sequence - iterative and recursive.](../resources/LR-ch4-flow-control-qa-fig-03.png)
+![g. Hailstone sequence - iterative and recursive.](../resources/S04-LR-ch4-flow-control-qa-fig-03.png)
 
 **Reading the figure**
 

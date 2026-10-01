@@ -542,9 +542,7 @@ Learn more: [Bitwise operations on integer types](https://docs.python.org/3/libr
 
 ## 5. Advanced Concept: How the Left Shift Works (Example: 10 Shifted Left by 3)
 
-<details>
-
-<summary>Click to open this section: explanation of the bitwise operation 10 &lt;&lt; 3</summary>
+### Explanation of the bitwise operation 10 << 3
 
 The operator `<<` is the **bitwise left shift** operator. It shifts the binary form of a number **to the left** by the number of places you give it. Empty places on the right are filled with zeros.
 
@@ -643,15 +641,11 @@ Result in decimal : 80
 10 << 3 = 80
 ```
 
-</details>
-
 [Back to the Table of Contents](#table-of-contents)
 
 ## 6. Advanced Concept: Shifting Very Large Integers
 
-<details>
-
-<summary>Click to open this section: what does "Large integers can be shifted arbitrarily because Python supports arbitrary precision" mean?</summary>
+### What does "Large integers can be shifted arbitrarily because Python supports arbitrary precision" mean?
 
 Let us understand the statement: **"Large integers can be shifted arbitrarily because Python supports arbitrary precision."**
 
@@ -724,8 +718,6 @@ The first line is `2 ** 200`, a 61-digit number. Python handles it, and the much
 * A left shift (`<<`) can be done by any number of places.
 * Python automatically sets aside more memory to store the larger integer.
 * This is why **large integers can be shifted arbitrarily** in Python.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1651,10 +1643,6 @@ Output:
 
 ## 13. Advanced Concept: Big Integer Mathematics
 
-<details>
-
-<summary>Click to open this section: big integer mathematics</summary>
-
 Because Python integers are exact at any size, Python is a good tool for number work such as cryptography, number theory and puzzles. Python's `int` supports:
 
 * exact big integer arithmetic,
@@ -1723,15 +1711,11 @@ How to read this output:
 * It supports caching of small numbers, bitwise operations, type widening and conversion.
 * It is much safer to use than the fixed-size integers of compiled languages, because it never overflows.
 
-</details>
-
 [Back to the Table of Contents](#table-of-contents)
 
 ## 14. Advanced Concept: Understanding Performance of Integer Operations in Python
 
-<details>
-
-<summary>Click to open this section: performance of small and large integers</summary>
+### Performance of small and large integers
 
 Python's `int` is very powerful because it supports **arbitrary precision**. Integers can grow to any size. But speed differs between **small** and **large** integers because of the way they are stored and processed inside Python.
 
@@ -1849,8 +1833,6 @@ CPython's `int` does **not** use FFT-based methods (such as the Schönhage–Str
 - **Step 5:** Yes: CPython uses the Karatsuba method, about O(n^1.585).
 - **Step 6:** No: it uses the schoolbook method, O(n²).
 - **Step 7:** Either way, the result is returned as a new `int` object.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 

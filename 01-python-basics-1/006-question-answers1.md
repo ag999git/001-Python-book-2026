@@ -105,7 +105,16 @@ A **compiler** converts the **entire source code** into machine code (or into an
 
 The flowchart below shows the steps.
 
-![Examples](../resources/0000-15-steps-in-how-compiler-works.png)
+![Examples](../resources/S01-LR-0000-15-steps-in-how-compiler-works.png)
+
+**Reading the figure**
+
+- **Step 1:** Start with the source code, for example `hello.cpp`.
+- **Step 2:** The compiler translates the whole program at once.
+- **Step 3:** Did it find any errors?
+- **Step 4:** Yes: fix the code and compile again.
+- **Step 5:** No: the result is an executable file, for example `hello.exe`.
+- **Step 6:** The executable can be run any number of times, with no compiler needed.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -158,7 +167,16 @@ When you run a Python program with the standard interpreter (**CPython**, the ve
 
 
 
-![How does Python actually run your code?](../resources/0000-16-how-does-python-run-code.png)
+![How does Python actually run your code?](../resources/S01-LR-0000-16-how-does-python-run-code.png)
+
+**Reading the figure**
+
+- **Step 1:** Start with the source code, `hello.py`.
+- **Step 2:** Python first compiles the whole file to bytecode.
+- **Step 3:** Are there any syntax errors?
+- **Step 4:** Yes: Python reports a `SyntaxError` and not a single line runs.
+- **Step 5:** No: the Python Virtual Machine runs the bytecode, instruction by instruction.
+- **Step 6:** You get the output, or a runtime error (such as `ZeroDivisionError`) at the line where it happens; the lines before it have already run.
 
 This has an important effect that surprises many beginners: **a syntax error anywhere in a file stops the whole file from running**, even the lines before it. Try this file, saved as `syntax_demo.py`:
 
@@ -638,7 +656,14 @@ x = "hi"   # x -> string object "hi"
 
 
 
-![Step 3 - and now to a decimal number (float)](../resources/0000-17.png)
+![Dynamic binding: x is re-bound from an int object to a str object](../resources/S01-LR-0000-17.png)
+
+**Reading the figure**
+
+- `x = 10` binds the name `x` to an integer object, 10.
+- The type belongs to the object: `type(x)` is `int`.
+- `x = "hi"` re-binds the same name to a different object.
+- Now `x` refers to a string object, and `type(x)` is `str`. The integer object is no longer used by `x`; if nothing else refers to it, Python can free it (small integers such as 10 are kept in Python's store and are never freed).
 
 A note on the term: in other books, "dynamic binding" (also called **late binding**) often means something slightly different - deciding *which method to call* while the program runs, a topic you will meet in the chapters on classes. In this chapter, it means binding names to values while the program runs.
 
@@ -739,7 +764,18 @@ It means that:
 - Together, these two methods prevent most memory leaks (memory that is never given back) and help programs use memory efficiently.
 
 
-![Step 3 - Convert the number to text first, then join them](../resources/0000-18-garbage-collection.png)
+![Reference counting and the garbage collector](../resources/S01-LR-0000-18-garbage-collection.png)
+
+**Reading the figure**
+
+- **Step 1:** When an object is created, its reference count is 1.
+- **Step 2:** Each extra name or container that refers to it raises the count.
+- **Step 3:** When a name is deleted or re-bound, the count goes down.
+- **Step 4:** Has the count reached zero?
+- **Step 5:** Yes: the memory is freed immediately.
+- **Step 6:** No: is the object reachable only through a reference cycle (objects referring to each other)?
+- **Step 7:** Yes: the garbage collector finds the cycle when it runs and frees the objects.
+- **Step 8:** No: the object is still in use and stays.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -992,7 +1028,15 @@ The differences are summarised in the tables in the next question and in [the co
 
 
 
-![Step 4 - The garbage collector finds the cycle and frees both objects](../resources/ch01-question-answers1-fig-05.png)
+![The steps to create and run a Python script](../resources/S01-LR-ch01-question-answers1-fig-05.png)
+
+**Reading the figure**
+
+- **Step 1:** Create a new file named `hello.py`.
+- **Step 2:** Type the Python code and save the file.
+- **Step 3:** Open a terminal (or command prompt) in the folder that contains the file.
+- **Step 4:** Run `python hello.py` (on Windows you can also use `py hello.py`).
+- **Step 5:** The output appears in the terminal.
 
 [Back to the Table of Contents](#table-of-contents)
 

@@ -106,7 +106,15 @@ The picture below shows how Colab works. Your browser only shows the notebook; t
 
 
 
-![What Is Google Colab](../resources/0000-13-ch1-how-google-colab-works.png)
+![What Is Google Colab](../resources/S01-LR-0000-13-ch1-how-google-colab-works.png)
+
+**Reading the figure**
+
+- **Step 1:** You type code in a notebook cell in your browser.
+- **Step 2:** The code is sent over the internet to Google.
+- **Step 3:** Google's computer, the runtime, runs it.
+- **Step 4:** The result is sent back to your browser.
+- **Step 5:** The output appears under the cell. The notebook file itself is saved in your Google Drive.
 
 The Google computer that runs your code is called the **runtime**. It is lent to you for a while and then taken back. This is why your notebook (saved in Google Drive) is permanent, but anything stored on the runtime itself is temporary. This idea comes up again and again on this page.
 
@@ -236,11 +244,19 @@ The usual way of working in Colab is shown below.
 
 
 
-![How to Run Code](../resources/0000-13-ch1-how-google-colab-works.png)
+![Usual way of working in Google Colab](../resources/S01-LR-0000-14-usual-way-of-working-in-Google-colab.png)
 
+**Reading the figure**
 
-
-![Usual way of working in Google Colab](../resources/0000-14-usual-way-of-working-in-Google-colab.png)
+- **Step 1:** Open Colab and create a notebook.
+- **Step 2:** Type code in a cell.
+- **Step 3:** Press Shift + Enter to run it.
+- **Step 4:** Is the notebook connected to a runtime?
+- **Step 5:** No: Colab connects to one automatically (the first run takes a few seconds).
+- **Step 6:** The cell runs and the output appears below it.
+- **Step 7:** Is the result correct?
+- **Step 8:** Yes: add the next cell and continue.
+- **Step 9:** No: fix the code and run the cell again.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -932,7 +948,7 @@ Clear all variables (the `-f` means "force", so Colab does not ask for confirmat
 %reset -f
 ```
 
-Restart the runtime (clears variables and installed libraries, but keeps files in `/content`):
+Restart the runtime (clears variables, but keeps files in `/content` and the libraries you installed with pip):
 
 ```text
 Runtime > Restart session

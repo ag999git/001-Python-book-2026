@@ -80,7 +80,19 @@ The key idea: **a `.py` file runs with the interpreter you select, and a noteboo
 
 The flowchart below shows the whole setup. Each part is explained in the sections that follow.
 
-![Key Words Used on This Page](../resources/0000-10-ch1-venv-py-ipynb-on-vscode.png)
+![Key Words Used on This Page](../resources/S01-LR-0000-10-ch1-venv-py-ipynb-on-vscode.png)
+
+**Reading the figure**
+
+- **Step 1:** Install VS Code (Part 1).
+- **Step 2:** Install the Python and Jupyter extensions (Part 2).
+- **Step 3:** Open your project folder (Part 3).
+- **Step 4:** Create a `.venv` virtual environment in it (Part 5).
+- **Step 5:** Select the `.venv` interpreter (Part 4).
+- **Step 6:** What do you want to write: a Python file or a notebook?
+- **Step 7:** A Python file: create a `.py` file and run it (Part 6); it uses the interpreter you selected.
+- **Step 8:** A notebook: create a notebook (Part 7).
+- **Step 9:** Select the `.venv` kernel at the top right and run the cells (Part 7).
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -541,7 +553,18 @@ The flowchart below helps you find the right fix for the most common problem: co
 
 
 
-![Part 9: Common Problems and Fixes](../resources/0000-11-ch1-fix-for-code-that-cannot-find-package.png)
+![Part 9: Common Problems and Fixes](../resources/S01-LR-0000-11-ch1-fix-for-code-that-cannot-find-package.png)
+
+**Reading the figure**
+
+- **Step 1:** Your code stops with `ModuleNotFoundError: No module named ...`.
+- **Step 2:** Is the code in a `.py` file or in a notebook?
+- **Step 3:** A `.py` file: check which interpreter is shown in the Status Bar.
+- **Step 4:** Select the `.venv` interpreter if it is not already selected.
+- **Step 5:** Open a new terminal and install the package with `python -m pip install ...`, so that it goes into that same Python.
+- **Step 6:** A notebook: check the kernel shown at the top right.
+- **Step 7:** Select the `.venv` kernel.
+- **Step 8:** Install the package from a cell with `%pip install ...`, which installs into the running kernel.
 
 
 [Back to the Table of Contents](#table-of-contents)

@@ -192,7 +192,16 @@ The flowchart below helps you decide. Follow the numbers.
 
 
 
-![Which One Should I Use](../resources/ch01-python-basics-fig-01.png)
+![Which One Should I Use](../resources/S01-LR-ch01-python-basics-fig-01.png)
+
+**Reading the figure**
+
+- **Step 1:** You want to add a note to your code.
+- **Step 2:** Does the note explain how or why some particular lines work?
+- **Step 3:** Yes: use a hash (`#`) comment, on the same line or on the line just above.
+- **Step 4:** No: does it describe what a whole module, class or function does and how to use it?
+- **Step 5:** Yes: use a triple-quoted docstring as the very first line after `def` or `class` (or at the top of the module), so that `help()` can show it.
+- **Step 6:** No: for any other longer note, use ordinary hash comments, with a `#` at the start of each line.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -247,7 +256,19 @@ The flowchart below shows how to check a name, step by step.
 
 
 
-![Valid and Invalid Identifiers](../resources/0000-01-ch1--how-to-select-variable-name.png)
+![Valid and Invalid Identifiers](../resources/S01-LR-0000-01-ch1--how-to-select-variable-name.png)
+
+**Reading the figure**
+
+- **Step 1:** Start with the name you want to use.
+- **Step 2:** Does it start with a letter (a–z, A–Z) or an underscore?
+- **Step 3:** No, or any other rule broken below: Python does not allow it and reports a `SyntaxError`.
+- **Step 4:** Yes: are all the other characters letters, digits or underscores (no spaces, `@`, `$` or `-`)?
+- **Step 5:** Yes: is the name a Python keyword, such as `for` or `class`? (Keywords are not allowed: back to Step 3.)
+- **Step 6:** Not a keyword: it is a valid identifier.
+- **Step 7:** Does it hide a built-in name such as `print`, `list` or `sum`?
+- **Step 8:** Yes: it is legal, but choose a different name, or the built-in stops working.
+- **Step 9:** No: the name is good to use.
 
 
 
@@ -381,7 +402,7 @@ Table 3: Main PEP 8 rules with correct and incorrect examples
 | ----------------------------------- | ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------ | -------------------------------------------------------------- |
 | Indentation                         | Use 4 spaces for each level of indentation                                         | The line `print(x)` under `if x > 5:` starts with 4 spaces               | `if x > 5:print(x)` squashed on one line, or 2 or 3 spaces used |
 | Tabs vs Spaces                      | Prefer spaces over tabs. Never mix the two in one file                             | 4 space characters                                                       | A tab character, or tabs and spaces mixed                      |
-| Maximum Line Length                 | Keep lines of code under 79 characters (72 for comments and docstrings)            | `# Short comment line`                                                   | A very long comment or code line that runs past 79 characters and is hard to read |
+| Maximum Line Length                 | Keep lines of code to 79 characters or fewer (72 for comments and docstrings)            | `# Short comment line`                                                   | A very long comment or code line that runs past 79 characters and is hard to read |
 | Blank Lines                         | Use blank lines to separate sections                                               | Two blank lines before and after a top-level function or class; one blank line between methods in a class | No blank lines between sections                                |
 | Imports                             | Keep imports at the top of the file, one per line                                  | `import os`<br>`import sys`                                              | `import os, sys`                                               |
 | Import Order                        | Standard library, then third-party, then local. Put a blank line between groups   | `import os` (standard library)<br>`import numpy` (third party)<br>`import mymodule` (local) | Random or mixed ordering                                       |
@@ -810,12 +831,7 @@ The official guide [Python debugging in VS Code](https://code.visualstudio.com/d
 The following flowchart shows how to debug a Python script.
 
 
-![Flowchart for debugging a Python script in an IDE](../resources/Debugging-chart.png)
-
-
-The same cycle is shown below as a numbered flowchart, so that you can follow each step by its number.
-
-![The Debugging Flowchart](../resources/0000-02-ch1-debugging-steps.png)
+![The Debugging Flowchart](../resources/S01-LR-0000-02-ch1-debugging-steps.png)
 
 
 

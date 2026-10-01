@@ -72,7 +72,17 @@ So when you create a new variable with one of those values, Python reuses the sa
 
 
 
-![What Is Interning](../resources/0000-12-ch1-interning-what-is.png)
+![What Is Interning](../resources/S01-LR-0000-12-ch1-interning-what-is.png)
+
+**Reading the figure**
+
+- `a = 256`: small integers from -5 to 256 are kept in a store and reused.
+- `b = 256` gets the very same object.
+- So `a` and `b` point to one object, and `a is b` is `True`.
+- `c = 257`, built while the program runs, for example with `int("257")`.
+- `d = 257`, built the same way.
+- `c` points to one object holding 257...
+- ...and `d` to a different object with the same value, so `c == d` is `True` but `c is d` is `False`.
 
 In the picture, `a` and `b` point to **one** object, so `a is b` is `True`. But `c` and `d` point to **two different** objects that happen to hold the same value, so `c == d` is `True` while `c is d` is `False`. (Section 6 shows this with real code.)
 
@@ -104,7 +114,18 @@ The flowchart below shows, in simplified form, how CPython decides whether to re
 
 
 
-![Where Does Interning Happen](../resources/ch01-2-interning-fig-02.png)
+![Where Does Interning Happen](../resources/S01-LR-ch01-2-interning-fig-02.png)
+
+**Reading the figure**
+
+- **Step 1:** Python needs an immutable value.
+- **Step 2:** Is it a small integer, from -5 to 256?
+- **Step 3:** Yes: CPython hands out the integer object it already keeps for that number.
+- **Step 4:** No: is it a string written in the code that looks like a name, such as `"hello"` or `"user_1"`?
+- **Step 5:** Yes: CPython reuses the interned string.
+- **Step 6:** No: is it an empty string or an empty tuple?
+- **Step 7:** Yes: there is only one such object, and it is reused.
+- **Step 8:** No to all three: a new object is created. (Simplified: `None`, `True` and `False` are always single objects, and mutable objects are never shared.)
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -236,7 +257,7 @@ So the result of `is` for large numbers depends on how your code happens to be c
 
 Python works out simple expressions such as `"a" * 1000` in advance, while compiling, and stores the result as a constant. (This is called **constant folding**.) The result is a string made only of letters, so it looks like a name, and Python interns it. Both variables therefore point to the same object.
 
-This is why the original comment "False in some implementations" does not match what CPython actually does for this example. To see a long string that is **not** shared, the string has to be built while the program runs, as in Step 6 of the next script.
+So, in CPython, this example prints True, but you should not rely on it. To see a long string that is **not** shared, the string has to be built while the program runs, as in Step 6 of the next script.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -387,7 +408,16 @@ True
 
 The flowchart below sums up the rule.
 
-![The Golden Rule for Comparing Values](../resources/ch01-2-interning-fig-03.png)
+![The Golden Rule for Comparing Values](../resources/S01-LR-ch01-2-interning-fig-03.png)
+
+**Reading the figure**
+
+- **Step 1:** You want to compare two things.
+- **Step 2:** Are you checking for `None`, `True` or `False`?
+- **Step 3:** Yes: use `is`, for example `if x is None:`.
+- **Step 4:** No: do you really need to know whether both names refer to the very same object?
+- **Step 5:** Yes: use `is`; this is rare in everyday code.
+- **Step 6:** No: use `==`, which compares values; it is the right choice almost every time.
 
 [Back to the Table of Contents](#table-of-contents)
 

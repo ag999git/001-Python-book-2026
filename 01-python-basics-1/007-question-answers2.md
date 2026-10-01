@@ -387,7 +387,16 @@ Step 3 - same id after count + 1? False
 When you run a cell, the browser sends the code to the server, the kernel runs it, and the result is sent back to the browser to be shown under the cell.
 
 
-![h. When we say that Jupyter Notebook is a “server-client” application, what does it mean?](../resources/0000-19-jupyter-NB-as-server-client.png)
+![h. When we say that Jupyter Notebook is a “server-client” application, what does it mean?](../resources/S01-LR-0000-19-jupyter-NB-as-server-client.png)
+
+**Reading the figure**
+
+- **Step 1:** The browser is the client: you type code in a cell and run it.
+- **Step 2:** The browser sends the code to the Jupyter server.
+- **Step 3:** The server passes it to a kernel.
+- **Step 4:** The kernel runs the code.
+- **Step 5:** The result goes back to the server.
+- **Step 6:** The server sends it to the browser, which shows it under the cell.
 
 Because of this design, the same notebook interface can work with a server on your own computer or with one far away, as in Google Colab.
 

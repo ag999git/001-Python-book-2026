@@ -207,7 +207,17 @@ All of this normally happens in a fraction of a second.
 
 
 
-![What Happens When You Run a Cell](../resources/0000-03-ch1-running-jupyter-cell.png)
+![What Happens When You Run a Cell](../resources/S01-LR-0000-03-ch1-running-jupyter-cell.png)
+
+**Reading the figure**
+
+- **Step 1:** You type Python code in a cell in your browser.
+- **Step 2:** The browser sends the code to the Jupyter server.
+- **Step 3:** The server passes the code to the kernel (usually IPython).
+- **Step 4:** The kernel executes the code.
+- **Step 5:** The result (text, plots or errors) is sent back to the server.
+- **Step 6:** The server sends the result to your browser.
+- **Step 7:** The browser displays the output under the cell.
 
 For the curious: the browser and the server talk over HTTP and WebSockets, while the server and the kernel talk using a messaging library called [ZeroMQ](https://zeromq.org/). You do not need to know these details to use Jupyter. A more detailed, twelve-step version of this flow is given in [Section 11](#11-advanced-how-a-cell-travels-from-browser-to-kernel).
 
@@ -257,7 +267,23 @@ Anaconda is the easiest and most common way for beginners to get Python and Jupy
 The flowchart below gives the whole process at a glance. Each step is explained after it.
 
 
-![Part 1: Installing Anaconda on Windows](../resources/0000-04-ch1-installing-anaconda-on-windows.png)
+![Part 1: Installing Anaconda on Windows](../resources/S01-LR-0000-04-ch1-installing-anaconda-on-windows.png)
+
+**Reading the figure**
+
+- **Step 1:** Step 1: open `https://www.anaconda.com/download` in your browser.
+- **Step 2:** Step 2: download the Anaconda Distribution installer for Windows (not Miniconda).
+- **Step 3:** Step 3: double-click the downloaded `.exe` file.
+- **Step 4:** Step 4: click Next on the welcome screen, then I Agree.
+- **Step 5:** Step 5: choose Just Me (recommended).
+- **Step 6:** Step 6: keep the default install folder.
+- **Step 7:** Step 7: is another Python already installed on this computer?
+- **Step 8:** Yes, or not sure: leave "Add Anaconda3 to my PATH" unticked.
+- **Step 9:** No: ticking "Add to PATH" is optional.
+- **Step 10:** Tick "Register Anaconda3 as my default Python" and click Install.
+- **Step 11:** Step 8: wait for the installation to finish.
+- **Step 12:** Step 9: click Next, Next and Finish.
+- **Step 13:** Open Anaconda Navigator (or the Anaconda Prompt) to start working.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -722,7 +748,14 @@ You can think of Jupyter Notebook as having **two main screens**:
 1. **Screen 1: the Tree View** (home page), where you pick or create notebooks.
 2. **Screen 2: the Notebook Editor**, where you write and run code.
 
-![The Jupyter Notebook User Interface](../resources/0000-05-ch1-jupyter-notebook-UI.png)
+![The Jupyter Notebook User Interface](../resources/S01-LR-0000-05-ch1-jupyter-notebook-UI.png)
+
+**Reading the figure**
+
+- **Step 1:** Start Jupyter, for example from Anaconda Navigator or with `jupyter notebook`.
+- **Step 2:** Screen 1, the Tree View (`http://localhost:8888/tree`), shows the files in the folder where Jupyter started.
+- **Step 3:** Open an existing notebook, or create a new one.
+- **Step 4:** Screen 2, the Notebook Editor, is where you write and run code; from here you can go back to the Tree View to pick another file.
 
 Screen 1 is the **launcher**; Screen 2 is the **work screen**. You always begin at Screen 1, unless you start Jupyter with a notebook name, for example `jupyter notebook MyNotebook.ipynb`.
 
@@ -1334,15 +1367,8 @@ This section describes, in more detail, the journey that was summarised in [Sect
 
 ### 11.1 The Flowchart
 
-![Flowchart: how code travels from the browser to the kernel and back](../resources/ch-001-jupyter-browser-to-kernel-flow.png)
+![Flowchart: how code travels from the browser to the kernel and back](../resources/S01-LR-0000-06-ch1-How-code-travels-from-browser-and-back.png)
 
-
-
-
-Another flowchart 
-
-
-![Advanced: How a Cell Travels from Browser to Kernel](../resources/0000-06-ch1-How-code-travels-from-browser-and-back.png)
 
 
 
@@ -1774,7 +1800,7 @@ Step 3 - Measure the peak memory of one statement with `%memit`:
 ```
 
 ```text
-peak memory: 50.26 MiB, increment: 4.23 MiB
+peak memory: 81.45 MiB, increment: 38.40 MiB
 ```
 
 `peak memory` is the most memory Python used while running the statement, and `increment` is how much extra memory the statement needed. (`MiB` is a mebibyte, about one million bytes.)
@@ -1959,7 +1985,17 @@ The flowchart below shows how to choose a tool.
 
 
 
-![Tips for Profiling Notebooks Effectively](../resources/ch01-jupyternb-fig-05.png)
+![Tips for Profiling Notebooks Effectively](../resources/S01-LR-ch01-jupyternb-fig-05.png)
+
+**Reading the figure**
+
+- **Step 1:** You want to make your code faster, or make it use less memory.
+- **Step 2:** Do you want to measure time, or memory?
+- **Step 3:** Time: how detailed must the answer be?
+- **Step 4:** A single line or a whole cell: use `%time` once, or `%timeit` for an accurate repeated timing (`%%time`, `%%timeit` for a cell).
+- **Step 5:** Function by function: use `%prun`; SnakeViz or Pyinstrument give a visual picture of the same information.
+- **Step 6:** Line by line inside one function: use `%lprun` from line_profiler.
+- **Step 7:** Memory: use `%memit` for one statement and `%mprun` for line-by-line memory use, both from memory_profiler.
 
 [Back to the Table of Contents](#table-of-contents)
 

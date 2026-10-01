@@ -167,7 +167,18 @@ The flowchart below shows the whole installation at a glance. Each step is expla
 
 
 
-![Installing VS Code on Windows (Step-by-Step)](../resources/ch01-vscode-1-fig-01.png)
+![Installing VS Code on Windows (Step-by-Step)](../resources/S01-LR-ch01-vscode-1-fig-01.png)
+
+**Reading the figure**
+
+- **Step 1:** Double-click the downloaded installer in your Downloads folder.
+- **Step 2:** Accept the licence agreement.
+- **Step 3:** Keep the default install folder.
+- **Step 4:** Keep the default Start Menu folder.
+- **Step 5:** Tick the additional tasks, such as "Add to PATH" and the "Open with Code" options.
+- **Step 6:** Click Install and wait.
+- **Step 7:** Tick "Launch Visual Studio Code" and click Finish.
+- **Step 8:** VS Code opens with its Welcome page.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -563,7 +574,22 @@ This is the simplest workflow for complete beginners. The flowchart shows it at 
 
 
 
-![A Beginner's Python Workflow in VS Code](../resources/0000-07-ch1-beginner-work-flow-vs-code.png)
+![A Beginner's Python Workflow in VS Code](../resources/S01-LR-0000-07-ch1-beginner-work-flow-vs-code.png)
+
+**Reading the figure**
+
+- **Step 1:** Install Python.
+- **Step 2:** Install VS Code.
+- **Step 3:** Install the Python extension.
+- **Step 4:** Create a project folder.
+- **Step 5:** Open the folder in VS Code.
+- **Step 6:** Create a file such as `main.py`.
+- **Step 7:** Write your code and save it.
+- **Step 8:** Open the Terminal.
+- **Step 9:** Run `python main.py`.
+- **Step 10:** Did it work?
+- **Step 11:** Yes: done; change the code and run it again whenever you like.
+- **Step 12:** No: read the error message and see Section 8, then correct the code and save it again.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -879,7 +905,17 @@ These are the most common problems Indian beginners face on Windows.
 The flowchart below helps with the most common one: the `python` command not working.
 
 
-![Common Beginner Errors and Quick Fixes](../resources/0000-08-ch1-common-beginner-error-quick-fixes.png)
+![Common Beginner Errors and Quick Fixes](../resources/S01-LR-0000-08-ch1-common-beginner-error-quick-fixes.png)
+
+**Reading the figure**
+
+- **Step 1:** Open a new terminal and type `python --version`.
+- **Step 2:** What happens?
+- **Step 3:** It shows a version number: Python works, so carry on.
+- **Step 4:** It says "not recognized", or the Microsoft Store opens: try `py --version` instead.
+- **Step 5:** Does the `py` command work?
+- **Step 6:** Yes: use `py` in place of `python`, or fix PATH as described in Section 8.1.
+- **Step 7:** No: Python is not installed; install it as described in Section 5.1.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1011,7 +1047,19 @@ Debugging means:
 
 The flowchart below shows the usual cycle. Each step is explained in the sections that follow.
 
-![What Is Debugging](../resources/0000-09-ch1-debugging-cycle.png)
+![What Is Debugging](../resources/S01-LR-0000-09-ch1-debugging-cycle.png)
+
+**Reading the figure**
+
+- **Step 1:** Open the Python file.
+- **Step 2:** Click in the margin to the left of a line number to set a breakpoint (a red dot).
+- **Step 3:** Press F5 to start debugging.
+- **Step 4:** The program runs and pauses at the breakpoint.
+- **Step 5:** Look at the variables: hover over them, or use the Variables and Watch panels.
+- **Step 6:** Step Over (F10), Step Into (F11) or Continue (F5).
+- **Step 7:** Have you found the mistake?
+- **Step 8:** Yes: stop debugging, fix the code and run it again.
+- **Step 9:** No: add more breakpoints and start debugging again.
 
 [Back to the Table of Contents](#table-of-contents)
 

@@ -113,12 +113,9 @@ The readings, 10 per row:
 
 **Follow-up question:** Would a histogram of these 60 readings also show both problems?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 It would show the negative value, as a lonely bar far to the left of all the others. It would not show the missing value at all, because `hist()` quietly leaves out `NaN` values when it counts. A line plot in reading order shows both problems, and it also shows *where* in the sequence they happened.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -205,12 +202,9 @@ Ratio    -> scatter / bubbles: {'A': 2.4, 'B': 7.5, 'C': 4.2, 'D': 1.1}
 
 **Follow-up question:** Why would it be wrong to size bubbles by temperature in °C?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 Temperature in °C has no true zero. A day at 10 °C would get a bubble half the size of a day at 20 °C, suggesting it had "half the temperature", which is meaningless. A day at -5 °C would need a negative size, which is impossible. Bubble sizes need ratio data.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -276,12 +270,9 @@ Right title: Object-oriented: cubes
 
 **Follow-up question:** In the object-oriented part of the script, what would happen if you wrote `plt.title("Cubes")` instead of `ax_right.set_title(...)`?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 `plt.title()` sets the title of the "current" axes. After `plt.subplots(1, 2)`, the current axes is the last one created, which is the right-hand one, so it would happen to work. But if the code later drew on `ax_left`, the "current" axes could change and the title could land on the wrong plot. Using `ax_right.set_title()` removes this uncertainty.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -364,12 +355,9 @@ Bars in Axes 2         : 3 Rectangle objects
 
 **Follow-up question:** Which object would you use to save the whole chart to a file: the Figure or an Axes?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 The Figure, with `fig.savefig("chart.png")`. Saving belongs to the whole frame, which contains all the Axes. An Axes has no `savefig()` method.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -423,12 +411,9 @@ Lines on the axes after the error: 0
 
 **Follow-up question:** Does Matplotlib quietly drop the two extra x-values and plot the first three pairs?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 No. Matplotlib never guesses which values you meant to pair. It refuses to plot and raises the error, so that the mistake is noticed and fixed in the data.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -474,12 +459,9 @@ The generated x-values are stored as decimal numbers (0.0, 1.0, ...), but they m
 
 **Follow-up question:** You want the five values to appear at x = 1 to 5 instead of 0 to 4. What is the simplest change?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 Give the x-values explicitly: `ax.plot(range(1, len(y) + 1), y)` or `ax.plot([1, 2, 3, 4, 5], y)`.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -550,16 +532,13 @@ Input Series -> stored y-data type: ndarray
 
 **Follow-up question:** You have a DataFrame `df` with columns "month" and "sales". Write the line that plots sales against month on an existing `ax`.
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 ```python
 ax.plot(df["month"], df["sales"])
 ```
 
 Each column is a Series, which Matplotlib accepts directly.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -616,12 +595,9 @@ When you run this script, line 1 is printed at once, the window opens, and line 
 
 **Follow-up question:** A script creates three figures and then calls `plt.show()` once at the end. How many windows open, and when does the script continue?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 All three windows open together. The script continues only after all three have been closed.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -692,12 +668,9 @@ Keyword version -> color: #FF5733 linewidth: 3.0 marker face: white
 
 **Follow-up question:** What does the format string `'g^:'` produce?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 A green line drawn as a dotted line, with triangle markers at the data points.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -795,12 +768,9 @@ Bin 3 [27.33, 35.00]: [28, 29, 31, 35] -> 4 values
 
 **Follow-up question:** If the value 27.33 were in the data, which bin would it go into?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 The second edge is really 27.333..., slightly larger than 27.33, so 27.33 would go into Bin 2. A value exactly equal to an inner edge always goes into the bin on its right, because each bin includes its left edge but not its right edge.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -877,12 +847,9 @@ Scores between 60 and 70: 2 of 200
 
 **Follow-up question:** When would you still choose a box plot over a violin plot?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 When you need to compare many groups in a small space, when outliers must be marked clearly, or when the audience already knows how to read box plots. For a quick check of shape, a violin plot or histogram is better.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -966,12 +933,9 @@ Written that way, the output reads `Colors       : ['#1f77b4', '#ff7f0e']` on ev
 
 **Follow-up question:** How can you give a line a label but still keep it out of the legend?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 Start the label with an underscore, for example `label="_hidden"`. Matplotlib ignores labels that begin with an underscore when it builds the legend.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1262,12 +1226,9 @@ Step 17: Figure closed. Open figures: []
 
 **Follow-up question:** Why does the script use `ax1.set_title()` rather than `plt.title()`?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 `plt.title()` sets the title of the "current" Axes. After `ax1.twinx()` runs, the current Axes becomes `ax2`, so the title would be attached to `ax2`. It would still appear at the top, but the code would be misleading. `ax1.set_title()` states clearly where the title belongs.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1366,12 +1327,9 @@ Color for 50 (highest): (0.99, 0.91, 0.14) (bright yellow)
 
 **Follow-up question:** If you add `vmin=0, vmax=100` to `imshow()`, what happens to the colors?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 The value 10 would normalize to 0.1 and 50 to 0.5 instead of 0 and 1. All the cells would shift toward the dark, lower half of the colormap, and no cell would be bright yellow. Fixing `vmin` and `vmax` is useful when several heat maps must use the same color scale so that they can be compared.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1444,12 +1402,9 @@ Constrained figure uses: ConstrainedLayoutEngine
 
 **Follow-up question:** You call `fig.tight_layout()` and then add a long figure title with `fig.suptitle()`. What might go wrong?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 `tight_layout()` has already run, so it did not leave room for the new title. The title may overlap the top row of subplots. Either call `tight_layout()` again after adding the title, or create the figure with `layout="constrained"`, which handles the title automatically.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1536,12 +1491,9 @@ The error line is placed inside `try` and `except`, which catches the error, pri
 
 **Follow-up question:** What does `ax[1]` give in a 2 × 2 grid?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 It gives the whole second row, which is a 1-D array of two Axes: `ax[1, 0]` and `ax[1, 1]`. It does not give a single plot, so calling `ax[1].plot(...)` raises an error.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1626,12 +1578,9 @@ After the with-block, background      : [1.0, 1.0, 1.0]
 
 **Follow-up question:** Where in a script is the best place to call `plt.style.use()`?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 At the top, straight after the imports and before any figure is created. Then every figure in the script uses the same style, and nothing depends on the order of later lines.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1714,8 +1663,7 @@ Annotation text keeps its offset from the point (4, 40)
 
 **Follow-up question:** You want a small note "Source: sales register" to stay in the bottom-right corner of the plot, however the data changes. Which method and settings would you use?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 Use `ax.text()` with axes coordinates:
 
@@ -1725,8 +1673,6 @@ ax.text(0.98, 0.02, "Source: sales register", transform=ax.transAxes,
 ```
 
 `ha="right"` and `va="bottom"` line up the right-hand and bottom edges of the text with that corner position.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1867,12 +1813,9 @@ Do not be alarmed. This warning is not a mistake in the script; it is the whole 
 
 **Follow-up question:** Is it enough to write `fig = None` or reuse the variable name `fig` in the next loop pass instead of calling `plt.close(fig)`?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 No. pyplot still holds its own reference to the figure in its list of open figures, so the memory is not freed. Only `plt.close()` removes the figure from that list.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -2098,16 +2041,13 @@ The printed rows and columns match the table above. For example, the Main panel 
 
 **Follow-up question:** How would you change the layout so that the sidebar is on the right and the main panel on the left?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 Step 1 - Start the main panel at the left: `loc=(1, 0)`, keeping `rowspan=2` and `colspan=2`. It now uses columns 0 and 1.
 
 Step 2 - Start the sidebar in the last column: `loc=(1, 2)`, keeping `rowspan=2`.
 
 Step 3 - Leave the banner unchanged. The panels still fill all nine cells without overlapping.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 

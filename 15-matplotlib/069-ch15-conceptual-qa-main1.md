@@ -90,14 +90,11 @@ See [Level of measurement (Wikipedia)](https://en.wikipedia.org/wiki/Level_of_me
 
 **Follow-up question:** A survey records each student's favourite sport and their height. Which plot suits each variable on its own?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 Step 1 - Favourite sport is nominal (categories with no order). A bar chart of how many students chose each sport suits it.
 
 Step 2 - Height is ratio data (numbers with a true zero). A histogram or box plot suits it, because it shows how heights are spread.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -159,12 +156,9 @@ Dataset 2: mean of y = 7.50, standard deviation of y = 2.03, correlation with x 
 
 **Follow-up question:** If summary numbers such as the mean can be misleading, should we stop using them?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 No. Summary numbers are useful and precise. The lesson is to use them **together with** a graph. The numbers give exact values, and the graph shows the shape and any unusual points that the numbers may hide.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -204,12 +198,9 @@ The last line confirms that `plt` is just another name for `matplotlib.pyplot`. 
 
 **Follow-up question:** Would `import matplotlib.pyplot as graph` work?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 Yes. Python accepts any valid name as an alias, and you would then write `graph.plot()` and `graph.show()`. It is not recommended, though, because other programmers expect `plt`, and the code becomes harder for them to read.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -315,12 +306,9 @@ A title and axis labels were added in Step 3. They are not one of the four basic
 
 **Follow-up question:** What happens if Step 4, `plt.show()`, is left out?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 When the file is run as a normal Python script, the program finishes without opening a graph window, so you see nothing. In Jupyter notebooks the graph usually appears anyway, because the notebook displays figures automatically at the end of a cell. It is still good practice to call `plt.show()`.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -385,12 +373,9 @@ Type of ax : Axes
 
 **Follow-up question:** In the state-based style, the title function is `plt.title()`. What is the matching method in the object-oriented style?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 `ax.set_title()`. Most object-oriented methods that change a setting start with `set_`, such as `ax.set_xlabel()`, `ax.set_ylabel()` and `ax.set_xlim()`.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -449,12 +434,9 @@ Notice that the exact wording of the error is different for `plot()` and `scatte
 
 **Follow-up question:** `plt.plot([4, 7, 5])` works even though only one list is given. Why does it not raise the same error?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 When only one sequence is given, Matplotlib treats it as the y-values and creates the x-values itself (0, 1, 2, ...). So the lengths always match. This is Pattern 1, explained in Question 10.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -592,12 +574,9 @@ Layer 3 - Chart elements: title, axis labels, legend, grid
 
 **Follow-up question:** Is `label="Delhi"` an option or a chart element?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 It is written as an option inside `ax.plot()` (Layer 2), but its purpose is to supply the text for the legend (Layer 3). The legend itself appears only when `ax.legend()` is called. This shows that the layers work together.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -652,12 +631,9 @@ UserWarning: No artists with labels found to put in legend.
 
 **Follow-up question:** Why is saving placed before showing in the flowchart above?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 In many setups, closing the window that `plt.show()` opens also clears the figure. Saving after that could produce a blank image. See Question 20.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -738,8 +714,7 @@ list * 2  : [3, 5, 4, 6, 8, 3, 5, 4, 6, 8]
 
 **Follow-up question:** You have a table with columns "year" and "rainfall" stored in a DataFrame `df`. How would you plot rainfall against year with Matplotlib?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 Select the two columns and pass them to `plot()`:
 
@@ -748,8 +723,6 @@ plt.plot(df["year"], df["rainfall"])
 ```
 
 Each column is a pandas Series, which Matplotlib accepts directly.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -799,12 +772,9 @@ x-values generated: [0.0, 1.0, 2.0, 3.0]
 
 **Follow-up question:** You plot monthly rainfall for January to December with `plt.plot(rainfall)`. What will the x-axis show, and is that a problem?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 The x-axis will show 0 to 11, so January appears as 0 and December as 11. That can confuse a reader. For a finished graph, give the months as x-values, or set the tick labels to the month names.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -864,12 +834,9 @@ Histogram counts (found) : [2, 3, 3, 3, 3]
 
 **Follow-up question:** In the output above, the histogram has five bins but the bar chart has three bars. Where did the number five come from?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 It came from `bins=5` in the script. Matplotlib divided the range of marks, from 45 to 91, into five equal intervals and counted the marks in each. The bar chart has three bars simply because three subjects were given.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -914,12 +881,9 @@ bins = 40  bin width =  1.24  tallest bin =  14  empty bins = 3
 
 **Follow-up question:** Can bins be of unequal width?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 Yes. Instead of a number, you can give a list of bin edges, for example `plt.hist(marks, bins=[0, 40, 60, 75, 100])`. This is useful for grade bands. Take care, though: wide bins naturally collect more values, so the bars must be read with the widths in mind. Setting `density=True` adjusts the heights to allow for different widths.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -981,12 +945,9 @@ The box plot would show a box from 56.5 to 71.0 with a median line at 63.0 and o
 
 **Follow-up question:** A class has two groups of students, one scoring around 40 and one around 80. Which of the three tools could mislead you?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 The box plot. It would show one wide box with a median somewhere in the gap between the two groups, where few students actually scored. The histogram and the violin plot would both show two separate peaks.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1038,12 +999,9 @@ The **shape** of an array gives its size. `(3,)` means a single row of 3 values.
 
 **Follow-up question:** A digital photograph is 800 pixels wide and 600 pixels tall. Is it coordinate data or grid data?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 Grid data. Each pixel (tiny dot of color) has a row and a column position, and its value is its brightness or color. That is why `imshow()`, which stands for "image show", is used to display both photographs and other matrices.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1112,12 +1070,9 @@ contourf() band edges  : [1.0, 2.0, 4.0, 6.0, 7.0]
 
 **Follow-up question:** The matrix in the script is small and has only whole numbers. Which of the three methods gives the most honest picture of it?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 `imshow()`, because it shows each of the 16 values as its own square. `contour()` and `contourf()` draw smooth lines and bands between the values, which suggests in-between values that were never measured. They are more suitable when the data really changes smoothly, such as height across a landscape.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1181,12 +1136,9 @@ Fertilizer C: mean = 13.70 cm, standard deviation = 2.10 cm
 
 **Follow-up question:** What does `capsize=6` do in the script?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 It draws short horizontal caps, 6 points wide, at both ends of each error bar. The caps make the ends of the bars easier to see. Without `capsize`, the error bars are plain vertical lines.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1247,12 +1199,9 @@ Variables shown: area (x), population (y), budget (size), green cover (color)
 
 **Follow-up question:** Why does the script add a color bar?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 Without a color bar, the reader cannot tell which shade stands for which percentage of green cover. The color bar is the key that turns colors back into numbers, just as the axis labels do for positions.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1278,12 +1227,9 @@ A graph without explanatory elements may be visually attractive but difficult to
 
 **Follow-up question:** A graph has two lines but only one of them was given a `label`. What will the legend show?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 The legend will show only the labelled line. Lines without a label are left out of the legend, so the reader cannot tell what the second line is. Every dataset that needs explaining should have a label.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1341,12 +1287,9 @@ Drew West in a plot area
 
 **Follow-up question:** What might go wrong if the four plots did not share the same y-axis?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 Matplotlib would scale each plot to fit its own data. East's small rise from 4 to 6 could then fill the whole height of its plot and look as dramatic as West's rise from 1 to 9. Readers comparing the plots would be misled.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1404,12 +1347,9 @@ graph.svg saved: True
 
 **Follow-up question:** You save a graph with `plt.savefig("chart.png")` placed after `plt.show()`, and the saved image is blank. Why?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 When you closed the window opened by `plt.show()`, the figure was cleared. `plt.savefig()` then saved a new, empty figure. Moving the `savefig()` line above `plt.show()` fixes the problem.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 

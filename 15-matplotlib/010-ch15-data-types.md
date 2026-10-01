@@ -1142,17 +1142,13 @@ Step 8: Figure saved as data_types_visualization_matrix.png
 
 **Question 1.1:** Why does the bar chart show the days in the order Sat, Sun, Thur, Fri instead of Thur, Fri, Sat, Sun?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 `value_counts()` sorts its result from the highest count to the lowest. Saturday has the most tables (87), so it comes first. To keep the calendar order instead, use `data["day"].value_counts(sort=False)`. Because `day` is a category column with the order Thur, Fri, Sat, Sun, the bars will then follow that order.
 
-</details>
-
 **Question 1.2:** The line plot of Lunch and Dinner has a y-axis that starts at about 17. How could this mislead a reader, and how would you fix it?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 Step 1 - Read the values: the averages are \$17.17 and \$20.80, a rise of about 21 percent.
 
@@ -1160,12 +1156,9 @@ Step 2 - Look at the picture: because the axis starts near 17, the Dinner point 
 
 Step 3 - Fix it: add `axes[0, 0].set_ylim(bottom=0)` so that the axis starts at zero, or draw a bar chart of the two averages. Bars should always start at zero because readers judge them by their length.
 
-</details>
-
 **Question 1.3:** Which column of the tips dataset is discrete, and which plot would suit it?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 `size` (the number of people at a table) is discrete, because it is a count. A bar chart of how many tables had 1, 2, 3, 4, 5 or 6 people would suit it:
 
@@ -1186,8 +1179,6 @@ size
 6      4
 Name: count, dtype: int64
 ```
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1660,17 +1651,13 @@ So the answer to the opening question is: Gentoo penguins are much heavier than 
 
 **Question 2.1:** Why is a box plot better than a bar chart of average mass for this question?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 A bar chart of averages would show only one number per species. Adelie (average 3706.2 g) and Chinstrap (average 3733.1 g) would look almost identical. The box plot also shows the spread, the median and the outliers. It reveals that Chinstrap masses are more tightly grouped and that two Chinstrap penguins are unusually light or heavy. None of this is visible in a bar chart of averages.
 
-</details>
-
 **Question 2.2:** Work out by hand whether a Chinstrap penguin weighing 4800 g is an outlier.
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 Step 1 - Note the quartiles from the output: Q1 = 3487.5 g and Q3 = 3950 g.
 
@@ -1680,16 +1667,11 @@ Step 3 - Find the upper limit: Q3 + 1.5 × IQR = 3950 + 693.75 = 4643.75 g.
 
 Step 4 - Compare: 4800 g is greater than 4643.75 g, so it is an outlier. This matches the dot drawn above the Chinstrap box.
 
-</details>
-
 **Question 2.3:** How would you change the script to compare flipper length instead of body mass?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 Change `y="body_mass_g"` to `y="flipper_length_mm"` in `sns.boxplot()`, and change the y-axis label to something like `"Flipper Length in mm (Ratio Scale)"`. Also update the column name used in Step 3 so that the printed summary matches the new plot. Flipper length is also a ratio, continuous variable, so a box plot remains a suitable choice.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -2028,8 +2010,7 @@ The table below summarizes how to read the shape of any histogram:
 
 **Question 3.1:** Draw the same data with 3, 15 and 100 bins. What changes?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 ```python
 import matplotlib.pyplot as plt
@@ -2068,29 +2049,21 @@ bins = 100
 
 With 3 bins, one bar holds 140 of the 244 bills and the shape is lost. With 15 bins, the peak and the right tail are both clear. With 100 bins, 32 bins are empty and the tallest bar holds only 11 bills, so the chart looks broken and spiky. The data is the same in all three cases; only the picture changes.
 
-</details>
-
 **Question 3.2:** Why would a bar chart with one bar for every different bill amount be a poor choice here?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 Almost every bill amount is different (such as \$16.99, \$10.34, \$21.01). A bar chart would have hundreds of bars, most of height 1, and would show no pattern at all. A histogram groups nearby values into bins, which is what reveals the shape of the distribution.
 
-</details>
-
 **Question 3.3:** If one table had a bill of \$500, what would happen to the mean and the median, and how would the histogram change?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 Step 1 - The median would hardly move, because it depends only on the middle of the ordered values.
 
 Step 2 - The mean would rise noticeably, because the \$500 is added into the total before dividing by the count. The new mean would be (19.79 × 244 + 500) / 245, which is about \$21.75.
 
 Step 3 - The histogram's x-axis would stretch to \$500. With 15 bins, each bin would now be more than \$30 wide, so almost all the normal bills would be squeezed into the first two bars, with one lonely bar far to the right. This shows why outliers should be checked before choosing the number of bins.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -2387,26 +2360,19 @@ Let us analyze what the plot and the printed numbers reveal about the relationsh
 
 **Question 4.1:** Suppose you swap the axes and put `tip` on the x-axis and `total_bill` on the y-axis. Does the correlation change?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 No. The correlation coefficient is the same (0.68) whichever variable is on which axis, because it only measures how closely the two variables move together. The picture will look like a mirror image across the diagonal. However, the usual convention is to put the explanatory variable (`total_bill`) on the x-axis, because the bill comes first and the tip is decided afterwards.
 
-</details>
-
 **Question 4.2:** Does this plot prove that a larger bill *causes* a larger tip?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 Not by itself. The plot shows a strong association. In this case a causal link is believable, because many people calculate the tip as a percentage of the bill. But other factors could also play a part. For example, larger groups (`size`) run up bigger bills and may also tip more. To claim cause and effect, you need more than a scatter plot, such as knowledge of how tips are decided or a controlled study.
 
-</details>
-
 **Question 4.3:** How can you add a third, nominal variable such as `smoker` to the same scatter plot?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 Give each group its own color and add a legend:
 
@@ -2441,8 +2407,6 @@ Smoker = No   tables = 151  correlation = 0.82
 ```
 
 The relationship between bill and tip is much stronger for non-smoking tables (0.82) than for smoking tables (0.49). Adding a nominal variable as color can reveal differences between groups that a single-color plot hides.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 

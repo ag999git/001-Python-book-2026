@@ -407,17 +407,13 @@ Step 4: Parts returned by ax.stem()
 
 **Question 1:** What happens if you leave out the `x` list and write `ax.stem(y)`?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 Matplotlib uses the positions 0, 1, 2, 3, 4, 5 as the x-values. The plot looks the same, but the stems are placed at 0 to 5 instead of 1 to 6. This is because Python counts from 0.
 
-</details>
-
 **Question 2:** How would you draw green dashed stems with black square markers and no visible baseline?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 Step 1 - Green dashed stems: `linefmt="g--"`.
 
@@ -429,16 +425,11 @@ Step 3 - Hide the baseline: use a format string with no line, `basefmt=" "` (a s
 ax.stem(x, y, linefmt="g--", markerfmt="ks", basefmt=" ")
 ```
 
-</details>
-
 **Question 3:** Why does the vertical axis go down to 0 (in fact slightly below it) even though the smallest value is 3?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 The baseline is drawn at 0 (the default value of `bottom`), and every stem starts from the baseline. Matplotlib makes the axis big enough to show the whole baseline and all the stems, so the axis must include 0. It then adds a small margin, which is why the axis starts a little below 0.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -813,17 +804,13 @@ The same dataset can be represented in different ways depending on the objective
 
 **Question 1:** In the line plot, halfway between sample 1 (value 2) and sample 2 (value 7), the line passes through the value 4.5. Was 4.5 ever measured?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 No. Only whole-number samples 1 to 8 were measured. The line simply joins the measured points with straight segments. This is why a line plot can be misleading for separate samples: it suggests values between the samples that were never recorded. The stem plot avoids this.
 
-</details>
-
 **Question 2:** The three panels line up here only because they happen to use the same x-values. How could you make sure they always line up, even if one panel had different data?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 Add `sharex=True` to `plt.subplots()`:
 
@@ -832,8 +819,6 @@ fig, ax = plt.subplots(3, 1, figsize=(8, 8), sharex=True)
 ```
 
 All three panels then use one common x-axis, so sample 4 in the top panel sits exactly above sample 4 in the other two.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 

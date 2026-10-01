@@ -1430,8 +1430,7 @@ Use the 5 × 5 matrix `A` from the examples above.
 
 **Question 3.1:** What do `A[2, 3]`, `A[2]` and `A[:, 0]` give?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 Step 1 - `A[2, 3]` has no colons, so it picks a single value: row 2, column 3, which is 13.
 
@@ -1439,25 +1438,17 @@ Step 2 - `A[2]` gives only a row number, so it picks the whole of row 2.
 
 Step 3 - `A[:, 0]` takes all rows but only column 0, so it picks the first column.
 
-</details>
-
 **Question 3.2:** How would you extract the bottom-right 2 × 2 corner without counting the size of the matrix?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 Use negative indexes. `-2:` means "from the second-last position to the end". So `A[-2:, -2:]` gives the last two rows and the last two columns.
 
-</details>
-
 **Question 3.3:** A slice can have a third number, the step, as in `start:end:step`. What does `A[::2, ::2]` give?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 `::2` means "from the start to the end, taking every second item". So `A[::2, ::2]` takes rows 0, 2, 4 and columns 0, 2, 4.
-
-</details>
 
 The script below checks all three answers.
 

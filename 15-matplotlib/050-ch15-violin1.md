@@ -760,17 +760,13 @@ Step 5: Parts drawn by violinplot(): ['bodies', 'cmeans', 'cmaxes', 'cmins', 'cb
 
 **Question 1:** Why do the mean line and the median line almost overlap?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 The 100 main scores come from a bell-shaped (normal) distribution centred at 70. In a symmetric distribution, the mean and the median are nearly equal. The three outliers pull in opposite directions (two low, one high), so they hardly move the mean. The printed values confirm this: mean 70.29 and median 70.90.
 
-</details>
-
 **Question 2:** What would change if the three outliers `[25, 30, 105]` were not added?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 Step 1 - Remove the line `scores = np.append(scores, [25, 30, 105])` and run the script again.
 
@@ -799,16 +795,11 @@ With outliers   : min = 25.00, max = 105.00
 
 Step 3 - Interpret. The mean and median barely change, but the minimum and maximum change a lot (from 48.68 to 25 and from 94.68 to 105). So without the outliers, the violin would be much shorter and the thin tails would disappear. This shows that the ends of a violin are very sensitive to a few extreme values, while the middle is not.
 
-</details>
-
 **Question 3:** A classmate says, "The violin is widest at 70, so 70 is the highest score." What is wrong with this statement?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 Width does not show the size of a value. It shows how many students scored near that value. The widest part at 70 means that 70 is the **most common** score region. The highest score is read from the top end of the violin on the vertical axis, which is 105.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1245,30 +1236,21 @@ but the data actually has TWO distinct groups!
 
 **Question 1:** The combined mean is 64.17 and the median is 63.37. Would it be fair to say that "a typical student scored about 64"?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 No. Only 6 students scored between 60 and 70. Most students scored either around 48 (Class A) or around 80 (Class B). When data is bimodal, a single average can describe a score that almost nobody actually got. It is better to report each group separately.
 
-</details>
-
 **Question 2:** Can a violin plot also hide the two peaks?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 Yes, if the curve is smoothed too much. The `bw_method` option controls the smoothing. With a large value such as `bw_method=1.0`, the two bulges merge into one rounded shape. See the solution to [Challenge 5](#solution-to-challenge-5-change-the-smoothness) for a picture. So a violin plot reveals peaks only when the smoothing is sensible. The default setting usually works well.
 
-</details>
-
 **Question 3:** If you knew which student belonged to which class, what would be a better plot?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 Draw one violin for each class, side by side, instead of one violin for the combined scores. Then each violin would have a single peak, and the difference between the classes would be obvious. The solution to [Challenge 3](#solution-to-challenge-3-compare-multiple-groups-side-by-side) shows how to do this.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 

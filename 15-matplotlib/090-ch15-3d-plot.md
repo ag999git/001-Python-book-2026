@@ -1302,16 +1302,13 @@ Number of turns: 10
 
 How would you change the script to draw a helix with 3 turns that is twice as tall?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 Step 1 - For 3 turns, the angles must go up to 3 × 2π = 6π: `t = np.linspace(0, 6 * np.pi, 1000)`.
 
 Step 2 - For twice the height, let z rise to 20: `z = np.linspace(0, 20, 1000)`.
 
 Step 3 - Leave x, y and the plotting code unchanged.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1412,8 +1409,7 @@ Points further from the viewer are drawn paler. This depth shading is on by defa
 
 How could you color each point according to its z-value and show a color bar?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 Pass the z-values to `c` together with a colormap, keep the returned object, and give it to `fig.colorbar()`:
 
@@ -1423,8 +1419,6 @@ fig.colorbar(points, ax=ax, shrink=0.7, label="z value")
 ```
 
 Remove `color="crimson"`, because `color` and `c` should not be used together.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1573,12 +1567,9 @@ Lowest z = 0.007, highest z = 18.0
 
 What shape would you get with `Z = X**2 - Y**2`?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 A **saddle** shape. Along the x direction the surface curves upward, like a bowl, but along the y direction it curves downward. The centre is a low point in one direction and a high point in the other, like the seat of a horse's saddle. See [Saddle point (Wikipedia)](https://en.wikipedia.org/wiki/Saddle_point).
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1731,12 +1722,9 @@ Right view: elev = 25  azim = 45
 
 What happens to the wireframe if you change `rstride=2, cstride=2` to `rstride=5, cstride=5`?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 Only every fifth row and column (plus the last one) is drawn, so there are 11 lines in each direction instead of 26. The mesh becomes much more open and faster to draw, but the curved shape looks less smooth. The surface plot on the left is not affected.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 

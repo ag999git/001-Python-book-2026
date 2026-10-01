@@ -165,12 +165,9 @@ The graph shows a dip at Test 3 (68) and then a steady rise to the best mark of 
 
 **Follow-up question:** Without `plt.xticks(tests)`, what might appear on the x-axis?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 Matplotlib chooses the tick positions itself and may show values such as 1.0, 1.5, 2.0, 2.5 and so on. There is no "Test 1.5", so setting the ticks to the actual test numbers makes the graph clearer.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -272,8 +269,7 @@ Coordinate pairs  : [(0, 120), (1, 135), (2, 150), (3, 170), (4, 165), (5, 190)]
 
 **Follow-up question:** The graph is titled "Monthly Sales", but the x-axis starts at 0. How would you make it show months 1 to 6 instead?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 Give the x-values yourself, so it is no longer a Y-only plot:
 
@@ -282,8 +278,6 @@ months = [1, 2, 3, 4, 5, 6]
 plt.plot(months, sales, marker='o', linewidth=2)
 plt.xlabel("Month")
 ```
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -412,12 +406,9 @@ Charlie  average = 78.4, improvement = 18 marks
 
 **Follow-up question:** What happens if you call `plt.legend()` but forget to give the lines a `label`?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 Matplotlib finds no labelled lines, prints a warning ("No artists with labels found to put in legend") and draws no legend.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -592,12 +583,9 @@ Same values in both versions? True
 
 **Follow-up question:** How would you add 5 bonus marks to every value in `y_list` and in `y_np`?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 For the array: `y_np + 5`. For the list, a loop or list comprehension is needed: `[value + 5 for value in y_list]`. Writing `y_list + 5` raises a `TypeError`, because Python cannot add a number to a list.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -786,12 +774,9 @@ Series plotted x = [0, 1, 2, 3, 4], y = [10, 15, 20, 25, 30]
 
 **Follow-up question:** If the Series were created as `pd.Series([10, 15, 20, 25, 30], index=[2020, 2021, 2022, 2023, 2024])`, what would the third subplot show on its x-axis?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 The years 2020 to 2024, because Matplotlib uses the Series index as the x-values. The first two subplots would still show 0 to 4, so they would no longer line up with the third one.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -917,12 +902,9 @@ alpha          : 0.8
 
 **Follow-up question:** Change the script so that the markers are white squares with a blue outline on a solid green line. Which values change?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 `color="green"`, `linestyle="-"`, `marker="s"`, `markerfacecolor="white"` and `markeredgecolor="blue"`.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1045,12 +1027,9 @@ Legend items : ['Alice', 'Bob', 'Charlie']
 
 **Follow-up question:** Charlie's line and Alice's line are close together. Which chart element helps the reader tell them apart, and what else in the script helps?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 The legend links each color and marker to a name. The different markers (circle, square, triangle) also help, especially if the graph is printed in black and white.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1168,12 +1147,9 @@ New y-limits      : (30.0, 40.0)
 
 **Follow-up question:** Why can changing the y-axis limits make the same data look dramatic or dull?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 The height of the plot always stays the same. A narrow y-range spreads a small change over the whole height, so a rise of 5 °C looks steep. A wide range squeezes the same change into a small part of the height, so it looks almost flat. Always check the axis numbers before judging how large a change is.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1325,12 +1301,9 @@ Jun: profit is 17.3% of sales
 
 **Follow-up question:** What would the chart look like if profit were plotted with `plt.plot()` on the same axes as the sales bars?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 The y-axis would run from 0 to about 270 to fit the sales bars. The profit line, with values from 15 to 45, would lie along the bottom of the chart, inside the bars, and its steady rise would be hard to see. That is why a second y-axis is used.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1495,8 +1468,7 @@ Title of ax      : Student Performance Comparison
 
 **Follow-up question:** How would you change this script to show each student in a separate plot placed side by side?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 Create three plotting areas and draw one line in each:
 
@@ -1512,8 +1484,6 @@ plt.show()
 ```
 
 `sharey=True` gives all three the same mark scale, so they can be compared fairly.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1654,8 +1624,7 @@ Total books issued: 1700
 
 **Follow-up question:** How would you sort the bars from the most books to the fewest?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 Sort the two lists together before plotting:
 
@@ -1666,8 +1635,6 @@ departments = [dept for books, dept in pairs]
 ```
 
 Departments are nominal categories with no natural order, so sorting them by size is allowed and makes comparison easier.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1782,12 +1749,9 @@ Explode values : (0.1, 0, 0, 0, 0)
 
 **Follow-up question:** What happens to the pie chart if the rent is raised to 30,000?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 The total becomes 57,000, so every percentage changes. Rent's share rises to 52.6% and its slice grows to more than half the pie. Rent is still the largest, so it is still the exploded slice. If another category became the largest, the script would highlight that one instead, because it finds the largest value each time.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1956,12 +1920,9 @@ The data is the same in both. Only the picture changes, so the choice of bins sh
 
 **Follow-up question:** In the left histogram, the 30–40 bin is empty. Should it be removed from `custom_bins`?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 It could be removed by starting the edges at 40, and the counts of the other bins would not change. Keeping it is also acceptable if 30–40 is a meaningful grade band that you want to show as empty. What matters is that every mark falls inside the first and last edges, which the script checks.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -2121,12 +2082,9 @@ Outlier: 9 hours, 45 marks (-44 marks from the trend line)
 
 **Follow-up question:** Why was the trend line fitted to the first ten students only, and not to all twelve?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 Outliers pull a fitted line toward themselves. If the two unusual students were included, the line would be flatter and would no longer describe the typical student well, which would make the outliers harder to spot. In real work, you would try both and report what the outliers do to the result.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -2295,14 +2253,11 @@ Mean = 44133  (higher than the median, so the data leans to the right)
 
 **Follow-up question:** Add a salary of 150,000 to the data. How would each plot change?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 Step 1 - The new value lies far above the upper outlier limit, so the box plot would draw it as a separate dot above the whisker. The box itself would change only a little.
 
 Step 2 - The violin plot would stretch up to 150,000 with a long, very thin tail, because its maximum line always reaches the largest value. It would not mark the salary as an outlier.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -2462,12 +2417,9 @@ Highest mark: 96 by S4 in English
 
 **Follow-up question:** Why does the script write the marks inside the cells when the color bar already shows the values?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 Colors are good for spotting patterns, but it is hard to read an exact number from a shade. Writing the marks in the cells gives both: the pattern at a glance and the exact value when needed. For a large matrix with hundreds of cells, the numbers would be too crowded and are usually left out.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -2644,12 +2596,9 @@ Filled band edges   : [-1.0, -0.75, -0.5, -0.25, 0.0, 0.25, 0.5, 0.75, 1.0]
 
 **Follow-up question:** What would the contour plot look like for z = x² + y² (without the sine)?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 Still circles centred on (0, 0), because z again depends only on the distance from the centre. But z would rise steadily outward instead of going up and down, so there would be one smooth "bowl" with the lowest value at the centre, and no repeated bands.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -2802,8 +2751,7 @@ Lowest sales : 100 in Mar
 
 **Follow-up question:** How would you also label the value of every point, not just the highest and lowest?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 Loop over the data and add a small text above each marker:
 
@@ -2812,8 +2760,6 @@ for month, value in zip(months, sales):
     plt.annotate(str(value), xy=(month, value), xytext=(0, 8),
                  textcoords="offset points", ha="center")
 ```
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -2960,12 +2906,9 @@ Default background color again   : [1.0, 1.0, 1.0]
 
 **Follow-up question:** Suppose the second graph had been made after `plt.style.use("dark_background")` instead of inside a `with` block. If you then added a third graph at the end of the script, what style would it have?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 It would still have the dark_background style, because `plt.style.use()` changes the defaults for everything that follows. To go back, you would need `plt.style.use("default")`. Using `plt.style.context()` avoids this problem.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -3128,8 +3071,7 @@ The files are saved in the folder from which the script is run. The message "Fil
 
 **Follow-up question:** How would you save the files into a folder called `charts` instead of the current folder?
 
-<details>
-<summary>Show answer</summary>
+**Answer**
 
 Create the folder if needed and join the folder name to each file name:
 
@@ -3139,8 +3081,6 @@ plt.savefig(os.path.join("charts", "revenue_chart.png"), dpi=300)
 ```
 
 `exist_ok=True` stops an error if the folder already exists.
-
-</details>
 
 [Back to the Table of Contents](#table-of-contents)
 

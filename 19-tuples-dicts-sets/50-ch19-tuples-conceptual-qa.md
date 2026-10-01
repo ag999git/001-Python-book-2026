@@ -1579,13 +1579,13 @@ In the example, the first case fails at Step 3 (`404` is not `200`). The second 
 
 **Reading the figure**
 
-- **Step 1:** Take the next `case` pattern, working from top to bottom.
-- **Step 2:** Is the value a sequence of the right length? `case (404, msg)` needs a sequence of exactly two items.
-- **Step 3:** Yes: do the fixed values match? In `case (404, msg)` the first item must be `404`.
-- **Step 4:** Yes: store the other items in the capture names. A plain name such as `msg` matches anything, so `msg` becomes `"Not Found"`.
-- **Step 5:** Run this case's code and leave the `match` statement. Later cases are not checked.
-- **Step 6:** A check failed: are there more `case` patterns? If so, go back to Step 1.
-- **Step 7:** No case matched, so nothing runs, unless there is a final `case _:`, which catches everything that is left.
+- **Step 1:** Python starts the `match` statement with the value to test, for example a status tuple.
+- **Step 2:** Are there `case` patterns left, working from top to bottom?
+- **Step 3:** Yes: take the next `case` pattern.
+- **Step 4:** Is the value a sequence of the right length? `case (404, msg)` needs a sequence of exactly two items. If not, go back to Step 2.
+- **Step 5:** Yes: do the fixed values match? In `case (404, msg)` the first item must be `404`. If not, go back to Step 2.
+- **Step 6:** Yes: store the other items in the capture names (a plain name such as `msg` matches anything, so `msg` becomes `"Not Found"`), run this case's code and leave the `match` statement. Later cases are not checked.
+- **Step 7:** No case matched, so nothing runs. A final `case _:` prevents this, because it matches everything that is left.
 
 **Script: matching HTTP status tuples**
 

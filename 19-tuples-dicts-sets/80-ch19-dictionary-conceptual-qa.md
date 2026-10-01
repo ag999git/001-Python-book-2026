@@ -538,11 +538,11 @@ No. Inside one run, every key keeps the same hash, so every lookup works. The ra
 **Reading the figure**
 
 - **Step 1:** `hash(t)` is called on a tuple, for example when the tuple is used as a dictionary key.
-- **Step 2:** Take the next item of the tuple.
-- **Step 3:** Is this item hashable?
-- **Step 4:** No: stop at once and raise `TypeError`. `(1, 2, [3, 4])` fails with `unhashable type: 'list'`.
-- **Step 5:** Yes: mix this item's hash into the running result. A tuple inside the tuple is checked item by item in the same way.
-- **Step 6:** If there are more items, go back to Step 2.
+- **Step 2:** Are there items left to check?
+- **Step 3:** Yes: take the next item of the tuple.
+- **Step 4:** Is this item hashable?
+- **Step 5:** No: stop at once and raise `TypeError`. `(1, 2, [3, 4])` fails with `unhashable type: 'list'`.
+- **Step 6:** Yes: mix this item's hash into the running result, then go back to Step 2. A tuple inside the tuple is checked item by item in the same way.
 - **Step 7:** No items are left, so return the combined hash. The tuple is hashable, as `(1, 2, 3)` is. That is what "conditionally hashable" means.
 
 **Script: hashable and unhashable tuples**
@@ -786,10 +786,9 @@ Example: `{word: len(word) for word in ["apple", "fig", "kiwi"] if len(word) > 3
 - **Step 2:** Is there another item in the iterable?
 - **Step 3:** Yes: put the next item into the loop variable, `word`.
 - **Step 4:** Is there an `if` condition, and is it `False` for this item? If so, skip the item and go back to Step 2.
-- **Step 5:** No condition, or it is `True`: work out the key expression, `word`.
-- **Step 6:** Work out the value expression, `len(word)`.
-- **Step 7:** Store `key: value` in the dictionary, then go back to Step 2.
-- **Step 8:** No items are left, so the finished dictionary is returned.
+- **Step 5:** No condition, or it is `True`: work out the key expression, `word`, and the value expression, `len(word)`.
+- **Step 6:** Store `key: value` in the dictionary, then go back to Step 2.
+- **Step 7:** No items are left, so the finished dictionary is returned.
 
 **Script: a comprehension and the loop it replaces**
 

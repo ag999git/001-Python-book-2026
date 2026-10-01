@@ -562,9 +562,8 @@ The loop keeps track of its place inside the dictionary. Deleting an entry chang
 - **Step 1:** Make a snapshot of the keys, `list(marks.keys())`, and loop over it instead of over the dictionary.
 - **Step 2:** Is there another name in the snapshot?
 - **Step 3:** Yes: are this student's marks below 40? If not, go back to Step 2.
-- **Step 4:** Yes: delete the entry from the real dictionary, `del marks[student]`.
-- **Step 5:** The snapshot list is not affected by the deletion, so the loop carries on safely. Looping over `marks` itself would raise `RuntimeError: dictionary changed size during iteration`.
-- **Step 6:** No names are left: print `marks`, which now holds only the students with 40 or more.
+- **Step 4:** Yes: delete the entry from the real dictionary, `del marks[student]`, then go back to Step 2. The snapshot list is not affected by the deletion, so the loop carries on safely. Looping over `marks` itself would raise `RuntimeError: dictionary changed size during iteration`.
+- **Step 5:** No names are left: print `marks`, which now holds only the students with 40 or more.
 
 **Try this next**
 
@@ -970,12 +969,13 @@ February is unchanged: {'Notebook': 70, 'Eraser': 30}
 
 **Reading the figure**
 
-- **Step 1:** `jan_sales.update(feb_sales)` takes the next key from `feb_sales`.
-- **Step 2:** Is that key already in `jan_sales`?
-- **Step 3:** Yes: its value is overwritten with the February value, as "Notebook" goes from 50 to 70.
-- **Step 4:** No: the key and value are added, as "Eraser" is. Keys only in `jan_sales`, such as "Pen", are kept.
-- **Step 5:** If more keys are left in `feb_sales`, go back to Step 1.
-- **Step 6:** Done. `jan_sales` itself has changed, and `update()` returns `None`, not the merged dictionary.
+- **Step 1:** Call `jan_sales.update(feb_sales)`. It works through the keys of `feb_sales` one by one.
+- **Step 2:** Are there keys left in `feb_sales`?
+- **Step 3:** Yes: take the next key.
+- **Step 4:** Is that key already in `jan_sales`?
+- **Step 5:** Yes: its value is overwritten with the February value, as "Notebook" goes from 50 to 70. Then go back to Step 2.
+- **Step 6:** No: the key and value are added, as "Eraser" is. Then go back to Step 2. Keys only in `jan_sales`, such as "Pen", are kept.
+- **Step 7:** Done. `jan_sales` itself has changed, and `update()` returns `None`, not the merged dictionary.
 
 **Try this next**
 

@@ -203,8 +203,7 @@ Rows: 344
 Columns: 7
 ```
 
-<details>
-<summary>Alternative ways to load the same dataset (click to expand)</summary>
+##### Alternative ways to load the same dataset
 
 The project brief deliberately allows you to load the data from an Excel file, a CSV file, or an online dataset. All three end up giving you the same 344 rows and 7 columns. Here's what each looks like in code:
 
@@ -221,8 +220,6 @@ my_df = pd.read_excel('penguins.xlsx')
 ```
 
 `read_csv()` and `read_excel()` are close cousins — they take a file path (or a web address, for `read_csv()`) and return a DataFrame. The only real difference is which file format they expect. See the [pandas I/O guide](https://pandas.pydata.org/docs/user_guide/io.html) for the full family of `read_*()` functions pandas offers.
-
-</details>
 
 ---
 
@@ -571,8 +568,7 @@ With `plt.show()`, you should see a bar chart with three bars — Biscoe, Dream,
 
 ## Object vs. Category, Explained
 
-<details open>
-<summary><strong>Click to expand or collapse: The Difference Between object/str and category</strong></summary>
+### The Difference Between object/str and category
 
 Pandas has more than one way to store text-like columns, and choosing the right one matters once your data gets larger.
 
@@ -631,8 +627,6 @@ Notice that the text "Biscoe" was written out in full twice. That repeated, unco
 * **Box 4** — This is the lookup table. Unlike boxes 1–3, it is kept only **once per column**, not once per row. It records what each code means — `0 = Biscoe`, `1 = Dream`, `2 = Torgersen` — and pandas checks it any time it needs to display the real value or compare two rows.
 
 Put side by side, the difference is exactly what makes `category` smaller: Flowchart 1 wrote the word "Biscoe" out in full, twice. Flowchart 2 wrote the number `0` twice and paid for the word "Biscoe" only once, inside the shared lookup table. Multiply that saving across 163 Biscoe rows instead of 2, and you get the ~86% reduction shown in the table above.
-
-</details>
 
 ---
 

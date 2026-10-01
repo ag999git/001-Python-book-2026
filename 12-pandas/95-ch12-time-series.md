@@ -97,10 +97,6 @@ Resampling is the process of changing the frequency of time-series observations.
 
 ## Script Implementing the Research Problem / Project
 
-<details>
-
-<summary>Script implementing the research problem / Project</summary>
-
 ```python
 """
 PROJECT: Time Series Basics in Pandas
@@ -403,13 +399,7 @@ BEST PRACTICES:
 """)
 ```
 
-</details>
-
 ## Flowchart of the Script
-
-<details>
-
-<summary>Flowchart of the script</summary>
 
 ![Flowchart of the script](../resources/S12-LR-ch12-timeline.png)
 
@@ -441,15 +431,9 @@ BEST PRACTICES:
 - **Step 6:** Slice the 1950s by date string.
 - **Step 7:** Downsample: the quarterly average and the yearly total.
 
-</details>
-
 ---
 
 ## Step-by-Step Explanation of the Script
-
-<details>
-
-<summary>Step by step explanation of the script</summary>
 
 ### STEP 0: Import Libraries
 
@@ -774,8 +758,6 @@ Index → quarter-end dates
 * Avoid `.apply()` for large datasets
 * Do not ignore missing/invalid dates
 * Do not ignore `FutureWarning` messages — they tell you your code will break in a future pandas version
-
-</details>
 
 ---
 

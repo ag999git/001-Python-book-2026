@@ -145,6 +145,7 @@ Every later step in this project depends on the dataset actually being loaded in
 ```python
 df = sns.load_dataset("penguins")
 ```
+
 | Aspect | Detail |
 | --- | --- |
 | Input | Dataset name (string) |
@@ -221,6 +222,7 @@ df_raw['BLmm'] = df_raw['BLmm'].astype(str)
 ```python
 Series.astype(dtype)
 ```
+
 | Aspect | Detail |
 | --- | --- |
 | Input | Target data type |
@@ -310,6 +312,7 @@ With the messy dataset now built, this phase reverses each of the three problems
 ```python
 DataFrame.rename(columns=None, index=None, inplace=False)
 ```
+
 | Aspect | Detail |
 | --- | --- |
 | Input | A dictionary (or function) mapping old names to new ones |
@@ -424,6 +427,7 @@ dtype: object
 ```python
 df.duplicated(keep=False)
 ```
+
 | Aspect | Detail |
 | --- | --- |
 | Output | A Boolean Series, one value per row |
@@ -433,6 +437,7 @@ df.duplicated(keep=False)
 ```python
 df.drop_duplicates()
 ```
+
 | Aspect | Detail |
 | --- | --- |
 | Output | A new, cleaned DataFrame |

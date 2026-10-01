@@ -121,6 +121,7 @@ df = sns.load_dataset('penguins')
 ```python
 seaborn.load_dataset(name)
 ```
+
 | Aspect | Explanation |
 | --- | --- |
 | Input | Dataset name (string) |
@@ -131,6 +132,7 @@ seaborn.load_dataset(name)
 ```python
 df.head()
 ```
+
 | Aspect | Explanation |
 | --- | --- |
 | Purpose | Preview the first 5 rows |

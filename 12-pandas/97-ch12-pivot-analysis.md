@@ -703,10 +703,6 @@ A data scientist reshapes data depending on the task:
 
 ## Advanced Discussion — Multi-Column Grouping & MultiIndex in Pandas
 
-<details>
-
-<summary>Advanced Discussion — Multi-Column Grouping &#x26; MultiIndex in Pandas</summary>
-
 ### 1. What is Multi-Column Grouping?
 
 When `groupby()` is applied on **more than one column**, Pandas creates a **hierarchical grouping**.
@@ -975,8 +971,6 @@ Not just rows — columns can also be hierarchical.
 * Don't assume flat structure
 * Don't mix up row vs column MultiIndex
 * Don't forget aggregation
-
-</details>
 
 ---
 

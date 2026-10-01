@@ -153,7 +153,7 @@ Number of newline characters: 1
 
 **1.1 Would triple double quotes work just as well here?**
 
-Not for this text. The block already contains double quote marks around the word `Python`, and a run of three of them would confuse Python. Triple single quotes are the right choice when the text contains double quotes, and triple double quotes when it contains single quotes or an apostrophe.
+Yes, it would. Inside triple double quotes a single double quote is an ordinary character; only a run of three ends the string. Trouble starts only if the text holds three double quotes in a row or ends with one just before the closing quotes. Triple single quotes are the right choice when the text contains double quotes, and triple double quotes when it contains single quotes or an apostrophe.
 
 **1.2 How do I count the words and the lines instead of the characters?**
 
@@ -237,7 +237,7 @@ The original is untouched: Data
 
 **What the `+=` really does**
 
-![Question 2. An Empty String, Concatenation and the Immutability Rule](../resources/LR-ch17-scripting-qa-fig-02.png)
+![Question 2. An Empty String, Concatenation and the Immutability Rule](../resources/S17-LR-ch17-scripting-qa-fig-02.png)
 
 **Reading the figure**
 
@@ -245,7 +245,7 @@ The original is untouched: Data
 - **Step 2:** The line `base_container += 'Data'` runs.
 - **Step 3:** Strings are immutable, so Python builds a brand-new string, `'Data'`.
 - **Step 4:** The name `base_container` is pointed at the new string.
-- **Step 5:** The old empty string is left behind, and Python clears it away when nothing uses it.
+- **Step 5:** The old empty string is no longer referenced by `base_container`. (In CPython the empty string is one shared object that is never freed, so it is not cleared away.)
 - **Step 6:** Nothing was changed inside the old string at any point. `+=` on a string always makes a new object.
 
 **Design Pattern Explanation**
@@ -464,7 +464,7 @@ Adding numbers: 50
 **Script**
 
 ```python
-# Step 1: Define a normal string containing multiple escape character escape sequences.
+# Step 1: Define a normal string containing several escape sequences.
 escaped_sequence = "Line1\nTab\tOver\rWrite\bDone"
 print("--- Normal String Output ---")
 print(escaped_sequence)
@@ -552,7 +552,7 @@ If you run these lines inside some editors or notebook windows, the `\r` and `\b
 
 **How Python reads a backslash**
 
-![Question 4. Escape Sequences and the Raw String Prefix](../resources/LR-ch17-scripting-qa-fig-03.png)
+![Question 4. Escape Sequences and the Raw String Prefix](../resources/S17-LR-ch17-scripting-qa-fig-03.png)
 
 **Reading the figure**
 
@@ -1474,7 +1474,7 @@ The next seven questions are about the methods of the `str` class: the ready-mad
 **Script**
 
 ```python
-# Step 1: Define a raw string sentence with inconsistent casing.
+# Step 1: Define an untidy sentence with inconsistent casing.
 raw_sentence = "thE qUicK bRoWn fOx"
 
 # Step 2: Apply the built-in string case methods.
@@ -1533,11 +1533,11 @@ Original again: thE qUicK bRoWn fOx
 
 **11.1 Where does `title()` get it wrong?**
 
-At an apostrophe or a hyphen. It treats them as the end of a word and capitalises the letter that follows.
+At an apostrophe. It treats it as the end of a word and capitalises the letter that follows, which suits O'Brien but not they're.
 
 ```python
-# Step 1: Names that title() does not handle as a reader would
-for name in ["o'brien", "smith-jones", "MRS D'SOUZA"]:
+# Step 1: Text with apostrophes, where title() is sometimes right and sometimes wrong
+for name in ["they're here", "o'brien", "MRS D'SOUZA"]:
     print(f"{name!r:>16} -> {name.title()!r}")
 
 # Step 2: The usual fix for a whole name typed in capitals
@@ -1548,8 +1548,8 @@ print("Fixed by hand:", " ".join(word.capitalize() for word in name.lower().spli
 **Output**
 
 ```text
+  "they're here" -> "They'Re Here"
        "o'brien" -> "O'Brien"
-   'smith-jones' -> 'Smith-Jones'
    "MRS D'SOUZA" -> "Mrs D'Souza"
 Fixed by hand: Mrs D'souza
 ```
@@ -1668,7 +1668,7 @@ The last line shows the danger. The slice quietly returned the full stop at the 
 
 **Choosing between the two methods**
 
-![Question 12. find() and index(), and What Each Does on Failure](../resources/LR-ch17-scripting-qa-fig-07.png)
+![Question 12. find() and index(), and What Each Does on Failure](../resources/S17-LR-ch17-scripting-qa-fig-07.png)
 
 **Reading the figure**
 
@@ -1867,7 +1867,7 @@ replace(): 'toomanyspaces'
 split and join: 'too many spaces'
 ```
 
-The fourth line is the one worth remembering. `split()` with no argument treats any run of spaces as one separator, so joining the pieces back with a single space tidies the whole line.
+The last line is the one worth remembering. `split()` with no argument treats any run of spaces as one separator, so joining the pieces back with a single space tidies the whole line.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1885,7 +1885,7 @@ The fourth line is the one worth remembering. `split()` with no argument treats 
 **Script**
 
 ```python
-# Step 1: Define a raw string containing data values separated by commas.
+# Step 1: Define a string containing data values separated by commas.
 raw_csv_data = "apple,banana,orange,grape"
 
 # Step 2: Break the string apart into a list using the comma as a delimiter.
@@ -2622,7 +2622,7 @@ Programming  last two characters: 'ng'
 a            last two characters: 'a'
 ```
 
-Note the last two lines. When the word is shorter than the slice asks for, Python gives back what there is instead of raising an error.
+Note the last line. When the word is shorter than the slice asks for, Python gives back what there is instead of raising an error.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -2694,7 +2694,7 @@ The third and fourth lines are worth a thought. A digit is not a small letter, a
 
 **The decision in a diagram**
 
-![Question 19. A Decision Taken on the First Character](../resources/LR-ch17-scripting-qa-fig-09.png)
+![Question 19. A Decision Taken on the First Character](../resources/S17-LR-ch17-scripting-qa-fig-09.png)
 
 **Reading the figure**
 
@@ -2885,15 +2885,15 @@ In one line:         Year 2026 Is True
 | 4 | `True` | `True` | `'Year 2026 Is True '` |
 | After `strip()` | | | `'Year 2026 Is True'` |
 
-![Question 20. Building One Sentence From a List of Mixed Values](../resources/LR-ch17-scripting-qa-fig-10.png)
+![Question 20. Building One Sentence From a List of Mixed Values](../resources/S17-LR-ch17-scripting-qa-fig-10.png)
 
 **Reading the figure**
 
 - **Step 1:** Start with an empty string.
-- **Step 2:** Take the next item from the list, which mixes strings, numbers and Booleans.
-- **Step 3:** Convert it to text with `str()`, because `+` cannot join a string to a number.
-- **Step 4:** Add it, followed by a space, to the collected string.
-- **Step 5:** If items are left, go back to Step 2.
+- **Step 2:** Are there items left in the list, which mixes strings, numbers and Booleans?
+- **Step 3:** Yes: take the next item.
+- **Step 4:** Convert it to text with `str()`, because `+` cannot join a string to a number.
+- **Step 5:** Add it, followed by a space, to the collected string, then go back to Step 2.
 - **Step 6:** No: `strip()` removes the extra space at the end.
 - **Step 7:** Print the finished sentence: `'Year 2026 Is True'`.
 

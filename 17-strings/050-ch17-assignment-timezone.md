@@ -110,7 +110,7 @@ One more rule is worth remembering. Python **will not let you subtract or compar
 
 The flowchart below shows how to decide what to do with a datetime object you have been given.
 
-![C. Naive vs. Aware at a Glance](../resources/LR-ch17-assignment-timezone-fig-01.png)
+![C. Naive vs. Aware at a Glance](../resources/S17-LR-ch17-assignment-timezone-fig-01.png)
 
 **Reading the figure**
 
@@ -609,7 +609,7 @@ Step 5 -> Error caused by replace():         5:30:00
 | `.replace(tzinfo=zone)` | Attaches a timezone label | No | You already know the reading was taken in that zone |
 | `.astimezone(zone)` | Converts the same moment to another zone's clock | Yes (unless the offsets are equal) | You want to see the same moment on a different clock |
 
-![An Important Warning: replace() Labels, It Does Not Convert](../resources/LR-ch17-assignment-timezone-fig-03.png)
+![An Important Warning: replace() Labels, It Does Not Convert](../resources/S17-LR-ch17-assignment-timezone-fig-03.png)
 
 **Reading the figure**
 
@@ -986,7 +986,7 @@ This table puts the two events side by side on three clocks. Reading it row by r
 
 The bold values are the ones each server actually wrote down. The naive calculation subtracts one bold value from the other (`08:00 - 04:00`), which mixes two different clocks and gives 4 hours. On any **single** clock the gap is 30 minutes. The naive answer is too large by 3 hours 30 minutes, which is exactly the difference between the two offsets (5:30 minus 2:00).
 
-![Timeline Table for the Simulation](../resources/LR-ch17-assignment-timezone-fig-05.png)
+![Timeline Table for the Simulation](../resources/S17-LR-ch17-assignment-timezone-fig-05.png)
 
 **Reading the figure**
 

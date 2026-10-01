@@ -1112,16 +1112,17 @@ Are both the same string? True
 
 **Flowchart**
 
-![Question 6. Escape Sequences](../resources/LR-ch17-conceptual-qa-fig-04.png)
+![Question 6. Escape Sequences](../resources/S17-LR-ch17-conceptual-qa-fig-04.png)
 
 **Reading the figure**
 
-- **Step 1:** Python reads the string literal one character at a time.
+- **Step 1:** Python reads the string literal one character at a time: take the next character.
 - **Step 2:** Is the character a backslash, `\`?
 - **Step 3:** No: store the character as it is.
 - **Step 4:** Yes: read the next character as well.
 - **Step 5:** Store the single special character the pair stands for. `\n` becomes one newline character, and `\t` one tab.
-- **Step 6:** Move on to the next character.
+- **Step 6:** Are there more characters in the literal? Yes: go back to Step 1.
+- **Step 7:** No: the string is complete.
 
 **Common beginner mistakes**
 
@@ -1132,7 +1133,7 @@ Are both the same string? True
 | Assuming `\n` is printed literally | Actually creates a new line |
 | Using unknown escape sequences | May produce warnings or incorrect output |
 
-The last row deserves a note. A sequence such as `"\d"` has no meaning in Python. Older versions simply kept both characters. Current versions still keep them, but they also give a `SyntaxWarning`, because such a sequence is almost always a mistake. The safe answer is to write `"\\d"` or to use a raw string, which the next question explains.
+The last row deserves a note. A sequence such as `"\d"` has no meaning in Python. Python keeps both characters. From Python 3.12 it also gives a `SyntaxWarning` (3.11 gives a `DeprecationWarning`, which is hidden by default), because such a sequence is almost always a mistake. The safe answer is to write `"\\d"` or to use a raw string, which the next question explains.
 
 **Follow-up questions**
 
@@ -1292,7 +1293,7 @@ Regular expressions are the most common use of all. There the backslash has its 
 
 **Diagram**
 
-![Question 7. Raw Strings](../resources/LR-ch17-conceptual-qa-fig-05.png)
+![Question 7. Raw Strings](../resources/S17-LR-ch17-conceptual-qa-fig-05.png)
 
 **Reading the figure**
 
@@ -1546,22 +1547,20 @@ Both loops give 3. The `for` loop is shorter, so it is the better choice here.
 
 **Flowchart**
 
-![Question 8. Traversing a String With for and while](../resources/LR-ch17-conceptual-qa-fig-06.png)
+![Question 8. Traversing a String With for and while](../resources/S17-LR-ch17-conceptual-qa-fig-06.png)
 
 **Reading the figure**
 
-- **Step 1:** Start.
-- **Step 2:** Get the string to traverse.
-- **Step 3:** Which traversal method is used?
-- **Step 4:** `for`: the loop itself hands over the next character. No index is needed.
-- **Step 5:** Process the character, for example count it.
-- **Step 6:** If characters are left, go back to Step 4. If not, go to Step 12.
-- **Step 7:** `while`: set the index to 0 yourself.
-- **Step 8:** Read the character at the index, `text[i]`.
-- **Step 9:** Process the character.
-- **Step 10:** Add 1 to the index. Forgetting this line makes the loop run for ever.
-- **Step 11:** Is the index still less than `len(text)`? If so, go back to Step 8. If not, go to Step 12.
-- **Step 12:** End. Both loops give the same result, and the `for` loop is shorter.
+- **Step 1:** Get the string to traverse.
+- **Step 2:** Which traversal method is used?
+- **Step 3:** `for`: are there characters left? The loop checks this itself before every round, so an empty string simply runs no rounds.
+- **Step 4:** Yes: the loop hands over the next character. No index is needed.
+- **Step 5:** Process the character, for example count it, then go back to Step 3.
+- **Step 6:** `while`: set the index to 0 yourself.
+- **Step 7:** Is the index still in range, `i < len(text)`? This test comes first, so an empty string is never read.
+- **Step 8:** Yes: read the character at the index, `text[i]`, and process it.
+- **Step 9:** Add 1 to the index, then go back to Step 7. Forgetting this line makes the loop run for ever.
+- **Step 10:** End. Both loops give the same result, and the `for` loop is shorter.
 
 **Common beginner mistakes**
 
@@ -1629,10 +1628,10 @@ The `end=" "` argument tells `print()` to finish with a space instead of a newli
 
 **8.2 Can I traverse a string without a loop at all?**
 
-Often yes, because a method or a built-in function already does the loop for you. Counting vowels, for example, can be done in one line with a comprehension.
+Often yes, because a method or a built-in function already does the loop for you. Counting vowels, for example, can be done in one line with a generator expression.
 
 ```python
-# Step 1: The comprehension builds a list of 1 for every vowel found
+# Step 1: The generator expression produces a 1 for every vowel found
 text = "Programming"
 count = sum(1 for ch in text.lower() if ch in "aeiou")
 print("Vowels counted in one line:", count)
@@ -2090,14 +2089,14 @@ For `text[2:9:2]` Python
 
 **Flowchart**
 
-![Question 10. String Slicing](../resources/LR-ch17-conceptual-qa-fig-08.png)
+![Question 10. String Slicing](../resources/S17-LR-ch17-conceptual-qa-fig-08.png)
 
 **Reading the figure**
 
 - **Step 1:** Go to the start index of the slice.
-- **Step 2:** Copy the character at that position into the new string.
-- **Step 3:** Move forward by the step, for example two positions for `[::2]`.
-- **Step 4:** Has the stop index been reached or passed? If not, go back to Step 2. The character at the stop index itself is never copied.
+- **Step 2:** Has the stop index been reached or passed? This test comes first, so a slice such as `s[3:3]` copies nothing. The character at the stop index itself is never copied.
+- **Step 3:** No: copy the character at that position into the new string.
+- **Step 4:** Move forward by the step, for example two positions for `[::2]`, then go back to Step 2.
 - **Step 5:** Yes: return the new string. The original string is not changed.
 
 **Examples**
@@ -2160,7 +2159,7 @@ print(extension)
 This returns `.pdf` without requiring loops. A more reliable way for real programs is to search for the last dot, because not every extension has three letters.
 
 ```python
-# Step 1: Two file names with extensions of different lengths
+# Step 1: Three file names with extensions of different lengths
 names = ["report.pdf", "archive.tar.gz", "notes.markdown"]
 
 # Step 2: For each name, find the last dot and slice from there
@@ -2694,7 +2693,7 @@ Notice that uppercase `P` and lowercase `p` have different Unicode values.
 
 The operators `<`, `>`, `<=` and `>=` perform dictionary-style comparisons. Python compares the strings character by character.
 
-Suppose we have `"Apple"` and `"Application"`. The first four characters match. The comparison continues until a difference is found: at the fifth character, `e` meets `c`, and since `c` comes earlier, `"Application"` is the smaller string.
+Suppose we have `"Apple"` and `"Application"`. The first four characters match. The comparison continues until a difference is found: at the fifth character, `e` meets `i`, and since `e` comes earlier, `"Apple"` is the smaller string.
 
 If one string ends first and everything up to that point matches, the shorter string is considered smaller. So `"Apple"` is less than `"Apples"`.
 
@@ -2745,13 +2744,13 @@ Apple < Apples : True
 ord('c') = 99 and ord('C') = 67
 ```
 
-The third line surprises most beginners. In a dictionary, "Car" would come before "cat" only because of the letters, and case would be ignored. Python is stricter: it compares the first characters, `c` and `C`, finds 99 against 67, and decides at once.
+The third line gives the dictionary's answer, but for a different reason. A dictionary puts "Car" before "cat" because r comes before t, ignoring case. Python is stricter: it compares the first characters, `c` and `C`, finds 99 against 67, and decides at once.
 
 **Why is comparison case-sensitive?**
 
 Uppercase and lowercase letters occupy different Unicode positions. Python compares positions, not meanings, so `"Python" == "python"` returns `False`.
 
-This is the right default. A password check must be case-sensitive, and so must a comparison of two file names on most systems. When you do want case to be ignored, you have to say so.
+This is the right default. A password check must be case-sensitive, and so must a comparison of two file names on Linux. When you do want case to be ignored, you have to say so.
 
 **Case-insensitive comparison**
 
@@ -2820,7 +2819,7 @@ print("a == b:", a == b)
 print("a is b:", a is b)
 
 # Step 2: The same value, but built while the program runs
-c = "Py" + "thon"
+c = "".join(["Pyt", "hon"])
 d = "".join(["Py", "thon"])
 print("c == d:", c == d)
 print("c is d:", c is d)
@@ -2955,7 +2954,7 @@ String object
     |-- replace()
     |-- find()
     |-- startswith()
-    |-- ... and about seventy more
+    |-- ... and about forty more
 ```
 
 You can ask Python itself for the list.
@@ -3670,7 +3669,7 @@ Validation therefore improves program reliability. Note the order of the steps: 
 
 **Flowchart**
 
-![Question 15. The is Family of Methods](../resources/LR-ch17-conceptual-qa-fig-13.png)
+![Question 15. The is Family of Methods](../resources/S17-LR-ch17-conceptual-qa-fig-13.png)
 
 **Reading the figure**
 
@@ -4237,18 +4236,17 @@ For a word of 5 letters that means 2 comparisons instead of 5. For a sentence of
 
 **Flowchart**
 
-![Question 17. Palindrome Using Indexing](../resources/LR-ch17-conceptual-qa-fig-15.png)
+![Question 17. Palindrome Using Indexing](../resources/S17-LR-ch17-conceptual-qa-fig-15.png)
 
 **Reading the figure**
 
 - **Step 1:** Start with the string to test.
-- **Step 2:** Set `i` to 0 and assume, for now, that the string is a palindrome.
-- **Step 3:** Compare the character at `i` with the one at the matching place from the end, `text[-(i + 1)]`.
-- **Step 4:** Are they equal?
+- **Step 2:** Set `i` to 0.
+- **Step 3:** Is `i` still less than half the length, `len(text) // 2`? The test comes first, so an empty string is never read.
+- **Step 4:** Yes: compare the character at `i` with the one at the matching place from the end, `text[-(i + 1)]`. Are they equal?
 - **Step 5:** No: one mismatch is enough. It is not a palindrome, so stop.
-- **Step 6:** Yes: add 1 to `i`.
-- **Step 7:** Has `i` reached half the length, `len(text) // 2`? If not, go back to Step 3.
-- **Step 8:** Yes: every pair matched, so it is a palindrome. Only `n // 2` comparisons were needed.
+- **Step 6:** Yes: add 1 to `i` and go back to Step 3.
+- **Step 7:** No at Step 3: every pair matched, so it is a palindrome. Only `n // 2` comparisons were needed.
 
 **Advantages**
 
@@ -4419,7 +4417,7 @@ Are they equal? False
 
 **Diagram**
 
-![Question 18. Palindrome Using Slicing](../resources/LR-ch17-conceptual-qa-fig-16.png)
+![Question 18. Palindrome Using Slicing](../resources/S17-LR-ch17-conceptual-qa-fig-16.png)
 
 **Reading the figure**
 
@@ -4606,7 +4604,7 @@ After mastering the algorithm, they should learn the slicing approach to appreci
 
 **Diagram**
 
-![Question 19. Comparing the Two Palindrome Methods](../resources/LR-ch17-conceptual-qa-fig-17.png)
+![Question 19. Comparing the Two Palindrome Methods](../resources/S17-LR-ch17-conceptual-qa-fig-17.png)
 
 **Reading the figure**
 
@@ -4717,7 +4715,7 @@ else:
     # Step 6: Use indexing to pick out the first letter
     initial = name[0]
 
-    # Step 7: Use slicing and a method to work out the family name
+    # Step 7: Use a method and a negative index to work out the family name
     family_name = name.split()[-1] if " " in name else name
 
     # Step 8: Build the messages with f-strings

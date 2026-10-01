@@ -2792,14 +2792,14 @@ In this example both sorts happen to agree. Change `"Apple"` to `"apple"` and `"
 
 **Reading the figure**
 
-- **Step 1:** Compare two strings, for example with `<`.
-- **Step 2:** Look at the first pair of characters, one from each string.
-- **Step 3:** Are they equal?
-- **Step 4:** No: the string whose character has the smaller code point is the smaller string. The comparison ends here. All capitals come before all small letters.
-- **Step 5:** Yes: move to the next pair of characters.
-- **Step 6:** Has either string run out of characters? If not, go back to Step 3.
-- **Step 7:** Both ended together: the strings are equal.
-- **Step 8:** Only one ended: the shorter string is the smaller one, so `"app" < "apple"`.
+- **Step 1:** Compare two strings, for example with `<`. Python works through them one position at a time, starting with the first.
+- **Step 2:** Has either string run out of characters?
+- **Step 3:** No: take the next pair of characters, one from each string.
+- **Step 4:** Are they equal? If so, go back to Step 2 for the next position.
+- **Step 5:** No: the string whose character has the smaller code point is the smaller string. The comparison ends here. All capitals come before all small letters.
+- **Step 6:** Yes, a string has run out at Step 2: did both run out together?
+- **Step 7:** Yes: the strings are equal.
+- **Step 8:** No, only one ran out: the shorter string is the smaller one, so `"app" < "apple"`.
 
 **Common beginner mistakes**
 

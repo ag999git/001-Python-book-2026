@@ -704,15 +704,14 @@ The counter ends at `-1`. That is one step past the first character, and it is e
 - **Step 1:** Start with a word, for example "Python".
 - **Step 2:** Which direction do you want to go?
 - **Step 3:** Forward: write `for character in word:`.
-- **Step 4:** Python hands over the next character each time round the loop. No counter is needed.
-- **Step 5:** Print the character.
-- **Step 6:** If characters are left, go back to Step 4. If not, go to Step 12.
+- **Step 4:** Are any characters left? The `for` loop checks this for you each time round. If not, go to Step 11.
+- **Step 5:** Yes: Python hands over the next character. No counter is needed.
+- **Step 6:** Print the character, then go back to Step 4.
 - **Step 7:** Backward: set a counter to the last index, `len(word) - 1`, which is 5 for "Python".
-- **Step 8:** Is the counter still 0 or more?
+- **Step 8:** Is the counter still 0 or more? If not, the counter is -1: it has passed the first character, so the loop stops and goes to Step 11.
 - **Step 9:** Yes: print the character at that index, `word[counter]`.
 - **Step 10:** Take 1 off the counter and go back to Step 8.
-- **Step 11:** No: the counter is -1, so it has passed the first character and the loop stops.
-- **Step 12:** Done.
+- **Step 11:** Done.
 
 **Design Pattern Explanation**
 
@@ -1381,14 +1380,14 @@ The last line catches most beginners. In a dictionary, "apple" comes before "Ban
 
 **Reading the figure**
 
-- **Step 1:** Compare two strings.
-- **Step 2:** Look at the characters in the same position in each string, starting with the first.
-- **Step 3:** Are they the same?
-- **Step 4:** No: the string whose character has the smaller code point is the smaller string, and the comparison ends.
-- **Step 5:** Yes: move to the next position.
-- **Step 6:** Has either string run out of characters? If not, go back to Step 2.
-- **Step 7:** Both ran out at once: the strings are equal.
-- **Step 8:** Only one ran out: the shorter string is the smaller one, so "Book" is less than "Bookcase".
+- **Step 1:** Compare two strings. Python works through them one position at a time, starting with the first.
+- **Step 2:** Has either string run out of characters?
+- **Step 3:** No: take the characters in the same position in each string.
+- **Step 4:** Are they the same? If so, go back to Step 2 for the next position.
+- **Step 5:** No: the string whose character has the smaller code point is the smaller string, and the comparison ends.
+- **Step 6:** Yes, a string has run out at Step 2: did both run out at once?
+- **Step 7:** Yes: the strings are equal.
+- **Step 8:** No, only one ran out: the shorter string is the smaller one, so "Book" is less than "Bookcase".
 
 **Design Pattern Explanation**
 

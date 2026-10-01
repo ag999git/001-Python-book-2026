@@ -137,9 +137,6 @@ surface, for every `(i, j)` in the grid.
 | `set_title()` | Add a title |
 | `plt.show()` | Display the finished plot |
 
-<details>
-<summary>Matplotlib Functions Used (Explained Simply — click to expand)</summary>
-
 ### Matplotlib Functions Used (Explained Simply)
 
 ---
@@ -271,8 +268,6 @@ plt.show()
 | `set_xlabel()` etc. | Label axes | string | labelled axes |
 | `set_title()` | Add title | string | titled plot |
 | `show()` | Display plot | none | visible output |
-
-</details>
 
 ---
 

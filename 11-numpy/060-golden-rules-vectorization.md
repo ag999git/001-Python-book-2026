@@ -293,9 +293,6 @@ print("Vectorized Time:", time.time() - start)
 
 ```
 
-<details>
-  <summary>RULE 2: Why `np.append()` in a loop is BAD (Click to expand!)</summary>
-
 ### RULE 2: Why `np.append()` in a loop is BAD
 First Understand What You Think is Happening
 
@@ -377,12 +374,7 @@ arr = np.array(temp)   # Convert once
 
 
   
-</details>
 
-
-<details>
-  <summary>RULE 3: Boolean Masking (Click to expand!)</summary>
-  
 
 ### RULE 3: Boolean Masking (Most Important Concept)
 What You Are Doing in Loop
@@ -476,8 +468,6 @@ This is very powerful and not possible easily with loops
 | Speed | slow | very fast |
 | Code | long | short |
 
-
-</details>
 
 
 

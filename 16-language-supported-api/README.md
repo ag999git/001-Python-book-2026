@@ -12,7 +12,7 @@ You need to be comfortable with lists, dictionaries, loops and functions before 
 | Page | What it covers | Best for |
 | --- | --- | --- |
 | [Converting a NamedTuple into a Dictionary](010-ch16-namedtuple2dict.md) | A worked exercise: building a record with `namedtuple`, turning it into a dictionary with `zip()`, and the `_asdict()` shortcut that does it for you | Start here |
-| [Real-World Python: Practical Uses for Standard Library Modules](020-ch16-real-world-use.md) | `collections`, `heapq`, `bisect`, `queue`, `enum`, `dataclasses` and `functools`, each shown solving a problem you would actually meet | The heart of the chapter |
+| [Real-World Python: Practical Uses for Standard Library Modules](020-ch16-real-world-use.md) | `collections`, `heapq`, `bisect`, `queue`, `enum`, `dataclasses`, `functools` and `itertools`, each shown solving a problem you would actually meet | The heart of the chapter |
 | [Conceptual Questions with Answers](060-ch16-conceptual-qa.md) | Big-O notation explained from scratch, then full answers to the conceptual questions printed in the book | Revision |
 | [Scripting Questions with Answers](065-ch16-scripting-qa-easy.md) | Twenty short programs with complete answers: linear and binary search, bubble, insertion and selection sort, stacks, queues and the `collections` types | Practice |
 | [Advanced Scripting Questions with Answers](070-ch16-scripting-qa-hard.md) | Twenty harder programs: timing comparisons, early-exit sorting, producer-consumer threads, an LRU cache, `groupby` and measured Big-O growth | Practice, after the easier set |

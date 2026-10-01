@@ -29,7 +29,7 @@ These questions go a step further than the easier set. Many of them ask you to *
 3. Copy the answer script into a `.py` file and run it. Compare your output with the output shown.
 4. Read the explanation, then try the follow-up questions.
 
-All scripts were tested with Python 3.11 and work with Python 3.8 or later. Scripts that **measure time** will show different numbers on your computer, because timing depends on the machine and on what else it is doing. The pattern of the numbers is what matters. Scripts that use random data set a fixed **seed** with `random.seed()`, so that you get exactly the same "random" numbers as shown here.
+All scripts were tested with Python 3.11 and work with Python 3.8 or later. Scripts that **measure time** will show different numbers on your computer, because timing depends on the machine and on what else it is doing. The pattern of the numbers is what matters. Scripts whose printed output depends on random data set a fixed **seed** with `random.seed()`, so that you get exactly the same "random" numbers as shown here.
 
 ---
 
@@ -107,18 +107,17 @@ The plan:
 7. Work out the speedup: linear time divided by binary time.
 8. Print one row of the table.
 
-![Q1. Linear Search vs Binary Search Timing](../resources/LR-ch16-scripting-qa-hard-fig-01.png)
+![Q1. Linear Search vs Binary Search Timing](../resources/S16-LR-ch16-scripting-qa-hard-fig-01.png)
 
 **Reading the figure**
 
-- **Step 1:** Take the next list size `n`.
-- **Step 2:** Build a list of `n` random numbers, and a sorted copy of it for binary search, which only works on sorted data.
+- **Step 1:** Are any list sizes left?
+- **Step 2:** Yes: take the next size `n` and build a list of `n` random numbers, and a sorted copy of it for binary search, which only works on sorted data.
 - **Step 3:** Time linear search on the data 5 times and keep the fastest time, the one least disturbed by other activity on the computer.
 - **Step 4:** Time binary search on the sorted copy in the same way.
 - **Step 5:** Work out how many times faster binary search is: `speedup = linear time / binary time`.
-- **Step 6:** Print one row of the table: `n`, both times and the speedup.
-- **Step 7:** If more sizes are left, go back to Step 1.
-- **Step 8:** No: print the Big-O summary. Linear search grows like O(n), binary search like O(log n), so the speedup grows as `n` grows.
+- **Step 6:** Print one row of the table: `n`, both times and the speedup. Then go back to Step 1.
+- **Step 7:** No: print the Big-O summary. Linear search grows like O(n), binary search like O(log n), so the speedup grows as `n` grows.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -265,21 +264,20 @@ The flag works like this:
 
 **Counting comparisons.** Without an early exit, the passes make `(n - 1) + (n - 2) + ... + 1` comparisons, which adds up to `n(n - 1)/2`. The largest part of this is `n²/2`, so the count grows like `n²`. A simple test: when `n` doubles, the count should become about **four times** larger.
 
-![Q2. Bubble Sort with Early Exit](../resources/LR-ch16-scripting-qa-hard-fig-02.png)
+![Q2. Bubble Sort with Early Exit](../resources/S16-LR-ch16-scripting-qa-hard-fig-02.png)
 
 **Reading the figure**
 
 - **Step 1:** Start with the first pass, `pass_no = 0`.
 - **Step 2:** At the start of each pass, assume the list is sorted: `already_sorted = True`.
-- **Step 3:** Compare the next neighbouring pair in the unsorted part, and count one comparison.
-- **Step 4:** Is the left item bigger than the right item?
-- **Step 5:** Yes: swap them and set `already_sorted = False`, because an item was out of order.
-- **Step 6:** If more pairs are left in this pass, go back to Step 3. (No from Step 4 comes straight here.)
-- **Step 7:** The pass is over. Is `already_sorted` still `True`?
-- **Step 8:** Yes: no swap happened in the whole pass, so the list is sorted. Stop early.
-- **Step 9:** No: are there more passes left?
-- **Step 10:** Yes: `pass_no = pass_no + 1`, and go back to Step 2.
-- **Step 11:** No: all passes are done. Without the early exit the count is `n(n - 1)/2` comparisons, which grows like `n²`.
+- **Step 3:** Is there another neighbouring pair to compare in the unsorted part? If so, compare it and count one comparison.
+- **Step 4:** Is the left item bigger than the right item? No: go back to Step 3.
+- **Step 5:** Yes: swap them and set `already_sorted = False`, because an item was out of order. Then go back to Step 3.
+- **Step 6:** No pairs are left, so the pass is over. Is `already_sorted` still `True`?
+- **Step 7:** Yes: no swap happened in the whole pass, so the list is sorted. Stop early.
+- **Step 8:** No: are there more passes left?
+- **Step 9:** Yes: `pass_no = pass_no + 1`, and go back to Step 2.
+- **Step 10:** No: all passes are done. Without the early exit the count is `n(n - 1)/2` comparisons, which grows like `n²`.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -383,15 +381,15 @@ Best case (already sorted):
 4. **The Growth column is close to 4x** each time `n` doubles, and it gets closer to 4 as `n` grows (4.50, 4.22, 4.11, 4.05). This is the sign of `O(n²)` growth.
 5. **The Sorted column is always `n - 1`.** With the early-exit flag, the best case grows only in step with `n`, which is `O(n)`.
 
-Why is the growth not exactly 4? Because `n(n-1)/2` is not exactly `n²/2`. The `-n` part matters for small lists but becomes less and less important as `n` grows. Big-O keeps only the part that dominates for large `n`.
+Why is the growth not exactly 4? Because `n(n-1)/2` is not exactly `n²/2`. The `-n/2` part matters for small lists but becomes less and less important as `n` grows. Big-O keeps only the part that dominates for large `n`.
 
 [Back to the Table of Contents](#table-of-contents)
 
 ### 2.5 Follow-up Questions
 
-**2.5.1 Does the early-exit flag help on a list that is sorted except for the very first item, such as `[9, 1, 2, 3, 4, 5]`?**
+**2.5.1 Does the early-exit flag help on a list that is sorted except for the very last item, such as `[2, 3, 4, 5, 6, 1]`?**
 
-Very little. The 9 moves only one place to the right per pass, so every pass has a swap until the 9 reaches the end. The flag helps most when the list is fully or almost fully sorted with small items near the front out of place.
+Very little. The 1 moves only one place to the left per pass, so every pass has a swap until the 1 reaches the front, and all 5 passes are needed. (A large item at the front is different: in `[9, 1, 2, 3, 4, 5]` the 9 bubbles all the way to the end in a single pass, so the flag stops the sort after pass 2.) The flag helps most when the list is already sorted or nearly sorted, with no small item far to the right of its correct place.
 
 **2.5.2 Why does `bubble_sort_count` begin with `numbers = numbers[:]`?**
 
@@ -433,19 +431,18 @@ So counting shifts against swaps gives the same number. The real difference is i
 
 (If a swap is done by hand with a temporary variable, it takes 3 assignments, which makes the difference even larger.)
 
-![Q3. Insertion Sort: Shifts vs Swaps](../resources/LR-ch16-scripting-qa-hard-fig-03.png)
+![Q3. Insertion Sort: Shifts vs Swaps](../resources/S16-LR-ch16-scripting-qa-hard-fig-03.png)
 
 **Reading the figure**
 
 - **Step 1:** Start with the second item, `i = 1`.
-- **Step 2:** Pick up the item as `key`, and start comparing with the item before it: `j = i - 1`.
-- **Step 3:** Is `j` still inside the list (`j >= 0`), and is the item at `j` bigger than `key`?
-- **Step 4:** Yes: shift that item one place right, `numbers[j + 1] = numbers[j]`, and count one shift. A shift writes only one position.
-- **Step 5:** Move one step left, `j = j - 1`, and go back to Step 3.
+- **Step 2:** Are there items left to place?
+- **Step 3:** Yes: pick up the item as `key`, and start comparing with the item before it: `j = i - 1`.
+- **Step 4:** Is `j` still inside the list (`j >= 0`), and is the item at `j` bigger than `key`?
+- **Step 5:** Yes: shift that item one place right, `numbers[j + 1] = numbers[j]`, and count one shift (a shift writes only one position). Move one step left, `j = j - 1`, and go back to Step 4.
 - **Step 6:** No: place `key` into the gap, `numbers[j + 1] = key`.
-- **Step 7:** Are there more items to place?
-- **Step 8:** Yes: `i = i + 1`, and go back to Step 2.
-- **Step 9:** No: the list is sorted.
+- **Step 7:** `i = i + 1`, and go back to Step 2.
+- **Step 8:** No items are left to place: the list is sorted.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -766,7 +763,7 @@ A few terms:
 
 Because two threads print at the same time, their lines could get mixed together. The script uses a **lock** so that only one thread prints at a time.
 
-![Q5. FIFO Queue and Producer-Consumer Threads](../resources/LR-ch16-scripting-qa-hard-fig-04.png)
+![Q5. FIFO Queue and Producer-Consumer Threads](../resources/S16-LR-ch16-scripting-qa-hard-fig-04.png)
 
 **Reading the figure**
 
@@ -1130,7 +1127,7 @@ A common use is a **priority queue**: always process the most important task nex
 
 After `heapify`, the marks list `[41, 55, 60, 92, 88, 73]` forms this tree:
 
-![Q7. heapq: Min-Heap, Max-Heap and Priority Queue](../resources/LR-ch16-scripting-qa-hard-fig-05.png)
+![Q7. heapq: Min-Heap, Max-Heap and Priority Queue](../resources/S16-LR-ch16-scripting-qa-hard-fig-05.png)
 
 **Reading the figure**
 
@@ -1297,15 +1294,15 @@ Typical uses are leaderboards, grade thresholds and live streams of data that mu
 
 There must always be one more grade than there are breakpoints.
 
-![Q8. bisect: Duplicates, Leaderboard and Grade Lookup](../resources/LR-ch16-scripting-qa-hard-fig-06.png)
+![Q8. bisect: Duplicates, Leaderboard and Grade Lookup](../resources/S16-LR-ch16-scripting-qa-hard-fig-06.png)
 
 **Reading the figure**
 
-- **Step 1:** Take the next score.
-- **Step 2:** `bisect(breakpoints, score)` counts how many breakpoints are less than or equal to the score. That count is the index.
-- **Step 3:** Use the index to pick the grade, `grade = grades[index]`. There is always one more grade than there are breakpoints.
-- **Step 4:** Print the score with its grade.
-- **Step 5:** If more scores are left, go back to Step 1.
+- **Step 1:** Are any scores left?
+- **Step 2:** Yes: take the next score.
+- **Step 3:** `bisect(breakpoints, score)` counts how many breakpoints are less than or equal to the score. That count is the index.
+- **Step 4:** Use the index to pick the grade, `grade = grades[index]`. There is always one more grade than there are breakpoints.
+- **Step 5:** Print the score with its grade, then go back to Step 1.
 - **Step 6:** No: done.
 
 [Back to the Table of Contents](#table-of-contents)
@@ -1444,18 +1441,17 @@ Since Python 3.7, plain dicts already keep items in insertion order. [OrderedDic
 - When an item is read or updated, `move_to_end(key)` marks it as most recently used.
 - When the cache is too full, `popitem(last=False)` removes the item at the front, which is the least recently used.
 
-![Q9. OrderedDict and an LRU Cache](../resources/LR-ch16-scripting-qa-hard-fig-07.png)
+![Q9. OrderedDict and an LRU Cache](../resources/S16-LR-ch16-scripting-qa-hard-fig-07.png)
 
 **Reading the figure**
 
 - **Step 1:** Call `put(key, value)` on the LRU cache.
 - **Step 2:** Is `key` already in the cache?
 - **Step 3:** Yes: `move_to_end(key)` moves it to the end, marking it as the most recently used.
-- **Step 4:** No: there is nothing to move.
-- **Step 5:** Store the value at `key`. A new key is added at the end, as the most recently used.
-- **Step 6:** Is the cache now holding more items than its capacity?
-- **Step 7:** Yes: `popitem(last=False)` removes the item at the front, which is the least recently used.
-- **Step 8:** Done.
+- **Step 4:** Store the value at `key`. A new key is added at the end, as the most recently used. (No from Step 2 comes straight here: there is nothing to move.)
+- **Step 5:** Is the cache now holding more items than its capacity?
+- **Step 6:** Yes: `popitem(last=False)` removes the item at the front, which is the least recently used.
+- **Step 7:** Done.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -2095,7 +2091,7 @@ Use square brackets: `OrderStatus["PENDING"]`.
 
 With the cache, each `n` from 0 to 35 is worked out only **once**, so the work drops to `O(n)`.
 
-![Q13. lrucache and Fibonacci](../resources/LR-ch16-scripting-qa-hard-fig-08.png)
+![Q13. lru_cache and Fibonacci](../resources/S16-LR-ch16-scripting-qa-hard-fig-08.png)
 
 **Reading the figure**
 
@@ -2255,14 +2251,14 @@ It empties the cache and resets all the counts to zero, so the next call starts 
 | 2 | 6 | 4 | 24 |
 | 3 | 24 | 5 | 120 |
 
-![Q14. partial() and reduce()](../resources/LR-ch16-scripting-qa-hard-fig-09.png)
+![Q14. partial() and reduce()](../resources/S16-LR-ch16-scripting-qa-hard-fig-09.png)
 
 **Reading the figure**
 
 - **Step 1:** No starting value is given, so `reduce` starts with the first item: `result = 2`.
-- **Step 2:** Take the next item: 3, then 4, then 5.
-- **Step 3:** Call the function on the running result and the item, `multiply(result, item)`, and print the new result: 6, 24, 120.
-- **Step 4:** If items are left, go back to Step 2.
+- **Step 2:** Are there items left?
+- **Step 3:** Yes: take the next item: 3, then 4, then 5.
+- **Step 4:** Call the function on the running result and the item, `multiply(result, item)`, and print the new result: 6, 24, 120. Then go back to Step 2.
 - **Step 5:** No: return the final result, 120.
 
 GST (Goods and Services Tax) is the tax added to most sales in India. `₹` is the symbol for the Indian rupee.
@@ -2439,17 +2435,17 @@ A **generator** is a function that uses `yield` instead of `return`. Each time i
 
 **Why sort before `groupby()`?** `groupby()` starts a new group every time the key changes. If "Engineering" appears, then "HR", then "Engineering" again, you get two separate Engineering groups. Sorting by department first puts all the same departments next to each other.
 
-![Q15. chain, islice and groupby](../resources/LR-ch16-scripting-qa-hard-fig-10.png)
+![Q15. chain, islice and groupby](../resources/S16-LR-ch16-scripting-qa-hard-fig-10.png)
 
 **Reading the figure**
 
 - **Step 1:** Sort the employees by department first, so that everyone in the same department sits next to each other.
-- **Step 2:** `groupby` reads the next employee.
-- **Step 3:** Is this employee's department the same as the department of the current group?
-- **Step 4:** Yes: the employee joins the current group.
-- **Step 5:** No: the key has changed, so `groupby` starts a new group for this department. Without Step 1, one department could be split into several groups.
-- **Step 6:** If more employees are left, go back to Step 2.
-- **Step 7:** No: all the groups have been produced.
+- **Step 2:** Are any employees left?
+- **Step 3:** Yes: `groupby` reads the next employee.
+- **Step 4:** Is this employee's department the same as the department of the current group?
+- **Step 5:** Yes: the employee joins the current group. Then go back to Step 2.
+- **Step 6:** No: the key has changed, so `groupby` starts a new group for this department, which becomes the current group (then Step 5). Without Step 1, one department could be split into several groups.
+- **Step 7:** No employees are left: all the groups have been produced.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -2558,7 +2554,7 @@ Employees by department (sorted first):
 **chain()**
 
 - Printing the chain object shows only `<itertools.chain object at ...>`, not the items. Nothing has been produced yet. (The address after "at" will be different on your computer.)
-- `list()` then pulled all the items through, in order: two lists, a tuple, another list and a range, all as one sequence.
+- `list()` then pulled all the items through, in order: a list, a tuple, another list and a range, all as one sequence.
 - `chain.from_iterable()` flattened a list of lists into one list.
 
 **islice()**
@@ -2766,23 +2762,18 @@ In each pass:
 
 Selection sort is therefore a good choice when writing data is expensive, for example on flash memory, which wears out a little with every write.
 
-![Q17. Selection Sort with Trace](../resources/LR-ch16-scripting-qa-hard-fig-11.png)
+![Q17. Selection Sort with Trace](../resources/S16-LR-ch16-scripting-qa-hard-fig-11.png)
 
 **Reading the figure**
 
 - **Step 1:** Start with the first position, `i = 0`.
-- **Step 2:** Assume the smallest item in the unsorted part is at `i`: `min_idx = i`.
-- **Step 3:** Take the next index `j`, from `i + 1` to the end of the list.
-- **Step 4:** Is `data[j]` smaller than the smallest found so far, `data[min_idx]`?
-- **Step 5:** Yes: remember it, `min_idx = j`.
-- **Step 6:** If more `j` values are left, go back to Step 3.
-- **Step 7:** The scan is over. Is `min_idx` different from `i`?
-- **Step 8:** Yes: swap `data[i]` with `data[min_idx]` and count one swap.
-- **Step 9:** No: the smallest item is already in place, so no swap is needed.
-- **Step 10:** Print the trace for this pass, showing the list and the swap count.
-- **Step 11:** Is `i < n - 2`? That is, is there more than one item left in the unsorted part after this pass?
-- **Step 12:** Yes: `i = i + 1`, and go back to Step 2.
-- **Step 13:** No: the list is sorted. Selection sort makes at most `n - 1` swaps, which is O(n).
+- **Step 2:** Assume the smallest item in the unsorted part is at `i` (`min_idx = i`), then check each index `j` from `i + 1` to the end; whenever `data[j]` is smaller than `data[min_idx]`, remember it with `min_idx = j`.
+- **Step 3:** The scan is over. Is the smallest item already at `i`, that is, `min_idx == i`?
+- **Step 4:** No: swap `data[i]` with `data[min_idx]` and count one swap.
+- **Step 5:** Print the trace for this pass, showing the list and the swap count. (Yes from Step 3 comes straight here, with no swap.)
+- **Step 6:** Is `i < n - 2`? That is, is there more than one item left in the unsorted part after this pass?
+- **Step 7:** Yes: `i = i + 1`, and go back to Step 2.
+- **Step 8:** No: the list is sorted. Selection sort makes at most `n - 1` swaps, which is O(n).
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -2930,7 +2921,7 @@ No. A long-distance swap can jump an item over another item with the same value.
 |---|---|---|
 | Format | Binary (not readable by people) | Text (readable in any editor) |
 | Who can read it | Python only | Almost every language |
-| Types supported | Almost all Python types, including `datetime`, sets and your own classes | Only `str`, `int`, `float`, `bool`, `None`, `list` and `dict` |
+| Types supported | Almost all Python types, including `datetime`, sets and your own classes | Only `str`, `int`, `float`, `bool`, `None`, `list` and `dict` (a `tuple` is saved as a list) |
 | Safe to load from an unknown source? | **No.** Loading can run hidden code | Yes. Loading only creates plain data |
 
 **Security.** Never unpickle data from a source you do not trust, such as a downloaded file or an email attachment. A pickle file can contain instructions that run code while it is being loaded.
@@ -3303,23 +3294,18 @@ So this answer handles the two parts separately:
 
 **Measurement methodology**
 
-![Q20. Big-O Timing Comparison](../resources/LR-ch16-scripting-qa-hard-fig-12.png)
+![Q20. Big-O Timing Comparison](../resources/S16-LR-ch16-scripting-qa-hard-fig-12.png)
 
 **Reading the figure**
 
 - **Step 1:** Choose the list sizes to test.
-- **Step 2:** Take the next size `n`.
-- **Step 3:** Build a list of `n` random numbers, and a sorted copy for binary search.
-- **Step 4:** Choose a target that is not in the data, so every search does the most work it can: the worst case.
-- **Step 5:** Read `time.perf_counter()` as the start time.
-- **Step 6:** Run the search many times in a row, because one search is too fast to time accurately.
-- **Step 7:** Read `time.perf_counter()` as the end time.
-- **Step 8:** Work out the time for one run: `(end - start) / repeats`.
-- **Step 9:** Have 5 rounds been done? If not, go back to Step 5.
-- **Step 10:** Yes: keep the fastest of the 5 rounds, the one least disturbed by background activity.
-- **Step 11:** If more sizes are left, go back to Step 2.
-- **Step 12:** No: print the table of times and how much each time grew from one size to the next.
-- **Step 13:** Draw the graph of time against `n` and save it.
+- **Step 2:** Are any sizes left?
+- **Step 3:** Yes: take the next size `n`, build a list of `n` random numbers and a sorted copy for binary search, and choose a target that is not in the data, so every search does the most work it can: the worst case.
+- **Step 4:** Read `time.perf_counter()` as the start time, run the search many times in a row (one search is too fast to time accurately), read `time.perf_counter()` again, and work out the time for one run: `(end - start) / repeats`.
+- **Step 5:** Have 5 rounds been done? If not, go back to Step 4.
+- **Step 6:** Yes: keep the fastest of the 5 rounds, the one least disturbed by background activity. Then go back to Step 2.
+- **Step 7:** No sizes are left: print the table of times and how much each time grew from one size to the next.
+- **Step 8:** Draw the graph of time against `n` and save it.
 
 [Back to the Table of Contents](#table-of-contents)
 

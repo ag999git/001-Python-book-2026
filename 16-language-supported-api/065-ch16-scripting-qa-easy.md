@@ -93,21 +93,19 @@ The plan for the script:
 
 We use [time.perf_counter()](https://docs.python.org/3/library/time.html#time.perf_counter) because it is a precise clock made for measuring short periods. [random.randint(a, b)](https://docs.python.org/3/library/random.html#random.randint) gives a random whole number between `a` and `b`, including both.
 
-![Linear Search Timing](../resources/LR-ch16-scripting-qa-easy-fig-01.png)
+![Linear Search Timing](../resources/S16-LR-ch16-scripting-qa-easy-fig-01.png)
 
 **Reading the figure**
 
-- **Step 1:** Take the next list size `n` from `sizes = [1000, 10000, 100000, 500000]`.
-- **Step 2:** Build a list of `n` random numbers with `random.randint(1, 100000)`.
+- **Step 1:** Are any list sizes left in `sizes = [1000, 10000, 100000, 500000]`?
+- **Step 2:** Yes: take the next size `n` and build a list of `n` random numbers with `random.randint(1, 100000)`.
 - **Step 3:** Start the timer with `time.perf_counter()` and call `linear_search()`.
-- **Step 4:** Linear search takes the next item from the list.
-- **Step 5:** Does the item equal the target?
+- **Step 4:** Linear search: are there items left to check?
+- **Step 5:** Yes: does the next item equal the target? No: go back to Step 4.
 - **Step 6:** Yes: return `True`. (In this script the target is `-1`, which is never in the list, so this branch is never taken.)
-- **Step 7:** No: if more items are left, go back to Step 4.
-- **Step 8:** No items are left: return `False`. Every item has been checked, which is the worst case.
-- **Step 9:** Stop the timer and record the time taken for this size.
-- **Step 10:** If more sizes are left, go back to Step 1.
-- **Step 11:** Print each size with its time. The time grows roughly in step with `n`, which is O(n).
+- **Step 7:** No items are left: return `False`. Every item has been checked, which is the worst case.
+- **Step 8:** Stop the timer, record the time taken for this size, and go back to Step 1.
+- **Step 9:** No sizes are left: print each size with its time. The time grows roughly in step with `n`, which is O(n).
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -294,7 +292,7 @@ With a list comprehension: `numbers = [random.randint(1, 100000) for _ in range(
    5. Otherwise, search the left half: `right = middle - 1`.
 3. If `left` passes `right`, the target is not in the list. Return `-1`.
 
-![Binary Search](../resources/LR-ch16-scripting-qa-easy-fig-02.png)
+![Binary Search](../resources/S16-LR-ch16-scripting-qa-easy-fig-02.png)
 
 **Reading the figure**
 
@@ -304,9 +302,7 @@ With a list comprehension: `numbers = [random.randint(1, 100000) for _ in range(
 - **Step 4:** Yes: find the middle, `middle = (left + right) // 2`, and count one comparison.
 - **Step 5:** Is the item at `middle` equal to the target?
 - **Step 6:** Yes: return `middle` and the number of comparisons.
-- **Step 7:** No: is the target bigger than the middle item?
-- **Step 8:** Yes: the target can only be in the right half, so `left = middle + 1`. Go back to Step 2.
-- **Step 9:** No: the target can only be in the left half, so `right = middle - 1`. Go back to Step 2.
+- **Step 7:** No: if the target is bigger than the middle item, it can only be in the right half, so `left = middle + 1`; otherwise `right = middle - 1`. Go back to Step 2.
 
 Here is the search for 70 in `[10, 20, 30, 40, 50, 60, 70]`:
 
@@ -423,21 +419,20 @@ The [bisect](https://docs.python.org/3/library/bisect.html) module. See Question
 4. Each pass can stop one position earlier than the last, because the end of the list is already sorted.
 5. Print the list after each pass.
 
-![Bubble Sort Implementation](../resources/LR-ch16-scripting-qa-easy-fig-03.png)
+![Bubble Sort Implementation](../resources/S16-LR-ch16-scripting-qa-easy-fig-03.png)
 
 **Reading the figure**
 
 - **Step 1:** Start with the first pass, `pass_no = 0`.
 - **Step 2:** Start each pass at the first pair, `i = 0`.
-- **Step 3:** Is `numbers[i]` bigger than the item after it, `numbers[i + 1]`?
-- **Step 4:** Yes: swap the two items, so the bigger one moves right.
-- **Step 5:** No: leave the pair as it is.
-- **Step 6:** Are there more pairs in this pass? Each pass stops one position earlier than the last, because the end of the list is already sorted.
-- **Step 7:** Yes: move to the next pair, `i = i + 1`, and go back to Step 3.
-- **Step 8:** No: the pass is over. Print the list, so you can watch the biggest remaining item settle at the end.
-- **Step 9:** Are there more passes left?
-- **Step 10:** Yes: `pass_no = pass_no + 1`, and go back to Step 2.
-- **Step 11:** No: the list is sorted.
+- **Step 3:** Are there more pairs in this pass? Each pass stops one position earlier than the last, because the end of the list is already sorted.
+- **Step 4:** Yes: is `numbers[i]` bigger than the item after it, `numbers[i + 1]`?
+- **Step 5:** Yes: swap the two items, so the bigger one moves right.
+- **Step 6:** Move to the next pair, `i = i + 1`, and go back to Step 3. (No from Step 4 comes straight here.)
+- **Step 7:** No pairs are left: the pass is over. Print the list, so you can watch the biggest remaining item settle at the end.
+- **Step 8:** Are there more passes left?
+- **Step 9:** Yes: `pass_no = pass_no + 1`, and go back to Step 2.
+- **Step 10:** No: the list is sorted.
 
 The line `numbers[i], numbers[i+1] = (numbers[i+1], numbers[i])` swaps two items in one step. Python first builds the pair on the right, then assigns it to the two positions on the left. This is called [tuple unpacking](https://docs.python.org/3/tutorial/datastructures.html#tuples-and-sequences).
 
@@ -569,19 +564,18 @@ Change `>` to `<` in the comparison, so that smaller items move to the end.
 5. Put the key into the gap.
 6. Repeat until every item has been placed.
 
-![Insertion Sort](../resources/LR-ch16-scripting-qa-easy-fig-04.png)
+![Insertion Sort](../resources/S16-LR-ch16-scripting-qa-easy-fig-04.png)
 
 **Reading the figure**
 
 - **Step 1:** Start with the second item, `key_index = 1`. A single item on its own is already sorted.
-- **Step 2:** Pick up the item as `key`, and start comparing with the item just before it: `position = key_index - 1`.
-- **Step 3:** Is `position` still inside the list (`position >= 0`), and is the item there bigger than `key`? Both must be true.
-- **Step 4:** Yes: shift that item one place to the right, `numbers[position + 1] = numbers[position]`.
-- **Step 5:** Move one step further left, `position = position - 1`, and go back to Step 3.
+- **Step 2:** Are there items left to place?
+- **Step 3:** Yes: pick up the item as `key`, and start comparing with the item just before it: `position = key_index - 1`.
+- **Step 4:** Is `position` still inside the list (`position >= 0`), and is the item there bigger than `key`? Both must be true.
+- **Step 5:** Yes: shift that item one place to the right, `numbers[position + 1] = numbers[position]`, then move one step further left, `position = position - 1`, and go back to Step 4.
 - **Step 6:** No: the gap is at `position + 1`, so put `key` there.
-- **Step 7:** Are there more items to place?
-- **Step 8:** Yes: `key_index = key_index + 1`, and go back to Step 2.
-- **Step 9:** No: every item has been placed, so the list is sorted.
+- **Step 7:** `key_index = key_index + 1`, and go back to Step 2.
+- **Step 8:** No items are left to place: the list is sorted.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -676,22 +670,17 @@ None. For each key, the item on its left is already smaller, so the `while` loop
    3. If the smallest item is not already at this position, swap them.
 2. When every position has been filled, the list is sorted.
 
-![Selection Sort](../resources/LR-ch16-scripting-qa-easy-fig-05.png)
+![Selection Sort](../resources/S16-LR-ch16-scripting-qa-easy-fig-05.png)
 
 **Reading the figure**
 
 - **Step 1:** Start with the first position, `position = 0`.
-- **Step 2:** Assume for now that the smallest item is the one at `position`: `min_index = position`.
-- **Step 3:** Take the next item after `position`.
-- **Step 4:** Is it smaller than the smallest item found so far, the one at `min_index`?
-- **Step 5:** Yes: remember its index, `min_index` = index of that item.
-- **Step 6:** If more items are left to scan, go back to Step 3.
-- **Step 7:** The scan is over. Is `min_index` different from `position`?
-- **Step 8:** Yes: swap the item at `position` with the smallest item.
-- **Step 9:** No: the smallest item is already in place, so no swap is needed.
-- **Step 10:** Are there more positions to fill?
-- **Step 11:** Yes: `position = position + 1`, and go back to Step 2.
-- **Step 12:** No: every position has been filled, so the list is sorted.
+- **Step 2:** Assume for now that the smallest item is at `position` (`min_index = position`), then scan every item after it; whenever one is smaller than the item at `min_index`, remember its index in `min_index`.
+- **Step 3:** The scan is over. Is the smallest item already at `position`, that is, `min_index == position`?
+- **Step 4:** No: swap the item at `position` with the smallest item.
+- **Step 5:** Move on: `position = position + 1`. (Yes from Step 3 comes straight here, with no swap.)
+- **Step 6:** Are there more positions to fill? Yes: go back to Step 2.
+- **Step 7:** No: every position has been filled, so the list is sorted.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -888,7 +877,7 @@ A **queue** is a collection where the first item added is the first item removed
 2. Add tasks at the right end with `append()`.
 3. While the deque is not empty, remove the task at the left end with `popleft()` and process it.
 
-![Queue using deque](../resources/LR-ch16-scripting-qa-easy-fig-06.png)
+![Queue using deque](../resources/S16-LR-ch16-scripting-qa-easy-fig-06.png)
 
 **Reading the figure**
 
@@ -1089,17 +1078,17 @@ Convert the words to lowercase first: `Counter(word.lower() for word in words)`.
 3. The first time a subject is used, an empty list is created for it automatically.
 4. Print the groups.
 
-![defaultdict](../resources/LR-ch16-scripting-qa-easy-fig-07.png)
+![defaultdict](../resources/S16-LR-ch16-scripting-qa-easy-fig-07.png)
 
 **Reading the figure**
 
 - **Step 1:** Create `students = defaultdict(list)`. A missing key will get an empty list.
-- **Step 2:** Take the next student's name and subject.
-- **Step 3:** The line `students[subject].append(name)` first looks up the subject. Does that key exist yet?
-- **Step 4:** No: `defaultdict` creates the key with an empty list, `[]`, instead of raising `KeyError`.
-- **Step 5:** The name is appended to the list for that subject. (Yes from Step 3 comes straight here.)
-- **Step 6:** If more students are left, go back to Step 2.
-- **Step 7:** No: print the groups, each subject with its list of names.
+- **Step 2:** Are any students left?
+- **Step 3:** Yes: take the next student's name and subject.
+- **Step 4:** The line `students[subject].append(name)` first looks up the subject. Does that key exist yet?
+- **Step 5:** No: `defaultdict` creates the key with an empty list, `[]`, instead of raising `KeyError`.
+- **Step 6:** The name is appended to the list for that subject, then go back to Step 2. (Yes from Step 4 comes straight here.)
+- **Step 7:** No students are left: print the groups, each subject with its list of names.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1302,7 +1291,7 @@ Use the `defaults` argument (Python 3.7+): `Student = namedtuple("Student", ["na
 3. Combine them with `ChainMap(user_settings, default_settings)`. The order matters: the first dictionary is searched first.
 4. When you look up a key, ChainMap checks `user_settings` first. If the key is not there, it checks `default_settings`.
 
-![ChainMap: Combine User Settings with Default Settings](../resources/LR-ch16-scripting-qa-easy-fig-08.png)
+![ChainMap: Combine User Settings with Default Settings](../resources/S16-LR-ch16-scripting-qa-easy-fig-08.png)
 
 **Reading the figure**
 
@@ -1415,7 +1404,7 @@ The [heapq](https://docs.python.org/3/library/heapq.html) module uses an ordinar
 3. Tuples are compared by their first item, so the priority number decides the order. A smaller number means more important.
 4. Remove tasks one by one with `heapq.heappop()`. It always returns the tuple with the smallest priority number.
 
-![heapq: Process Tasks According to Priority](../resources/LR-ch16-scripting-qa-easy-fig-09.png)
+![heapq: Process Tasks According to Priority](../resources/S16-LR-ch16-scripting-qa-easy-fig-09.png)
 
 **Reading the figure**
 
@@ -1832,7 +1821,7 @@ Every reply from a web server carries an [HTTP status code](https://developer.mo
 2. Write a function that checks which status it has received.
 3. Call the function with a readable name.
 
-![Enum: Represent Fixed Choices](../resources/LR-ch16-scripting-qa-easy-fig-10.png)
+![Enum: Represent Fixed Choices](../resources/S16-LR-ch16-scripting-qa-easy-fig-10.png)
 
 **Reading the figure**
 
@@ -2009,7 +1998,7 @@ s1 == s3: True
 4. Unlike a namedtuple, a dataclass object can be changed, so `s2.marks = 45` worked.
 5. `s1 == s3` is `True` because the generated `__eq__()` compares the field values. Without `@dataclass`, two separate objects would not be equal even with the same data.
 
-Fields with default values must come **after** fields without defaults. Writing `passed: bool = True` before `marks: int` would raise a `TypeError`, just as it would in a normal function definition.
+Fields with default values must come **after** fields without defaults. Writing `passed: bool = True` before `marks: int` would raise a `TypeError`. The same rule applies in a normal function definition, where breaking it is a `SyntaxError`.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -2062,7 +2051,7 @@ A **cache** is a store of results that you are likely to need again. [functools.
 2. The first call with `10` runs the function body, which is slow, and saves the result.
 3. The second call with `10` finds the saved result and returns it immediately.
 
-![lrucache: Avoid Repeated Calculations](../resources/LR-ch16-scripting-qa-easy-fig-11.png)
+![lru_cache: Avoid Repeated Calculations](../resources/S16-LR-ch16-scripting-qa-easy-fig-11.png)
 
 **Reading the figure**
 

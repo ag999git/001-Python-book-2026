@@ -139,7 +139,7 @@ The table shows how 1,000 items shrink with each comparison.
 
 The flowchart shows the logic of binary search.
 
-![Answer to Q1 (b): Why binary search is O(log n)](../resources/LR-ch16-conceptual-qa-fig-01.png)
+![Answer to Q1 (b): Why binary search is O(log n)](../resources/S16-LR-ch16-conceptual-qa-fig-01.png)
 
 **Reading the figure**
 
@@ -149,9 +149,7 @@ The flowchart shows the logic of binary search.
 - **Step 4:** Yes: find the middle of the part still being searched, `middle = (low + high) // 2`.
 - **Step 5:** Is the item at `middle` the target?
 - **Step 6:** Yes: the target is found. Return `middle`.
-- **Step 7:** No: is the item at `middle` smaller than the target?
-- **Step 8:** Yes: the target can only be to the right, so discard the left half with `low = middle + 1`. Go back to Step 2.
-- **Step 9:** No: the target can only be to the left, so discard the right half with `high = middle - 1`. Go back to Step 2. Each pass halves what is left, which is why binary search is O(log n).
+- **Step 7:** No: discard the half that cannot hold the target. If the item at `middle` is smaller than the target, the target can only be to the right, so `low = middle + 1`; otherwise `high = middle - 1`. Go back to Step 2. Each pass halves what is left, which is why binary search is O(log n).
 
 The script below counts the comparisons made by both methods, so you can see the difference for yourself.
 
@@ -297,22 +295,20 @@ For example, with `n = 5`: `4 + 3 + 2 + 1 = 10`, and the formula gives `5 × 4 /
 
 Only with the **optimised** version that includes an `is_swapped` flag. If a complete pass produces zero swaps, the list is already sorted and the outer loop exits immediately. For an already-sorted list this needs only one pass of `n - 1` comparisons, which is `O(n)`. The basic version without the flag always does all `n(n - 1)/2` comparisons, so it is always `O(n²)` regardless of input order.
 
-![When O(n) is achievable](../resources/LR-ch16-conceptual-qa-fig-02.png)
+![When O(n) is achievable](../resources/S16-LR-ch16-conceptual-qa-fig-02.png)
 
 **Reading the figure**
 
 - **Step 1:** Start with the first pass, `pass_no = 0`. The outer loop is `for pass_no in range(n - 1)`.
 - **Step 2:** At the start of every pass, set `is_swapped = False`.
-- **Step 3:** The inner loop, `for i in range(n - pass_no - 1)`, compares the next neighbouring pair in the part that is not yet sorted.
-- **Step 4:** Is the left item bigger than the right item?
-- **Step 5:** Yes: swap the two items and set `is_swapped = True`.
-- **Step 6:** No: leave the pair as it is.
-- **Step 7:** If pairs are left in this pass, go back to Step 3.
-- **Step 8:** The pass is over. Was anything swapped during it?
-- **Step 9:** No: a whole pass with no swaps means the list is already sorted, so stop early. For a list that is sorted to begin with, this happens after one pass, which is O(n).
-- **Step 10:** Yes: move on to the next pass, `pass_no = pass_no + 1`. The largest unsorted item has now bubbled to its final place.
-- **Step 11:** If passes are left, go back to Step 2.
-- **Step 12:** No passes are left, so the list is sorted.
+- **Step 3:** The inner loop, `for i in range(n - pass_no - 1)`: are there neighbouring pairs left to compare in the part that is not yet sorted?
+- **Step 4:** Yes: is the left item bigger than the right item? No: leave the pair as it is and go back to Step 3.
+- **Step 5:** Yes: swap the two items, set `is_swapped = True`, and go back to Step 3.
+- **Step 6:** No pairs are left, so the pass is over. Was anything swapped during it?
+- **Step 7:** No: a whole pass with no swaps means the list is already sorted, so stop early. For a list that is sorted to begin with, this happens after one pass, which is O(n).
+- **Step 8:** Yes: the largest unsorted item has now bubbled to its final place. Are any passes left?
+- **Step 9:** Yes: move on to the next pass, `pass_no = pass_no + 1`, and go back to Step 2.
+- **Step 10:** No passes are left, so the list is sorted.
 
 The script below counts comparisons for the basic and optimised versions on a sorted list and on a reversed list.
 
@@ -409,19 +405,18 @@ In list terms:
 5. When you reach an item that is not bigger (or the start of the list), drop the key into the gap.
 6. Repeat from Step 2 until every item has been placed.
 
-![Answer to Q3: The card analogy](../resources/LR-ch16-conceptual-qa-fig-03.png)
+![Answer to Q3: The card analogy](../resources/S16-LR-ch16-conceptual-qa-fig-03.png)
 
 **Reading the figure**
 
 - **Step 1:** Start with the item at `index = 1`. The single item at index 0 counts as a sorted hand of one card.
-- **Step 2:** Pick up that item as the `key` and remember its place: `position = index`.
-- **Step 3:** Is there an item to the left (`position > 0`), and is that item bigger than `key`? Both must be true.
-- **Step 4:** Yes: shift the bigger item one place to the right, opening a gap.
-- **Step 5:** Move one place left, `position = position - 1`, and go back to Step 3.
+- **Step 2:** Are there items still to place?
+- **Step 3:** Yes: pick up the item at `index` as the `key` and remember its place: `position = index`.
+- **Step 4:** Is there an item to the left (`position > 0`), and is that item bigger than `key`? Both must be true.
+- **Step 5:** Yes: shift the bigger item one place to the right, opening a gap, then move one place left, `position = position - 1`, and go back to Step 4.
 - **Step 6:** No: the gap is in the right place, so drop `key` into it at `position`.
-- **Step 7:** Are there more items still to place?
-- **Step 8:** Yes: move on to the next item, `index = index + 1`, and go back to Step 2.
-- **Step 9:** No: every item has been placed, so the list is sorted.
+- **Step 7:** Move on to the next item, `index = index + 1`, and go back to Step 2.
+- **Step 8:** No items are left to place: every item has been placed, so the list is sorted.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -927,7 +922,7 @@ This makes the tree structure implicit: no node objects, no pointers, just a lis
 
 For example, the heap list `[1, 3, 2, 7, 4, 5]` represents this tree:
 
-![How Python stores a heap](../resources/LR-ch16-conceptual-qa-fig-04.png)
+![How Python stores a heap](../resources/S16-LR-ch16-conceptual-qa-fig-04.png)
 
 **Reading the figure**
 
@@ -1218,21 +1213,22 @@ for _ in range(num_workers):
 
 This approach needs no extra shared variables or flags, works reliably, and is easy to understand.
 
-About `task_done()` and `join()`: every call to `get()` adds to the queue's count of unfinished tasks, and every call to `task_done()` reduces it. `queue.join()` waits until that count reaches zero. So `task_done()` must be called for **every** item taken from the queue, including the `None` sentinels if `join()` is called after they are added. A simple way to stay safe is the order used in the script below: first `join()` the queue to wait for the real work, then send the sentinels, then wait for the threads to finish.
+About `task_done()` and `join()`: every call to `put()` adds to the queue's count of unfinished tasks, and every call to `task_done()` reduces it. `queue.join()` waits until that count reaches zero. So `task_done()` should be called for **every** item taken from the queue, including the `None` sentinels. In the script below, `queue.join()` is called before the sentinels are sent, so it waits only for the real tasks. The workers still call `task_done()` for each sentinel so that the count ends at zero, and any later `queue.join()` would return at once instead of waiting for ever. The order is: first `join()` the queue to wait for the real work, then send the sentinels, then `join()` each thread to wait for the workers to finish.
 
-![The None sentinel pattern](../resources/LR-ch16-conceptual-qa-fig-05.png)
+![The None sentinel pattern](../resources/S16-LR-ch16-conceptual-qa-fig-05.png)
 
 **Reading the figure**
 
 - **Step 1:** The main thread creates and starts the worker threads.
 - **Step 2:** The main thread puts the real tasks into the queue.
-- **Step 3:** After the tasks, it puts one `None` into the queue for each worker. `None` is the stop signal, the sentinel.
-- **Step 4:** Each worker calls `get()`, which waits until an item is available and then takes it.
-- **Step 5:** The worker checks whether the item is `None`.
-- **Step 6:** No: it is a real task, so the worker processes it.
-- **Step 7:** The worker calls `task_done()` for that item and goes back to Step 4 for the next one.
-- **Step 8:** Yes: it is the stop signal. The worker still calls `task_done()` for it, so that `queue.join()` can finish, and then leaves its loop.
-- **Step 9:** The worker thread ends.
+- **Step 3:** It calls `task_queue.join()`, which waits until every real task has been marked done.
+- **Step 4:** Then it puts one `None` into the queue for each worker. `None` is the stop signal, the sentinel.
+- **Step 5:** Meanwhile, each worker calls `get()`, which waits until an item is available and then takes it.
+- **Step 6:** The worker checks whether the item is `None`.
+- **Step 7:** No: it is a real task, so the worker processes it.
+- **Step 8:** The worker calls `task_done()` for that item and goes back to Step 5 for the next one.
+- **Step 9:** Yes: it is the stop signal. The worker still calls `task_done()` for it, so that the queue's count of unfinished tasks ends at zero, and then leaves its loop.
+- **Step 10:** The worker thread ends. The main thread then joins each thread to wait for them all.
 
 ```python
 # Step 1 - Imports
@@ -1317,12 +1313,12 @@ The stored results are kept in a **cache**, a store of things you are likely to 
 - A **cache hit** happens when the result is already in the cache and is returned immediately.
 - A **cache miss** happens when the result is not in the cache, so the function body runs and the new result is saved.
 
-![Answer to Q10: What memoisation is](../resources/LR-ch16-conceptual-qa-fig-06.png)
+![Answer to Q10: What memoisation is](../resources/S16-LR-ch16-conceptual-qa-fig-06.png)
 
 **Reading the figure**
 
 - **Step 1:** The memoised function is called with some arguments.
-- **Step 2:** Look up these arguments in the cache.
+- **Step 2:** Look up these arguments in the cache. Are they there?
 - **Step 3:** Yes, a cache hit: return the saved result at once and add 1 to the hit count. The function body does not run.
 - **Step 4:** No, a cache miss: run the function body to work out the result, and add 1 to the miss count.
 - **Step 5:** Save the new result in the cache, stored against these arguments.
@@ -1426,13 +1422,13 @@ There is also `cache_clear()`, which empties the cache and resets these counts.
 
 #### lru_cache(maxsize=None) vs cache
 
-In Python 3.9, [functools.cache](https://docs.python.org/3/library/functools.html#functools.cache) was added as a simpler way of writing `@lru_cache(maxsize=None)`. Both give unlimited caching that never throws results away. Because `@cache` never has to track which result was used least recently, it is also slightly faster.
+In Python 3.9, [functools.cache](https://docs.python.org/3/library/functools.html#functools.cache) was added as a simpler way of writing `@lru_cache(maxsize=None)`. Both give unlimited caching that never throws results away. In fact `@cache` simply calls `lru_cache(maxsize=None)` for you, so the two behave and perform the same. Both are slightly faster than an `lru_cache` with a size limit, because they never have to track which result was used least recently.
 
 `@lru_cache` with a limited `maxsize` (for example `maxsize=128`, which is the default) uses a **Least Recently Used** (LRU) policy. When the cache is full, the result that has gone unused for the longest time is discarded to make room.
 
 | Decorator | Size limit | Throws away old results? | Available from |
 |---|---|---|---|
-| `@lru_cache` | 128 by default | Yes, least recently used first | Python 3.2 |
+| `@lru_cache` | 128 by default | Yes, least recently used first | Python 3.8 (written `@lru_cache()` from Python 3.2) |
 | `@lru_cache(maxsize=N)` | `N` | Yes, least recently used first | Python 3.2 |
 | `@lru_cache(maxsize=None)` | No limit | No | Python 3.2 |
 | `@cache` | No limit | No | Python 3.9 |
@@ -1915,14 +1911,14 @@ If you give the optional third argument, the **initializer**, `reduce()` starts 
 | 3 | `multiply(24, 5)` | 120 |
 | Result | | **120** |
 
-![Step-by-step trace for reduce(multiply, [2, 3, 4, 5])](../resources/LR-ch16-conceptual-qa-fig-07.png)
+![Step-by-step trace for reduce(multiply, [2, 3, 4, 5])](../resources/S16-LR-ch16-conceptual-qa-fig-07.png)
 
 **Reading the figure**
 
 - **Step 1:** No starting value is given, so `reduce` uses the first item, 2, as the starting `result`.
-- **Step 2:** Take the next item from the list: 3, then 4, then 5.
-- **Step 3:** Call the function on the running result and the item: `multiply(2, 3)` gives 6, then 24, then 120.
-- **Step 4:** If items are left, go back to Step 2.
+- **Step 2:** Are there items left in the list?
+- **Step 3:** Yes: take the next item from the list: 3, then 4, then 5.
+- **Step 4:** Call the function on the running result and the item: `multiply(2, 3)` gives 6, then 24, then 120. Then go back to Step 2.
 - **Step 5:** No items are left, so `reduce` returns the final result, 120.
 
 [Back to the Table of Contents](#table-of-contents)
@@ -1953,7 +1949,7 @@ Both produce 120. The loop version is readable by any programmer.
 
 Also check whether Python already has a built-in for the job. `sum()` adds, `max()` and `min()` find extremes, and since Python 3.8, `math.prod()` multiplies. These are clearer than `reduce()` for those tasks.
 
-Use `reduce()` only when the operation is a simple, natural way of combining two values, and no ready-made function exists for it. Finding the greatest common divisor (GCD) of a whole list is a good example. When you do use it, add a comment saying what it calculates.
+Use `reduce()` only when the operation is a simple, natural way of combining two values, and no ready-made function exists for it. Finding the greatest common divisor (GCD) of a whole list is a classic example. (Since Python 3.9, `math.gcd()` accepts any number of arguments, so `math.gcd(*numbers)` also works.) When you do use it, add a comment saying what it calculates.
 
 ```python
 # Step 1 - Imports
@@ -1979,7 +1975,7 @@ print("Loop result:", result)
 print("math.prod result:", math.prod([2, 3, 4, 5]))
 
 # Step 5 - A good use of reduce: the GCD of a whole list
-# (math.gcd takes two numbers; reduce applies it across the list)
+# (before Python 3.9, math.gcd took only two numbers; reduce applies it across the list)
 print("GCD of [48, 36, 120]:", reduce(math.gcd, [48, 36, 120]))
 
 # Step 6 - Empty list: with and without an initializer
@@ -2048,17 +2044,16 @@ Use **json** by default. It is safe, readable, and accepted by almost every syst
 1. You need to save a Python-specific object that json cannot represent, such as a custom class instance, a set, or a NumPy array.
 2. The saved file will be read back only by your own code on a trusted system.
 
-![Practical rule](../resources/LR-ch16-conceptual-qa-fig-08.png)
+![Practical rule](../resources/S16-LR-ch16-conceptual-qa-fig-08.png)
 
 **Reading the figure**
 
 - **Step 1:** You need to save some data to a file.
-- **Step 2:** Will a program in another language, or another system, read the file?
-- **Step 3:** Use `json`. It is safe, readable, and accepted almost everywhere. (Yes from Step 2 and Yes from Step 4 both end here.)
-- **Step 4:** No: can `json` represent the data? It cannot store sets, custom class instances or NumPy arrays directly.
-- **Step 5:** No: will the file be read only by your own code on a trusted system?
-- **Step 6:** Yes: `pickle` is acceptable. Never unpickle a file from an untrusted source, because loading it can run code.
-- **Step 7:** No: convert the data to json-friendly types first, for example a set to a list, and then use `json`.
+- **Step 2:** Can `json` represent the data as it is? It cannot store sets, custom class instances or NumPy arrays directly.
+- **Step 3:** Yes: use `json`. It is safe, readable, and accepted almost everywhere, so another program, in any language, can read the file.
+- **Step 4:** No: will the file be read only by your own Python code, on a trusted system?
+- **Step 5:** Yes: `pickle` is acceptable. Never unpickle a file from an untrusted source, because loading it can run code.
+- **Step 6:** No (for example, a program in another language must read it): convert the data to json-friendly types first, for example a set to a list, and then use `json`.
 
 ```python
 # Step 1 - Imports
@@ -2131,7 +2126,7 @@ Here is selection sort on `[29, 10, 14, 37, 13]`. The `|` shows the boundary.
 | 3 | 14 | none needed (already in place) | `[10, 13, 14 | 37, 29]` |
 | 4 | 29 | 37 and 29 | `[10, 13, 14, 29 | 37]` |
 
-![Answer to Q17: The sorted and unsorted parts](../resources/LR-ch16-conceptual-qa-fig-09.png)
+![Answer to Q17: The sorted and unsorted parts](../resources/S16-LR-ch16-conceptual-qa-fig-09.png)
 
 **Reading the figure**
 
@@ -2139,10 +2134,9 @@ Here is selection sort on `[29, 10, 14, 37, 13]`. The `|` shows the boundary.
 - **Step 2:** Scan the unsorted part, from `boundary` to the end, and find the smallest item.
 - **Step 3:** Is that smallest item already at the `boundary` position?
 - **Step 4:** No: swap it into the `boundary` position.
-- **Step 5:** Yes: it is already in place, so no swap is needed.
-- **Step 6:** The sorted part has grown by one: `boundary = boundary + 1`.
-- **Step 7:** If `boundary < n - 1`, go back to Step 2.
-- **Step 8:** No: only one item is left in the unsorted part, and it must be the largest, so the list is sorted.
+- **Step 5:** The sorted part has grown by one: `boundary = boundary + 1`. (Yes from Step 3 comes straight here, with no swap.)
+- **Step 6:** Is `boundary < n - 1`? Yes: go back to Step 2.
+- **Step 7:** No: only one item is left in the unsorted part, and it must be the largest, so the list is sorted.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -2412,10 +2406,10 @@ A single operation often finishes in microseconds (millionths of a second) or na
 
 Two strategies solve this:
 
-1. **Test on increasingly large inputs**, as this chapter does, using sizes from 1,000 to 1,000,000. Larger inputs take longer, so the timings rise well above the noise.
+1. **Test on increasingly large inputs**, as this chapter does. Larger inputs take longer, so the timings rise well above the noise.
 2. **Repeat a fast operation many times** and divide the total time by the number of repetitions. Python's [timeit](https://docs.python.org/3/library/timeit.html) module does this for you.
 
-This chapter uses the first strategy. It plots search or sort time against input size, so that the growth curve becomes visible.
+The script below uses both: it grows the list from 1,000 to 100,000 items and repeats each search 1,000 times. Comparing the time against the input size then makes the growth visible.
 
 ```python
 # Step 1 - Imports
@@ -2539,11 +2533,11 @@ When Python runs an `import` statement, it follows these steps:
 
 1. It checks `sys.modules`, a dictionary of modules already loaded. If the module is there, it reuses it and skips to Step 5.
 2. Otherwise, it searches for the module in a list of folders called `sys.path` (which includes your script's own folder and the Standard Library folders).
-3. When it finds the module, it runs the module's code once, from top to bottom, creating its functions and classes.
-4. It stores the loaded module in `sys.modules`, so any later import is instant.
+3. When it finds the module, it creates a new module object and stores it in `sys.modules` straight away, so any later import is instant (this also stops two modules that import each other from looping for ever).
+4. It then runs the module's code once, from top to bottom, creating its functions and classes. (If that code raises an error, the module is removed from `sys.modules` again.)
 5. It creates a name in your program that refers to the module (or to the specific names you asked for).
 
-![How importing works](../resources/LR-ch16-conceptual-qa-fig-10.png)
+![How importing works](../resources/S16-LR-ch16-conceptual-qa-fig-10.png)
 
 **Reading the figure**
 
@@ -2552,7 +2546,7 @@ When Python runs an `import` statement, it follows these steps:
 - **Step 3:** No: search the folders listed in `sys.path`, in order.
 - **Step 4:** Was the module found?
 - **Step 5:** No: raise `ModuleNotFoundError`.
-- **Step 6:** Yes: run the module's code once, from top to bottom, and store the loaded module in `sys.modules`.
+- **Step 6:** Yes: create the module object and store it in `sys.modules` first, then run the module's code once, from top to bottom.
 - **Step 7:** Bind the name `collections` in your program so that it refers to the module. (Yes from Step 2 comes straight here, which is why a second import is instant.)
 
 See [the import system](https://docs.python.org/3/reference/import.html) for full details.
@@ -2598,7 +2592,8 @@ import collections as again
 print("Same module object?", again is sys.modules["collections"] is collections)
 
 # Step 5 - from module import * can hide a built-in name
-print("Before: open is the built-in?", open.__module__ == "io")
+import builtins
+print("Before: open is the built-in?", open is builtins.open)
 from os import *
 print("After 'from os import *': open comes from", open.__module__)
 ```

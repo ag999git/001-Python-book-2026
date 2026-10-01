@@ -18,7 +18,7 @@ These examples matter because good Python programmers rarely write everything fr
 | **Output** | What the script prints when you run it |
 | **Explanation** | Why the tool is a good fit for the problem |
 
-All scripts on this page were tested with Python 3.11. They should work the same way in Python 3.8 and later.
+All scripts on this page were tested with Python 3.11 and 3.12. They should work the same way in Python 3.8 and later. Where an error message is worded differently between versions, this is pointed out.
 
 ---
 
@@ -119,7 +119,7 @@ The table below shows how Step 3 pulls the code out of one line.
 | `line.split()[1]` | `'404:'` |
 | `line.split()[1].rstrip(':')` | `'404'` |
 
-![Counter: Log File Analysis](../resources/LR-ch16-real-world-use-fig-01.png)
+![Counter: Log File Analysis](../resources/S16-LR-ch16-real-world-use-fig-01.png)
 
 **Reading the figure**
 
@@ -262,16 +262,16 @@ A [defaultdict](https://docs.python.org/3/library/collections.html#collections.d
 4. Append the student's name to the list for that grade.
 5. Print the result.
 
-![defaultdict: Grouping Grades by Letter](../resources/LR-ch16-real-world-use-fig-02.png)
+![defaultdict: Grouping Grades by Letter](../resources/S16-LR-ch16-real-world-use-fig-02.png)
 
 **Reading the figure**
 
 - **Step 1:** Create `grade_book = defaultdict(list)`. Any missing key will get an empty list as its value.
-- **Step 2:** Take the next student's name and grade.
-- **Step 3:** Check whether this grade is already a key in `grade_book`. You do not write this check yourself: `defaultdict` does it for you.
-- **Step 4:** No: `defaultdict` quietly creates the key with an empty list, `[]`, so no `KeyError` is raised.
-- **Step 5:** Append the student's name to the list for that grade. (Yes from Step 3 comes straight here.)
-- **Step 6:** If more students are left, go back to Step 2.
+- **Step 2:** Are any students left?
+- **Step 3:** Yes: take the next student's name and grade.
+- **Step 4:** Is this grade already a key in `grade_book`? You do not write this check yourself: `defaultdict` does it for you.
+- **Step 5:** No: `defaultdict` quietly creates the key with an empty list, `[]`, so no `KeyError` is raised.
+- **Step 6:** Append the student's name to the list for that grade, then go back to Step 2. (Yes from Step 4 comes straight here.)
 - **Step 7:** No students are left, so print the grade book: each grade with the list of names that earned it.
 
 ```python
@@ -513,14 +513,14 @@ A [ChainMap](https://docs.python.org/3/library/collections.html#collections.Chai
 5. Look up "volume". It is not in the user settings, so the default value is used.
 6. Change a setting through the `ChainMap` and see where the change is stored.
 
-![ChainMap: Application Configuration](../resources/LR-ch16-real-world-use-fig-03.png)
+![ChainMap: Application Configuration](../resources/S16-LR-ch16-real-world-use-fig-03.png)
 
 **Reading the figure**
 
 - **Step 1:** Look up a key in the `ChainMap`, for example `config['theme']`.
 - **Step 2:** `ChainMap` searches the first mapping first: is the key in `user_prefs`?
 - **Step 3:** Yes: the user's value is returned, and `defaults` is never looked at.
-- **Step 4:** No: `ChainMap` moves on to the next mapping, `defaults`.
+- **Step 4:** No: `ChainMap` moves on to the next mapping. Is the key in `defaults`?
 - **Step 5:** Yes: the default value is returned.
 - **Step 6:** No: the key is in neither mapping, so `KeyError` is raised.
 
@@ -619,13 +619,13 @@ The [heapq](https://docs.python.org/3/library/heapq.html) module lets you use a 
 4. Keep popping the front task until the heap is empty.
 5. Each pop gives the most urgent task still waiting.
 
-![Priority Task Manager](../resources/LR-ch16-real-world-use-fig-04.png)
+![Priority Task Manager](../resources/S16-LR-ch16-real-world-use-fig-04.png)
 
 **Reading the figure**
 
 - **Step 1:** Create an empty list, `tasks`. `heapq` will use it as a heap.
 - **Step 2:** `heapq.heappush()` adds each task as a `(priority, description)` tuple. After every push, the tuple with the smallest priority number is at the front, `tasks[0]`.
-- **Step 3:** Check whether the heap is empty.
+- **Step 3:** Is the heap empty?
 - **Step 4:** No: `heapq.heappop()` removes and returns the task with the smallest priority number, the most urgent one.
 - **Step 5:** Print its priority and description, then go back to Step 3.
 - **Step 6:** Yes: every task has been handled, so the program ends.
@@ -722,7 +722,7 @@ The table below shows how binary search finds the position for 65 in `[40, 55, 7
 
 Only two comparisons were needed. For a list of one million marks, binary search needs only about 20.
 
-![Student Marks List](../resources/LR-ch16-real-world-use-fig-05.png)
+![Student Marks List](../resources/S16-LR-ch16-real-world-use-fig-05.png)
 
 **Reading the figure**
 
@@ -1009,7 +1009,7 @@ An **API** (Application Programming Interface) is a way for one program to talk 
 3. Call the function with a readable name such as `HttpStatus.NOT_FOUND`.
 4. See how to get the name and the number from an enum member, and how to go from a number back to a member.
 
-![HTTP Status Codes](../resources/LR-ch16-real-world-use-fig-06.png)
+![HTTP Status Codes](../resources/S16-LR-ch16-real-world-use-fig-06.png)
 
 **Reading the figure**
 
@@ -1096,7 +1096,7 @@ Step 4 - HttpStatus.NOT_FOUND.value == 404 ? True
 Step 5 - AttributeError: type object 'HttpStatus' has no attribute 'NOT_FOUNT'
 ```
 
-**Explanation:** `HttpStatus.NOT_FOUND` stands for the number `404`, and you can get that number with `HttpStatus.NOT_FOUND.value`. Using the name makes the code instantly understandable to another developer. If you type `HttpStatus.NOT_FOUNT` by mistake, Python immediately raises an `AttributeError`, so typos are caught at once. A bare number like `4040` would slip through unnoticed.
+**Explanation:** `HttpStatus.NOT_FOUND` stands for the number `404`, and you can get that number with `HttpStatus.NOT_FOUND.value`. Using the name makes the code instantly understandable to another developer. If you type `HttpStatus.NOT_FOUNT` by mistake, Python immediately raises an `AttributeError`, so typos are caught at once. (The message shown is from Python 3.12 and later. Python 3.11 and earlier print only the misspelt name: `Step 5 - AttributeError: NOT_FOUNT`.) A bare number like `4040` would slip through unnoticed.
 
 Notice from Step 4 that an `Enum` member is not equal to its plain number. `HttpStatus.NOT_FOUND == 404` is `False`. If you need members that also behave like integers, Python provides [IntEnum](https://docs.python.org/3/library/enum.html#enum.IntEnum). In fact, the standard library already has a ready-made [http.HTTPStatus](https://docs.python.org/3/library/http.html#http.HTTPStatus) enum built this way.
 
@@ -1241,7 +1241,7 @@ LRU stands for **Least Recently Used**. An LRU cache remembers recent results. I
 4. Measure the time for each call to see the difference.
 5. Ask the cache for its statistics.
 
-![lrucache: Simulating a Slow Database](../resources/LR-ch16-real-world-use-fig-07.png)
+![lru_cache: Simulating a Slow Database](../resources/S16-LR-ch16-real-world-use-fig-07.png)
 
 **Reading the figure**
 
@@ -1442,14 +1442,14 @@ The table below traces how the running total (`acc`) builds up.
 | 2 | 15.99 | Pen | 2.50 | 18.49 |
 | 3 | 18.49 | Notebook | 5.00 | 23.49 |
 
-![reduce: Calculating Shopping Cart Total](../resources/LR-ch16-real-world-use-fig-08.png)
+![reduce: Calculating Shopping Cart Total](../resources/S16-LR-ch16-real-world-use-fig-08.png)
 
 **Reading the figure**
 
 - **Step 1:** `reduce` starts the accumulator `acc` at 0, the initial value given as its third argument.
-- **Step 2:** Take the next item from the cart.
-- **Step 3:** The function adds the item's price to the running total: `acc = acc + price`.
-- **Step 4:** If there are more items in the cart, go back to Step 2.
+- **Step 2:** Are there items left in the cart?
+- **Step 3:** Yes: take the next item from the cart.
+- **Step 4:** The function adds the item's price to the running total, `acc = acc + item["price"]`, and goes back to Step 2.
 - **Step 5:** No items are left, so `reduce` returns `acc`, the grand total.
 
 ```python

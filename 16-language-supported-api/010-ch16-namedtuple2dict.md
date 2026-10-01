@@ -239,22 +239,19 @@ The table below shows how the data changes at each stage.
 
 ### 3.2 Flowchart of the solution
 
-![Exercise: Convert a NamedTuple into a Dictionary](../resources/LR-ch16-namedtuple2dict-fig-01.png)
+![Exercise: Convert a NamedTuple into a Dictionary](../resources/S16-LR-ch16-namedtuple2dict-fig-01.png)
 
 **Reading the figure**
 
-- **Step 1:** Start the program.
-- **Step 2:** Import `namedtuple` from the `collections` module.
-- **Step 3:** Create the class `Student` with the three fields `name`, `age` and `course`.
-- **Step 4:** Create one record, `s1 = Student('Anita', 20, 'Python')`.
-- **Step 5a:** Get the field names from `s1._fields`: `('name', 'age', 'course')`.
-- **Step 5b:** At the same time, get the values by treating `s1` as an ordinary tuple: `('Anita', 20, 'Python')`. Steps 5a and 5b feed Step 6 side by side.
-- **Step 6:** `zip(s1._fields, s1)` pairs each name with its value: `('name', 'Anita')`, `('age', 20)`, `('course', 'Python')`.
-- **Step 7:** `dict()` turns those pairs into a dictionary, with the names as keys.
-- **Step 8:** Print the dictionary: `{'name': 'Anita', 'age': 20, 'course': 'Python'}`.
-- **Step 9:** End the program.
+- **Step 1:** Import `namedtuple` from the `collections` module and create the class `Student` with the three fields `name`, `age` and `course`.
+- **Step 2:** Create one record, `s1 = Student('Anita', 20, 'Python')`.
+- **Step 3:** Get the field names from `s1._fields`: `('name', 'age', 'course')`.
+- **Step 4:** At the same time, get the values by treating `s1` as an ordinary tuple: `('Anita', 20, 'Python')`.
+- **Step 5:** `zip(s1._fields, s1)` pairs each name with its value: `('name', 'Anita')`, `('age', 20)`, `('course', 'Python')`.
+- **Step 6:** `dict()` turns those pairs into a dictionary, with the names as keys.
+- **Step 7:** Print the dictionary: `{'name': 'Anita', 'age': 20, 'course': 'Python'}`.
 
-Steps 5a and 5b happen side by side. Both feed into Step 6, where `zip()` joins them.
+Steps 3 and 4 happen side by side. Both feed into Step 5, where `zip()` joins them.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -527,23 +524,19 @@ The conversion in Step 5 is exactly the same line we used for one student. The o
 
 ### 4.2 Flowchart of the extension task
 
-![Optional Extension Task](../resources/LR-ch16-namedtuple2dict-fig-02.png)
+![Optional Extension Task](../resources/S16-LR-ch16-namedtuple2dict-fig-02.png)
 
 **Reading the figure**
 
-- **Step 1:** Start the program.
-- **Step 2:** Import `namedtuple` from `collections` and create the class `Student`.
-- **Step 3:** Create two records: `s1` for Anita and `s2` for Rahul.
-- **Step 4:** Put the records in a list, `students = [s1, s2]`.
-- **Step 5:** Create an empty list, `student_dicts`, to collect the results.
-- **Step 6:** The `for` loop checks whether any record in `students` has not been processed yet.
-- **Step 7:** Yes: take the next record from the list.
-- **Step 8:** Convert it to a dictionary with exactly the same line used for one student, `dict(zip(record._fields, record))`.
-- **Step 9:** Append that dictionary to `student_dicts`, then go back to Step 6.
-- **Step 10:** No records are left, so print `student_dicts`, a list of two dictionaries.
-- **Step 11:** End the program.
+- **Step 1:** Import `namedtuple` from `collections`, create the class `Student`, create two records (`s1` for Anita and `s2` for Rahul) and put them in a list, `students = [s1, s2]`.
+- **Step 2:** Create an empty list, `student_dicts`, to collect the results.
+- **Step 3:** The `for` loop checks whether any record in `students` has not been processed yet.
+- **Step 4:** Yes: take the next record from the list. The loop variable is `student`.
+- **Step 5:** Convert it to a dictionary with exactly the same line used for one student: `record = dict(zip(student._fields, student))`.
+- **Step 6:** Append that dictionary to `student_dicts`, then go back to Step 3.
+- **Step 7:** No records are left, so print `student_dicts`, a list of two dictionaries.
 
-Steps 7, 8 and 9 form the loop. After Step 9 the program goes back to Step 6 and checks whether another record is waiting. When no record is left, it moves on to Step 10.
+Steps 4, 5 and 6 form the loop. After Step 6 the program goes back to Step 3 and checks whether another record is waiting. When no record is left, it moves on to Step 7.
 
 [Back to the Table of Contents](#table-of-contents)
 

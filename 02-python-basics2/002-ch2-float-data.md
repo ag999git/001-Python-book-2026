@@ -396,7 +396,17 @@ So 0.1 in binary is `0.0001100110011001100...`, with `0011` repeating forever. A
 
 
 
-![Why 0.1 Cannot Be Stored Exactly](../resources/ch02-float-data-fig-01.png)
+![Why 0.1 Cannot Be Stored Exactly](../resources/S02-LR-ch02-float-data-fig-01.png)
+
+**Reading the figure**
+
+- **Step 1:** You type `0.1` in your code.
+- **Step 2:** Python converts it to binary.
+- **Step 3:** In binary the digits repeat forever: `0.0001100110011...`.
+- **Step 4:** A float can keep only 53 significant bits.
+- **Step 5:** The rest are rounded off.
+- **Step 6:** The value actually stored is very slightly more than 0.1: `0.1000000000000000055511...`.
+- **Step 7:** `print(0.1)` shows the shortest text that gives back the same float, so it shows `0.1`.
 
 Step 7 explains why `print(0.1)` still shows `0.1`. Python hides the tiny error when it prints a single number. The error shows up only after arithmetic, as in `0.1 + 0.2`, which prints `0.30000000000000004`.
 
@@ -634,7 +644,20 @@ Note that `float("3,5")` fails. Python always uses a point, never a comma, as th
 
 The flowchart shows how `float()` decides what to do.
 
-![All the Conversions in One Script](../resources/ch02-float-data-fig-02.png)
+![How float() decides what to do](../resources/S02-LR-ch02-float-data-fig-02.png)
+
+**Reading the figure**
+
+- **Step 1:** Call `float(x)`.
+- **Step 2:** What type is `x`?
+- **Step 3:** An `int` or `bool`: is it too large for a float (more than about 309 digits)?
+- **Step 4:** Yes: `OverflowError: int too large to convert to float`.
+- **Step 5:** No: the nearest float to the integer is used.
+- **Step 6:** A `str`: is the text a valid number, or `"inf"` or `"nan"`?
+- **Step 7:** Yes: the nearest float is used (or infinity if the number is too large).
+- **Step 8:** No: `ValueError`, for example `float("3,5")`.
+- **Step 9:** Any other type, such as `None` or a list: `TypeError`.
+- **Step 10:** The successful branches return a new `float`.
 
 Branch numbers: the int branch is steps 3 to 5, the string branch is steps 6 to 8 and the other branch is step 9. The two successful branches meet at step 10.
 
@@ -715,7 +738,18 @@ Output:
 | Speed | Very fast (done by the processor) | Slower | Slowest |
 | Good for | Science, engineering, graphics, measurements | Money, banking, anything that must match hand calculations | Exact fractions, probability, maths teaching |
 
-![Comparing the Three Types](../resources/ch02-float-data-fig-03.png)
+![Choosing between int, Decimal, Fraction and float](../resources/S02-LR-ch02-float-data-fig-03.png)
+
+**Reading the figure**
+
+- **Step 1:** Decide what kind of numbers your program needs.
+- **Step 2:** Only whole numbers?
+- **Step 3:** Yes: use `int`, which is exact and has no size limit.
+- **Step 4:** No: money, or anything that must match exact decimal places?
+- **Step 5:** Yes: use `Decimal`.
+- **Step 6:** No: exact fractions, such as 1/3?
+- **Step 7:** Yes: use `Fraction`.
+- **Step 8:** No: use `float`, which is fast and fine for science, engineering and measurements.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -892,7 +926,17 @@ True
 Note the last two lines. From Python 3.12, the built-in `sum()` adds floats more carefully, so it also gives `1.0` here. In older versions it gives `0.9999999999999999`. `math.fsum()` is accurate in every version.
 
 
-![Using math.isclose() Correctly](../resources/0000-24-using-isclose.png)
+![Using math.isclose() Correctly](../resources/S02-LR-0000-24-using-isclose.png)
+
+**Reading the figure**
+
+- **Step 1:** You want to compare two floats, `a` and `b`, without `==`.
+- **Step 2:** Could either value be NaN?
+- **Step 3:** Yes: check with `math.isnan()` first, because NaN is never close to anything, not even itself.
+- **Step 4:** Could one value be zero, or very close to zero?
+- **Step 5:** No: `math.isclose(a, b)` is enough; its default relative tolerance is `1e-09`.
+- **Step 6:** Yes: add an absolute tolerance, `math.isclose(a, b, abs_tol=...)`, because a relative tolerance alone never matches zero.
+- **Step 7:** Use the `True` or `False` result in your program.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -2298,7 +2342,7 @@ True
 1.1102230246251565e-15
 ```
 
-Steps 1 to 4 show what happens with the original example:
+Steps 1 to 4 show what happens when a tiny number is added to a huge one:
 
 1. Expected: `1`. Actual: `0.0`.
 2. At 1e16, neighbouring floats are 2 apart, so the float cannot hold 1e16 + 1. Adding a tiny number to a huge one loses the low-order bits, and the `1` disappears completely. This effect is often called **absorption**.

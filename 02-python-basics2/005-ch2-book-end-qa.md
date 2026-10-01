@@ -186,7 +186,7 @@ Roll number: 55
 
 Note that `print(text)` shows `55` without quotes, even though `text` is a string. `print()` always shows text without its quotes. Use `repr()` or `type()` when you want to be sure that a value is a string.
 
-Why convert? Because Python will not join a string and a number with `+` (see question e). After `str()`, the number becomes text and can be joined. An f-string does the conversion for you.
+Why convert? Because Python will not join a string and a number with `+`. After `str()`, the number becomes text and can be joined. An f-string does the conversion for you.
 
 [Back to the Table of Contents](#table-of-contents)
 

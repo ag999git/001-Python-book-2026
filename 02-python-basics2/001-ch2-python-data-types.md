@@ -405,7 +405,17 @@ The table below sums it up.
 
 The flowchart shows the steps Python follows for `a // b`.
 
-![Floor Division with Negative Numbers](../resources/0000-20-floor-division-with-negative-numbers.png)
+![Floor Division with Negative Numbers](../resources/S02-LR-0000-20-floor-division-with-negative-numbers.png)
+
+**Reading the figure**
+
+- **Step 1:** Start with the floor division `a // b`.
+- **Step 2:** Work out the exact answer, `a / b`.
+- **Step 3:** Is the exact answer already a whole number?
+- **Step 4:** Yes: keep that whole number.
+- **Step 5:** No: move down to the next smaller whole number, towards minus infinity, not towards zero.
+- **Step 6:** For example, `-15 / 4` is `-3.75`, so `-15 // 4` is `-4` (not `-3`).
+- **Step 7:** That whole number is the result of `a // b`.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -589,7 +599,16 @@ Each step to the left doubles a bit's place value, just as each step to the left
 
 
 
-![Advanced Concept: How the Left Shift Works (Example: 10 Shifted Left by 3)](../resources/ch02-python-data-types-fig-02.png)
+![How the left shift works: 10 shifted left by 3](../resources/S02-LR-ch02-python-data-types-fig-02.png)
+
+**Reading the figure**
+
+- **Step 1:** Start with the number 10.
+- **Step 2:** Write it in binary: `1010` (8 + 2).
+- **Step 3:** `10 << 3` shifts every bit three places to the left, adding three zeros on the right.
+- **Step 4:** The new binary number is `1010000`.
+- **Step 5:** Converting back: 64 + 16 = 80.
+- **Step 6:** Check: shifting left by 3 multiplies by 2³ = 8, and 10 × 8 = 80.
 
 **The same steps in Python**
 
@@ -797,7 +816,21 @@ A few points to note:
 
 
 
-![How int() Decides What to Do](../resources/ch02-python-data-types-fig-03.png)
+![How int() Decides What to Do](../resources/S02-LR-ch02-python-data-types-fig-03.png)
+
+**Reading the figure**
+
+- **Step 1:** Call `int(x)`.
+- **Step 2:** What type is `x`?
+- **Step 3:** A `bool`: `True` gives 1 and `False` gives 0.
+- **Step 4:** A `float`: is it infinity or NaN (not a number)?
+- **Step 5:** Yes: infinity raises `OverflowError` and NaN raises `ValueError`.
+- **Step 6:** No: the part after the decimal point is cut off (`int(-3.9)` is `-3`).
+- **Step 7:** A `str`: is the text a valid whole number in the given base (10 unless you pass another)?
+- **Step 8:** Yes: the digits are read.
+- **Step 9:** No: `ValueError`, for example `int("3.5")`.
+- **Step 10:** Any other type, such as a list, a dictionary or `None`: `TypeError`.
+- **Step 11:** The successful branches all return a new `int`.
 
 Branch numbers: the bool branch is step 3, the float branch is steps 4 to 6, the string branch is steps 7 to 9 and the other branch is step 10. The three successful branches meet again at step 11.
 
@@ -1163,7 +1196,17 @@ Learn more: [Numeric types](https://docs.python.org/3/library/stdtypes.html#nume
 
 ### 10.2 How Python Picks the Result Type
 
-![How Python Picks the Result Type](../resources/0000-21-how-python-picks-result-type.png)
+![How Python Picks the Result Type](../resources/S02-LR-0000-21-how-python-picks-result-type.png)
+
+**Reading the figure**
+
+- **Step 1:** Python sees an arithmetic operation, such as `a + b`.
+- **Step 2:** Is either `a` or `b` a complex number?
+- **Step 3:** Yes: both are converted to `complex`.
+- **Step 4:** No: is either of them a `float`?
+- **Step 5:** Yes: both are converted to `float`.
+- **Step 6:** No: both are `int` (or `bool`, which counts as an int), so the result stays an `int`. (True division `/` always gives a float.)
+- **Step 7:** Python does the arithmetic and returns a result of that type.
 
 | Left operand | Right operand | Result type | Example | Result |
 | ------------ | ------------- | ----------- | ------- | ------ |
@@ -1236,7 +1279,7 @@ On a 64-bit computer running Python 3.12, the size of an integer is roughly:
 
 For example, `10 ** 100` needs 333 bits. That is 12 digits of 30 bits each (12 × 30 = 360 ≥ 333). So its size is 24 + 12 × 4 = 72 bytes.
 
-Older versions give slightly different numbers. In Python 3.11, for example, `sys.getsizeof(0)` returns 24. The general idea (a fixed part plus a bit more for each digit) is the same in every version.
+Older versions give slightly different numbers. In Python 3.10, for example, `sys.getsizeof(0)` returns 24. The general idea (a fixed part plus a bit more for each digit) is the same in every version.
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1715,7 +1758,16 @@ Small numbers such as loop counters and list positions are used all the time, so
 
 The flowchart shows what Python does when it needs an integer.
 
-![Advanced Concept: Understanding Performance of Integer Operations in Python](../resources/0000-22-what-python-does-when-it-needs-an-integer.png)
+![What Python does when it needs an integer](../resources/S02-LR-0000-22-what-python-does-when-it-needs-an-integer.png)
+
+**Reading the figure**
+
+- **Step 1:** Python needs an integer object with the value `v`.
+- **Step 2:** Is `v` between -5 and 256?
+- **Step 3:** Yes: Python takes the ready-made object from its small-integer cache; no memory is set aside.
+- **Step 4:** No: Python sets aside memory for a new `int` object.
+- **Step 5:** It stores the value `v` in the new object.
+- **Step 6:** The object is given to your variable.
 
 The script below shows the cache at work. It uses `int("100")` instead of the literal `100` on purpose. When the same literal appears twice in one script, Python may reuse one object for both, even for large numbers, which would hide the effect we want to see.
 
@@ -1786,7 +1838,17 @@ CPython's `int` does **not** use FFT-based methods (such as the Schönhage–Str
 
 
 
-![Advanced Concept: Understanding Performance of Integer Operations in Python](../resources/0000-23.png)
+![How Python chooses a method to multiply two integers](../resources/S02-LR-0000-23.png)
+
+**Reading the figure**
+
+- **Step 1:** Python multiplies two integers, `a * b`.
+- **Step 2:** Are both numbers below 2³⁰, so each fits in one 30-bit piece?
+- **Step 3:** Yes: a single quick machine multiplication is enough.
+- **Step 4:** No: do both numbers have about 70 or more 30-bit pieces (roughly 630 or more decimal digits)?
+- **Step 5:** Yes: CPython uses the Karatsuba method, about O(n^1.585).
+- **Step 6:** No: it uses the schoolbook method, O(n²).
+- **Step 7:** Either way, the result is returned as a new `int` object.
 
 </details>
 

@@ -517,7 +517,7 @@ cmath.isclose(z, 3 + 4j) -> True
 
 The rebuilt number is not exactly `3 + 4j`, because the angle and the cos and sin values are rounded floats. That is why Step 5 uses `cmath.isclose()`.
 
-![Polar Operations with cmath](../resources/LR-ch02-complex-numbers-advanced-fig-01.png)
+![Polar Operations with cmath](../resources/S02-LR-ch02-complex-numbers-advanced-fig-01.png)
 
 **Reading the figure**
 
@@ -1089,7 +1089,7 @@ NumPy was about 26 times faster
 
 ## Part B: Advanced Complex Number Examples in Python
 
-Each block below runs on its own. The expected output is shown in a hash comment below each `print()` line, and the full output follows each script. Block 4 needs NumPy (`pip install numpy`). A combined script is given at the end.
+Each block below runs on its own. The expected output is shown in a hash comment below each `print()` line, and the full output follows each script. Blocks 4 and 5 need NumPy (`pip install numpy`). A combined script is given at the end.
 
 [Back to the Table of Contents](#table-of-contents)
 

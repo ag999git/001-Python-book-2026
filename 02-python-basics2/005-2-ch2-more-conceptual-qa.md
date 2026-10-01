@@ -122,7 +122,7 @@ print("x =", x)
 # Step 3: Compare identities - x now points to a different object
 print("Same object as before?", id(x) == old_id)
 
-# Step 4: Integers have no methods that change them in place
+# Step 4: An integer cannot be changed in place, not even through its attributes
 try:
     x.real = 5
 except AttributeError as error:
@@ -645,16 +645,18 @@ Dictionary keys are stored using hash values worked out from the key objects. If
 
 How a lookup such as `d["a"]` works:
 
-![Why must dictionary keys be immutable?](../resources/LR-ch02-2-ch2-more-conceptual-qa-fig-02.png)
+![Why must dictionary keys be immutable?](../resources/S02-LR-ch02-2-ch2-more-conceptual-qa-fig-02.png)
 
 **Reading the figure**
 
 - **Step 1:** You ask for a value, for example `d["a"]`.
 - **Step 2:** Python works out `hash(key)`, a number calculated from the key's contents.
 - **Step 3:** The hash tells Python which slot of the dictionary's table to look in, so it does not have to search every item.
-- **Step 4:** Is a key equal to the one you asked for stored there? (If two keys share a slot, Python checks the next slots too.)
-- **Step 5:** Yes: return its value.
-- **Step 6:** No: raise `KeyError`. If a key could change after being stored, its hash would change too, and Python would look in the wrong slot. That is why keys must be immutable.
+- **Step 4:** Is that slot empty?
+- **Step 5:** Yes: the key is not in the dictionary, so Python raises `KeyError`.
+- **Step 6:** No: is the key stored there the one you asked for? Python first compares the hashes, then checks with `==`.
+- **Step 7:** Yes: return its value.
+- **Step 8:** No: another key landed in this slot first, so Python looks at the next slot in its search order and goes back to Step 4. If a key could change after being stored, its hash would change too, and Python would look in the wrong slot. That is why keys must be immutable.
 
 If the key could change after being stored, its hash at step 2 would no longer point to the slot where it was stored, and the lookup would fail.
 
@@ -934,7 +936,7 @@ Implicit type conversion is done automatically by Python when it is safe and log
 | Who does it | Python, automatically | The programmer |
 | When | Mixing number types, such as `int` and `float` | Whenever you choose, for example text to number |
 | Example | `3 + 1.5` gives `4.5` | `int("42")` gives `42` |
-| Can lose information? | No, it only goes to a wider type | Yes, for example `int(7.9)` gives `7` |
+| Can lose information? | Usually not, it goes to a wider type (but very large ints can lose digits: `float(2**53 + 1)` gives `9007199254740992.0`) | Yes, for example `int(7.9)` gives `7` |
 
 ```python
 # Step 1: Implicit - Python converts 3 to 3.0 on its own
@@ -955,13 +957,13 @@ Output:
 99 marks
 ```
 
-![What is the difference between implicit and explicit type conversion?](../resources/LR-ch02-2-ch2-more-conceptual-qa-fig-03.png)
+![What is the difference between implicit and explicit type conversion?](../resources/S02-LR-ch02-2-ch2-more-conceptual-qa-fig-03.png)
 
 **Reading the figure**
 
 - **Step 1:** An operation such as `+` is given two values of different types.
 - **Step 2:** Are both values numbers, for example an `int` and a `float`?
-- **Step 3:** Yes: Python converts implicitly, turning the narrower type into the wider one, here `int` to `float`, so no information is lost.
+- **Step 3:** Yes: Python converts implicitly, turning the narrower type into the wider one, here `int` to `float`. Usually no information is lost, but a very large `int` can lose its last digits: `float(2**53 + 1)` gives `9007199254740992.0`.
 - **Step 4:** The operation runs: `3 + 1.5` gives `4.5`.
 - **Step 5:** No: for a mix such as `"5" + 3`, Python will not guess, so it raises `TypeError`.
 - **Step 6:** The programmer converts explicitly, on purpose, with a function such as `int()`, `float()` or `str()`.
@@ -1218,7 +1220,7 @@ True
 True
 ```
 
-![Why does Python cache imported modules in sys.modules?](../resources/LR-ch02-2-ch2-more-conceptual-qa-fig-05.png)
+![Why does Python cache imported modules in sys.modules?](../resources/S02-LR-ch02-2-ch2-more-conceptual-qa-fig-05.png)
 
 **Reading the figure**
 
@@ -1405,7 +1407,7 @@ Please enter your name
 Guest
 ```
 
-The `or` in Step 2 returns the first truthy value, so an empty name is replaced by `"Guest"`. See question 27 for the full list of falsy values.
+The `or` in Step 2 returns the first truthy value (or the last value if none is truthy), so an empty name is replaced by `"Guest"`. See question 27 for more examples of falsy values.
 
 [Back to the Table of Contents](#table-of-contents)
 

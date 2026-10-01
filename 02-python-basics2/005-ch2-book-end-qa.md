@@ -539,7 +539,7 @@ ImportError: cannot import name 'func_a' from partially initialized module 'a_mo
 
 What happens, step by step:
 
-![g.2 Circular Import Example](../resources/LR-ch02-book-end-qa-fig-02.png)
+![g.2 Circular Import Example](../resources/S02-LR-ch02-book-end-qa-fig-02.png)
 
 **Reading the figure**
 
@@ -1084,7 +1084,7 @@ Running `python test2.py` prints only:
 Hello, Asha!
 ```
 
-![p.3 Controlling Runnable Code with name](../resources/LR-ch02-book-end-qa-fig-04.png)
+![p.3 Controlling Runnable Code with name](../resources/S02-LR-ch02-book-end-qa-fig-04.png)
 
 **Reading the figure**
 

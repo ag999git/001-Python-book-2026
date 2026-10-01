@@ -1255,7 +1255,7 @@ round(2.675, 2)-> 2.67
 
 Most people learn at school to round a half **up** (2.5 becomes 3). Python instead rounds a half to the nearest **even** digit (2.5 becomes 2, 3.5 becomes 4). This is called banker's rounding. When you round many numbers, rounding halves always up makes totals drift upwards. Rounding to even pushes half of them up and half down, so the errors cancel out.
 
-![Block 4: isinteger() and round()](../resources/LR-ch02-float-data-fig-05.png)
+![Block 4: isinteger() and round()](../resources/S02-LR-ch02-float-data-fig-05.png)
 
 **Reading the figure**
 

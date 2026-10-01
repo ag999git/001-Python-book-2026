@@ -17,7 +17,7 @@ You do not need much mathematics to follow this page. If you know how to multipl
 
 * [Complex Numbers in Python (`complex`): A Beginner's Guide with Examples](#complex-numbers-in-python-complex-a-beginners-guide-with-examples)
   * [Key Terms Used on This Page](#key-terms-used-on-this-page)
-  * [Part A: Beginners Guide to Complex Numbers in Python](#part-a-beginners-guide-to-complex-numbers-in-python)
+  * [Part A: Beginner's Guide to Complex Numbers in Python](#part-a-beginners-guide-to-complex-numbers-in-python)
     * [1. What Is a Complex Number?](#1-what-is-a-complex-number)
     * [2. Why Complex Numbers?](#2-why-complex-numbers)
     * [3. How to Create Them](#3-how-to-create-them)
@@ -66,7 +66,7 @@ You do not need much mathematics to follow this page. If you know how to multipl
 
 [Back to the Table of Contents](#table-of-contents)
 
-## Part A: Beginners Guide to Complex Numbers in Python
+## Part A: Beginner's Guide to Complex Numbers in Python
 
 Complex numbers let us work with quantities that have **two parts**:
 
@@ -374,7 +374,7 @@ Multiply out the brackets as usual, then replace `j × j` by -1. For `z * w = (3
 6. Add the imaginary parts: 6j + 20j = 26j.
 7. Answer: 7 + 26j, which matches Python's `(7+26j)`.
 
-![How Multiplication Works by Hand](../resources/LR-ch02-complex-numbers-basics-fig-01.png)
+![How Multiplication Works by Hand](../resources/S02-LR-ch02-complex-numbers-basics-fig-01.png)
 
 **Reading the figure**
 
@@ -397,7 +397,7 @@ We cannot divide by a complex number directly. The trick is to multiply the top 
 4. Divide each part by 29: 23/29 = 0.7931... and 14/29 = 0.4827...
 5. Answer: about 0.793 + 0.483j, which matches Python's result.
 
-![How Division Works by Hand](../resources/LR-ch02-complex-numbers-basics-fig-02.png)
+![How Division Works by Hand](../resources/S02-LR-ch02-complex-numbers-basics-fig-02.png)
 
 **Reading the figure**
 

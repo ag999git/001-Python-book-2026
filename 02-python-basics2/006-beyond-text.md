@@ -70,7 +70,7 @@ All the commands on this page are typed in a **terminal** (Command Prompt, Power
 
 What happens when you type `pip install requests`:
 
-![What is pip?](../resources/LR-ch02-beyond-text-fig-01.png)
+![What is pip?](../resources/S02-LR-ch02-beyond-text-fig-01.png)
 
 **Reading the figure**
 
@@ -148,7 +148,7 @@ urllib3            2.8.0
 $
 ```
 
-(Before the last two lines, `pip` also prints several `Collecting ...` and `Downloading ...` lines while it works. They are left out here to save space.)
+(Before the `Installing collected packages` line, `pip` also prints several `Collecting ...` and `Downloading ...` lines while it works. They are left out here to save space.)
 
 Notice that asking for one package, `requests`, installed five. The other four are its dependencies. `pip` found and installed them automatically.
 
@@ -171,7 +171,7 @@ If you use Anaconda, `conda create` and `conda activate` do the same job with co
 | `'pip' is not recognized as an internal or external command` | Python's folder was not added to your system's `PATH` during installation, so the computer cannot find `pip`. | Use `python -m pip install ...` (or `py -m pip install ...` on Windows). Or reinstall Python and tick the box **"Add Python to PATH"**. |
 | `Permission denied` (or `EACCES`) | You are trying to install into a folder that only administrators can change. | Use a **virtual environment** (best). Or install just for yourself with `pip install --user <package_name>`. |
 | `error: externally-managed-environment` | Newer Linux systems and Homebrew Python on macOS protect the system's own Python from `pip` (a rule called [PEP 668](https://peps.python.org/pep-0668/)). | Create and activate a virtual environment, then install. Do not force it with `--break-system-packages`. |
-| `WARNING: You are using pip version X; however, version Y is available.` | A newer `pip` has been released. | This is just a friendly reminder, not an error. Run `python -m pip install --upgrade pip` to update the tool itself. |
+| `[notice] A new release of pip is available: X -> Y` | A newer `pip` has been released. | This is just a friendly reminder, not an error. Run `python -m pip install --upgrade pip` to update the tool itself. |
 | `ModuleNotFoundError: No module named 'requests'` when you run your program | The package was installed into a different Python or environment from the one running your program. | Activate the right environment, or install with `python -m pip` using the same `python` that runs your program. |
 
 [Back to the Table of Contents](#table-of-contents)
@@ -253,7 +253,7 @@ Initialized project `hello` at `/home/yourname/hello`
 $ cd hello
 ```
 
-The new folder contains `pyproject.toml`, `main.py`, `README.md`, `.python-version` (which records the Python version) and `.gitignore`. The file `pyproject.toml` looks like this:
+The new folder contains `pyproject.toml`, `main.py`, `README.md`, `.python-version` (which records the Python version) and `.gitignore`. If Git is installed, `uv init` also makes the folder a Git repository (a hidden `.git` folder). The file `pyproject.toml` looks like this:
 
 ```toml
 [project]
@@ -334,7 +334,7 @@ hello v0.1.0
     └── urllib3 v2.8.0
 ```
 
-![A Complete uv Project, Step by Step](../resources/LR-ch02-beyond-text-fig-02.png)
+![A Complete uv Project, Step by Step](../resources/S02-LR-ch02-beyond-text-fig-02.png)
 
 **Reading the figure**
 
@@ -352,7 +352,7 @@ hello v0.1.0
 | Error | Cause | Fix |
 | ----- | ----- | --- |
 | `Failed to build ...` with a message such as `fatal error: Python.h: No such file or directory` | The package has parts written in C that must be compiled (built) on your computer, and the build tools or Python's C header files are missing. | First check whether a newer version of the package offers a ready-made wheel for your system. Otherwise, on Windows install *Visual Studio Build Tools*; on Ubuntu Linux run `sudo apt install build-essential python3-dev`. |
-| `error: No interpreter found for Python 3.x in managed installations or search path` | `uv` cannot find the Python version the project asks for, and is not allowed to download one. | Run `uv python install 3.x` to let `uv` download it for you. |
+| `error: No interpreter found for Python 3.x in virtual environments, managed installations, or search path` | `uv` cannot find the Python version the project asks for, and is not allowed to download one. | Run `uv python install 3.x` to let `uv` download it for you. |
 | `ImportError: attempted relative import with no known parent package` | A file inside a package folder, using an import such as `from .helpers import x`, was run directly as a script. | Run it as a module from the **root folder** of your project (where `pyproject.toml` is): `uv run python -m mypackage.main`. |
 | ``error: No `pyproject.toml` found in current directory or any parent directory`` | A project command such as `uv add` was run outside the project folder. | `cd` into the project folder first, or create a project with `uv init`. |
 
@@ -441,7 +441,7 @@ No broken requirements found.
 
 The second command prints nothing on the screen, because its output went into the file. The file `requirements.txt` now contains exactly the five lines shown by the first command.
 
-![Common Commands](../resources/LR-ch02-beyond-text-fig-04.png)
+![Common Commands](../resources/S02-LR-ch02-beyond-text-fig-04.png)
 
 **Reading the figure**
 

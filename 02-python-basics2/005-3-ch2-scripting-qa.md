@@ -570,7 +570,7 @@ Same object as before? True
 
 Compare this with questions 1 and 7. The list keeps its ID when changed, but the integer and the string got new IDs.
 
-![Write a Python script that demonstrates mutability of lists using the id() function.](../resources/LR-ch02-3-ch2-scripting-qa-fig-01.png)
+![Write a Python script that demonstrates mutability of lists using the id() function.](../resources/S02-LR-ch02-3-ch2-scripting-qa-fig-01.png)
 
 **Reading the figure**
 
@@ -1168,7 +1168,7 @@ A conversion fails with `ValueError` when the text does not look like the number
 
 **Plan:**
 
-1. Widening: convert an `int` to a `float` and show that nothing is lost.
+1. Widening: convert an `int` to a `float` and show that nothing is lost for a number of ordinary size.
 2. Narrowing: convert a `float` to an `int` and show how much is lost.
 3. Show that `int()` cuts off the decimal part rather than rounding.
 
@@ -1323,7 +1323,7 @@ Enter your age: 25
 Next year your age will be: 26
 ```
 
-![Write a Python script that accepts age input from the user and converts it into an integer before using it in arithmetic.](../resources/LR-ch02-3-ch2-scripting-qa-fig-03.png)
+![Write a Python script that accepts age input from the user and converts it into an integer before using it in arithmetic.](../resources/S02-LR-ch02-3-ch2-scripting-qa-fig-03.png)
 
 **Reading the figure**
 
@@ -1364,7 +1364,7 @@ print('bool({"a": 1}):', bool({"a": 1}))
 # Step 5: None
 print("bool(None):", bool(None))
 
-# Step 6: Two surprises - these are truthy because they are not empty
+# Step 6: Three surprises - these are truthy because they are not empty
 print('bool("0"):', bool("0"))
 print('bool(" "):', bool(" "))
 print("bool([0]):", bool([0]))
@@ -1959,7 +1959,7 @@ import sys
 # Step 2: Display built-in module names
 print(sys.builtin_module_names)
 
-# Step 3: How many there are, and a quick check for two of them
+# Step 3: How many there are, and a quick check of two names
 print("\nNumber of built-in modules:", len(sys.builtin_module_names))
 print("'sys' is built in:", "sys" in sys.builtin_module_names)
 print("'json' is built in:", "json" in sys.builtin_module_names)

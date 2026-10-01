@@ -12,8 +12,7 @@ This is one of the most practically useful patterns in everyday Python: it lets 
 
 ---
 
-<details>
-<summary>Understanding the three attributes <code>fget</code>, <code>fset</code>, and <code>fdel</code> (every property object has these) — click ► to expand</summary>
+### Understanding the three attributes `fget`, `fset`, and `fdel` (every property object has these)
 
 ### Before we proceed further, we need to understand `fget`, `fset`, and `fdel`
 
@@ -89,10 +88,7 @@ So this ultimately executes: `p._age = 10`.
 - They belong to the **property object itself**, not directly to the class.
 - They store the *actual functions* used for controlling attribute access.
 
-</details>
-
-<details>
-<summary>Discussion on <code>@property</code> and <code>@age.setter</code> — click ► to expand</summary>
+### Discussion on `@property` and `@age.setter`
 
 Before taking up the project, it's worth understanding exactly how `@property` and `@age.setter` work together.
 
@@ -144,8 +140,6 @@ age (property object)
 ### D. Where are `@property` and `@age.setter` actually defined?
 
 They're **built into Python itself** — no import is needed. Internally, `property` is simply a built-in class, and `@property` (along with `@age.setter`) is just convenient syntactic sugar layered on top of it.
-
-</details>
 
 ![Flowchart](../resources/S08-LR-ch-8-august-2026-property-decorator.png)
 

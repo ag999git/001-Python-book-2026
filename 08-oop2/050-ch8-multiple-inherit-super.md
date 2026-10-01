@@ -94,9 +94,6 @@ Calling `Pet.__init__(self)` directly bypasses the MRO entirely — it hardcodes
 
 ---
 
-<details>
-<summary>Problem statement and solution: use of <code>super()</code> and MRO in Multiple Inheritance</summary>
-
 ## Problem statement and solution to use of `super()` and MRO in Multiple Inheritance
 
 
@@ -140,8 +137,6 @@ Write code to:
 1. Print the MRO of both classes: `Dog1.__mro__`, `Dog2.__mro__`
 2. Create objects: `d1 = Dog1()`, `d2 = Dog2()`
 3. Call: `d1.action()`, `d2.action()`
-
-</details>
 
 ### A follow-up question worth exploring
 

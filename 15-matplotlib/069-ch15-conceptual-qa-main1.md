@@ -16,7 +16,7 @@ The questions move from the general to the specific:
 
 These ideas are not limited to Matplotlib. Almost every data analysis task in Python ends with a graph, and other plotting libraries such as Seaborn and pandas' own plotting tools are built on top of Matplotlib. So a clear understanding of these concepts will help you in any Python work that involves data.
 
-**How to use this page:** try to answer each question in your own words first. Then read the answer, run the script, and try the follow-up question. The answers to the follow-up questions are hidden; click "Show answer" to see them.
+**How to use this page:** try to answer each question in your own words first. Then read the answer, run the script, and try the follow-up question. The answer to each follow-up question is given just below it, under **Answer**.
 
 **About the scripts:** every script was run with Matplotlib 3.10, NumPy 2 and pandas 3.0, and the printed output is shown below it. When a script calls `plt.show()`, a graph window opens on your computer. A picture of that graph is shown on this page below the printed output, so you can check your result.
 

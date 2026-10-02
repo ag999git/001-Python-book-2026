@@ -16,7 +16,7 @@ The exercises start with a single line plot and build up step by step:
 
 Writing plotting scripts is a good way to practise many basic Python skills at the same time: lists, loops, functions, importing libraries and reading documentation. The same skills are used in data analysis, science, engineering and business reporting.
 
-**How to use this page:** read the question and try to write the script yourself first. Then compare your script with the answer, run it, and check that your printed output and graph match the ones shown. Finally, try the follow-up question. Its answer is hidden; click "Show answer" to see it.
+**How to use this page:** read the question and try to write the script yourself first. Then compare your script with the answer, run it, and check that your printed output and graph match the ones shown. Finally, try the follow-up question. Its answer is given just below it, under **Answer**.
 
 **About the scripts:** every script was run with Python 3.11, Matplotlib 3.10, NumPy 2 and pandas 3.0. `print()` statements have been added so that you can check the numbers behind each graph. When a script calls `plt.show()`, a graph window opens; the picture below the output shows what that window contains.
 

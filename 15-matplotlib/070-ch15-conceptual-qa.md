@@ -13,7 +13,7 @@ The questions cover:
 
 Understanding these ideas helps you move from copying plotting code to writing it with confidence. It also helps you find and fix errors, which is an everyday part of programming in Python.
 
-**How to use this page:** read each question and try to answer it yourself. Then read the answer, run the script, compare your output and graph with the ones shown, and try the follow-up question. The follow-up answers are hidden; click "Show answer" to see them.
+**How to use this page:** read each question and try to answer it yourself. Then read the answer, run the script, compare your output and graph with the ones shown, and try the follow-up question. The answer to each follow-up question is given just below it, under **Answer**.
 
 **About the scripts:** every script was run with Python 3.11, Matplotlib 3.10, NumPy 2 and pandas 3.0. The printed output is shown below each script, followed by a picture of the graph it draws. With other versions, small details of the output (such as memory sizes) may differ.
 

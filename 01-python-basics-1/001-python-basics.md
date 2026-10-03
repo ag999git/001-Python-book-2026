@@ -424,6 +424,7 @@ Indentation is hard to show inside a table, so here it is as code. In the correc
 
 ```python
 # PEP 8 (correct): 4 spaces for each level
+x = 7
 if x > 5:
     print(x)
     if x > 10:

@@ -1713,7 +1713,7 @@ How to read it:
 | `percall` (second) | `cumtime` divided by the number of calls |
 | `filename:lineno(function)` | Which function the row is about |
 
-Here you can see that `slow_squares` takes the most time, and that `list.append` was called 200,000 times. The list comprehension (`<listcomp>`, in `fast_squares`) needed much less time for the same job.
+Here you can see that `slow_squares` takes the most time, and that `list.append` was called 200,000 times. The list comprehension (`<listcomp>`, in `fast_squares`) needed much less time for the same job. (This report is from Python 3.11. On Python 3.12 and later there is no separate `<listcomp>` row; its time is counted in the `fast_squares` row.)
 
 [Back to the Table of Contents](#table-of-contents)
 
@@ -1913,7 +1913,7 @@ prof.stop()
 prof.print()
 ```
 
-Output (shortened; your numbers will differ):
+Output (Python 3.11, shortened; your numbers will differ. On Python 3.12 and later the `<listcomp>` line does not appear):
 
 ```text
 Duration: 0.066     CPU time: 0.064

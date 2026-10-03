@@ -281,8 +281,8 @@ The flowchart below gives the whole process at a glance. Each step is explained 
 - **Step 8:** Yes, or not sure: leave "Add Anaconda3 to my PATH" unticked.
 - **Step 9:** No: ticking "Add to PATH" is optional.
 - **Step 10:** Tick "Register Anaconda3 as my default Python" and click Install.
-- **Step 11:** Step 8: wait for the installation to finish.
-- **Step 12:** Step 9: click Next, Next and Finish.
+- **Step 11:** Wait for the installation to finish.
+- **Step 12:** Click Next, Next and Finish.
 - **Step 13:** Open Anaconda Navigator (or the Anaconda Prompt) to start working.
 
 [Back to the Table of Contents](#table-of-contents)

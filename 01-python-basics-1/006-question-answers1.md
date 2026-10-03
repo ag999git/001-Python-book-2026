@@ -1501,7 +1501,7 @@ python -m cProfile -s cumulative slow.py
 
 (`-s cumulative` sorts the report so that the functions that take the most time, including everything they call, come first.)
 
-Output (your times will be different):
+Output (Python 3.11; your times will be different):
 
 ```text
 Both lists have 1000000 and 1000000 items
@@ -1518,6 +1518,8 @@ Both lists have 1000000 and 1000000 items
         1    0.086    0.086    0.086    0.086 slow.py:13(<listcomp>)
   1000000    0.067    0.000    0.067    0.000 {method 'append' of 'list' objects}
 ```
+
+On Python 3.12 and later the `<listcomp>` row does not appear. From 3.12, a list comprehension runs inside the function that contains it, so its time is counted in the `fast_squares` row instead.
 
 Read it like this: `ncalls` is how many times a function was called, `tottime` is the time spent inside the function itself, and `cumtime` is the time including everything it called. Here `slow_squares` took about 0.29 seconds and `fast_squares` only about 0.09 seconds, for the same result.
 

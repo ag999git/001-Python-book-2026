@@ -20,7 +20,7 @@ The questions are grouped by topic:
 
 These ideas explain *why* Python behaves the way it does. Understanding them now will make the later chapters easier, and will help you answer the "theory" questions that often appear in examinations and interviews.
 
-All the scripts on this page were run with Python 3.11 and 3.13; the outputs shown are the real ones.
+All the scripts on this page were run with Python 3.11 and 3.13; the outputs shown are the real ones. Where the two versions differ, the page says so.
 
 ## Table of Contents
 

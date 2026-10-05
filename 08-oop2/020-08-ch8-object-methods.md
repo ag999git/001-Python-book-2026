@@ -67,17 +67,17 @@ for i, method in enumerate(methods, 1):
     # enumerate(methods, 1) numbers the list starting from 1, rather
     # than the default of 0, matching the "01. __init__" style
     # requested in the exercise.
-    print(f"{i}. {method}", end='')
+    print(f"{i}. {method}", end=' ')
     # end='' stops print() from adding a newline after each entry,
     # so the whole list prints on one continuous line instead of
     # one method name per line.
 
 # Output (one continuous line):
-# 1. __class__ 2. __delattr__ 3. __dir__ 4. __doc__ 5. __eq__
-# 6. __format__ 7. __ge__ 8. __getattribute__ 9. __gt__ 10. __hash__
-# 11. __init__ 12. __init_subclass__ 13. __le__ 14. __lt__ 15. __ne__
-# 16. __new__ 17. __reduce__ 18. __reduce_ex__ 19. __repr__
-# 20. __setattr__ 21. __sizeof__ 22. __str__ 23. __subclasshook__
+# 1. __class__ 2. __delattr__ 3. __dir__ 4. __doc__ 5. __eq__ 6. __format__
+# 7. __ge__ 8. __getattribute__ 9. __getstate__ 10. __gt__ 11. __hash__
+# 12. __init__ 13. __init_subclass__ 14. __le__ 15. __lt__ 16. __ne__
+# 17. __new__ 18. __reduce__ 19. __reduce_ex__ 20. __repr__ 21. __setattr__
+# 22. __sizeof__ 23. __str__ 24. __subclasshook__ (Python 3.11 and later)
 
 print()   # Step 1b: print a blank line, purely to separate the two
           # sections of output that follow.

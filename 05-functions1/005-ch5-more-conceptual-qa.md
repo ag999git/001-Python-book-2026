@@ -63,7 +63,8 @@ A namespace is essentially a mapping or "dictionary" where Python stores the nam
 
 **16. How does "Garbage Collection" relate to the lifetime of local variables in a function?** 
 
-When a function finishes its execution, its local variables go "out of scope," meaning they are no longer reachable by the program. Python's interpreter monitors these references; once a variable's reference count drops to zero, the **Garbage Collector** automatically deletes the object and frees up the associated RAM. This automated memory management allows programmers to use local variables as "scratchpads" without worrying about manually cleaning up memory.
+When a function finishes its execution, its local variables go "out of scope," meaning they are no longer reachable by the program. Python keeps a count of the references to every object; once an object's reference count drops to zero, standard Python (CPython) frees it immediately. The Garbage Collector handles the remaining cases, such as groups of objects that refer to each other (reference cycles). An object that is still referred to elsewhere, for example one that was returned by the function, is not freed.
+
 
 **17. What is a "Closure," and why is it often compared to a function with a "backpack"?** 
 

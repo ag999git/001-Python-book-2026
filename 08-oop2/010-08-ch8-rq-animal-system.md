@@ -88,7 +88,7 @@ The assignment has `Cat` inherit from `Animal` only, while `Dog` inherits from b
 - `Animal` is the abstract base class. It provides `walk()` and declares the abstract method `speak()`.
 - `Friendly` is a separate, unrelated parent class that provides `nature()`.
 - `Cat` inherits from `Animal` only (single inheritance).
-- `Dog` has two arrows coming in, from `Animal` and from `Friendly`: this is multiple inheritance. Its MRO is `Dog`, `Animal`, `Friendly`, `object`.
+- `Dog` has two arrows coming in, from `Animal` and from `Friendly`: this is multiple inheritance. Its MRO is `Dog`, `Animal`, `ABC`, `Friendly`, `object`.
 
 
 
@@ -227,17 +227,17 @@ print(issubclass(Dog, Animal))  # True  -- checks the CLASS relationship,
 # --- 7. Method Resolution Order (MRO) ---
 print(Dog.__mro__)
 # Output:
-# (<class '__main__.Dog'>, <class '__main__.Animal'>,
+# (<class '__main__.Dog'>, <class '__main__.Animal'>, <class 'abc.ABC'>,
 #  <class '__main__.Friendly'>, <class 'object'>)
 # This is the exact order Python searches when looking for a method on
-# a Dog object: Dog itself first, then Animal, then Friendly, and
+# a Dog object: Dog itself first, then Animal, then ABC, then Friendly, and
 # finally object -- the shared root every class ultimately traces back to
 # (see the previous chapter page on implicit inheritance from 'object').
 
 # --- Follow-up: compare with Cat's MRO ---
 print(Cat.__mro__)
 # Output:
-# (<class '__main__.Cat'>, <class '__main__.Animal'>, <class 'object'>)
+# (<class '__main__.Cat'>, <class '__main__.Animal'>, <class 'abc.ABC'>, <class 'object'>)
 # Cat's MRO is SHORTER than Dog's, because Cat only has one parent
 # (Animal), while Dog has two (Animal and Friendly).
 ```

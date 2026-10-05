@@ -228,7 +228,7 @@ class Dog(Pet):
 
 # pet = Pet()   # Uncommenting this raises:
                  # TypeError: Can't instantiate abstract class Pet
-                 # with abstract method speak
+                 # without an implementation for abstract method 'speak'
                  # Unlike Question 9, this failure happens IMMEDIATELY,
                  # at creation time -- not later, when speak() is called.
 ```
@@ -467,8 +467,8 @@ try:
     b = Base()
 except TypeError as e:
     print(f"Guard triggered: {e}")
-# Output: Guard triggered: Can't instantiate abstract class Base with
-# abstract method run
+# Output: Guard triggered: Can't instantiate abstract class Base without
+# an implementation for abstract method 'run'
 ```
 
 ---

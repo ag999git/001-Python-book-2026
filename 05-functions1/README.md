@@ -18,15 +18,17 @@ You need Chapters 1 to 4 first. Nothing else is assumed.
 
 ## What Is on the math Page
 
+
 | Section | Covers |
 | --- | --- |
 | Mathematical constants | `pi`, `e`, `tau`, `inf`, `nan` |
-| Number theory and representation | `gcd`, `factorial`, `floor`, `ceil`, `fabs`, `isclose` |
-| Powers and logarithms | `pow`, `sqrt`, `exp`, `log`, `log10`, `log2` |
-| Trigonometry and angles | `sin`, `cos`, `tan`, `degrees`, `radians` |
+| Number theory and representation | `ceil`, `floor`, `trunc`, `fabs`, `gcd`, `factorial`, `isclose`  |
+| Powers and logarithms | `sqrt`, `isqrt`, `pow`, `exp`, `log`, `log10` |
+| Trigonometry and angles | `sin`, `cos`, `tan`, `hypot`, `degrees`, `radians` |
 | Hyperbolic and special functions | `sinh`, `cosh`, `gamma`, `erf` |
-| Worked problems | Each function used in a small complete script |
-| Modern alternatives | Where NumPy, `statistics` or the operators do the job better |
+| Worked problems |  Two complete scripts: the hypotenuse of a right triangle and the area of a circle  |
+| Modern alternatives | NumPy, SciPy, SymPy and the `decimal` module, and when each does the job better |
+
 
 ## Suggested Reading Order
 

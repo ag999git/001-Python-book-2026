@@ -164,7 +164,7 @@ try:
 except AttributeError as e:
     print("Cannot add new attribute to PetSlots:", e)
 # Output: Cannot add new attribute to PetSlots: 'PetSlots' object has
-# no attribute 'color'
+# no attribute 'color' (Python 3.13 adds: and no __dict__ for setting new attributes)
 
 
 # ============================================================

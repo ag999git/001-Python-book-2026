@@ -156,7 +156,7 @@ class Fish(Swimmer):
 # ============================================================
 print("MRO for Dog:", Dog.__mro__)
 # Output: (<class '__main__.Dog'>, <class '__main__.Walker'>,
-#          <class '__main__.Pet'>, <class 'object'>)
+#          <class '__main__.Pet'>, <class 'abc.ABC'>, <class 'object'>)
 
 d = Dog()
 d.speak()   # -> Dog barks
@@ -169,7 +169,7 @@ d.move()
 
 print("\nMRO for Fish:", Fish.__mro__)
 # Output: (<class '__main__.Fish'>, <class '__main__.Swimmer'>,
-#          <class '__main__.Pet'>, <class 'object'>)
+#          <class '__main__.Pet'>, <class 'abc.ABC'>, <class 'object'>)
 
 f = Fish()
 f.speak()   # -> Fish makes sound
@@ -202,7 +202,7 @@ class Amphibian(Walker, Swimmer):
 print("\nMRO for Amphibian:", Amphibian.__mro__)
 # Output: (<class '__main__.Amphibian'>, <class '__main__.Walker'>,
 #          <class '__main__.Swimmer'>, <class '__main__.Pet'>,
-#          <class 'object'>)
+#          <class 'abc.ABC'>, <class 'object'>)
 
 a = Amphibian()
 a.speak()   # -> Amphibian sound
@@ -226,7 +226,7 @@ except TypeError as e:
     print(f"\nCannot create Pet directly: {e}")
 # Output:
 # Cannot create Pet directly: Can't instantiate abstract class Pet
-# with abstract methods move, speak
+# without an implementation for abstract methods 'move', 'speak'
 # This confirms Requirement 4: Python actively PREVENTS creating an
 # object from an incomplete class, at the moment of creation --
 # not later, when a missing method happens to be called.

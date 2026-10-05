@@ -34,7 +34,8 @@ Python executes code sequentially from top to bottom, but function definitions (
 
 Shadowing occurs when a variable defined inside a local scope (like a function) has the same name as a variable in the global scope. When this happens, the local variable "hides" or shadows the global one while the function is executing. Python resolves this using a search priority: it checks the local "box" first; if the name is found there, it uses that value and ignores the global version. The global variable remains unchanged in the outer world.
 
-**9. Explain the concept of "Lazy Evaluation" using the range() function as an example.** Lazy evaluation is a memory-saving strategy where values are produced only at the moment they are needed, rather than being stored all at once. Instead of creating a full list of numbers in memory, the `range()` function acts as a generator that "computes" the next number in the sequence only when requested (e.g., in a for loop). This allows Python to handle massive sequences of numbers efficiently without exhausting the computer's RAM.
+**9. Explain the concept of "Lazy Evaluation" using the range() function as an example.** Lazy evaluation is a memory-saving strategy where values are produced only at the moment they are needed, rather than being stored all at once. 
+Instead of creating a full list of numbers in memory, the `range()` object stores only its `start`, `stop` and `step` values and "computes" each number in the sequence only when it is requested (e.g., in a for loop). Note that `range()` is lazy in the same way as a generator, but it is not a generator: it is a sequence, so it supports `len()`, indexing and in, and it can be used again and again.
 
 **10. Why is the random module in Python described as a "Pseudo-random Number Generator" (PRNG)?** 
 

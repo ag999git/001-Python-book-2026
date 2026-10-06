@@ -435,9 +435,11 @@ except NameError as e:
 my_list = [10, 20]
 
 try:
-    # Step 1: valid indices here are only 0 and 1 -- index 2 is
-    # one position past the end of this 2-item list
-    item = my_list[2]
+    # Step 1: the loop asks for positions 0, 1 and 2, but valid
+    # indices here are only 0 and 1 -- index 2 is one position
+    # past the end of this 2-item list
+    for i in range(3):
+        print(my_list[i])
 
 except IndexError:
     print("List Error: You are trying to access a position that doesn't exist.")
@@ -600,9 +602,10 @@ except KeyboardInterrupt:
     # Catching KeyboardInterrupt BY NAME, deliberately, is fine --
     # it's a conscious choice to react to Ctrl+C specifically.
     # What's usually avoided is catching it ACCIDENTALLY through a
-    # bare 'except:' or an overly broad 'except Exception:' block
-    # (see Exercise 8), which silently swallows it along with
-    # everything else.
+    # bare 'except:' or 'except BaseException:' block (see Exercise 8),
+    # which silently swallows it along with everything else.
+    # ('except Exception:' does NOT catch it: KeyboardInterrupt comes
+    # directly from BaseException, not from Exception.)
     print("User aborted the process.")
 ```
 
@@ -759,7 +762,8 @@ except ZeroDivisionError:
     print(error_stack)
 ```
 
-> This section of the book covers `sys.exc_info()`, `e.__traceback__`, and the `traceback` module in much greater depth in the two chapters specifically dedicated to them.
+> This section of the book covers `sys.exc_info()`, `e.__traceback__`, and the `traceback` module in much greater depth
+in the two pages of this chapter specifically dedicated to them.
 
 ---
 
@@ -807,7 +811,9 @@ import os
 # genuinely want to ignore ONE particular, expected exception type
 with suppress(FileNotFoundError):
     os.remove("non_existent_file.txt")
-    print("This line runs, but nothing happens if the file is missing.")
+    print("File removed.")   # skipped if the file is missing
+
+print("The program carries on, whether or not the file existed.")
 ```
 
 > **A word of caution:** this is one of the few places where silently ignoring an exception is considered acceptable practice — but only because it names one *specific*, genuinely expected exception type. Compare this to the dangers of silently swallowing *everything*, covered in the conceptual Q&A (Question 35).

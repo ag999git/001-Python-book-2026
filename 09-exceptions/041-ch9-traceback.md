@@ -4,7 +4,7 @@
 
 # Exceptions as Objects: `__traceback__` and the `traceback` Module
 
-The previous section showed how to pull detailed error information out of `sys.exc_info()`. This section covers a more modern, more direct route to almost the same information: the exception object itself already carries its own traceback, available directly as `e.__traceback__`. Since Python 3, exceptions are simply objects — and like any object, they store their own data. Once you know that, a lot of what felt like "extra machinery" around error handling turns out to be sitting right there on the exception you already caught with `except ... as e`.
+The previous section showed how to pull detailed error information out of `sys.exc_info()`. This section covers a more modern, more direct route to almost the same information: the exception object itself already carries its own traceback, available directly as `e.__traceback__`. Exceptions are objects — and since Python 3 every exception object also stores its own traceback, in the `__traceback__` attribute. Once you know that, a lot of what felt like "extra machinery" around error handling turns out to be sitting right there on the exception you already caught with `except ... as e`.
 
 This section is meant to be read as a natural follow-on to the previous one — same underlying idea (extracting rich detail about an error, not just its message), but a cleaner way of getting there, and one you're more likely to see used in modern Python code.
 
@@ -36,7 +36,7 @@ This section is meant to be read as a natural follow-on to the previous one — 
 
 ### Step 1: Exceptions are objects
 
-In Python 3, every exception you catch is a genuine **object**, built from an exception class — and like any object, it carries its own data around with it, ready to be inspected.
+Every exception you catch is a genuine **object**, built from an exception class — and like any object, it carries its own data around with it, ready to be inspected.
 
 ```python
 except Exception as e:
@@ -78,7 +78,7 @@ Both approaches ultimately give you access to the same traceback information —
 | Gives you the type and value too? | Yes, all three (type, value, traceback) in one call | No — just the traceback; `type(e)` and `str(e)` cover the rest separately |
 | Modern-code preference | Less common in modern code | More common — the exception object already has what you need |
 
-**In short:** `e.__traceback__` is the more direct, more modern way to get at the same traceback information `sys.exc_info()` provides — since Python 3 made exceptions full objects, there's usually no need to go through `sys` at all if you already have the exception object in hand from `except ... as e`.
+**In short:** `e.__traceback__` is the more direct, more modern way to get at the same traceback information `sys.exc_info()` provides — since Python 3 added the `__traceback__` attribute to every exception object, there's usually no need to go through `sys` at all if you already have the exception object in hand from `except ... as e`.
 
 ### Step 4: `traceback.extract_tb()` and `traceback.format_exc()`
 

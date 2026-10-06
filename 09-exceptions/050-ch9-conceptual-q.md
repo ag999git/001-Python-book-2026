@@ -196,7 +196,7 @@ with open("data.txt") as f:   # __enter__ opens the file
 # __exit__ has ALREADY closed the file by this point, automatically
 ```
 
-This section of the book has an entire chapter dedicated to this topic if you'd like to go deeper — see *Context Managers: `with`, `__enter__()`, and `__exit__()`* elsewhere in this chapter for a full breakdown, including how to build your own.
+This chapter has a whole page dedicated to this topic if you'd like to go deeper — see *Context Managers: `with`, `__enter__()`, and `__exit__()`* elsewhere in this chapter for a full breakdown, including how to build your own.
 
 ---
 
@@ -205,17 +205,18 @@ This section of the book has an entire chapter dedicated to this topic if you'd 
 **Answer**
 
 1. `BaseException` sits at the very top of Python's exception hierarchy — but its direct children include things that are *not* ordinary program errors, like `KeyboardInterrupt` (Ctrl+C) and `SystemExit` (raised when the program is deliberately closing).
-2. If a custom exception were built directly on `BaseException`, a broad `except BaseException:` written somewhere else in the program could accidentally catch these system-level signals too — for example, silently swallowing the user's Ctrl+C press.
-3. `Exception` is a subclass of `BaseException` that specifically groups together ordinary, application-level errors — the kind you actually want caught by typical error-handling code.
-4. Building your own exceptions on top of `Exception` keeps them safely inside that "ordinary application error" category, without any risk of interfering with these system-level signals.
+2. Most error-handling code is written as `except Exception:`. A custom exception built directly on `BaseException` is not a child of `Exception`, so those ordinary handlers will **miss** it: it slips past them as Ctrl+C does, and can stop the program even where the code was written to catch every ordinary error.
+4. `Exception` is a subclass of `BaseException` that specifically groups together ordinary, application-level errors — the kind you actually want caught by typical error-handling code.
+5. Building your own exceptions on top of `Exception` keeps them safely inside that "ordinary application error" category, without any risk of interfering with these system-level signals.
 
 ```python
 # Correct: inherits from Exception
 class InsufficientBalanceError(Exception):
     pass
 
-# Risky: inherits from BaseException, and could get accidentally
-# caught by (or interfere with) system-level exception handling
+
+# Risky: inherits from BaseException, so an ordinary
+# 'except Exception:' handler will NOT catch it
 class RiskyCustomError(BaseException):
     pass
 ```
@@ -876,7 +877,7 @@ except Exception:
     print("An unexpected error occurred. Our team has been notified.")
 ```
 
-This section of the book covers `traceback` — along with `sys.exc_info()` and the modern `e.__traceback__` attribute — in much greater depth in the two chapters specifically dedicated to it.
+This section of the book covers `traceback` — along with `sys.exc_info()` and the modern `e.__traceback__` attribute — in much greater depth in the two pages of this chapter specifically dedicated to it.
 
 ---
 

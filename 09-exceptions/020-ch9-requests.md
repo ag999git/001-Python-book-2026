@@ -312,6 +312,8 @@ The same relationship, as a flowchart
 
 
 > **Why the order of `except` blocks still matters here too:** exactly as explained for `urllib` in the previous section, Python checks `except` blocks from top to bottom and stops at the first match. Since every exception in this tree — `HTTPError`, `ConnectionError`, `Timeout`, and `TooManyRedirects` — is *also* a `RequestException`, a generic `except requests.exceptions.RequestException:` block placed too early would catch all of them, and the more specific, more informative blocks below it would never run. That's why the script in Part 3 lists its `except` blocks from most specific to most general, with `RequestException` last.
+>
+> > **Two details the simple tree leaves out:** `RequestException` is itself a child of Python's built-in `OSError`, so `except OSError:` would also catch every `requests` error. And `ConnectTimeout` (the server did not even accept the connection in time) is a child of **both** `ConnectionError` and `Timeout`. With the order used in Part 3, a connection that times out is caught by the `ConnectionError` block and prints "Connection Error"; only a server that connects but then answers too slowly (`ReadTimeout`, as in Case 4) reaches the `Timeout` block.
 
 ---
 

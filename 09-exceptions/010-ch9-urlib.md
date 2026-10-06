@@ -293,7 +293,7 @@ Exception
 
 ### Important Note: Order Matters
 
-`HTTPError` is a **subclass** of `URLError` — in other words, every `HTTPError` *is also* a `URLError`, but not the other way around. (A quick primer on this idea, if it's new to you: a "subclass" is a more specific version of a more general category — the same way "a poodle" is a specific kind of "a dog." The book's later chapter on Object-Oriented Programming covers this idea properly.)
+`HTTPError` is a **subclass** of `URLError` — in other words, every `HTTPError` *is also* a `URLError`, but not the other way around. (A quick primer on this idea, if it's new to you: a "subclass" is a more specific version of a more general category — the same way "a poodle" is a specific kind of "a dog." Chapters 7 and 8 of the book, on Object-Oriented Programming, cover this idea properly.
 
 This matters because Python checks `except` blocks **in the order they're written**, and stops at the *first* one that matches. So:
 

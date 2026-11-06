@@ -1,7 +1,7 @@
 
 # Chapter 1: Python Basics
 
-The online companion to Chapter 1 of the book. The printed chapter introduces comments, identifiers, keywords and PEP 8. These pages add the two things a printed page cannot give you: room to explain an idea at length, and step-by-step help with setting up the tools you will write your code in.
+This is the online companion to Chapter 1 of the printed book. The printed chapter introduces comments, identifiers, keywords and PEP 8. These pages add the two things a printed page cannot give you: room to explain an idea at length, and step-by-step help with setting up the tools you will write your code in.
 
 By the end of these pages you should have a working Python setup on your own computer, know how to run code in three different places, and be comfortable with the naming and layout rules that Python programmers follow.
 
